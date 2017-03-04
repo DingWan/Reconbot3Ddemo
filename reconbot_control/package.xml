@@ -1,12 +1,11 @@
 <?xml version="1.0"?>
 <package>
-  <name>reconbot</name>
+  <name>reconbot_control</name>
   <version>0.0.0</version>
-  <description>The reconbot package</description>
+  <description>The reconbot_control package</description>
 
   <author email="delacruz@igm.rwth-aaachen.de">Jorge De La Cruz</author>
   <maintainer email="delacruz@igm.rwth-aaachen.de">Jorge De La Cruz</maintainer>
-
   <license>TODO</license>
 
   <buildtool_depend>catkin</buildtool_depend>

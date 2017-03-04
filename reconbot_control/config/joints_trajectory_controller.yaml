@@ -1,4 +1,4 @@
-arm_controller:
+reconbot_arm_controller:
     controller:
         package: dynamixel_controllers
         module: joint_trajectory_action_controller
