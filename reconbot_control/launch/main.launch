@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="full_mode" default="false"/>
+  <arg name="r_arm_mode" default="false"/>
+  <arg name="l_arm_mode" default="false"/>
+
+  <!--<rosparam file="$(find reconbot_control)/config/controller_list.yaml" command="load"/>-->
+
+  <include file="$(find reconbot_control)/launch/controller_manager.launch"></include>
+
+  <include if="$(arg full_mode)" file="$(find reconbot_control)/launch/reconbot_controller.launch">
+  </include>
+
+  <include if="$(arg r_arm_mode)" file="$(find reconbot_control)/launch/r_arm_reconbot_controller.launch">  </include>
+
+  <include if="$(arg l_arm_mode)" file="$(find reconbot_control)/launch/l_arm_reconbot_controller.launch">  </include>
+
+  <node if="$(arg full_mode)" name="ReConBot_Driver" pkg="reconbot_control" type="move_group_interface" respawn="true"/>
+
+  <node if="$(arg r_arm_mode)" name="r_arm_ReConBot_Driver" pkg="reconbot_control" type="r_arm_move_group_interface" respawn="true"/>
+
+  <node if="$(arg l_arm_mode)" name="l_arm_ReConBot_Driver" pkg="reconbot_control" type="l_arm_move_group_interface" respawn="true"/>
+
+</launch>

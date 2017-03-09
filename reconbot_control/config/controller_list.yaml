@@ -1,0 +1,10 @@
+controller_list:
+  controller_1: joint1_controller
+  controller_2: joint2_controller
+  controller_3: joint3_controller
+  controller_4: joint4_controller
+  controller_5: joint5_controller
+  controller_6: joint6_controller
+  controller_l: l_reconbot_arm_controller
+  controller_r: r_reconbot_arm_controller
+  controller_full: reconbot_controller
