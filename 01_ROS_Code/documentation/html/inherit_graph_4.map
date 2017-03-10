@@ -1,0 +1,9 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$d6/dac/classdynamixel__driver_1_1dynamixel__io_1_1_checksum_error.html" title="dynamixel_driver.dynamixel\l_io.ChecksumError" alt="" coords="137,5,319,46"/>
+<area shape="rect" id="node3" href="$dc/d81/classdynamixel__driver_1_1dynamixel__io_1_1_dropped_packet_error.html" title="dynamixel_driver.dynamixel\l_io.DroppedPacketError" alt="" coords="137,70,319,111"/>
+<area shape="rect" id="node4" href="$d2/da8/classdynamixel__driver_1_1dynamixel__io_1_1_error_code_error.html" title="dynamixel_driver.dynamixel\l_io.ErrorCodeError" alt="" coords="137,135,319,177"/>
+<area shape="rect" id="node5" href="$d7/d34/classdynamixel__driver_1_1dynamixel__io_1_1_fatal_error_code_error.html" title="dynamixel_driver.dynamixel\l_io.FatalErrorCodeError" alt="" coords="137,201,319,242"/>
+<area shape="rect" id="node6" href="$d5/da3/classdynamixel__driver_1_1dynamixel__io_1_1_nonfatal_error_code_error.html" title="dynamixel_driver.dynamixel\l_io.NonfatalErrorCodeError" alt="" coords="137,266,319,307"/>
+<area shape="rect" id="node7" href="$d2/d77/classdynamixel__driver_1_1dynamixel__io_1_1_serial_open_error.html" title="dynamixel_driver.dynamixel\l_io.SerialOpenError" alt="" coords="137,331,319,373"/>
+<area shape="rect" id="node8" href="$d1/d94/classdynamixel__driver_1_1dynamixel__io_1_1_unsupported_feature_error.html" title="dynamixel_driver.dynamixel\l_io.UnsupportedFeatureError" alt="" coords="133,397,323,438"/>
+</map>

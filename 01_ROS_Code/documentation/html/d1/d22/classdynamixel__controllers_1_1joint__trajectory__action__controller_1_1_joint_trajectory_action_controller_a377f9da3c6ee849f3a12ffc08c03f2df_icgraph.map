@@ -1,0 +1,4 @@
+<map id="dynamixel_controllers.joint_trajectory_action_controller.JointTrajectoryActionController.process_trajectory" name="dynamixel_controllers.joint_trajectory_action_controller.JointTrajectoryActionController.process_trajectory">
+<area shape="rect" id="node2" href="$d1/d22/classdynamixel__controllers_1_1joint__trajectory__action__controller_1_1_joint_trajectory_action_controller.html#a86f9e610dbac6f1de79f4ff95448daa9" title="dynamixel_controllers.joint\l_trajectory_action_controller.Joint\lTrajectoryActionController.process_command" alt="" coords="278,5,565,61"/>
+<area shape="rect" id="node3" href="$d1/d22/classdynamixel__controllers_1_1joint__trajectory__action__controller_1_1_joint_trajectory_action_controller.html#afbfa29ff56121dd37e2dc579e8a32da2" title="dynamixel_controllers.joint\l_trajectory_action_controller.Joint\lTrajectoryActionController.process\l_follow_trajectory" alt="" coords="310,86,533,157"/>
+</map>

@@ -1,0 +1,82 @@
+\hypertarget{r__arm__trajectory__publisher_8cpp}{}\section{r\+\_\+arm\+\_\+trajectory\+\_\+publisher.\+cpp File Reference}
+\label{r__arm__trajectory__publisher_8cpp}\index{r\+\_\+arm\+\_\+trajectory\+\_\+publisher.\+cpp@{r\+\_\+arm\+\_\+trajectory\+\_\+publisher.\+cpp}}
+{\ttfamily \#include $<$ros/ros.\+h$>$}\newline
+{\ttfamily \#include $<$control\+\_\+msgs/\+Follow\+Joint\+Trajectory\+Action.\+h$>$}\newline
+{\ttfamily \#include $<$actionlib/client/simple\+\_\+action\+\_\+client.\+h$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include \char`\"{}Re\+Con\+Bot.\+h\char`\"{}}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$cstdlib$>$}\newline
+{\ttfamily \#include $<$map$>$}\newline
+{\ttfamily \#include $<$pwd.\+h$>$}\newline
+Include dependency graph for r\+\_\+arm\+\_\+trajectory\+\_\+publisher.\+cpp\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d7/d13/r__arm__trajectory__publisher_8cpp__incl}
+\end{center}
+\end{figure}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{r__arm__trajectory__publisher_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}{main} (int argc, char $\ast$$\ast$argv)
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{r__arm__trajectory__publisher_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}\label{r__arm__trajectory__publisher_8cpp_a3c04138a5bfe5d72780bb7e82a18e627}} 
+\index{r\+\_\+arm\+\_\+trajectory\+\_\+publisher.\+cpp@{r\+\_\+arm\+\_\+trajectory\+\_\+publisher.\+cpp}!main@{main}}
+\index{main@{main}!r\+\_\+arm\+\_\+trajectory\+\_\+publisher.\+cpp@{r\+\_\+arm\+\_\+trajectory\+\_\+publisher.\+cpp}}
+\subsubsection{\texorpdfstring{main()}{main()}}
+{\footnotesize\ttfamily int main (\begin{DoxyParamCaption}\item[{int}]{argc,  }\item[{char $\ast$$\ast$}]{argv }\end{DoxyParamCaption})}
+
+
+
+Definition at line 15 of file r\+\_\+arm\+\_\+trajectory\+\_\+publisher.\+cpp.
+
+
+
+References Re\+Con\+Bot\+Pub\+::build\+Trajectory(), Re\+Con\+Bot\+Lx\+::motors\+State(), Re\+Con\+Bot\+::name\+Space, Re\+Con\+Bot\+Pub\+::publisher(), Re\+Con\+Bot\+::source\+File, Re\+Con\+Bot\+::topic\+Name, and Re\+Con\+Bot\+Pub\+::trajectory\+Publisher\+Start().
+
+
+\begin{DoxyCode}
+15                               \{
+16   ros::init(argc, argv, \textcolor{stringliteral}{"r\_arm\_Trajectory\_Publisher"});
+17   ros::NodeHandle nh;
+18   control\_msgs::FollowJointTrajectoryGoal goal;
+19   \textcolor{comment}{//ros::Rate loop\_rate(5);}
+20   \textcolor{comment}{//ros::AsyncSpinner spinner(1);/**<Two spinner are instantiated for managing 2 threats*/}
+21   \textcolor{comment}{//spinner.start();}
+22   \hyperlink{class_re_con_bot_pub}{ReConBotPub} Publisher;
+23   Publisher.\hyperlink{class_re_con_bot_a1d91d2ea8c0f16340440357906fb9ebf}{topicName} = \textcolor{stringliteral}{"/r\_arm\_reconbot\_trajectory"};
+24   \textcolor{keywordtype}{int} arg[] = \{1,2,3\};
+25 
+26   passwd* pw = getpwuid(getuid());
+27   std::string path(pw->pw\_dir);
+28 
+29   Publisher.\hyperlink{class_re_con_bot_lx_a0e25f573057755c6729ea572362652e6}{motorsState}(arg,3);
+30   Publisher.\hyperlink{class_re_con_bot_pub_a2019b0d8d30f2419026c90dd30de500f}{trajectoryPublisherStart}(nh, 1000);
+31   Publisher.\hyperlink{class_re_con_bot_a40ca07cd606988b78664c4a52fd8dc59}{nameSpace} = \textcolor{stringliteral}{"r\_arm\_reconbot\_controller"};
+32   Publisher.\hyperlink{class_re_con_bot_a65cf4bed9bbabd92e1265d05507e0945}{sourceFile} = path += \textcolor{stringliteral}{"/catkin\_ws/src/reconbot/trajectory/r\_arm\_trajectory.txt"};
+33   goal = Publisher.\hyperlink{class_re_con_bot_pub_af99f5189cd8e834d7b59f1b106b99345}{buildTrajectory}();
+34   Publisher.\hyperlink{class_re_con_bot_pub_ac763949cb5256de695e02c5f81084ead}{publisher}(goal);
+35 
+36   sleep(3);
+37 
+38   ROS\_INFO(\textcolor{stringliteral}{"Good bye!"});
+39   \textcolor{comment}{//spinner.stop();}
+40   \textcolor{comment}{//loop\_rate.sleep();}
+41 
+42   \textcolor{comment}{//sleep(2);}
+43   \textcolor{keywordflow}{return} 0;
+44 \}
+\end{DoxyCode}
+Here is the call graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=322pt]{d5/d54/r__arm__trajectory__publisher_8cpp_a3c04138a5bfe5d72780bb7e82a18e627_cgraph}
+\end{center}
+\end{figure}

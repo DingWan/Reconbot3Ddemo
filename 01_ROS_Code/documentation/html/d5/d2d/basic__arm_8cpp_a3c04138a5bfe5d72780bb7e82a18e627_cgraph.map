@@ -1,0 +1,5 @@
+<map id="main" name="main">
+<area shape="rect" id="node2" href="$d3/d06/class_re_con_bot_arm.html#ac499ee22d73b90c860f06a16afcd2fb0" title="ReConBotArm::armTrajectory" alt="" coords="107,5,301,32"/>
+<area shape="rect" id="node3" href="$d3/d06/class_re_con_bot_arm.html#a179480efa62ff256fb8b3ddc0685d762" title="Returns the current state of the action. " alt="" coords="122,56,286,83"/>
+<area shape="rect" id="node4" href="$d3/d06/class_re_con_bot_arm.html#a52f6f89615b17a421d5cd8b51b2962d7" title="Sends the command to start a given trajectory. " alt="" coords="105,107,303,133"/>
+</map>
