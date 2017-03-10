@@ -1,0 +1,5 @@
+var namespacedynamixel__controllers_1_1joint__trajectory__action__controller =
+[
+    [ "JointTrajectoryActionController", "d1/d22/classdynamixel__controllers_1_1joint__trajectory__action__controller_1_1_joint_trajectory_action_controller.html", "d1/d22/classdynamixel__controllers_1_1joint__trajectory__action__controller_1_1_joint_trajectory_action_controller" ],
+    [ "Segment", "d6/d71/classdynamixel__controllers_1_1joint__trajectory__action__controller_1_1_segment.html", "d6/d71/classdynamixel__controllers_1_1joint__trajectory__action__controller_1_1_segment" ]
+];

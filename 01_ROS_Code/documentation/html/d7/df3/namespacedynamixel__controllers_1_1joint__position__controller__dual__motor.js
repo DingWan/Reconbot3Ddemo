@@ -1,0 +1,4 @@
+var namespacedynamixel__controllers_1_1joint__position__controller__dual__motor =
+[
+    [ "JointPositionControllerDual", "d7/d04/classdynamixel__controllers_1_1joint__position__controller__dual__motor_1_1_joint_position_controller_dual.html", "d7/d04/classdynamixel__controllers_1_1joint__position__controller__dual__motor_1_1_joint_position_controller_dual" ]
+];

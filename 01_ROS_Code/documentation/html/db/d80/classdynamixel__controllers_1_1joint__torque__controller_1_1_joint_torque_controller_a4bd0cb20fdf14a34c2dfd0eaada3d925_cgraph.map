@@ -1,0 +1,5 @@
+<map id="dynamixel_controllers.joint_torque_controller.JointTorqueController.set_speed" name="dynamixel_controllers.joint_torque_controller.JointTorqueController.set_speed">
+<area shape="rect" id="node2" href="$db/d80/classdynamixel__controllers_1_1joint__torque__controller_1_1_joint_torque_controller.html#ac5eb1af408da423a97956bc896859db4" title="dynamixel_controllers.joint\l_torque_controller.JointTorqueController.spd\l_rad_to_raw" alt="" coords="371,5,650,61"/>
+<area shape="rect" id="node3" href="$d1/df0/classdynamixel__controllers_1_1joint__position__controller_1_1_joint_position_controller.html#ac82aa3145e2ba55f75b43563827828d5" title="dynamixel_controllers.joint\l_position_controller.JointPosition\lController.spd_rad_to_raw" alt="" coords="404,85,617,141"/>
+<area shape="rect" id="node4" href="$d7/d04/classdynamixel__controllers_1_1joint__position__controller__dual__motor_1_1_joint_position_controller_dual.html#a5a96d3bd5d40feb12ffcb581d7acedc1" title="dynamixel_controllers.joint\l_position_controller_dual\l_motor.JointPositionControllerDual.spd\l_rad_to_raw" alt="" coords="386,166,635,237"/>
+</map>

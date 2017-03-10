@@ -1,0 +1,27 @@
+<launch>
+
+<!-- Start tilt joint controller -->
+    <rosparam file="$(find reconbot_control)/config/l_arm_joints_controller.yaml" command="load"/>
+    <node name="controller_spawner_l_joints" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --port pan_tilt_port
+                joint4_controller
+                joint5_controller
+                joint6_controller
+                "
+          output="screen"/>
+
+  <!-- Start joints trajectory controller controller -->
+    <rosparam file="$(find reconbot_control)/config/l_arm_joints_trajectory_controller.yaml" command="load"/>
+    <node name="controller_spawner_l" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --type=meta
+                l_arm_reconbot_controller
+                joint4_controller
+                joint5_controller
+                joint6_controller
+
+                "
+
+                          output="screen"/>
+</launch>
