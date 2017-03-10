@@ -109,7 +109,7 @@ protected:
 
 public:
   ReConBotPub(){
-    sourceFile = "/home/jdelacruz/catkin_ws/src/reconbot/trajectory/trajectory1.txt";
+    sourceFile = "/home/jdelacruz/catkin_ws/src/reconbot/01_ROS_Code/trajectory/trajectory1.txt";
     topicName = "/reconbot_trajectory";
   }
   control_msgs::FollowJointTrajectoryGoal buildTrajectory();
