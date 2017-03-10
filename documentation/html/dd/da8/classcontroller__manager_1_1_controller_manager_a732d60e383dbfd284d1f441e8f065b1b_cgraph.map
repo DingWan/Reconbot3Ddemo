@@ -1,0 +1,5 @@
+<map id="controller_manager.ControllerManager.restart_controller" name="controller_manager.ControllerManager.restart_controller">
+<area shape="rect" id="node2" href="$dd/da8/classcontroller__manager_1_1_controller_manager.html#a4d92280a301d78500055ebccdaf14820" title="controller_manager.Controller\lManager.start_controller" alt="" coords="245,5,437,46"/>
+<area shape="rect" id="node4" href="$dd/da8/classcontroller__manager_1_1_controller_manager.html#a54e01b56f67af0b1434c53b1c0abe7ef" title="controller_manager.Controller\lManager.stop_controller" alt="" coords="245,70,437,111"/>
+<area shape="rect" id="node3" href="$dd/da8/classcontroller__manager_1_1_controller_manager.html#a3d03ada2320233f373b3af8bdff63b0d" title="controller_manager.Controller\lManager.check_deps" alt="" coords="485,5,677,46"/>
+</map>

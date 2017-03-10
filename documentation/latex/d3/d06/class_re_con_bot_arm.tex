@@ -1,0 +1,251 @@
+\hypertarget{class_re_con_bot_arm}{}\section{Re\+Con\+Bot\+Arm Class Reference}
+\label{class_re_con_bot_arm}\index{Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{class_re_con_bot_arm_acdc750bbe5edac6d78c117e0b2073c60}{Re\+Con\+Bot\+Arm} ()
+\item 
+\hyperlink{class_re_con_bot_arm_ab8ce7d41fb625ac7ad8486278b5e2a45}{$\sim$\+Re\+Con\+Bot\+Arm} ()
+\begin{DoxyCompactList}\small\item\em Clean up the action client. \end{DoxyCompactList}\item 
+void \hyperlink{class_re_con_bot_arm_a52f6f89615b17a421d5cd8b51b2962d7}{start\+Trajectory} (control\+\_\+msgs\+::\+Follow\+Joint\+Trajectory\+Goal goal)
+\begin{DoxyCompactList}\small\item\em Sends the command to start a given trajectory. \end{DoxyCompactList}\item 
+control\+\_\+msgs\+::\+Follow\+Joint\+Trajectory\+Goal \hyperlink{class_re_con_bot_arm_ac499ee22d73b90c860f06a16afcd2fb0}{arm\+Trajectory} ()
+\item 
+actionlib\+::\+Simple\+Client\+Goal\+State \hyperlink{class_re_con_bot_arm_a179480efa62ff256fb8b3ddc0685d762}{get\+State} ()
+\begin{DoxyCompactList}\small\item\em Returns the current state of the action. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{Private Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{basic__arm_8cpp_a6fb8875093261cdc69e54d3ac7d5c301}{Traj\+Client} $\ast$ \hyperlink{class_re_con_bot_arm_a0be83821f776c5ca9874fabbeaa177cf}{traj\+\_\+client\+\_\+}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 47 of file basic\+\_\+arm.\+cpp.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{class_re_con_bot_arm_acdc750bbe5edac6d78c117e0b2073c60}\label{class_re_con_bot_arm_acdc750bbe5edac6d78c117e0b2073c60}} 
+\index{Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}!Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}}
+\index{Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}!Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}}
+\subsubsection{\texorpdfstring{Re\+Con\+Bot\+Arm()}{ReConBotArm()}}
+{\footnotesize\ttfamily Re\+Con\+Bot\+Arm\+::\+Re\+Con\+Bot\+Arm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 52 of file basic\+\_\+arm.\+cpp.
+
+
+\begin{DoxyCode}
+53   \{
+54     \textcolor{comment}{// tell the action client that we want to spin a thread by default}
+55     \hyperlink{class_re_con_bot_arm_a0be83821f776c5ca9874fabbeaa177cf}{traj\_client\_} = \textcolor{keyword}{new} \hyperlink{basic__arm_8cpp_a6fb8875093261cdc69e54d3ac7d5c301}{TrajClient}(\textcolor{stringliteral}{"reconbot\_arm\_controller/follow\_joint\_trajectory"}, \textcolor{keyword}{
+      true});
+56 
+57     \textcolor{comment}{// wait for action server to come up}
+58     \textcolor{keywordflow}{while}(!\hyperlink{class_re_con_bot_arm_a0be83821f776c5ca9874fabbeaa177cf}{traj\_client\_}->waitForServer(ros::Duration(5.0)))\{
+59     ROS\_INFO(\textcolor{stringliteral}{"Waiting for the joint\_trajectory\_action server"});
+60     \}
+61   \}
+\end{DoxyCode}
+\mbox{\Hypertarget{class_re_con_bot_arm_ab8ce7d41fb625ac7ad8486278b5e2a45}\label{class_re_con_bot_arm_ab8ce7d41fb625ac7ad8486278b5e2a45}} 
+\index{Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}!````~Re\+Con\+Bot\+Arm@{$\sim$\+Re\+Con\+Bot\+Arm}}
+\index{````~Re\+Con\+Bot\+Arm@{$\sim$\+Re\+Con\+Bot\+Arm}!Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}}
+\subsubsection{\texorpdfstring{$\sim$\+Re\+Con\+Bot\+Arm()}{~ReConBotArm()}}
+{\footnotesize\ttfamily Re\+Con\+Bot\+Arm\+::$\sim$\+Re\+Con\+Bot\+Arm (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Clean up the action client. 
+
+
+
+Definition at line 63 of file basic\+\_\+arm.\+cpp.
+
+
+
+References traj\+\_\+client\+\_\+.
+
+
+\begin{DoxyCode}
+64   \{
+65   \textcolor{keyword}{delete} \hyperlink{class_re_con_bot_arm_a0be83821f776c5ca9874fabbeaa177cf}{traj\_client\_};
+66   \}
+\end{DoxyCode}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{class_re_con_bot_arm_ac499ee22d73b90c860f06a16afcd2fb0}\label{class_re_con_bot_arm_ac499ee22d73b90c860f06a16afcd2fb0}} 
+\index{Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}!arm\+Trajectory@{arm\+Trajectory}}
+\index{arm\+Trajectory@{arm\+Trajectory}!Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}}
+\subsubsection{\texorpdfstring{arm\+Trajectory()}{armTrajectory()}}
+{\footnotesize\ttfamily control\+\_\+msgs\+::\+Follow\+Joint\+Trajectory\+Goal Re\+Con\+Bot\+Arm\+::arm\+Trajectory (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Definition at line 76 of file basic\+\_\+arm.\+cpp.
+
+
+
+Referenced by main().
+
+
+\begin{DoxyCode}
+77     \{
+78       \textcolor{comment}{//our goal variable}
+79       control\_msgs::FollowJointTrajectoryGoal goal;
+80 
+81       \textcolor{comment}{// First, the joint names, which apply to all waypoints}
+82       goal.trajectory.joint\_names.push\_back(\textcolor{stringliteral}{"joint\_1"});
+83       goal.trajectory.joint\_names.push\_back(\textcolor{stringliteral}{"joint\_2"});
+84       goal.trajectory.joint\_names.push\_back(\textcolor{stringliteral}{"joint\_3"});
+85 
+86       \textcolor{comment}{// We will have two waypoints in this goal trajectory}
+87       goal.trajectory.points.resize(3);
+88 
+89       \textcolor{comment}{// First trajectory point}
+90       \textcolor{comment}{// Positions}
+91       \textcolor{keywordtype}{int} ind = 0;
+92       goal.trajectory.points[ind].positions.resize(3);
+93       goal.trajectory.points[ind].positions[0] = 0.0;
+94       goal.trajectory.points[ind].positions[1] = 0.0;
+95       goal.trajectory.points[ind].positions[2] = 0.4363;
+96       \textcolor{comment}{// Velocities}
+97       goal.trajectory.points[ind].velocities.resize(3);
+98       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} j = 0; j < 3; ++j)
+99       \{
+100         goal.trajectory.points[ind].velocities[j] = 0.0;
+101       \}
+102       \textcolor{comment}{// To be reached 1 second after starting along the trajectory}
+103       goal.trajectory.points[ind].time\_from\_start = ros::Duration(2.0);
+104 
+105       \textcolor{comment}{// Second trajectory point}
+106       \textcolor{comment}{// Positions}
+107       ind = 1;
+108       goal.trajectory.points[ind].positions.resize(3);
+109       goal.trajectory.points[ind].positions[0] = 1.5708;
+110       goal.trajectory.points[ind].positions[1] = 1.5708;
+111       goal.trajectory.points[ind].positions[2] = 3.5779;
+112       \textcolor{comment}{// Velocities}
+113       goal.trajectory.points[ind].velocities.resize(3);
+114       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} j = 0; j < 3; ++j)
+115       \{
+116         goal.trajectory.points[ind].velocities[j] = 0.0;
+117       \}
+118       \textcolor{comment}{// To be reached 2 seconds after starting along the trajectory}
+119       goal.trajectory.points[ind].time\_from\_start = ros::Duration(4.0);
+120 
+121       ind = 2;
+122       goal.trajectory.points[ind].positions.resize(3);
+123       goal.trajectory.points[ind].positions[0] = 0.0;
+124       goal.trajectory.points[ind].positions[1] = 0.0;
+125       goal.trajectory.points[ind].positions[2] = 0.4363;
+126       \textcolor{comment}{// Velocities}
+127       goal.trajectory.points[ind].velocities.resize(3);
+128       \textcolor{keywordflow}{for} (\textcolor{keywordtype}{size\_t} j = 0; j < 3; ++j)
+129       \{
+130         goal.trajectory.points[ind].velocities[j] = 0.0;
+131       \}
+132       \textcolor{comment}{// To be reached 2 seconds after starting along the trajectory}
+133       goal.trajectory.points[ind].time\_from\_start = ros::Duration(6.0);
+134 
+135       \textcolor{comment}{//we are done; return the goal}
+136       \textcolor{keywordflow}{return} goal;
+137     \}
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=300pt]{d3/d06/class_re_con_bot_arm_ac499ee22d73b90c860f06a16afcd2fb0_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_re_con_bot_arm_a179480efa62ff256fb8b3ddc0685d762}\label{class_re_con_bot_arm_a179480efa62ff256fb8b3ddc0685d762}} 
+\index{Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}!get\+State@{get\+State}}
+\index{get\+State@{get\+State}!Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}}
+\subsubsection{\texorpdfstring{get\+State()}{getState()}}
+{\footnotesize\ttfamily actionlib\+::\+Simple\+Client\+Goal\+State Re\+Con\+Bot\+Arm\+::get\+State (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Returns the current state of the action. 
+
+
+
+Definition at line 140 of file basic\+\_\+arm.\+cpp.
+
+
+
+Referenced by main().
+
+
+\begin{DoxyCode}
+141     \{
+142       \textcolor{keywordflow}{return} \hyperlink{class_re_con_bot_arm_a0be83821f776c5ca9874fabbeaa177cf}{traj\_client\_}->getState();
+143     \}
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=278pt]{d3/d06/class_re_con_bot_arm_a179480efa62ff256fb8b3ddc0685d762_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{class_re_con_bot_arm_a52f6f89615b17a421d5cd8b51b2962d7}\label{class_re_con_bot_arm_a52f6f89615b17a421d5cd8b51b2962d7}} 
+\index{Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}!start\+Trajectory@{start\+Trajectory}}
+\index{start\+Trajectory@{start\+Trajectory}!Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}}
+\subsubsection{\texorpdfstring{start\+Trajectory()}{startTrajectory()}}
+{\footnotesize\ttfamily void Re\+Con\+Bot\+Arm\+::start\+Trajectory (\begin{DoxyParamCaption}\item[{control\+\_\+msgs\+::\+Follow\+Joint\+Trajectory\+Goal}]{goal }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+Sends the command to start a given trajectory. 
+
+
+
+Definition at line 68 of file basic\+\_\+arm.\+cpp.
+
+
+
+Referenced by main().
+
+
+\begin{DoxyCode}
+69     \{
+70       \textcolor{comment}{// When to start the trajectory: 1s from now}
+71       goal.trajectory.header.stamp = ros::Time::now() + ros::Duration(1.0);
+72       \hyperlink{class_re_con_bot_arm_a0be83821f776c5ca9874fabbeaa177cf}{traj\_client\_}->sendGoal(goal);
+73     \}
+\end{DoxyCode}
+Here is the caller graph for this function\+:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=304pt]{d3/d06/class_re_con_bot_arm_a52f6f89615b17a421d5cd8b51b2962d7_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{class_re_con_bot_arm_a0be83821f776c5ca9874fabbeaa177cf}\label{class_re_con_bot_arm_a0be83821f776c5ca9874fabbeaa177cf}} 
+\index{Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}!traj\+\_\+client\+\_\+@{traj\+\_\+client\+\_\+}}
+\index{traj\+\_\+client\+\_\+@{traj\+\_\+client\+\_\+}!Re\+Con\+Bot\+Arm@{Re\+Con\+Bot\+Arm}}
+\subsubsection{\texorpdfstring{traj\+\_\+client\+\_\+}{traj\_client\_}}
+{\footnotesize\ttfamily \hyperlink{basic__arm_8cpp_a6fb8875093261cdc69e54d3ac7d5c301}{Traj\+Client}$\ast$ Re\+Con\+Bot\+Arm\+::traj\+\_\+client\+\_\+\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line 50 of file basic\+\_\+arm.\+cpp.
+
+
+
+Referenced by $\sim$\+Re\+Con\+Bot\+Arm().
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{basic__arm_8cpp}{basic\+\_\+arm.\+cpp}\end{DoxyCompactItemize}

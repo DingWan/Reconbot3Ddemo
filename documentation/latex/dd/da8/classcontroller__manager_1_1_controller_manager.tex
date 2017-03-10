@@ -1,0 +1,558 @@
+\hypertarget{classcontroller__manager_1_1_controller_manager}{}\section{controller\+\_\+manager.\+Controller\+Manager Class Reference}
+\label{classcontroller__manager_1_1_controller_manager}\index{controller\+\_\+manager.\+Controller\+Manager@{controller\+\_\+manager.\+Controller\+Manager}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classcontroller__manager_1_1_controller_manager_a92e6e1983e89e13d96ead32a5d311655}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self)
+\item 
+def \hyperlink{classcontroller__manager_1_1_controller_manager_a0d85576b1fbfd7e7e8361ce3d4518920}{on\+\_\+shutdown} (self)
+\item 
+def \hyperlink{classcontroller__manager_1_1_controller_manager_aa87554fb74a01e962e39ee1b33fecc83}{diagnostics\+\_\+processor} (self)
+\item 
+def \hyperlink{classcontroller__manager_1_1_controller_manager_a3d03ada2320233f373b3af8bdff63b0d}{check\+\_\+deps} (self)
+\item 
+def \hyperlink{classcontroller__manager_1_1_controller_manager_a4d92280a301d78500055ebccdaf14820}{start\+\_\+controller} (self, req)
+\item 
+def \hyperlink{classcontroller__manager_1_1_controller_manager_a54e01b56f67af0b1434c53b1c0abe7ef}{stop\+\_\+controller} (self, req)
+\item 
+def \hyperlink{classcontroller__manager_1_1_controller_manager_a732d60e383dbfd284d1f441e8f065b1b}{restart\+\_\+controller} (self, req)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcontroller__manager_1_1_controller_manager_a10faf09a5de3efe436c7862fee2d9709}{waiting\+\_\+meta\+\_\+controllers}
+\item 
+\hyperlink{classcontroller__manager_1_1_controller_manager_afb31b7117fd61c9c7431b47cfcddb962}{controllers}
+\item 
+\hyperlink{classcontroller__manager_1_1_controller_manager_adbee940432e0e6fe3f97b2eab6be6285}{serial\+\_\+proxies}
+\item 
+\hyperlink{classcontroller__manager_1_1_controller_manager_a8bc4abdce61030b2c80b29987d25a745}{diagnostics\+\_\+rate}
+\item 
+\hyperlink{classcontroller__manager_1_1_controller_manager_a3c9bc2258eb592e26334d69ff9d205ec}{start\+\_\+controller\+\_\+lock}
+\item 
+\hyperlink{classcontroller__manager_1_1_controller_manager_a974bae4de69c9ccb568def314be7d6b6}{stop\+\_\+controller\+\_\+lock}
+\item 
+\hyperlink{classcontroller__manager_1_1_controller_manager_a262f444500bd45723b7945fd24e07d18}{diagnostics\+\_\+pub}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+
+
+Definition at line 65 of file controller\+\_\+manager.\+py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_a92e6e1983e89e13d96ead32a5d311655}\label{classcontroller__manager_1_1_controller_manager_a92e6e1983e89e13d96ead32a5d311655}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def controller\+\_\+manager.\+Controller\+Manager.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line 66 of file controller\+\_\+manager.\+py.
+
+
+
+References controller\+\_\+manager.\+Controller\+Manager.\+on\+\_\+shutdown().
+
+
+\begin{DoxyCode}
+66     \textcolor{keyword}{def }\_\_init\_\_(self):
+67         rospy.init\_node(\textcolor{stringliteral}{'dynamixel\_controller\_manager'}, anonymous=\textcolor{keyword}{True})
+68         rospy.on\_shutdown(self.on\_shutdown)
+69         
+70         self.waiting\_meta\_controllers = []
+71         self.controllers = \{\}
+72         self.serial\_proxies = \{\}
+73         self.diagnostics\_rate = rospy.get\_param(\textcolor{stringliteral}{'~diagnostics\_rate'}, 1)
+74         
+75         self.start\_controller\_lock = Lock()
+76         self.stop\_controller\_lock = Lock()
+77 
+78         manager\_namespace = rospy.get\_param(\textcolor{stringliteral}{'~namespace'})
+79         serial\_ports = rospy.get\_param(\textcolor{stringliteral}{'~serial\_ports'})
+80         
+81         \textcolor{keywordflow}{for} port\_namespace,port\_config \textcolor{keywordflow}{in} serial\_ports.items():
+82             port\_name = port\_config[\textcolor{stringliteral}{'port\_name'}]
+83             baud\_rate = port\_config[\textcolor{stringliteral}{'baud\_rate'}]
+84             readback\_echo = port\_config[\textcolor{stringliteral}{'readback\_echo'}] \textcolor{keywordflow}{if} \textcolor{stringliteral}{'readback\_echo'} \textcolor{keywordflow}{in} port\_config \textcolor{keywordflow}{else} \textcolor{keyword}{False}
+85             min\_motor\_id = port\_config[\textcolor{stringliteral}{'min\_motor\_id'}] \textcolor{keywordflow}{if} \textcolor{stringliteral}{'min\_motor\_id'} \textcolor{keywordflow}{in} port\_config \textcolor{keywordflow}{else} 0
+86             max\_motor\_id = port\_config[\textcolor{stringliteral}{'max\_motor\_id'}] \textcolor{keywordflow}{if} \textcolor{stringliteral}{'max\_motor\_id'} \textcolor{keywordflow}{in} port\_config \textcolor{keywordflow}{else} 253
+87             update\_rate = port\_config[\textcolor{stringliteral}{'update\_rate'}] \textcolor{keywordflow}{if} \textcolor{stringliteral}{'update\_rate'} \textcolor{keywordflow}{in} port\_config \textcolor{keywordflow}{else} 5
+88             error\_level\_temp = 75
+89             warn\_level\_temp = 70
+90             
+91             \textcolor{keywordflow}{if} \textcolor{stringliteral}{'diagnostics'} \textcolor{keywordflow}{in} port\_config:
+92                 \textcolor{keywordflow}{if} \textcolor{stringliteral}{'error\_level\_temp'} \textcolor{keywordflow}{in} port\_config[\textcolor{stringliteral}{'diagnostics'}]:
+93                     error\_level\_temp = port\_config[\textcolor{stringliteral}{'diagnostics'}][\textcolor{stringliteral}{'error\_level\_temp'}]
+94                 \textcolor{keywordflow}{if} \textcolor{stringliteral}{'warn\_level\_temp'} \textcolor{keywordflow}{in} port\_config[\textcolor{stringliteral}{'diagnostics'}]:
+95                     warn\_level\_temp = port\_config[\textcolor{stringliteral}{'diagnostics'}][\textcolor{stringliteral}{'warn\_level\_temp'}]
+96                     
+97             serial\_proxy = SerialProxy(port\_name,
+98                                        port\_namespace,
+99                                        baud\_rate,
+100                                        min\_motor\_id,
+101                                        max\_motor\_id,
+102                                        update\_rate,
+103                                        self.diagnostics\_rate,
+104                                        error\_level\_temp,
+105                                        warn\_level\_temp,
+106                                        readback\_echo)
+107             serial\_proxy.connect()
+108             
+109             \textcolor{comment}{# will create a set of services for each serial port under common manager namesapce}
+110             \textcolor{comment}{# e.g. /dynamixel\_manager/robot\_arm\_port/start\_controller}
+111             \textcolor{comment}{#      /dynamixel\_manager/robot\_head\_port/start\_controller}
+112             \textcolor{comment}{# where 'dynamixel\_manager' is manager's namespace}
+113             \textcolor{comment}{#       'robot\_arm\_port' and 'robot\_head\_port' are human readable names for serial ports}
+114             rospy.Service(\textcolor{stringliteral}{'%s/%s/start\_controller'} % (manager\_namespace, port\_namespace), StartController, 
+      self.start\_controller)
+115             rospy.Service(\textcolor{stringliteral}{'%s/%s/stop\_controller'} % (manager\_namespace, port\_namespace), StopController, 
+      self.stop\_controller)
+116             rospy.Service(\textcolor{stringliteral}{'%s/%s/restart\_controller'} % (manager\_namespace, port\_namespace), 
+      RestartController, self.restart\_controller)
+117             
+118             self.serial\_proxies[port\_namespace] = serial\_proxy
+119             
+120         \textcolor{comment}{# services for 'meta' controllers, e.g. joint trajectory controller}
+121         \textcolor{comment}{# these controllers don't have their own serial port, instead they rely}
+122         \textcolor{comment}{# on regular controllers for serial connection. The advantage of meta}
+123         \textcolor{comment}{# controller is that it can pack commands for multiple motors on multiple}
+124         \textcolor{comment}{# serial ports.}
+125         \textcolor{comment}{# NOTE: all serial ports that meta controller needs should be managed by}
+126         \textcolor{comment}{# the same controler manager.}
+127         rospy.Service(\textcolor{stringliteral}{'%s/meta/start\_controller'} % manager\_namespace, StartController, self.
+      start\_controller)
+128         rospy.Service(\textcolor{stringliteral}{'%s/meta/stop\_controller'} % manager\_namespace, StopController, self.stop\_controller)
+129         rospy.Service(\textcolor{stringliteral}{'%s/meta/restart\_controller'} % manager\_namespace, RestartController, self.
+      restart\_controller)
+130         
+131         self.diagnostics\_pub = rospy.Publisher(\textcolor{stringliteral}{'/diagnostics'}, DiagnosticArray, queue\_size=1)
+132         \textcolor{keywordflow}{if} self.diagnostics\_rate > 0: Thread(target=self.diagnostics\_processor).start()
+133 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da8/classcontroller__manager_1_1_controller_manager_a92e6e1983e89e13d96ead32a5d311655_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_a3d03ada2320233f373b3af8bdff63b0d}\label{classcontroller__manager_1_1_controller_manager_a3d03ada2320233f373b3af8bdff63b0d}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!check\+\_\+deps@{check\+\_\+deps}}
+\index{check\+\_\+deps@{check\+\_\+deps}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{check\+\_\+deps()}{check\_deps()}}
+{\footnotesize\ttfamily def controller\+\_\+manager.\+Controller\+Manager.\+check\+\_\+deps (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line 172 of file controller\+\_\+manager.\+py.
+
+
+
+References controller\+\_\+manager.\+Controller\+Manager.\+controllers, and controller\+\_\+manager.\+Controller\+Manager.\+waiting\+\_\+meta\+\_\+controllers.
+
+
+
+Referenced by controller\+\_\+manager.\+Controller\+Manager.\+start\+\_\+controller().
+
+
+\begin{DoxyCode}
+172     \textcolor{keyword}{def }check\_deps(self):
+173         controllers\_still\_waiting = []
+174         
+175         \textcolor{keywordflow}{for} i,(controller\_name,deps,kls) \textcolor{keywordflow}{in} enumerate(self.waiting\_meta\_controllers):
+176             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} set(deps).issubset(self.controllers.keys()):
+177                 controllers\_still\_waiting.append(self.waiting\_meta\_controllers[i])
+178                 rospy.logwarn(\textcolor{stringliteral}{'[%s] not all dependencies started, still waiting for %s...'} % (
+      controller\_name, str(list(set(deps).difference(self.controllers.keys())))))
+179             \textcolor{keywordflow}{else}:
+180                 dependencies = [self.controllers[dep\_name] \textcolor{keywordflow}{for} dep\_name \textcolor{keywordflow}{in} deps]
+181                 controller = kls(controller\_name, dependencies)
+182                 
+183                 \textcolor{keywordflow}{if} controller.initialize():
+184                     controller.start()
+185                     self.controllers[controller\_name] = controller
+186                     
+187         self.waiting\_meta\_controllers = controllers\_still\_waiting[:]
+188 
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da8/classcontroller__manager_1_1_controller_manager_a3d03ada2320233f373b3af8bdff63b0d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_aa87554fb74a01e962e39ee1b33fecc83}\label{classcontroller__manager_1_1_controller_manager_aa87554fb74a01e962e39ee1b33fecc83}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!diagnostics\+\_\+processor@{diagnostics\+\_\+processor}}
+\index{diagnostics\+\_\+processor@{diagnostics\+\_\+processor}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{diagnostics\+\_\+processor()}{diagnostics\_processor()}}
+{\footnotesize\ttfamily def controller\+\_\+manager.\+Controller\+Manager.\+diagnostics\+\_\+processor (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line 138 of file controller\+\_\+manager.\+py.
+
+
+
+References controller\+\_\+manager.\+Controller\+Manager.\+controllers, controller\+\_\+manager.\+Controller\+Manager.\+diagnostics\+\_\+pub, controller\+\_\+manager.\+Controller\+Manager.\+diagnostics\+\_\+rate, and info\+\_\+dump.\+values.
+
+
+\begin{DoxyCode}
+138     \textcolor{keyword}{def }diagnostics\_processor(self):
+139         diag\_msg = DiagnosticArray()
+140         
+141         rate = rospy.Rate(self.diagnostics\_rate)
+142         \textcolor{keywordflow}{while} \textcolor{keywordflow}{not} rospy.is\_shutdown():
+143             diag\_msg.status = []
+144             diag\_msg.header.stamp = rospy.Time.now()
+145             
+146             \textcolor{keywordflow}{for} controller \textcolor{keywordflow}{in} self.controllers.\hyperlink{namespaceinfo__dump_a519d64383e606d3ddaff0c01f233d087}{values}():
+147                 \textcolor{keywordflow}{try}:
+148                     joint\_state = controller.joint\_state
+149                     temps = joint\_state.motor\_temps
+150                     max\_temp = max(temps)
+151                     
+152                     status = DiagnosticStatus()
+153                     status.name = \textcolor{stringliteral}{'Joint Controller (%s)'} % controller.joint\_name
+154                     status.hardware\_id = \textcolor{stringliteral}{'Robotis Dynamixel %s on port %s'} % (str(joint\_state.motor\_ids), 
+      controller.port\_namespace)
+155                     status.values.append(KeyValue(\textcolor{stringliteral}{'Goal'}, str(joint\_state.goal\_pos)))
+156                     status.values.append(KeyValue(\textcolor{stringliteral}{'Position'}, str(joint\_state.current\_pos)))
+157                     status.values.append(KeyValue(\textcolor{stringliteral}{'Error'}, str(joint\_state.error)))
+158                     status.values.append(KeyValue(\textcolor{stringliteral}{'Velocity'}, str(joint\_state.velocity)))
+159                     status.values.append(KeyValue(\textcolor{stringliteral}{'Load'}, str(joint\_state.load)))
+160                     status.values.append(KeyValue(\textcolor{stringliteral}{'Moving'}, str(joint\_state.is\_moving)))
+161                     status.values.append(KeyValue(\textcolor{stringliteral}{'Temperature'}, str(max\_temp)))
+162                     status.level = DiagnosticStatus.OK
+163                     status.message = \textcolor{stringliteral}{'OK'}
+164                         
+165                     diag\_msg.status.append(status)
+166                 \textcolor{keywordflow}{except}:
+167                     \textcolor{keywordflow}{pass}
+168                     
+169             self.diagnostics\_pub.publish(diag\_msg)
+170             rate.sleep()
+171 
+\end{DoxyCode}
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_a0d85576b1fbfd7e7e8361ce3d4518920}\label{classcontroller__manager_1_1_controller_manager_a0d85576b1fbfd7e7e8361ce3d4518920}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!on\+\_\+shutdown@{on\+\_\+shutdown}}
+\index{on\+\_\+shutdown@{on\+\_\+shutdown}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{on\+\_\+shutdown()}{on\_shutdown()}}
+{\footnotesize\ttfamily def controller\+\_\+manager.\+Controller\+Manager.\+on\+\_\+shutdown (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+
+
+Definition at line 134 of file controller\+\_\+manager.\+py.
+
+
+
+References controller\+\_\+manager.\+Controller\+Manager.\+serial\+\_\+proxies, and info\+\_\+dump.\+values.
+
+
+
+Referenced by controller\+\_\+manager.\+Controller\+Manager.\+\_\+\+\_\+init\+\_\+\+\_\+().
+
+
+\begin{DoxyCode}
+134     \textcolor{keyword}{def }on\_shutdown(self):
+135         \textcolor{keywordflow}{for} serial\_proxy \textcolor{keywordflow}{in} self.serial\_proxies.\hyperlink{namespaceinfo__dump_a519d64383e606d3ddaff0c01f233d087}{values}():
+136             serial\_proxy.disconnect()
+137 
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da8/classcontroller__manager_1_1_controller_manager_a0d85576b1fbfd7e7e8361ce3d4518920_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_a732d60e383dbfd284d1f441e8f065b1b}\label{classcontroller__manager_1_1_controller_manager_a732d60e383dbfd284d1f441e8f065b1b}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!restart\+\_\+controller@{restart\+\_\+controller}}
+\index{restart\+\_\+controller@{restart\+\_\+controller}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{restart\+\_\+controller()}{restart\_controller()}}
+{\footnotesize\ttfamily def controller\+\_\+manager.\+Controller\+Manager.\+restart\+\_\+controller (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{req }\end{DoxyParamCaption})}
+
+
+
+Definition at line 259 of file controller\+\_\+manager.\+py.
+
+
+
+References controller\+\_\+manager.\+Controller\+Manager.\+start\+\_\+controller(), and controller\+\_\+manager.\+Controller\+Manager.\+stop\+\_\+controller().
+
+
+\begin{DoxyCode}
+259     \textcolor{keyword}{def }\hyperlink{namespacecontroller__spawner_ad1bd5e722a8cd83baf3a907520853c2d}{restart\_controller}(self, req):
+260         response1 = self.stop\_controller(StopController(req.controller\_name))
+261         response2 = self.start\_controller(req)
+262         \textcolor{keywordflow}{return} RestartControllerResponse(response1.success \textcolor{keywordflow}{and} response2.success, \textcolor{stringliteral}{'%s\(\backslash\)n%s'} % (
+      response1.reason, response2.reason))
+263 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da8/classcontroller__manager_1_1_controller_manager_a732d60e383dbfd284d1f441e8f065b1b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_a4d92280a301d78500055ebccdaf14820}\label{classcontroller__manager_1_1_controller_manager_a4d92280a301d78500055ebccdaf14820}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!start\+\_\+controller@{start\+\_\+controller}}
+\index{start\+\_\+controller@{start\+\_\+controller}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{start\+\_\+controller()}{start\_controller()}}
+{\footnotesize\ttfamily def controller\+\_\+manager.\+Controller\+Manager.\+start\+\_\+controller (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{req }\end{DoxyParamCaption})}
+
+
+
+Definition at line 189 of file controller\+\_\+manager.\+py.
+
+
+
+References controller\+\_\+manager.\+Controller\+Manager.\+check\+\_\+deps(), controller\+\_\+manager.\+Controller\+Manager.\+controllers, controller\+\_\+manager.\+Controller\+Manager.\+serial\+\_\+proxies, controller\+\_\+manager.\+Controller\+Manager.\+start\+\_\+controller\+\_\+lock, and controller\+\_\+manager.\+Controller\+Manager.\+waiting\+\_\+meta\+\_\+controllers.
+
+
+
+Referenced by controller\+\_\+manager.\+Controller\+Manager.\+restart\+\_\+controller().
+
+
+\begin{DoxyCode}
+189     \textcolor{keyword}{def }\hyperlink{namespacecontroller__spawner_a1bf65f27733e8e5fcb255dd8d369da6d}{start\_controller}(self, req):
+190         port\_name = req.port\_name
+191         package\_path = req.package\_path
+192         module\_name = req.module\_name
+193         class\_name = req.class\_name
+194         controller\_name = req.controller\_name
+195         
+196         self.start\_controller\_lock.acquire()
+197         
+198         \textcolor{keywordflow}{if} controller\_name \textcolor{keywordflow}{in} self.controllers:
+199             self.start\_controller\_lock.release()
+200             \textcolor{keywordflow}{return} StartControllerResponse(\textcolor{keyword}{False}, \textcolor{stringliteral}{'Controller [%s] already started. If you want to restart
+       it, call restart.'} % controller\_name)
+201             
+202         \textcolor{keywordflow}{try}:
+203             \textcolor{keywordflow}{if} module\_name \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} sys.modules:
+204                 \textcolor{comment}{# import if module not previously imported}
+205                 package\_module = \_\_import\_\_(package\_path, globals(), locals(), [module\_name], -1)
+206             \textcolor{keywordflow}{else}:
+207                 \textcolor{comment}{# reload module if previously imported}
+208                 package\_module = reload(sys.modules[package\_path])
+209             controller\_module = getattr(package\_module, module\_name)
+210         \textcolor{keywordflow}{except} ImportError, ie:
+211             self.start\_controller\_lock.release()
+212             \textcolor{keywordflow}{return} StartControllerResponse(\textcolor{keyword}{False}, \textcolor{stringliteral}{'Cannot find controller module. Unable to start
+       controller %s\(\backslash\)n%s'} % (module\_name, str(ie)))
+213         \textcolor{keywordflow}{except} SyntaxError, se:
+214             self.start\_controller\_lock.release()
+215             \textcolor{keywordflow}{return} StartControllerResponse(\textcolor{keyword}{False}, \textcolor{stringliteral}{'Syntax error in controller module. Unable to start
+       controller %s\(\backslash\)n%s'} % (module\_name, str(se)))
+216         \textcolor{keywordflow}{except} Exception, e:
+217             self.start\_controller\_lock.release()
+218             \textcolor{keywordflow}{return} StartControllerResponse(\textcolor{keyword}{False}, \textcolor{stringliteral}{'Unknown error has occured. Unable to start controller %s
+      \(\backslash\)n%s'} % (module\_name, str(e)))
+219         
+220         kls = getattr(controller\_module, class\_name)
+221         
+222         \textcolor{keywordflow}{if} port\_name == \textcolor{stringliteral}{'meta'}:
+223             self.waiting\_meta\_controllers.append((controller\_name,req.dependencies,kls))
+224             self.check\_deps()
+225             self.start\_controller\_lock.release()
+226             \textcolor{keywordflow}{return} StartControllerResponse(\textcolor{keyword}{True}, \textcolor{stringliteral}{''})
+227             
+228         \textcolor{keywordflow}{if} port\_name != \textcolor{stringliteral}{'meta'} \textcolor{keywordflow}{and} (port\_name \textcolor{keywordflow}{not} \textcolor{keywordflow}{in} self.serial\_proxies):
+229             self.start\_controller\_lock.release()
+230             \textcolor{keywordflow}{return} StartControllerResponse(\textcolor{keyword}{False}, \textcolor{stringliteral}{'Specified port [%s] not found, available ports are %s.
+       Unable to start controller %s'} % (port\_name, str(self.serial\_proxies.keys()), controller\_name))
+231             
+232         controller = kls(self.serial\_proxies[port\_name].dxl\_io, controller\_name, port\_name)
+233         
+234         \textcolor{keywordflow}{if} controller.initialize():
+235             controller.start()
+236             self.controllers[controller\_name] = controller
+237             
+238             self.check\_deps()
+239             self.start\_controller\_lock.release()
+240             
+241             \textcolor{keywordflow}{return} StartControllerResponse(\textcolor{keyword}{True}, \textcolor{stringliteral}{'Controller %s successfully started.'} % controller\_name)
+242         \textcolor{keywordflow}{else}:
+243             self.start\_controller\_lock.release()
+244             \textcolor{keywordflow}{return} StartControllerResponse(\textcolor{keyword}{False}, \textcolor{stringliteral}{'Initialization failed. Unable to start controller %s'} % 
+      controller\_name)
+245 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da8/classcontroller__manager_1_1_controller_manager_a4d92280a301d78500055ebccdaf14820_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da8/classcontroller__manager_1_1_controller_manager_a4d92280a301d78500055ebccdaf14820_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_a54e01b56f67af0b1434c53b1c0abe7ef}\label{classcontroller__manager_1_1_controller_manager_a54e01b56f67af0b1434c53b1c0abe7ef}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!stop\+\_\+controller@{stop\+\_\+controller}}
+\index{stop\+\_\+controller@{stop\+\_\+controller}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{stop\+\_\+controller()}{stop\_controller()}}
+{\footnotesize\ttfamily def controller\+\_\+manager.\+Controller\+Manager.\+stop\+\_\+controller (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{req }\end{DoxyParamCaption})}
+
+
+
+Definition at line 246 of file controller\+\_\+manager.\+py.
+
+
+
+References controller\+\_\+manager.\+Controller\+Manager.\+controllers, and controller\+\_\+manager.\+Controller\+Manager.\+stop\+\_\+controller\+\_\+lock.
+
+
+
+Referenced by controller\+\_\+manager.\+Controller\+Manager.\+restart\+\_\+controller().
+
+
+\begin{DoxyCode}
+246     \textcolor{keyword}{def }\hyperlink{namespacecontroller__spawner_abb7c023c547b422e17287d367fe0de8e}{stop\_controller}(self, req):
+247         controller\_name = req.controller\_name
+248         self.stop\_controller\_lock.acquire()
+249         
+250         \textcolor{keywordflow}{if} controller\_name \textcolor{keywordflow}{in} self.controllers:
+251             self.controllers[controller\_name].stop()
+252             del self.controllers[controller\_name]
+253             self.stop\_controller\_lock.release()
+254             \textcolor{keywordflow}{return} StopControllerResponse(\textcolor{keyword}{True}, \textcolor{stringliteral}{'controller %s successfully stopped.'} % controller\_name)
+255         \textcolor{keywordflow}{else}:
+256             self.self.stop\_controller\_lock.release()
+257             \textcolor{keywordflow}{return} StopControllerResponse(\textcolor{keyword}{False}, \textcolor{stringliteral}{'controller %s was not running.'} % controller\_name)
+258 
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/da8/classcontroller__manager_1_1_controller_manager_a54e01b56f67af0b1434c53b1c0abe7ef_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_afb31b7117fd61c9c7431b47cfcddb962}\label{classcontroller__manager_1_1_controller_manager_afb31b7117fd61c9c7431b47cfcddb962}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!controllers@{controllers}}
+\index{controllers@{controllers}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{controllers}{controllers}}
+{\footnotesize\ttfamily controller\+\_\+manager.\+Controller\+Manager.\+controllers}
+
+
+
+Definition at line 71 of file controller\+\_\+manager.\+py.
+
+
+
+Referenced by controller\+\_\+manager.\+Controller\+Manager.\+check\+\_\+deps(), controller\+\_\+manager.\+Controller\+Manager.\+diagnostics\+\_\+processor(), controller\+\_\+manager.\+Controller\+Manager.\+start\+\_\+controller(), and controller\+\_\+manager.\+Controller\+Manager.\+stop\+\_\+controller().
+
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_a262f444500bd45723b7945fd24e07d18}\label{classcontroller__manager_1_1_controller_manager_a262f444500bd45723b7945fd24e07d18}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!diagnostics\+\_\+pub@{diagnostics\+\_\+pub}}
+\index{diagnostics\+\_\+pub@{diagnostics\+\_\+pub}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{diagnostics\+\_\+pub}{diagnostics\_pub}}
+{\footnotesize\ttfamily controller\+\_\+manager.\+Controller\+Manager.\+diagnostics\+\_\+pub}
+
+
+
+Definition at line 131 of file controller\+\_\+manager.\+py.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+serial\+\_\+proxy.\+Serial\+Proxy.\+\_\+\+\_\+publish\+\_\+diagnostic\+\_\+information(), and controller\+\_\+manager.\+Controller\+Manager.\+diagnostics\+\_\+processor().
+
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_a8bc4abdce61030b2c80b29987d25a745}\label{classcontroller__manager_1_1_controller_manager_a8bc4abdce61030b2c80b29987d25a745}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!diagnostics\+\_\+rate@{diagnostics\+\_\+rate}}
+\index{diagnostics\+\_\+rate@{diagnostics\+\_\+rate}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{diagnostics\+\_\+rate}{diagnostics\_rate}}
+{\footnotesize\ttfamily controller\+\_\+manager.\+Controller\+Manager.\+diagnostics\+\_\+rate}
+
+
+
+Definition at line 73 of file controller\+\_\+manager.\+py.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+serial\+\_\+proxy.\+Serial\+Proxy.\+\_\+\+\_\+publish\+\_\+diagnostic\+\_\+information(), and controller\+\_\+manager.\+Controller\+Manager.\+diagnostics\+\_\+processor().
+
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_adbee940432e0e6fe3f97b2eab6be6285}\label{classcontroller__manager_1_1_controller_manager_adbee940432e0e6fe3f97b2eab6be6285}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!serial\+\_\+proxies@{serial\+\_\+proxies}}
+\index{serial\+\_\+proxies@{serial\+\_\+proxies}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{serial\+\_\+proxies}{serial\_proxies}}
+{\footnotesize\ttfamily controller\+\_\+manager.\+Controller\+Manager.\+serial\+\_\+proxies}
+
+
+
+Definition at line 72 of file controller\+\_\+manager.\+py.
+
+
+
+Referenced by controller\+\_\+manager.\+Controller\+Manager.\+on\+\_\+shutdown(), and controller\+\_\+manager.\+Controller\+Manager.\+start\+\_\+controller().
+
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_a3c9bc2258eb592e26334d69ff9d205ec}\label{classcontroller__manager_1_1_controller_manager_a3c9bc2258eb592e26334d69ff9d205ec}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!start\+\_\+controller\+\_\+lock@{start\+\_\+controller\+\_\+lock}}
+\index{start\+\_\+controller\+\_\+lock@{start\+\_\+controller\+\_\+lock}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{start\+\_\+controller\+\_\+lock}{start\_controller\_lock}}
+{\footnotesize\ttfamily controller\+\_\+manager.\+Controller\+Manager.\+start\+\_\+controller\+\_\+lock}
+
+
+
+Definition at line 75 of file controller\+\_\+manager.\+py.
+
+
+
+Referenced by controller\+\_\+manager.\+Controller\+Manager.\+start\+\_\+controller().
+
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_a974bae4de69c9ccb568def314be7d6b6}\label{classcontroller__manager_1_1_controller_manager_a974bae4de69c9ccb568def314be7d6b6}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!stop\+\_\+controller\+\_\+lock@{stop\+\_\+controller\+\_\+lock}}
+\index{stop\+\_\+controller\+\_\+lock@{stop\+\_\+controller\+\_\+lock}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{stop\+\_\+controller\+\_\+lock}{stop\_controller\_lock}}
+{\footnotesize\ttfamily controller\+\_\+manager.\+Controller\+Manager.\+stop\+\_\+controller\+\_\+lock}
+
+
+
+Definition at line 76 of file controller\+\_\+manager.\+py.
+
+
+
+Referenced by controller\+\_\+manager.\+Controller\+Manager.\+stop\+\_\+controller().
+
+\mbox{\Hypertarget{classcontroller__manager_1_1_controller_manager_a10faf09a5de3efe436c7862fee2d9709}\label{classcontroller__manager_1_1_controller_manager_a10faf09a5de3efe436c7862fee2d9709}} 
+\index{controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}!waiting\+\_\+meta\+\_\+controllers@{waiting\+\_\+meta\+\_\+controllers}}
+\index{waiting\+\_\+meta\+\_\+controllers@{waiting\+\_\+meta\+\_\+controllers}!controller\+\_\+manager\+::\+Controller\+Manager@{controller\+\_\+manager\+::\+Controller\+Manager}}
+\subsubsection{\texorpdfstring{waiting\+\_\+meta\+\_\+controllers}{waiting\_meta\_controllers}}
+{\footnotesize\ttfamily controller\+\_\+manager.\+Controller\+Manager.\+waiting\+\_\+meta\+\_\+controllers}
+
+
+
+Definition at line 70 of file controller\+\_\+manager.\+py.
+
+
+
+Referenced by controller\+\_\+manager.\+Controller\+Manager.\+check\+\_\+deps(), and controller\+\_\+manager.\+Controller\+Manager.\+start\+\_\+controller().
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{controller__manager_8py}{controller\+\_\+manager.\+py}\end{DoxyCompactItemize}

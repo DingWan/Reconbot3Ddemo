@@ -46,16 +46,31 @@
 
 /** \class ReConBot
 * \brief Class implemented for driving the ReConBot planning group.
-* \details This class is created for hearing in the topic /wished_path and the topic
-* /collision_object. With this information an avoidance proccedure is performed for
+* \details This class is created for controlling the Dynamixel Motors and also provides
+* tools for taking control of the ReConBot using planning groups.
 * Moveit.
 */
+
 typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> TrajClient;
+
+/**
+ * Number of motors to take in account in the planning group. For instance, nMotors = 3 when planning
+ * with right arm or the left arm of the ReConBot and nMotors = 6 when planning with bouth arms.
+**/
 static int nMotors;
+
+/**
+ * A vector with the numbers which identify the active motors. For example, for the
+ * right arm should be motorActive = {1,2,3} because the motors with the ids 1 ,2 3 are
+ * included in the kinematic chain of thid arm.
+**/
 static int * motorsActive;
 class ReConBot
 {
 protected:
+  /**
+   * Definition o fthe trajClient object used for publish the desired trajectories in joint space.
+  **/
   TrajClient* traj_client_;
   control_msgs::FollowJointTrajectoryGoal goal;
   ros::NodeHandle nhPub;
@@ -116,7 +131,7 @@ void ReConBot::trajClient(){
 }
 
 bool ReConBot::run(){
-    ros::AsyncSpinner spinner(2);/**<Two spinner are instantiated for managing 2 threats*/
+    ros::AsyncSpinner spinner(2);/**Two spinner are instantiated for managing 2 threats*/
     spinner.start();
     ros::waitForShutdown();
 }
@@ -228,4 +243,8 @@ control_msgs::FollowJointTrajectoryGoal ReConBotPub::buildTrajectory(){
   ROS_INFO("Trajectory vector was successfully built....");
   return goal;
 }
+/**
+ * \todo Continue adding comments to the Class
+ */
+
 #endif

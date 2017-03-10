@@ -1,0 +1,5 @@
+<map id="dynamixel_driver.dynamixel_io.DynamixelIO.get_model_number" name="dynamixel_driver.dynamixel_io.DynamixelIO.get_model_number">
+<area shape="rect" id="node2" href="$dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o.html#aac11f861a1d7b67bb5976a43ea69b092" title="dynamixel_driver.dynamixel\l_io.DynamixelIO.get_current" alt="" coords="303,5,491,46"/>
+<area shape="rect" id="node3" href="$dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o.html#a493890484a67a377cb462c5ad58217e5" title="dynamixel_driver.dynamixel\l_io.DynamixelIO.set_acceleration" alt="" coords="288,70,507,111"/>
+<area shape="rect" id="node4" href="$dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o.html#a5d9728d7f0159ccd73fa6de0b1bfb402" title="dynamixel_driver.dynamixel\l_io.DynamixelIO.set_goal_torque" alt="" coords="290,135,505,177"/>
+</map>

@@ -1,0 +1,376 @@
+\hypertarget{namespaceinfo__dump}{}\section{info\+\_\+dump Namespace Reference}
+\label{namespaceinfo__dump}\index{info\+\_\+dump@{info\+\_\+dump}}
+\subsection*{Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{namespaceinfo__dump_ac13e616852fd9e21cf91c62bd7c6ba7c}{print\+\_\+data} (\hyperlink{namespaceinfo__dump_a519d64383e606d3ddaff0c01f233d087}{values})
+\end{DoxyCompactItemize}
+\subsection*{Variables}
+\begin{DoxyCompactItemize}
+\item 
+string \hyperlink{namespaceinfo__dump_ad2b2bd739969906b2cd85371c05cce99}{\+\_\+\+\_\+author\+\_\+\+\_\+} = \textquotesingle{}Cody Jorgensen, Antons Rebguns\textquotesingle{}
+\item 
+string \hyperlink{namespaceinfo__dump_a8af4b6f139eb532c91d84e6354cf060a}{\+\_\+\+\_\+copyright\+\_\+\+\_\+} = \textquotesingle{}Copyright (c) 2010-\/2011 Cody Jorgensen, Antons Rebguns\textquotesingle{}
+\item 
+string \hyperlink{namespaceinfo__dump_a9a4d843d23e4bf8269008117fd5ef106}{\+\_\+\+\_\+license\+\_\+\+\_\+} = \textquotesingle{}B\+SD\textquotesingle{}
+\item 
+string \hyperlink{namespaceinfo__dump_adf9a87ae7d1f8fdb12c9856eeefcf52c}{\+\_\+\+\_\+maintainer\+\_\+\+\_\+} = \textquotesingle{}Antons Rebguns\textquotesingle{}
+\item 
+string \hyperlink{namespaceinfo__dump_aee6a55e46e487213e7bdd1d81c30dc1e}{\+\_\+\+\_\+email\+\_\+\+\_\+} = \textquotesingle{}anton@email.\+arizona.\+edu\textquotesingle{}
+\item 
+string \hyperlink{namespaceinfo__dump_a90a3cf17b0c24ded2ef387fa67ef7f1e}{usage\+\_\+msg} = \textquotesingle{}Usage\+: \%prog \mbox{[}\hyperlink{namespaceinfo__dump_a7d6b1021261929bba75323767de00e7c}{options}\mbox{]} I\+Ds\textquotesingle{}
+\item 
+string \hyperlink{namespaceinfo__dump_afa18e188fcfcb13b0f16523f97422078}{desc\+\_\+msg} = \textquotesingle{}Prints the current status of specified Dynamixel servo motors.\textquotesingle{}
+\item 
+string \hyperlink{namespaceinfo__dump_a20ba822326945097385577b53888d244}{epi\+\_\+msg} = \textquotesingle{}Example\+: \%s -\/-\/\hyperlink{namespaceinfo__dump_a6a0b57c32b7abb158439bb4e8b370c45}{port}=/dev/tty\+U\+S\+B1 -\/-\/baud=57600 1 2 3 4 5\textquotesingle{} \% sys.\+argv\mbox{[}0\mbox{]}
+\item 
+\hyperlink{namespaceinfo__dump_a4b2573b90a51048b077f2b1909886483}{parser} = Option\+Parser(usage=\hyperlink{namespaceinfo__dump_a90a3cf17b0c24ded2ef387fa67ef7f1e}{usage\+\_\+msg}, description=\hyperlink{namespaceinfo__dump_afa18e188fcfcb13b0f16523f97422078}{desc\+\_\+msg}, epilog=\hyperlink{namespaceinfo__dump_a20ba822326945097385577b53888d244}{epi\+\_\+msg})
+\item 
+\hyperlink{namespaceinfo__dump_a93b0fee6570e26a997d0deaf338fbec5}{metavar}
+\item 
+\hyperlink{namespaceinfo__dump_a82df11e8a469a00e4d6cd392074a43bf}{default}
+\item 
+\hyperlink{namespaceinfo__dump_aa86ebeaa3c5aac015d0d9c03879df060}{help}
+\item 
+\hyperlink{namespaceinfo__dump_ac238d5ac975ddd9eb9ea696b9dabe4b2}{type}
+\item 
+\hyperlink{namespaceinfo__dump_a7d6b1021261929bba75323767de00e7c}{options}
+\item 
+\hyperlink{namespaceinfo__dump_a027c02ad18aa7a853a517433230af8a1}{args}
+\item 
+\hyperlink{namespaceinfo__dump_a6a0b57c32b7abb158439bb4e8b370c45}{port} = options.\+port
+\item 
+\hyperlink{namespaceinfo__dump_aa7d6b35ec273c6b59d04e755217a0134}{baudrate} = options.\+baud
+\item 
+\hyperlink{namespaceinfo__dump_ace0a37572cece800e11d67ce29077e98}{motor\+\_\+ids} = \hyperlink{namespaceinfo__dump_a027c02ad18aa7a853a517433230af8a1}{args}\mbox{[}1\+:\mbox{]}
+\item 
+\hyperlink{namespaceinfo__dump_abfbf78081220a30aef2aa3d8a46d4d0c}{dxl\+\_\+io} = dynamixel\+\_\+io.\+Dynamixel\+IO(\hyperlink{namespaceinfo__dump_a6a0b57c32b7abb158439bb4e8b370c45}{port}, \hyperlink{namespaceinfo__dump_aa7d6b35ec273c6b59d04e755217a0134}{baudrate})
+\item 
+int \hyperlink{namespaceinfo__dump_a41f2b166246844d080d65665e4335e98}{responses} = 0
+\item 
+\hyperlink{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}{motor\+\_\+id} = int(motor\+\_\+id)
+\item 
+\hyperlink{namespaceinfo__dump_a4121bc21863b0d4380aac92a52617fd0}{p} = dxl\+\_\+io.\+ping(\hyperlink{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}{motor\+\_\+id})
+\item 
+\hyperlink{namespaceinfo__dump_a519d64383e606d3ddaff0c01f233d087}{values} = dxl\+\_\+io.\+get\+\_\+feedback(\hyperlink{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}{motor\+\_\+id})
+\item 
+\hyperlink{namespaceinfo__dump_ad900b8834233c7b841ac28883ba3e854}{angles} = dxl\+\_\+io.\+get\+\_\+angle\+\_\+limits(\hyperlink{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}{motor\+\_\+id})
+\item 
+\hyperlink{namespaceinfo__dump_a7b8b18c2843714130e2cf0f9859565d7}{model} = dxl\+\_\+io.\+get\+\_\+model\+\_\+number(\hyperlink{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}{motor\+\_\+id})
+\item 
+\hyperlink{namespaceinfo__dump_a24cc6416ad6ea3ee4cf38bf57e886c70}{firmware} = dxl\+\_\+io.\+get\+\_\+firmware\+\_\+version(\hyperlink{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}{motor\+\_\+id})
+\end{DoxyCompactItemize}
+
+
+\subsection{Function Documentation}
+\mbox{\Hypertarget{namespaceinfo__dump_ac13e616852fd9e21cf91c62bd7c6ba7c}\label{namespaceinfo__dump_ac13e616852fd9e21cf91c62bd7c6ba7c}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!print\+\_\+data@{print\+\_\+data}}
+\index{print\+\_\+data@{print\+\_\+data}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{print\+\_\+data()}{print\_data()}}
+{\footnotesize\ttfamily def info\+\_\+dump.\+print\+\_\+data (\begin{DoxyParamCaption}\item[{}]{values }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Takes a dictionary with all the motor values and does a formatted print.
+\end{DoxyVerb}
+ 
+
+Definition at line 54 of file info\+\_\+dump.\+py.
+
+
+\begin{DoxyCode}
+54 \textcolor{keyword}{def }\hyperlink{namespaceinfo__dump_ac13e616852fd9e21cf91c62bd7c6ba7c}{print\_data}(values):
+55     \textcolor{stringliteral}{''' Takes a dictionary with all the motor values and does a formatted print.}
+56 \textcolor{stringliteral}{    '''}
+57     \textcolor{keywordflow}{if} values[\textcolor{stringliteral}{'freespin'}]:
+58         \textcolor{keywordflow}{print} \textcolor{stringliteral}{'''\(\backslash\)}
+59 \textcolor{stringliteral}{    Motor %(id)d is connected:}
+60 \textcolor{stringliteral}{        Freespin: True}
+61 \textcolor{stringliteral}{        Model ------------------- %(model)s}
+62 \textcolor{stringliteral}{        Current Speed ----------- %(speed)d}
+63 \textcolor{stringliteral}{        Current Temperature ----- %(temperature)d%(degree\_symbol)sC}
+64 \textcolor{stringliteral}{        Current Voltage --------- %(voltage).1fv}
+65 \textcolor{stringliteral}{        Current Load ------------ %(load)d}
+66 \textcolor{stringliteral}{        Moving ------------------ %(moving)s}
+67 \textcolor{stringliteral}{'''} %values
+68     \textcolor{keywordflow}{else}:
+69         \textcolor{keywordflow}{print} \textcolor{stringliteral}{'''\(\backslash\)}
+70 \textcolor{stringliteral}{    Motor %(id)d is connected:}
+71 \textcolor{stringliteral}{        Freespin: False}
+72 \textcolor{stringliteral}{        Model ------------------- %(model)s}
+73 \textcolor{stringliteral}{        Min Angle --------------- %(min)d}
+74 \textcolor{stringliteral}{        Max Angle --------------- %(max)d}
+75 \textcolor{stringliteral}{        Current Position -------- %(position)d}
+76 \textcolor{stringliteral}{        Current Speed ----------- %(speed)d}
+77 \textcolor{stringliteral}{        Current Temperature ----- %(temperature)d%(degree\_symbol)sC}
+78 \textcolor{stringliteral}{        Current Voltage --------- %(voltage).1fv}
+79 \textcolor{stringliteral}{        Current Load ------------ %(load)d}
+80 \textcolor{stringliteral}{        Moving ------------------ %(moving)s}
+81 \textcolor{stringliteral}{'''} %values
+82 
+\end{DoxyCode}
+
+
+\subsection{Variable Documentation}
+\mbox{\Hypertarget{namespaceinfo__dump_ad2b2bd739969906b2cd85371c05cce99}\label{namespaceinfo__dump_ad2b2bd739969906b2cd85371c05cce99}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!\+\_\+\+\_\+author\+\_\+\+\_\+@{\+\_\+\+\_\+author\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+author\+\_\+\+\_\+@{\+\_\+\+\_\+author\+\_\+\+\_\+}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+author\+\_\+\+\_\+}{\_\_author\_\_}}
+{\footnotesize\ttfamily string info\+\_\+dump.\+\_\+\+\_\+author\+\_\+\+\_\+ = \textquotesingle{}Cody Jorgensen, Antons Rebguns\textquotesingle{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line 37 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a8af4b6f139eb532c91d84e6354cf060a}\label{namespaceinfo__dump_a8af4b6f139eb532c91d84e6354cf060a}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!\+\_\+\+\_\+copyright\+\_\+\+\_\+@{\+\_\+\+\_\+copyright\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+copyright\+\_\+\+\_\+@{\+\_\+\+\_\+copyright\+\_\+\+\_\+}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+copyright\+\_\+\+\_\+}{\_\_copyright\_\_}}
+{\footnotesize\ttfamily string info\+\_\+dump.\+\_\+\+\_\+copyright\+\_\+\+\_\+ = \textquotesingle{}Copyright (c) 2010-\/2011 Cody Jorgensen, Antons Rebguns\textquotesingle{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line 38 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_aee6a55e46e487213e7bdd1d81c30dc1e}\label{namespaceinfo__dump_aee6a55e46e487213e7bdd1d81c30dc1e}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!\+\_\+\+\_\+email\+\_\+\+\_\+@{\+\_\+\+\_\+email\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+email\+\_\+\+\_\+@{\+\_\+\+\_\+email\+\_\+\+\_\+}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+email\+\_\+\+\_\+}{\_\_email\_\_}}
+{\footnotesize\ttfamily string info\+\_\+dump.\+\_\+\+\_\+email\+\_\+\+\_\+ = \textquotesingle{}anton@email.\+arizona.\+edu\textquotesingle{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line 42 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a9a4d843d23e4bf8269008117fd5ef106}\label{namespaceinfo__dump_a9a4d843d23e4bf8269008117fd5ef106}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!\+\_\+\+\_\+license\+\_\+\+\_\+@{\+\_\+\+\_\+license\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+license\+\_\+\+\_\+@{\+\_\+\+\_\+license\+\_\+\+\_\+}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+license\+\_\+\+\_\+}{\_\_license\_\_}}
+{\footnotesize\ttfamily string info\+\_\+dump.\+\_\+\+\_\+license\+\_\+\+\_\+ = \textquotesingle{}B\+SD\textquotesingle{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line 40 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_adf9a87ae7d1f8fdb12c9856eeefcf52c}\label{namespaceinfo__dump_adf9a87ae7d1f8fdb12c9856eeefcf52c}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!\+\_\+\+\_\+maintainer\+\_\+\+\_\+@{\+\_\+\+\_\+maintainer\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+maintainer\+\_\+\+\_\+@{\+\_\+\+\_\+maintainer\+\_\+\+\_\+}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+maintainer\+\_\+\+\_\+}{\_\_maintainer\_\_}}
+{\footnotesize\ttfamily string info\+\_\+dump.\+\_\+\+\_\+maintainer\+\_\+\+\_\+ = \textquotesingle{}Antons Rebguns\textquotesingle{}\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line 41 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_ad900b8834233c7b841ac28883ba3e854}\label{namespaceinfo__dump_ad900b8834233c7b841ac28883ba3e854}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!angles@{angles}}
+\index{angles@{angles}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{angles}{angles}}
+{\footnotesize\ttfamily info\+\_\+dump.\+angles = dxl\+\_\+io.\+get\+\_\+angle\+\_\+limits(\hyperlink{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}{motor\+\_\+id})}
+
+
+
+Definition at line 118 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a027c02ad18aa7a853a517433230af8a1}\label{namespaceinfo__dump_a027c02ad18aa7a853a517433230af8a1}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!args@{args}}
+\index{args@{args}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{args}{args}}
+{\footnotesize\ttfamily info\+\_\+dump.\+args}
+
+
+
+Definition at line 94 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_aa7d6b35ec273c6b59d04e755217a0134}\label{namespaceinfo__dump_aa7d6b35ec273c6b59d04e755217a0134}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!baudrate@{baudrate}}
+\index{baudrate@{baudrate}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{baudrate}{baudrate}}
+{\footnotesize\ttfamily info\+\_\+dump.\+baudrate = options.\+baud}
+
+
+
+Definition at line 101 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a82df11e8a469a00e4d6cd392074a43bf}\label{namespaceinfo__dump_a82df11e8a469a00e4d6cd392074a43bf}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!default@{default}}
+\index{default@{default}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{default}{default}}
+{\footnotesize\ttfamily info\+\_\+dump.\+default}
+
+
+
+Definition at line 89 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_afa18e188fcfcb13b0f16523f97422078}\label{namespaceinfo__dump_afa18e188fcfcb13b0f16523f97422078}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!desc\+\_\+msg@{desc\+\_\+msg}}
+\index{desc\+\_\+msg@{desc\+\_\+msg}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{desc\+\_\+msg}{desc\_msg}}
+{\footnotesize\ttfamily string info\+\_\+dump.\+desc\+\_\+msg = \textquotesingle{}Prints the current status of specified Dynamixel servo motors.\textquotesingle{}}
+
+
+
+Definition at line 85 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_abfbf78081220a30aef2aa3d8a46d4d0c}\label{namespaceinfo__dump_abfbf78081220a30aef2aa3d8a46d4d0c}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!dxl\+\_\+io@{dxl\+\_\+io}}
+\index{dxl\+\_\+io@{dxl\+\_\+io}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{dxl\+\_\+io}{dxl\_io}}
+{\footnotesize\ttfamily info\+\_\+dump.\+dxl\+\_\+io = dynamixel\+\_\+io.\+Dynamixel\+IO(\hyperlink{namespaceinfo__dump_a6a0b57c32b7abb158439bb4e8b370c45}{port}, \hyperlink{namespaceinfo__dump_aa7d6b35ec273c6b59d04e755217a0134}{baudrate})}
+
+
+
+Definition at line 105 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a20ba822326945097385577b53888d244}\label{namespaceinfo__dump_a20ba822326945097385577b53888d244}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!epi\+\_\+msg@{epi\+\_\+msg}}
+\index{epi\+\_\+msg@{epi\+\_\+msg}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{epi\+\_\+msg}{epi\_msg}}
+{\footnotesize\ttfamily string info\+\_\+dump.\+epi\+\_\+msg = \textquotesingle{}Example\+: \%s -\/-\/\hyperlink{namespaceinfo__dump_a6a0b57c32b7abb158439bb4e8b370c45}{port}=/dev/tty\+U\+S\+B1 -\/-\/baud=57600 1 2 3 4 5\textquotesingle{} \% sys.\+argv\mbox{[}0\mbox{]}}
+
+
+
+Definition at line 86 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a24cc6416ad6ea3ee4cf38bf57e886c70}\label{namespaceinfo__dump_a24cc6416ad6ea3ee4cf38bf57e886c70}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!firmware@{firmware}}
+\index{firmware@{firmware}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{firmware}{firmware}}
+{\footnotesize\ttfamily info\+\_\+dump.\+firmware = dxl\+\_\+io.\+get\+\_\+firmware\+\_\+version(\hyperlink{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}{motor\+\_\+id})}
+
+
+
+Definition at line 120 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_aa86ebeaa3c5aac015d0d9c03879df060}\label{namespaceinfo__dump_aa86ebeaa3c5aac015d0d9c03879df060}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!help@{help}}
+\index{help@{help}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{help}{help}}
+{\footnotesize\ttfamily info\+\_\+dump.\+help}
+
+
+
+Definition at line 90 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a93b0fee6570e26a997d0deaf338fbec5}\label{namespaceinfo__dump_a93b0fee6570e26a997d0deaf338fbec5}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!metavar@{metavar}}
+\index{metavar@{metavar}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{metavar}{metavar}}
+{\footnotesize\ttfamily info\+\_\+dump.\+metavar}
+
+
+
+Definition at line 89 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a7b8b18c2843714130e2cf0f9859565d7}\label{namespaceinfo__dump_a7b8b18c2843714130e2cf0f9859565d7}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!model@{model}}
+\index{model@{model}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{model}{model}}
+{\footnotesize\ttfamily info\+\_\+dump.\+model = dxl\+\_\+io.\+get\+\_\+model\+\_\+number(\hyperlink{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}{motor\+\_\+id})}
+
+
+
+Definition at line 119 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}\label{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!motor\+\_\+id@{motor\+\_\+id}}
+\index{motor\+\_\+id@{motor\+\_\+id}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{motor\+\_\+id}{motor\_id}}
+{\footnotesize\ttfamily info\+\_\+dump.\+motor\+\_\+id = int(motor\+\_\+id)}
+
+
+
+Definition at line 112 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_ace0a37572cece800e11d67ce29077e98}\label{namespaceinfo__dump_ace0a37572cece800e11d67ce29077e98}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!motor\+\_\+ids@{motor\+\_\+ids}}
+\index{motor\+\_\+ids@{motor\+\_\+ids}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{motor\+\_\+ids}{motor\_ids}}
+{\footnotesize\ttfamily info\+\_\+dump.\+motor\+\_\+ids = \hyperlink{namespaceinfo__dump_a027c02ad18aa7a853a517433230af8a1}{args}\mbox{[}1\+:\mbox{]}}
+
+
+
+Definition at line 102 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a7d6b1021261929bba75323767de00e7c}\label{namespaceinfo__dump_a7d6b1021261929bba75323767de00e7c}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!options@{options}}
+\index{options@{options}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{options}{options}}
+{\footnotesize\ttfamily info\+\_\+dump.\+options}
+
+
+
+Definition at line 94 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a4121bc21863b0d4380aac92a52617fd0}\label{namespaceinfo__dump_a4121bc21863b0d4380aac92a52617fd0}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!p@{p}}
+\index{p@{p}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{p}{p}}
+{\footnotesize\ttfamily info\+\_\+dump.\+p = dxl\+\_\+io.\+ping(\hyperlink{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}{motor\+\_\+id})}
+
+
+
+Definition at line 114 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a4b2573b90a51048b077f2b1909886483}\label{namespaceinfo__dump_a4b2573b90a51048b077f2b1909886483}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!parser@{parser}}
+\index{parser@{parser}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{parser}{parser}}
+{\footnotesize\ttfamily info\+\_\+dump.\+parser = Option\+Parser(usage=\hyperlink{namespaceinfo__dump_a90a3cf17b0c24ded2ef387fa67ef7f1e}{usage\+\_\+msg}, description=\hyperlink{namespaceinfo__dump_afa18e188fcfcb13b0f16523f97422078}{desc\+\_\+msg}, epilog=\hyperlink{namespaceinfo__dump_a20ba822326945097385577b53888d244}{epi\+\_\+msg})}
+
+
+
+Definition at line 88 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a6a0b57c32b7abb158439bb4e8b370c45}\label{namespaceinfo__dump_a6a0b57c32b7abb158439bb4e8b370c45}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!port@{port}}
+\index{port@{port}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{port}{port}}
+{\footnotesize\ttfamily info\+\_\+dump.\+port = options.\+port}
+
+
+
+Definition at line 100 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a41f2b166246844d080d65665e4335e98}\label{namespaceinfo__dump_a41f2b166246844d080d65665e4335e98}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!responses@{responses}}
+\index{responses@{responses}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{responses}{responses}}
+{\footnotesize\ttfamily int info\+\_\+dump.\+responses = 0}
+
+
+
+Definition at line 109 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_ac238d5ac975ddd9eb9ea696b9dabe4b2}\label{namespaceinfo__dump_ac238d5ac975ddd9eb9ea696b9dabe4b2}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!type@{type}}
+\index{type@{type}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{type}{type}}
+{\footnotesize\ttfamily info\+\_\+dump.\+type}
+
+
+
+Definition at line 91 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a90a3cf17b0c24ded2ef387fa67ef7f1e}\label{namespaceinfo__dump_a90a3cf17b0c24ded2ef387fa67ef7f1e}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!usage\+\_\+msg@{usage\+\_\+msg}}
+\index{usage\+\_\+msg@{usage\+\_\+msg}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{usage\+\_\+msg}{usage\_msg}}
+{\footnotesize\ttfamily string info\+\_\+dump.\+usage\+\_\+msg = \textquotesingle{}Usage\+: \%prog \mbox{[}\hyperlink{namespaceinfo__dump_a7d6b1021261929bba75323767de00e7c}{options}\mbox{]} I\+Ds\textquotesingle{}}
+
+
+
+Definition at line 84 of file info\+\_\+dump.\+py.
+
+\mbox{\Hypertarget{namespaceinfo__dump_a519d64383e606d3ddaff0c01f233d087}\label{namespaceinfo__dump_a519d64383e606d3ddaff0c01f233d087}} 
+\index{info\+\_\+dump@{info\+\_\+dump}!values@{values}}
+\index{values@{values}!info\+\_\+dump@{info\+\_\+dump}}
+\subsubsection{\texorpdfstring{values}{values}}
+{\footnotesize\ttfamily info\+\_\+dump.\+values = dxl\+\_\+io.\+get\+\_\+feedback(\hyperlink{namespaceinfo__dump_ab8304b7617ad78e51a49ee40b5f2f3fc}{motor\+\_\+id})}
+
+
+
+Definition at line 117 of file info\+\_\+dump.\+py.
+
+
+
+Referenced by controller\+\_\+manager.\+Controller\+Manager.\+diagnostics\+\_\+processor(), and controller\+\_\+manager.\+Controller\+Manager.\+on\+\_\+shutdown().
+

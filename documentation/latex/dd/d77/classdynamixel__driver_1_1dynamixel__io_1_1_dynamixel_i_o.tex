@@ -1,0 +1,3044 @@
+\hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o}{}\section{dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+IO Class Reference}
+\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o}\index{dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+IO@{dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+IO}}
+
+
+Inheritance diagram for dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+IO\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{d1/df0/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o__inherit__graph}
+\end{center}
+\end{figure}
+
+
+Collaboration diagram for dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+IO\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=216pt]{d6/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab9c6aee22734b7c0a09a4f1e5a03609b}{\+\_\+\+\_\+init\+\_\+\+\_\+} (self, port, baudrate, \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a5cc6e8617f26fe6af8add33bee3544fe}{readback\+\_\+echo}=False)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2a13aea3e96f34e02926c4395924359e}{\+\_\+\+\_\+del\+\_\+\+\_\+} (self)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a4cdcd3496e76197fc4d5f23ccd7daf26}{close} (self)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6f8abf6563aac5aed93565234b971314}{read} (self, servo\+\_\+id, address, size)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a32049f3a322d37054032b9d44be39192}{write} (self, servo\+\_\+id, address, data)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa61b3e4c17b04db3e5fa94f4f81a961d}{sync\+\_\+write} (self, address, data)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6a992742790d35953761eeb20275563a}{ping} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ac617d4150cfc51f64cde863cc5902a8f}{test\+\_\+bit} (self, number, offset)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_afccabc02484af88d2343715225d92194}{set\+\_\+id} (self, old\+\_\+id, new\+\_\+id)
+\begin{DoxyCompactList}\small\item\em These function modify E\+E\+P\+R\+OM data which persists after power cycle \#. \end{DoxyCompactList}\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aec6d930e6e2e4e0063d555ff79f6838e}{set\+\_\+baud\+\_\+rate} (self, servo\+\_\+id, baud\+\_\+rate)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abb71028869bffa449bc0c6f94f44de26}{set\+\_\+return\+\_\+delay\+\_\+time} (self, servo\+\_\+id, delay)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ad1845360a250bafe8e0e055245c5f1da}{set\+\_\+angle\+\_\+limit\+\_\+cw} (self, servo\+\_\+id, angle\+\_\+cw)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2cffd8bdd7929986fca71952250a6dc7}{set\+\_\+angle\+\_\+limit\+\_\+ccw} (self, servo\+\_\+id, angle\+\_\+ccw)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab40bc8abbb014fe83050af58b515e300}{set\+\_\+angle\+\_\+limits} (self, servo\+\_\+id, min\+\_\+angle, max\+\_\+angle)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a86293d719e12fb9e8a1e06c0ec8a5bd8}{set\+\_\+drive\+\_\+mode} (self, servo\+\_\+id, is\+\_\+slave=False, is\+\_\+reverse=False)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a59bee3249a66ca51b57d22c85d640e9b}{set\+\_\+voltage\+\_\+limit\+\_\+min} (self, servo\+\_\+id, min\+\_\+voltage)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa3057aa0c2b3efcbac7c8e5fb606b267}{set\+\_\+voltage\+\_\+limit\+\_\+max} (self, servo\+\_\+id, max\+\_\+voltage)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a993cc60ca00c86d68fbc1cf342e51181}{set\+\_\+voltage\+\_\+limits} (self, servo\+\_\+id, min\+\_\+voltage, max\+\_\+voltage)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aab00b3a67df7330d6ab230b4c477550c}{set\+\_\+torque\+\_\+enabled} (self, servo\+\_\+id, enabled)
+\begin{DoxyCompactList}\small\item\em These functions can send a single command to a single servo \#. \end{DoxyCompactList}\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abce41464baeefd827b2e0e751a07066a}{set\+\_\+compliance\+\_\+margin\+\_\+cw} (self, servo\+\_\+id, margin)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a9bccd126d83bf078e1879d7f0819be74}{set\+\_\+compliance\+\_\+margin\+\_\+ccw} (self, servo\+\_\+id, margin)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a63bf7eefaada9a1a9d8b17dd33d88f90}{set\+\_\+compliance\+\_\+margins} (self, servo\+\_\+id, margin\+\_\+cw, margin\+\_\+ccw)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2592528e6dc31c08e36f40b2bb8712e7}{set\+\_\+compliance\+\_\+slope\+\_\+cw} (self, servo\+\_\+id, slope)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a367bdf6bff310866e082962ec6b62ee2}{set\+\_\+compliance\+\_\+slope\+\_\+ccw} (self, servo\+\_\+id, slope)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a861b5b920bdd922f787d5f7a335c583d}{set\+\_\+compliance\+\_\+slopes} (self, servo\+\_\+id, slope\+\_\+cw, slope\+\_\+ccw)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a0047f1e442b7db44b6c85f4695384ffc}{set\+\_\+d\+\_\+gain} (self, servo\+\_\+id, d\+\_\+gain)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3d65dc76f96e3c11e2319a1dd79e85dd}{set\+\_\+i\+\_\+gain} (self, servo\+\_\+id, i\+\_\+gain)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aaf22ae60cdc22b26bc6b1fb3f8c87197}{set\+\_\+p\+\_\+gain} (self, servo\+\_\+id, p\+\_\+gain)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a71006ce4b2eed14fbf7189813b168086}{set\+\_\+punch} (self, servo\+\_\+id, punch)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a493890484a67a377cb462c5ad58217e5}{set\+\_\+acceleration} (self, servo\+\_\+id, acceleration)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a9fe99ffb450e3d2df5a4ffe188a74c27}{set\+\_\+position} (self, servo\+\_\+id, position)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_add7657922014d85bd52aeb1f0d9d2d41}{set\+\_\+speed} (self, servo\+\_\+id, speed)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a77333ce0f4d09a02be80b48cdc4abda3}{set\+\_\+torque\+\_\+limit} (self, servo\+\_\+id, torque)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a5d9728d7f0159ccd73fa6de0b1bfb402}{set\+\_\+goal\+\_\+torque} (self, servo\+\_\+id, torque)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af71f76e0add41cdb296082acf75fbe2c}{set\+\_\+position\+\_\+and\+\_\+speed} (self, servo\+\_\+id, position, speed)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a72228e3b0c55a624300a4cfba0e2d07f}{set\+\_\+led} (self, servo\+\_\+id, led\+\_\+state)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a131a8a5ce4168f260e0661c2867155d2}{set\+\_\+multi\+\_\+torque\+\_\+enabled} (self, value\+Tuples)
+\begin{DoxyCompactList}\small\item\em These functions can send multiple commands to multiple servos \# These commands are used in R\+OS wrapper as they don\textquotesingle{}t send a \# response packet, R\+OS wrapper gets motor states at a set rate \#. \end{DoxyCompactList}\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a57b4bb815b4946e8759c512c3a7aec90}{set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+cw} (self, value\+Tuples)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a20243d60946e850c4bccf94edfa2504a}{set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+ccw} (self, value\+Tuples)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab6ae4c7448f85ee22a95510a23be04b2}{set\+\_\+multi\+\_\+compliance\+\_\+margins} (self, value\+Tuples)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a115695cc45ce343d0787fcc3c0bf6e7b}{set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+cw} (self, value\+Tuples)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3c59c5ea5e5e0262fc43d0b2603ca444}{set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+ccw} (self, value\+Tuples)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af3b2a4bd581266a9dd067a0c1f34687a}{set\+\_\+multi\+\_\+compliance\+\_\+slopes} (self, value\+Tuples)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a113e6ff1c59d67480dc779fe7fa1ba52}{set\+\_\+multi\+\_\+punch} (self, value\+Tuples)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aca2d90dab958dcc6d058c1eb6d7a6e11}{set\+\_\+multi\+\_\+position} (self, value\+Tuples)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a8150f8a015df1441f348eb0a6c6ccaee}{set\+\_\+multi\+\_\+speed} (self, value\+Tuples)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a1e05872bf62fd6726255c423219ca569}{set\+\_\+multi\+\_\+torque\+\_\+limit} (self, value\+Tuples)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a124b89dc055f8f5ff807d8d976115529}{set\+\_\+multi\+\_\+position\+\_\+and\+\_\+speed} (self, value\+Tuples)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3f2d1b9ac285fb0490edfd2a4c7243c2}{get\+\_\+model\+\_\+number} (self, servo\+\_\+id)
+\begin{DoxyCompactList}\small\item\em Servo status access functions \#. \end{DoxyCompactList}\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a14d10031059c6c40dae76d3d9324a81c}{get\+\_\+firmware\+\_\+version} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a23eb8935d71b71c87fac075d8002abc1}{get\+\_\+return\+\_\+delay\+\_\+time} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af3a593697df035e17e287e3d401a8fe7}{get\+\_\+angle\+\_\+limits} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ad81c7f3da8654306f00f7ad9a2cbf54c}{get\+\_\+drive\+\_\+mode} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab11d3c841d1e858f350c2c2e32f10ec3}{get\+\_\+voltage\+\_\+limits} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ac0f3bb1c05808fb34281f30ba9c43800}{get\+\_\+position} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abe3496d8e3d3dea89509f354b009b326}{get\+\_\+speed} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af5a22d82fcdd6fcbe0823c763f7bcc4d}{get\+\_\+voltage} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aac11f861a1d7b67bb5976a43ea69b092}{get\+\_\+current} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a91841058e6c53561236ab08762438d52}{get\+\_\+feedback} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a1080dc1550b89b705ed7995ef4e67349}{get\+\_\+led} (self, servo\+\_\+id)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2276d95fa505e09758d500731edf5753}{exception\+\_\+on\+\_\+error} (self, error\+\_\+code, servo\+\_\+id, command\+\_\+failed)
+\end{DoxyCompactItemize}
+\subsection*{Public Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a67bb8729caac5df92342f0a0cb57ec8d}{serial\+\_\+mutex}
+\item 
+\hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa8889993f9c5ee4c23b535d81027bc77}{ser}
+\item 
+\hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ae4ec71fd84ab8709471d21970a070e31}{port\+\_\+name}
+\item 
+\hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a5cc6e8617f26fe6af8add33bee3544fe}{readback\+\_\+echo}
+\end{DoxyCompactItemize}
+\subsection*{Private Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6fb06ef65f812dccf51f320618892a1b}{\+\_\+\+\_\+write\+\_\+serial} (self, data)
+\item 
+def \hyperlink{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a0e0e863880f961a4dcffb12274db9fa6}{\+\_\+\+\_\+read\+\_\+response} (self, servo\+\_\+id)
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+\begin{DoxyVerb}Provides low level IO with the Dynamixel servos through pyserial. Has the
+ability to write instruction packets, request and read register value
+packets, send and receive a response to a ping packet, and send a SYNC WRITE
+multi-servo instruction packet.
+\end{DoxyVerb}
+ 
+
+Definition at line 55 of file dynamixel\+\_\+io.\+py.
+
+
+
+\subsection{Constructor \& Destructor Documentation}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab9c6aee22734b7c0a09a4f1e5a03609b}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab9c6aee22734b7c0a09a4f1e5a03609b}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+init\+\_\+\+\_\+@{\+\_\+\+\_\+init\+\_\+\+\_\+}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+init\+\_\+\+\_\+()}{\_\_init\_\_()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+init\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{port,  }\item[{}]{baudrate,  }\item[{}]{readback\+\_\+echo = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Constructor takes serial port and baudrate as arguments. \end{DoxyVerb}
+ 
+
+Definition at line 62 of file dynamixel\+\_\+io.\+py.
+
+
+\begin{DoxyCode}
+62     \textcolor{keyword}{def }\_\_init\_\_(self, port, baudrate, readback\_echo=False):
+63         \textcolor{stringliteral}{""" Constructor takes serial port and baudrate as arguments. """}
+64         \textcolor{keywordflow}{try}:
+65             self.serial\_mutex = Lock()
+66             self.ser = \textcolor{keywordtype}{None}
+67             self.ser = serial.Serial(port, baudrate, timeout=0.015)
+68             self.port\_name = port
+69             self.readback\_echo = readback\_echo
+70         \textcolor{keywordflow}{except} SerialOpenError:
+71            \textcolor{keywordflow}{raise} SerialOpenError(port, baudrate)
+72 
+\end{DoxyCode}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2a13aea3e96f34e02926c4395924359e}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2a13aea3e96f34e02926c4395924359e}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!\+\_\+\+\_\+del\+\_\+\+\_\+@{\+\_\+\+\_\+del\+\_\+\+\_\+}}
+\index{\+\_\+\+\_\+del\+\_\+\+\_\+@{\+\_\+\+\_\+del\+\_\+\+\_\+}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+del\+\_\+\+\_\+()}{\_\_del\_\_()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+del\+\_\+\+\_\+ (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Destructor calls DynamixelIO.close \end{DoxyVerb}
+ 
+
+Definition at line 73 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+close().
+
+
+\begin{DoxyCode}
+73     \textcolor{keyword}{def }\_\_del\_\_(self):
+74         \textcolor{stringliteral}{""" Destructor calls DynamixelIO.close """}
+75         self.close()
+76 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2a13aea3e96f34e02926c4395924359e_cgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a0e0e863880f961a4dcffb12274db9fa6}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a0e0e863880f961a4dcffb12274db9fa6}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!\+\_\+\+\_\+read\+\_\+response@{\+\_\+\+\_\+read\+\_\+response}}
+\index{\+\_\+\+\_\+read\+\_\+response@{\+\_\+\+\_\+read\+\_\+response}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+read\+\_\+response()}{\_\_read\_response()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+read\+\_\+response (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line 93 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+ser.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+ping(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+93     \textcolor{keyword}{def }\_\_read\_response(self, servo\_id):
+94         data = []
+95 
+96         \textcolor{keywordflow}{try}:
+97             data.extend(self.ser.read(4))
+98             \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} data[0:2] == [\textcolor{stringliteral}{'\(\backslash\)xff'}, \textcolor{stringliteral}{'\(\backslash\)xff'}]: \textcolor{keywordflow}{raise} Exception(\textcolor{stringliteral}{'Wrong packet prefix %s'} % data[0:2])
+99             data.extend(self.ser.read(ord(data[3])))
+100             data = array(\textcolor{stringliteral}{'B'}, \textcolor{stringliteral}{''}.join(data)).tolist() \textcolor{comment}{# [int(b2a\_hex(byte), 16) for byte in data]}
+101         \textcolor{keywordflow}{except} Exception, e:
+102             \textcolor{keywordflow}{raise} DroppedPacketError(\textcolor{stringliteral}{'Invalid response received from motor %d. %s'} % (servo\_id, e))
+103 
+104         \textcolor{comment}{# verify checksum}
+105         checksum = 255 - sum(data[2:-1]) % 256
+106         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} checksum == data[-1]: \textcolor{keywordflow}{raise} ChecksumError(servo\_id, data, checksum)
+107 
+108         \textcolor{keywordflow}{return} data
+109 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a0e0e863880f961a4dcffb12274db9fa6_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a0e0e863880f961a4dcffb12274db9fa6_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6fb06ef65f812dccf51f320618892a1b}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6fb06ef65f812dccf51f320618892a1b}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!\+\_\+\+\_\+write\+\_\+serial@{\+\_\+\+\_\+write\+\_\+serial}}
+\index{\+\_\+\+\_\+write\+\_\+serial@{\+\_\+\+\_\+write\+\_\+serial}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{\+\_\+\+\_\+write\+\_\+serial()}{\_\_write\_serial()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+write\+\_\+serial (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{data }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [private]}}
+
+
+
+Definition at line 86 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+readback\+\_\+echo, dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+ser, and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+ping(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+86     \textcolor{keyword}{def }\_\_write\_serial(self, data):
+87         self.ser.flushInput()
+88         self.ser.flushOutput()
+89         self.ser.write(data)
+90         \textcolor{keywordflow}{if} self.readback\_echo:
+91             self.ser.read(len(data))
+92 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6fb06ef65f812dccf51f320618892a1b_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6fb06ef65f812dccf51f320618892a1b_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a4cdcd3496e76197fc4d5f23ccd7daf26}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a4cdcd3496e76197fc4d5f23ccd7daf26}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!close@{close}}
+\index{close@{close}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{close()}{close()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+close (\begin{DoxyParamCaption}\item[{}]{self }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Be nice, close the serial port.
+\end{DoxyVerb}
+ 
+
+Definition at line 77 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+ser.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+del\+\_\+\+\_\+().
+
+
+\begin{DoxyCode}
+77     \textcolor{keyword}{def }close(self):
+78         \textcolor{stringliteral}{"""}
+79 \textcolor{stringliteral}{        Be nice, close the serial port.}
+80 \textcolor{stringliteral}{        """}
+81         \textcolor{keywordflow}{if} self.ser:
+82             self.ser.flushInput()
+83             self.ser.flushOutput()
+84             self.ser.close()
+85 
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a4cdcd3496e76197fc4d5f23ccd7daf26_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2276d95fa505e09758d500731edf5753}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2276d95fa505e09758d500731edf5753}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!exception\+\_\+on\+\_\+error@{exception\+\_\+on\+\_\+error}}
+\index{exception\+\_\+on\+\_\+error@{exception\+\_\+on\+\_\+error}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{exception\+\_\+on\+\_\+error()}{exception\_on\_error()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{error\+\_\+code,  }\item[{}]{servo\+\_\+id,  }\item[{}]{command\+\_\+failed }\end{DoxyParamCaption})}
+
+
+
+Definition at line 976 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+ser.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+angle\+\_\+limits(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+current(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+drive\+\_\+mode(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+feedback(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+firmware\+\_\+version(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+led(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+model\+\_\+number(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+position(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+return\+\_\+delay\+\_\+time(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+speed(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+voltage(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+voltage\+\_\+limits(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+ping(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+acceleration(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+angle\+\_\+limit\+\_\+ccw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+angle\+\_\+limit\+\_\+cw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+angle\+\_\+limits(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+baud\+\_\+rate(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+margin\+\_\+ccw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+margin\+\_\+cw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+margins(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+slope\+\_\+ccw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+slope\+\_\+cw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+slopes(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+d\+\_\+gain(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+drive\+\_\+mode(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+goal\+\_\+torque(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+i\+\_\+gain(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+id(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+led(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+p\+\_\+gain(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+position(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+position\+\_\+and\+\_\+speed(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+punch(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+return\+\_\+delay\+\_\+time(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+speed(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+torque\+\_\+enabled(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+torque\+\_\+limit(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+voltage\+\_\+limit\+\_\+max(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+voltage\+\_\+limit\+\_\+min(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+voltage\+\_\+limits().
+
+
+\begin{DoxyCode}
+976     \textcolor{keyword}{def }exception\_on\_error(self, error\_code, servo\_id, command\_failed):
+977         \textcolor{keyword}{global} exception
+978         exception = \textcolor{keywordtype}{None}
+979         ex\_message = \textcolor{stringliteral}{'[servo #%d on %s@%sbps]: %s failed'} % (servo\_id, self.ser.port, self.ser.baudrate, 
+      command\_failed)
+980 
+981         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} isinstance(error\_code, int):
+982             msg = \textcolor{stringliteral}{'Communcation Error '} + ex\_message
+983             exception = NonfatalErrorCodeError(msg, 0)
+984             \textcolor{keywordflow}{return}
+985         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} error\_code & DXL\_OVERHEATING\_ERROR == 0:
+986             msg = \textcolor{stringliteral}{'Overheating Error '} + ex\_message
+987             exception = FatalErrorCodeError(msg, error\_code)
+988         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} error\_code & DXL\_OVERLOAD\_ERROR == 0:
+989             msg = \textcolor{stringliteral}{'Overload Error '} + ex\_message
+990             exception = FatalErrorCodeError(msg, error\_code)
+991         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} error\_code & DXL\_INPUT\_VOLTAGE\_ERROR == 0:
+992             msg = \textcolor{stringliteral}{'Input Voltage Error '} + ex\_message
+993             exception = NonfatalErrorCodeError(msg, error\_code)
+994         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} error\_code & DXL\_ANGLE\_LIMIT\_ERROR == 0:
+995             msg = \textcolor{stringliteral}{'Angle Limit Error '} + ex\_message
+996             exception = NonfatalErrorCodeError(msg, error\_code)
+997         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} error\_code & DXL\_RANGE\_ERROR == 0:
+998             msg = \textcolor{stringliteral}{'Range Error '} + ex\_message
+999             exception = NonfatalErrorCodeError(msg, error\_code)
+1000         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} error\_code & DXL\_CHECKSUM\_ERROR == 0:
+1001             msg = \textcolor{stringliteral}{'Checksum Error '} + ex\_message
+1002             exception = NonfatalErrorCodeError(msg, error\_code)
+1003         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} error\_code & DXL\_INSTRUCTION\_ERROR == 0:
+1004             msg = \textcolor{stringliteral}{'Instruction Error '} + ex\_message
+1005             exception = NonfatalErrorCodeError(msg, error\_code)
+1006 
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2276d95fa505e09758d500731edf5753_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af3a593697df035e17e287e3d401a8fe7}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af3a593697df035e17e287e3d401a8fe7}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+angle\+\_\+limits@{get\+\_\+angle\+\_\+limits}}
+\index{get\+\_\+angle\+\_\+limits@{get\+\_\+angle\+\_\+limits}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+angle\+\_\+limits()}{get\_angle\_limits()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+angle\+\_\+limits (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Returns the min and max angle limits from the specified servo.
+\end{DoxyVerb}
+ 
+
+Definition at line 839 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read().
+
+
+\begin{DoxyCode}
+839     \textcolor{keyword}{def }get\_angle\_limits(self, servo\_id):
+840         \textcolor{stringliteral}{"""}
+841 \textcolor{stringliteral}{        Returns the min and max angle limits from the specified servo.}
+842 \textcolor{stringliteral}{        """}
+843         \textcolor{comment}{# read in 4 consecutive bytes starting with low value of clockwise angle limit}
+844         response = self.read(servo\_id, DXL\_CW\_ANGLE\_LIMIT\_L, 4)
+845         \textcolor{keywordflow}{if} response:
+846             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching CW/CCW angle limits'})
+847         \textcolor{comment}{# extract data valus from the raw data}
+848         cwLimit = response[5] + (response[6] << 8)
+849         ccwLimit = response[7] + (response[8] << 8)
+850 
+851         \textcolor{comment}{# return the data in a dictionary}
+852         \textcolor{keywordflow}{return} \{\textcolor{stringliteral}{'min'}:cwLimit, \textcolor{stringliteral}{'max'}:ccwLimit\}
+853 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af3a593697df035e17e287e3d401a8fe7_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aac11f861a1d7b67bb5976a43ea69b092}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aac11f861a1d7b67bb5976a43ea69b092}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+current@{get\+\_\+current}}
+\index{get\+\_\+current@{get\+\_\+current}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+current()}{get\_current()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+current (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reads the servo's current consumption (if supported by model) \end{DoxyVerb}
+ 
+
+Definition at line 900 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+model\+\_\+number(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read().
+
+
+\begin{DoxyCode}
+900     \textcolor{keyword}{def }get\_current(self, servo\_id):
+901         \textcolor{stringliteral}{""" Reads the servo's current consumption (if supported by model) """}
+902         model = self.get\_model\_number(servo\_id)
+903         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} model \textcolor{keywordflow}{in} DXL\_MODEL\_TO\_PARAMS:
+904             \textcolor{keywordflow}{raise} UnsupportedFeatureError(model, DXL\_CURRENT\_L)
+905 
+906         \textcolor{keywordflow}{if} DXL\_CURRENT\_L \textcolor{keywordflow}{in} DXL\_MODEL\_TO\_PARAMS[model][\textcolor{stringliteral}{'features'}]:
+907             response = self.read(servo\_id, DXL\_CURRENT\_L, 2)
+908             \textcolor{keywordflow}{if} response:
+909                 self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching sensed current'})
+910             current = response[5] + (response[6] << 8)
+911             \textcolor{keywordflow}{return} 0.0045 * (current - 2048)
+912 
+913         \textcolor{keywordflow}{if} DXL\_SENSED\_CURRENT\_L \textcolor{keywordflow}{in} DXL\_MODEL\_TO\_PARAMS[model][\textcolor{stringliteral}{'features'}]:
+914             response = self.read(servo\_id, DXL\_SENSED\_CURRENT\_L, 2)
+915             \textcolor{keywordflow}{if} response:
+916                 self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching sensed current'})
+917             current = response[5] + (response[6] << 8)
+918             \textcolor{keywordflow}{return} 0.01 * (current - 512)
+919 
+920         \textcolor{keywordflow}{else}:
+921             \textcolor{keywordflow}{raise} UnsupportedFeatureError(model, DXL\_CURRENT\_L)
+922 
+923 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aac11f861a1d7b67bb5976a43ea69b092_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ad81c7f3da8654306f00f7ad9a2cbf54c}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ad81c7f3da8654306f00f7ad9a2cbf54c}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+drive\+\_\+mode@{get\+\_\+drive\+\_\+mode}}
+\index{get\+\_\+drive\+\_\+mode@{get\+\_\+drive\+\_\+mode}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+drive\+\_\+mode()}{get\_drive\_mode()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+drive\+\_\+mode (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reads the servo's drive mode. \end{DoxyVerb}
+ 
+
+Definition at line 854 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read().
+
+
+\begin{DoxyCode}
+854     \textcolor{keyword}{def }get\_drive\_mode(self, servo\_id):
+855         \textcolor{stringliteral}{""" Reads the servo's drive mode. """}
+856         response = self.read(servo\_id, DXL\_DRIVE\_MODE, 1)
+857         \textcolor{keywordflow}{if} response:
+858             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching drive mode'})
+859         \textcolor{keywordflow}{return} response[5]
+860 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ad81c7f3da8654306f00f7ad9a2cbf54c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a91841058e6c53561236ab08762438d52}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a91841058e6c53561236ab08762438d52}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+feedback@{get\+\_\+feedback}}
+\index{get\+\_\+feedback@{get\+\_\+feedback}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+feedback()}{get\_feedback()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+feedback (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Returns the id, goal, position, error, speed, load, voltage, temperature
+and moving values from the specified servo.
+\end{DoxyVerb}
+ 
+
+Definition at line 924 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+test\+\_\+bit().
+
+
+\begin{DoxyCode}
+924     \textcolor{keyword}{def }get\_feedback(self, servo\_id):
+925         \textcolor{stringliteral}{"""}
+926 \textcolor{stringliteral}{        Returns the id, goal, position, error, speed, load, voltage, temperature}
+927 \textcolor{stringliteral}{        and moving values from the specified servo.}
+928 \textcolor{stringliteral}{        """}
+929         \textcolor{comment}{# read in 17 consecutive bytes starting with low value for goal position}
+930         response = self.read(servo\_id, DXL\_GOAL\_POSITION\_L, 17)
+931 
+932         \textcolor{keywordflow}{if} response:
+933             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching full servo status'})
+934         \textcolor{keywordflow}{if} len(response) == 24:
+935             \textcolor{comment}{# extract data values from the raw data}
+936             goal = response[5] + (response[6] << 8)
+937             position = response[11] + (response[12] << 8)
+938             error = position - goal
+939             speed = response[13] + ( response[14] << 8)
+940             \textcolor{keywordflow}{if} speed > 1023: speed = 1023 - speed
+941             load\_raw = response[15] + (response[16] << 8)
+942             load\_direction = 1 \textcolor{keywordflow}{if} self.test\_bit(load\_raw, 10) \textcolor{keywordflow}{else} 0
+943             load = (load\_raw & int(\textcolor{stringliteral}{'1111111111'}, 2)) / 1024.0
+944             \textcolor{keywordflow}{if} load\_direction == 1: load = -load
+945             voltage = response[17] / 10.0
+946             temperature = response[18]
+947             moving = response[21]
+948             timestamp = response[-1]
+949 
+950             \textcolor{comment}{# return the data in a dictionary}
+951             \textcolor{keywordflow}{return} \{ \textcolor{stringliteral}{'timestamp'}: timestamp,
+952                      \textcolor{stringliteral}{'id'}: servo\_id,
+953                      \textcolor{stringliteral}{'goal'}: goal,
+954                      \textcolor{stringliteral}{'position'}: position,
+955                      \textcolor{stringliteral}{'error'}: error,
+956                      \textcolor{stringliteral}{'speed'}: speed,
+957                      \textcolor{stringliteral}{'load'}: load,
+958                      \textcolor{stringliteral}{'voltage'}: voltage,
+959                      \textcolor{stringliteral}{'temperature'}: temperature,
+960                      \textcolor{stringliteral}{'moving'}: bool(moving) \}
+961 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a91841058e6c53561236ab08762438d52_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a14d10031059c6c40dae76d3d9324a81c}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a14d10031059c6c40dae76d3d9324a81c}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+firmware\+\_\+version@{get\+\_\+firmware\+\_\+version}}
+\index{get\+\_\+firmware\+\_\+version@{get\+\_\+firmware\+\_\+version}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+firmware\+\_\+version()}{get\_firmware\_version()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+firmware\+\_\+version (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reads the servo's firmware version. \end{DoxyVerb}
+ 
+
+Definition at line 825 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read().
+
+
+\begin{DoxyCode}
+825     \textcolor{keyword}{def }get\_firmware\_version(self, servo\_id):
+826         \textcolor{stringliteral}{""" Reads the servo's firmware version. """}
+827         response = self.read(servo\_id, DXL\_VERSION, 1)
+828         \textcolor{keywordflow}{if} response:
+829             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching firmware version'})
+830         \textcolor{keywordflow}{return} response[5]
+831 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a14d10031059c6c40dae76d3d9324a81c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a1080dc1550b89b705ed7995ef4e67349}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a1080dc1550b89b705ed7995ef4e67349}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+led@{get\+\_\+led}}
+\index{get\+\_\+led@{get\+\_\+led}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+led()}{get\_led()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+led (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Get status of the LED. Boolean return values:
+    True - LED is on,
+    False - LED is off.
+\end{DoxyVerb}
+ 
+
+Definition at line 962 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read().
+
+
+\begin{DoxyCode}
+962     \textcolor{keyword}{def }get\_led(self, servo\_id):
+963         \textcolor{stringliteral}{"""}
+964 \textcolor{stringliteral}{        Get status of the LED. Boolean return values:}
+965 \textcolor{stringliteral}{            True - LED is on,}
+966 \textcolor{stringliteral}{            False - LED is off.}
+967 \textcolor{stringliteral}{        """}
+968         response = self.read(servo\_id, DXL\_LED, 1)
+969         \textcolor{keywordflow}{if} response:
+970             self.exception\_on\_error(response[4], servo\_id,
+971                 \textcolor{stringliteral}{'fetching LED status'})
+972 
+973         \textcolor{keywordflow}{return} bool(response[5])
+974 
+975 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a1080dc1550b89b705ed7995ef4e67349_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3f2d1b9ac285fb0490edfd2a4c7243c2}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3f2d1b9ac285fb0490edfd2a4c7243c2}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+model\+\_\+number@{get\+\_\+model\+\_\+number}}
+\index{get\+\_\+model\+\_\+number@{get\+\_\+model\+\_\+number}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+model\+\_\+number()}{get\_model\_number()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+model\+\_\+number (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+
+
+Servo status access functions \#. 
+
+\begin{DoxyVerb}Reads the servo's model number (e.g. 12 for AX-12+). \end{DoxyVerb}
+ 
+
+Definition at line 818 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read().
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+current(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+acceleration(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+goal\+\_\+torque().
+
+
+\begin{DoxyCode}
+818     \textcolor{keyword}{def }get\_model\_number(self, servo\_id):
+819         \textcolor{stringliteral}{""" Reads the servo's model number (e.g. 12 for AX-12+). """}
+820         response = self.read(servo\_id, DXL\_MODEL\_NUMBER\_L, 2)
+821         \textcolor{keywordflow}{if} response:
+822             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching model number'})
+823         \textcolor{keywordflow}{return} response[5] + (response[6] << 8)
+824 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3f2d1b9ac285fb0490edfd2a4c7243c2_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3f2d1b9ac285fb0490edfd2a4c7243c2_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ac0f3bb1c05808fb34281f30ba9c43800}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ac0f3bb1c05808fb34281f30ba9c43800}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+position@{get\+\_\+position}}
+\index{get\+\_\+position@{get\+\_\+position}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+position()}{get\_position()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+position (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reads the servo's position value from its registers. \end{DoxyVerb}
+ 
+
+Definition at line 875 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read().
+
+
+\begin{DoxyCode}
+875     \textcolor{keyword}{def }get\_position(self, servo\_id):
+876         \textcolor{stringliteral}{""" Reads the servo's position value from its registers. """}
+877         response = self.read(servo\_id, DXL\_PRESENT\_POSITION\_L, 2)
+878         \textcolor{keywordflow}{if} response:
+879             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching present position'})
+880         position = response[5] + (response[6] << 8)
+881         \textcolor{keywordflow}{return} position
+882 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ac0f3bb1c05808fb34281f30ba9c43800_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a23eb8935d71b71c87fac075d8002abc1}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a23eb8935d71b71c87fac075d8002abc1}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+return\+\_\+delay\+\_\+time@{get\+\_\+return\+\_\+delay\+\_\+time}}
+\index{get\+\_\+return\+\_\+delay\+\_\+time@{get\+\_\+return\+\_\+delay\+\_\+time}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+return\+\_\+delay\+\_\+time()}{get\_return\_delay\_time()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+return\+\_\+delay\+\_\+time (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reads the servo's return delay time. \end{DoxyVerb}
+ 
+
+Definition at line 832 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read().
+
+
+\begin{DoxyCode}
+832     \textcolor{keyword}{def }get\_return\_delay\_time(self, servo\_id):
+833         \textcolor{stringliteral}{""" Reads the servo's return delay time. """}
+834         response = self.read(servo\_id, DXL\_RETURN\_DELAY\_TIME, 1)
+835         \textcolor{keywordflow}{if} response:
+836             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching return delay time'})
+837         \textcolor{keywordflow}{return} response[5]
+838 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a23eb8935d71b71c87fac075d8002abc1_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abe3496d8e3d3dea89509f354b009b326}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abe3496d8e3d3dea89509f354b009b326}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+speed@{get\+\_\+speed}}
+\index{get\+\_\+speed@{get\+\_\+speed}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+speed()}{get\_speed()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+speed (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reads the servo's speed value from its registers. \end{DoxyVerb}
+ 
+
+Definition at line 883 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read().
+
+
+\begin{DoxyCode}
+883     \textcolor{keyword}{def }get\_speed(self, servo\_id):
+884         \textcolor{stringliteral}{""" Reads the servo's speed value from its registers. """}
+885         response = self.read(servo\_id, DXL\_PRESENT\_SPEED\_L, 2)
+886         \textcolor{keywordflow}{if} response:
+887             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching present speed'})
+888         speed = response[5] + (response[6] << 8)
+889         \textcolor{keywordflow}{if} speed > 1023:
+890             \textcolor{keywordflow}{return} 1023 - speed
+891         \textcolor{keywordflow}{return} speed
+892 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abe3496d8e3d3dea89509f354b009b326_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af5a22d82fcdd6fcbe0823c763f7bcc4d}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af5a22d82fcdd6fcbe0823c763f7bcc4d}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+voltage@{get\+\_\+voltage}}
+\index{get\+\_\+voltage@{get\+\_\+voltage}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+voltage()}{get\_voltage()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+voltage (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Reads the servo's voltage. \end{DoxyVerb}
+ 
+
+Definition at line 893 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read().
+
+
+\begin{DoxyCode}
+893     \textcolor{keyword}{def }get\_voltage(self, servo\_id):
+894         \textcolor{stringliteral}{""" Reads the servo's voltage. """}
+895         response = self.read(servo\_id, DXL\_PRESENT\_VOLTAGE, 1)
+896         \textcolor{keywordflow}{if} response:
+897             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching supplied voltage'})
+898         \textcolor{keywordflow}{return} response[5] / 10.0
+899 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af5a22d82fcdd6fcbe0823c763f7bcc4d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab11d3c841d1e858f350c2c2e32f10ec3}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab11d3c841d1e858f350c2c2e32f10ec3}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!get\+\_\+voltage\+\_\+limits@{get\+\_\+voltage\+\_\+limits}}
+\index{get\+\_\+voltage\+\_\+limits@{get\+\_\+voltage\+\_\+limits}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{get\+\_\+voltage\+\_\+limits()}{get\_voltage\_limits()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+voltage\+\_\+limits (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Returns the min and max voltage limits from the specified servo.
+\end{DoxyVerb}
+ 
+
+Definition at line 861 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read().
+
+
+\begin{DoxyCode}
+861     \textcolor{keyword}{def }get\_voltage\_limits(self, servo\_id):
+862         \textcolor{stringliteral}{"""}
+863 \textcolor{stringliteral}{        Returns the min and max voltage limits from the specified servo.}
+864 \textcolor{stringliteral}{        """}
+865         response = self.read(servo\_id, DXL\_DOWN\_LIMIT\_VOLTAGE, 2)
+866         \textcolor{keywordflow}{if} response:
+867             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'fetching voltage limits'})
+868         \textcolor{comment}{# extract data valus from the raw data}
+869         min\_voltage = response[5] / 10.0
+870         max\_voltage = response[6] / 10.0
+871 
+872         \textcolor{comment}{# return the data in a dictionary}
+873         \textcolor{keywordflow}{return} \{\textcolor{stringliteral}{'min'}:min\_voltage, \textcolor{stringliteral}{'max'}:max\_voltage\}
+874 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab11d3c841d1e858f350c2c2e32f10ec3_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6a992742790d35953761eeb20275563a}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6a992742790d35953761eeb20275563a}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!ping@{ping}}
+\index{ping@{ping}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{ping()}{ping()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+ping (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Ping the servo with "servo_id". This causes the servo to return a
+"status packet". This can tell us if the servo is attached and powered,
+and if so, if there are any errors.
+\end{DoxyVerb}
+ 
+
+Definition at line 216 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+read\+\_\+response(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+write\+\_\+serial(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+serial\+\_\+mutex.
+
+
+\begin{DoxyCode}
+216     \textcolor{keyword}{def }ping(self, servo\_id):
+217         \textcolor{stringliteral}{""" Ping the servo with "servo\_id". This causes the servo to return a}
+218 \textcolor{stringliteral}{        "status packet". This can tell us if the servo is attached and powered,}
+219 \textcolor{stringliteral}{        and if so, if there are any errors.}
+220 \textcolor{stringliteral}{        """}
+221         \textcolor{comment}{# Number of bytes following standard header (0xFF, 0xFF, id, length)}
+222         length = 2  \textcolor{comment}{# instruction, checksum}
+223 
+224         \textcolor{comment}{# directly from AX-12 manual:}
+225         \textcolor{comment}{# Check Sum = ~ (ID + LENGTH + INSTRUCTION + PARAM\_1 + ... + PARAM\_N)}
+226         \textcolor{comment}{# If the calculated value is > 255, the lower byte is the check sum.}
+227         checksum = 255 - ((servo\_id + length + DXL\_PING) % 256)
+228 
+229         \textcolor{comment}{# packet: FF  FF  ID LENGTH INSTRUCTION CHECKSUM}
+230         packet = [0xFF, 0xFF, servo\_id, length, DXL\_PING, checksum]
+231         packetStr = array(\textcolor{stringliteral}{'B'}, packet).tostring()
+232 
+233         with self.serial\_mutex:
+234             self.\_\_write\_serial(packetStr)
+235 
+236             \textcolor{comment}{# wait for response packet from the motor}
+237             timestamp = time.time()
+238             time.sleep(0.0013)
+239 
+240             \textcolor{comment}{# read response}
+241             \textcolor{keywordflow}{try}:
+242                 response = self.\_\_read\_response(servo\_id)
+243                 response.append(timestamp)
+244             \textcolor{keywordflow}{except} Exception, e:
+245                 response = []
+246 
+247         \textcolor{keywordflow}{if} response:
+248             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'ping'})
+249         \textcolor{keywordflow}{return} response
+250 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6a992742790d35953761eeb20275563a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6f8abf6563aac5aed93565234b971314}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6f8abf6563aac5aed93565234b971314}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!read@{read}}
+\index{read@{read}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{read()}{read()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{address,  }\item[{}]{size }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Read "size" bytes of data from servo with "servo_id" starting at the
+register with "address". "address" is an integer between 0 and 57. It is
+recommended to use the constants in module dynamixel_const for readability.
+
+To read the position from servo with id 1, the method should be called
+like:
+    read(1, DXL_GOAL_POSITION_L, 2)
+\end{DoxyVerb}
+ 
+
+Definition at line 110 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+read\+\_\+response(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+write\+\_\+serial(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+serial\+\_\+mutex.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+read\+\_\+response(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+write\+\_\+serial(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+angle\+\_\+limits(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+current(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+drive\+\_\+mode(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+feedback(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+firmware\+\_\+version(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+led(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+model\+\_\+number(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+position(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+return\+\_\+delay\+\_\+time(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+speed(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+voltage(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+voltage\+\_\+limits().
+
+
+\begin{DoxyCode}
+110     \textcolor{keyword}{def }read(self, servo\_id, address, size):
+111         \textcolor{stringliteral}{""" Read "size" bytes of data from servo with "servo\_id" starting at the}
+112 \textcolor{stringliteral}{        register with "address". "address" is an integer between 0 and 57. It is}
+113 \textcolor{stringliteral}{        recommended to use the constants in module dynamixel\_const for readability.}
+114 \textcolor{stringliteral}{}
+115 \textcolor{stringliteral}{        To read the position from servo with id 1, the method should be called}
+116 \textcolor{stringliteral}{        like:}
+117 \textcolor{stringliteral}{            read(1, DXL\_GOAL\_POSITION\_L, 2)}
+118 \textcolor{stringliteral}{        """}
+119         \textcolor{comment}{# Number of bytes following standard header (0xFF, 0xFF, id, length)}
+120         length = 4  \textcolor{comment}{# instruction, address, size, checksum}
+121 
+122         \textcolor{comment}{# directly from AX-12 manual:}
+123         \textcolor{comment}{# Check Sum = ~ (ID + LENGTH + INSTRUCTION + PARAM\_1 + ... + PARAM\_N)}
+124         \textcolor{comment}{# If the calculated value is > 255, the lower byte is the check sum.}
+125         checksum = 255 - ( (servo\_id + length + DXL\_READ\_DATA + address + size) % 256 )
+126 
+127         \textcolor{comment}{# packet: FF  FF  ID LENGTH INSTRUCTION PARAM\_1 ... CHECKSUM}
+128         packet = [0xFF, 0xFF, servo\_id, length, DXL\_READ\_DATA, address, size, checksum]
+129         packetStr = array(\textcolor{stringliteral}{'B'}, packet).tostring() \textcolor{comment}{# same as: packetStr = ''.join([chr(byte) for byte in
+       packet])}
+130 
+131         with self.serial\_mutex:
+132             self.\_\_write\_serial(packetStr)
+133 
+134             \textcolor{comment}{# wait for response packet from the motor}
+135             timestamp = time.time()
+136             time.sleep(0.0013)\textcolor{comment}{#0.00235)}
+137 
+138             \textcolor{comment}{# read response}
+139             data = self.\_\_read\_response(servo\_id)
+140             data.append(timestamp)
+141 
+142         \textcolor{keywordflow}{return} data
+143 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6f8abf6563aac5aed93565234b971314_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a6f8abf6563aac5aed93565234b971314_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a493890484a67a377cb462c5ad58217e5}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a493890484a67a377cb462c5ad58217e5}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+acceleration@{set\+\_\+acceleration}}
+\index{set\+\_\+acceleration@{set\+\_\+acceleration}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+acceleration()}{set\_acceleration()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+acceleration (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{acceleration }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the acceleration. The unit is 8.583 Degree / sec^2.
+0 - acceleration control disabled, 1-254 - valid range for acceleration.
+\end{DoxyVerb}
+ 
+
+Definition at line 508 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+model\+\_\+number(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+508     \textcolor{keyword}{def }set\_acceleration(self, servo\_id, acceleration):
+509         \textcolor{stringliteral}{"""}
+510 \textcolor{stringliteral}{        Sets the acceleration. The unit is 8.583 Degree / sec^2.}
+511 \textcolor{stringliteral}{        0 - acceleration control disabled, 1-254 - valid range for acceleration.}
+512 \textcolor{stringliteral}{        """}
+513 
+514         model = self.get\_model\_number(servo\_id)
+515         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} model \textcolor{keywordflow}{in} DXL\_MODEL\_TO\_PARAMS:
+516             \textcolor{keywordflow}{raise} UnsupportedFeatureError(model, DXL\_GOAL\_ACCELERATION)
+517 
+518         \textcolor{keywordflow}{if} DXL\_GOAL\_ACCELERATION \textcolor{keywordflow}{in} DXL\_MODEL\_TO\_PARAMS[model][\textcolor{stringliteral}{'features'}]:
+519             response = self.write(servo\_id, DXL\_GOAL\_ACCELERATION, (acceleration, ))
+520             \textcolor{keywordflow}{if} response:
+521                 self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting acceleration to %d'} % acceleration)
+522             \textcolor{keywordflow}{return} response
+523         \textcolor{keywordflow}{else}:
+524             \textcolor{keywordflow}{raise} UnsupportedFeatureError(model, DXL\_GOAL\_ACCELERATION)
+525 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a493890484a67a377cb462c5ad58217e5_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2cffd8bdd7929986fca71952250a6dc7}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2cffd8bdd7929986fca71952250a6dc7}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+angle\+\_\+limit\+\_\+ccw@{set\+\_\+angle\+\_\+limit\+\_\+ccw}}
+\index{set\+\_\+angle\+\_\+limit\+\_\+ccw@{set\+\_\+angle\+\_\+limit\+\_\+ccw}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+angle\+\_\+limit\+\_\+ccw()}{set\_angle\_limit\_ccw()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+angle\+\_\+limit\+\_\+ccw (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{angle\+\_\+ccw }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the max (CCW) angle of rotation limit.
+\end{DoxyVerb}
+ 
+
+Definition at line 302 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+302     \textcolor{keyword}{def }set\_angle\_limit\_ccw(self, servo\_id, angle\_ccw):
+303         \textcolor{stringliteral}{"""}
+304 \textcolor{stringliteral}{        Set the max (CCW) angle of rotation limit.}
+305 \textcolor{stringliteral}{        """}
+306         loVal = int(angle\_ccw % 256)
+307         hiVal = int(angle\_ccw >> 8)
+308 
+309         response = self.write(servo\_id, DXL\_CCW\_ANGLE\_LIMIT\_L, (loVal, hiVal))
+310         \textcolor{keywordflow}{if} response:
+311             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting CCW angle limits to %d'} % angle\_ccw)
+312         \textcolor{keywordflow}{return} response
+313 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2cffd8bdd7929986fca71952250a6dc7_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ad1845360a250bafe8e0e055245c5f1da}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ad1845360a250bafe8e0e055245c5f1da}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+angle\+\_\+limit\+\_\+cw@{set\+\_\+angle\+\_\+limit\+\_\+cw}}
+\index{set\+\_\+angle\+\_\+limit\+\_\+cw@{set\+\_\+angle\+\_\+limit\+\_\+cw}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+angle\+\_\+limit\+\_\+cw()}{set\_angle\_limit\_cw()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+angle\+\_\+limit\+\_\+cw (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{angle\+\_\+cw }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the min (CW) angle of rotation limit.
+\end{DoxyVerb}
+ 
+
+Definition at line 290 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+290     \textcolor{keyword}{def }set\_angle\_limit\_cw(self, servo\_id, angle\_cw):
+291         \textcolor{stringliteral}{"""}
+292 \textcolor{stringliteral}{        Set the min (CW) angle of rotation limit.}
+293 \textcolor{stringliteral}{        """}
+294         loVal = int(angle\_cw % 256)
+295         hiVal = int(angle\_cw >> 8)
+296 
+297         response = self.write(servo\_id, DXL\_CW\_ANGLE\_LIMIT\_L, (loVal, hiVal))
+298         \textcolor{keywordflow}{if} response:
+299             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting CW angle limits to %d'} % angle\_cw)
+300         \textcolor{keywordflow}{return} response
+301 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ad1845360a250bafe8e0e055245c5f1da_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab40bc8abbb014fe83050af58b515e300}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab40bc8abbb014fe83050af58b515e300}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+angle\+\_\+limits@{set\+\_\+angle\+\_\+limits}}
+\index{set\+\_\+angle\+\_\+limits@{set\+\_\+angle\+\_\+limits}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+angle\+\_\+limits()}{set\_angle\_limits()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+angle\+\_\+limits (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{min\+\_\+angle,  }\item[{}]{max\+\_\+angle }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the min (CW) and max (CCW) angle of rotation limits.
+\end{DoxyVerb}
+ 
+
+Definition at line 314 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+314     \textcolor{keyword}{def }set\_angle\_limits(self, servo\_id, min\_angle, max\_angle):
+315         \textcolor{stringliteral}{"""}
+316 \textcolor{stringliteral}{        Set the min (CW) and max (CCW) angle of rotation limits.}
+317 \textcolor{stringliteral}{        """}
+318         loMinVal = int(min\_angle % 256)
+319         hiMinVal = int(min\_angle >> 8)
+320         loMaxVal = int(max\_angle % 256)
+321         hiMaxVal = int(max\_angle >> 8)
+322 
+323         \textcolor{comment}{# set 4 register values with low and high bytes for min and max angles}
+324         response = self.write(servo\_id, DXL\_CW\_ANGLE\_LIMIT\_L, (loMinVal, hiMinVal, loMaxVal, hiMaxVal))
+325         \textcolor{keywordflow}{if} response:
+326             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting CW and CCW angle limits to %d and %d'} %
+      (min\_angle, max\_angle))
+327         \textcolor{keywordflow}{return} response
+328 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab40bc8abbb014fe83050af58b515e300_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aec6d930e6e2e4e0063d555ff79f6838e}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aec6d930e6e2e4e0063d555ff79f6838e}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+baud\+\_\+rate@{set\+\_\+baud\+\_\+rate}}
+\index{set\+\_\+baud\+\_\+rate@{set\+\_\+baud\+\_\+rate}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+baud\+\_\+rate()}{set\_baud\_rate()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+baud\+\_\+rate (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{baud\+\_\+rate }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets servo communication speed. The range from 0 to 254.
+\end{DoxyVerb}
+ 
+
+Definition at line 270 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+270     \textcolor{keyword}{def }set\_baud\_rate(self, servo\_id, baud\_rate):
+271         \textcolor{stringliteral}{"""}
+272 \textcolor{stringliteral}{        Sets servo communication speed. The range from 0 to 254.}
+273 \textcolor{stringliteral}{        """}
+274         response = self.write(servo\_id, DXL\_BAUD\_RATE, [baud\_rate])
+275         \textcolor{keywordflow}{if} response:
+276             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting baud rate to %d'} % baud\_rate)
+277         \textcolor{keywordflow}{return} response
+278 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aec6d930e6e2e4e0063d555ff79f6838e_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a9bccd126d83bf078e1879d7f0819be74}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a9bccd126d83bf078e1879d7f0819be74}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+compliance\+\_\+margin\+\_\+ccw@{set\+\_\+compliance\+\_\+margin\+\_\+ccw}}
+\index{set\+\_\+compliance\+\_\+margin\+\_\+ccw@{set\+\_\+compliance\+\_\+margin\+\_\+ccw}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+compliance\+\_\+margin\+\_\+ccw()}{set\_compliance\_margin\_ccw()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+margin\+\_\+ccw (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{margin }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The error between goal position and present position in CCW direction.
+The range of the value is 0 to 255, and the unit is the same as Goal Position.
+The greater the value, the more difference occurs.
+\end{DoxyVerb}
+ 
+
+Definition at line 412 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+412     \textcolor{keyword}{def }set\_compliance\_margin\_ccw(self, servo\_id, margin):
+413         \textcolor{stringliteral}{"""}
+414 \textcolor{stringliteral}{        The error between goal position and present position in CCW direction.}
+415 \textcolor{stringliteral}{        The range of the value is 0 to 255, and the unit is the same as Goal Position.}
+416 \textcolor{stringliteral}{        The greater the value, the more difference occurs.}
+417 \textcolor{stringliteral}{        """}
+418         response = self.write(servo\_id, DXL\_CCW\_COMPLIANCE\_MARGIN, [margin])
+419         \textcolor{keywordflow}{if} response:
+420             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting CCW compliance margin to %d'} % margin)
+421         \textcolor{keywordflow}{return} response
+422 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a9bccd126d83bf078e1879d7f0819be74_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abce41464baeefd827b2e0e751a07066a}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abce41464baeefd827b2e0e751a07066a}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+compliance\+\_\+margin\+\_\+cw@{set\+\_\+compliance\+\_\+margin\+\_\+cw}}
+\index{set\+\_\+compliance\+\_\+margin\+\_\+cw@{set\+\_\+compliance\+\_\+margin\+\_\+cw}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+compliance\+\_\+margin\+\_\+cw()}{set\_compliance\_margin\_cw()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+margin\+\_\+cw (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{margin }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The error between goal position and present position in CW direction.
+The range of the value is 0 to 255, and the unit is the same as Goal Position.
+The greater the value, the more difference occurs.
+\end{DoxyVerb}
+ 
+
+Definition at line 401 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+401     \textcolor{keyword}{def }set\_compliance\_margin\_cw(self, servo\_id, margin):
+402         \textcolor{stringliteral}{"""}
+403 \textcolor{stringliteral}{        The error between goal position and present position in CW direction.}
+404 \textcolor{stringliteral}{        The range of the value is 0 to 255, and the unit is the same as Goal Position.}
+405 \textcolor{stringliteral}{        The greater the value, the more difference occurs.}
+406 \textcolor{stringliteral}{        """}
+407         response = self.write(servo\_id, DXL\_CW\_COMPLIANCE\_MARGIN, [margin])
+408         \textcolor{keywordflow}{if} response:
+409             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting CW compliance margin to %d'} % margin)
+410         \textcolor{keywordflow}{return} response
+411 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abce41464baeefd827b2e0e751a07066a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a63bf7eefaada9a1a9d8b17dd33d88f90}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a63bf7eefaada9a1a9d8b17dd33d88f90}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+compliance\+\_\+margins@{set\+\_\+compliance\+\_\+margins}}
+\index{set\+\_\+compliance\+\_\+margins@{set\+\_\+compliance\+\_\+margins}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+compliance\+\_\+margins()}{set\_compliance\_margins()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+margins (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{margin\+\_\+cw,  }\item[{}]{margin\+\_\+ccw }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}The error between goal position and present position in CCW direction.
+The range of the value is 0 to 255, and the unit is the same as Goal Position.
+The greater the value, the more difference occurs.
+\end{DoxyVerb}
+ 
+
+Definition at line 423 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+423     \textcolor{keyword}{def }set\_compliance\_margins(self, servo\_id, margin\_cw, margin\_ccw):
+424         \textcolor{stringliteral}{"""}
+425 \textcolor{stringliteral}{        The error between goal position and present position in CCW direction.}
+426 \textcolor{stringliteral}{        The range of the value is 0 to 255, and the unit is the same as Goal Position.}
+427 \textcolor{stringliteral}{        The greater the value, the more difference occurs.}
+428 \textcolor{stringliteral}{        """}
+429         response = self.write(servo\_id, DXL\_CW\_COMPLIANCE\_MARGIN, (margin\_cw, margin\_ccw))
+430         \textcolor{keywordflow}{if} response:
+431             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting CW and CCW compliance margins to values
+       %d and %d'} %(margin\_cw, margin\_ccw))
+432         \textcolor{keywordflow}{return} response
+433 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a63bf7eefaada9a1a9d8b17dd33d88f90_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a367bdf6bff310866e082962ec6b62ee2}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a367bdf6bff310866e082962ec6b62ee2}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+compliance\+\_\+slope\+\_\+ccw@{set\+\_\+compliance\+\_\+slope\+\_\+ccw}}
+\index{set\+\_\+compliance\+\_\+slope\+\_\+ccw@{set\+\_\+compliance\+\_\+slope\+\_\+ccw}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+compliance\+\_\+slope\+\_\+ccw()}{set\_compliance\_slope\_ccw()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+slope\+\_\+ccw (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{slope }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the level of Torque near the goal position in CCW direction.
+Compliance Slope is set in 7 steps, the higher the value, the more flexibility is obtained.
+\end{DoxyVerb}
+ 
+
+Definition at line 444 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+444     \textcolor{keyword}{def }set\_compliance\_slope\_ccw(self, servo\_id, slope):
+445         \textcolor{stringliteral}{"""}
+446 \textcolor{stringliteral}{        Sets the level of Torque near the goal position in CCW direction.}
+447 \textcolor{stringliteral}{        Compliance Slope is set in 7 steps, the higher the value, the more flexibility is obtained.}
+448 \textcolor{stringliteral}{        """}
+449         response = self.write(servo\_id, DXL\_CCW\_COMPLIANCE\_SLOPE, [slope])
+450         \textcolor{keywordflow}{if} response:
+451             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting CCW compliance slope to %d'} % slope)
+452         \textcolor{keywordflow}{return} response
+453 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a367bdf6bff310866e082962ec6b62ee2_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2592528e6dc31c08e36f40b2bb8712e7}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2592528e6dc31c08e36f40b2bb8712e7}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+compliance\+\_\+slope\+\_\+cw@{set\+\_\+compliance\+\_\+slope\+\_\+cw}}
+\index{set\+\_\+compliance\+\_\+slope\+\_\+cw@{set\+\_\+compliance\+\_\+slope\+\_\+cw}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+compliance\+\_\+slope\+\_\+cw()}{set\_compliance\_slope\_cw()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+slope\+\_\+cw (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{slope }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the level of Torque near the goal position in CW direction.
+Compliance Slope is set in 7 steps, the higher the value, the more flexibility is obtained.
+\end{DoxyVerb}
+ 
+
+Definition at line 434 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+434     \textcolor{keyword}{def }set\_compliance\_slope\_cw(self, servo\_id, slope):
+435         \textcolor{stringliteral}{"""}
+436 \textcolor{stringliteral}{        Sets the level of Torque near the goal position in CW direction.}
+437 \textcolor{stringliteral}{        Compliance Slope is set in 7 steps, the higher the value, the more flexibility is obtained.}
+438 \textcolor{stringliteral}{        """}
+439         response = self.write(servo\_id, DXL\_CW\_COMPLIANCE\_SLOPE, [slope])
+440         \textcolor{keywordflow}{if} response:
+441             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting CW compliance slope to %d'} %  slope)
+442         \textcolor{keywordflow}{return} response
+443 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a2592528e6dc31c08e36f40b2bb8712e7_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a861b5b920bdd922f787d5f7a335c583d}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a861b5b920bdd922f787d5f7a335c583d}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+compliance\+\_\+slopes@{set\+\_\+compliance\+\_\+slopes}}
+\index{set\+\_\+compliance\+\_\+slopes@{set\+\_\+compliance\+\_\+slopes}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+compliance\+\_\+slopes()}{set\_compliance\_slopes()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+slopes (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{slope\+\_\+cw,  }\item[{}]{slope\+\_\+ccw }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the level of Torque near the goal position in CW/CCW direction.
+Compliance Slope is set in 7 steps, the higher the value, the more flexibility is obtained.
+\end{DoxyVerb}
+ 
+
+Definition at line 454 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+454     \textcolor{keyword}{def }set\_compliance\_slopes(self, servo\_id, slope\_cw, slope\_ccw):
+455         \textcolor{stringliteral}{"""}
+456 \textcolor{stringliteral}{        Sets the level of Torque near the goal position in CW/CCW direction.}
+457 \textcolor{stringliteral}{        Compliance Slope is set in 7 steps, the higher the value, the more flexibility is obtained.}
+458 \textcolor{stringliteral}{        """}
+459         response = self.write(servo\_id, DXL\_CW\_COMPLIANCE\_SLOPE, (slope\_cw, slope\_ccw))
+460         \textcolor{keywordflow}{if} response:
+461             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting CW and CCW compliance slopes to %d and
+       %d'} %(slope\_cw, slope\_ccw))
+462         \textcolor{keywordflow}{return} response
+463 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a861b5b920bdd922f787d5f7a335c583d_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a0047f1e442b7db44b6c85f4695384ffc}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a0047f1e442b7db44b6c85f4695384ffc}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+d\+\_\+gain@{set\+\_\+d\+\_\+gain}}
+\index{set\+\_\+d\+\_\+gain@{set\+\_\+d\+\_\+gain}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+d\+\_\+gain()}{set\_d\_gain()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+d\+\_\+gain (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{d\+\_\+gain }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the value of derivative action of PID controller.
+Gain value is in range 0 to 254.
+\end{DoxyVerb}
+ 
+
+Definition at line 464 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+464     \textcolor{keyword}{def }set\_d\_gain(self, servo\_id, d\_gain):
+465         \textcolor{stringliteral}{"""}
+466 \textcolor{stringliteral}{        Sets the value of derivative action of PID controller.}
+467 \textcolor{stringliteral}{        Gain value is in range 0 to 254.}
+468 \textcolor{stringliteral}{        """}
+469         response = self.write(servo\_id, DXL\_D\_GAIN, [d\_gain])
+470         \textcolor{keywordflow}{if} response:
+471             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting D gain value of PID controller to %d'} %
+       d\_gain)
+472         \textcolor{keywordflow}{return} response
+473 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a0047f1e442b7db44b6c85f4695384ffc_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a86293d719e12fb9e8a1e06c0ec8a5bd8}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a86293d719e12fb9e8a1e06c0ec8a5bd8}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+drive\+\_\+mode@{set\+\_\+drive\+\_\+mode}}
+\index{set\+\_\+drive\+\_\+mode@{set\+\_\+drive\+\_\+mode}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+drive\+\_\+mode()}{set\_drive\_mode()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+drive\+\_\+mode (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{is\+\_\+slave = {\ttfamily False},  }\item[{}]{is\+\_\+reverse = {\ttfamily False} }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the drive mode for EX-106 motors
+\end{DoxyVerb}
+ 
+
+Definition at line 329 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+329     \textcolor{keyword}{def }set\_drive\_mode(self, servo\_id, is\_slave=False, is\_reverse=False):
+330         \textcolor{stringliteral}{"""}
+331 \textcolor{stringliteral}{        Sets the drive mode for EX-106 motors}
+332 \textcolor{stringliteral}{        """}
+333         drive\_mode = (is\_slave << 1) + is\_reverse
+334 
+335         response = self.write(servo\_id, DXL\_DRIVE\_MODE, [drive\_mode])
+336         \textcolor{keywordflow}{if} response:
+337             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting drive mode to %d'} % drive\_mode)
+338         \textcolor{keywordflow}{return} response
+339 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a86293d719e12fb9e8a1e06c0ec8a5bd8_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a5d9728d7f0159ccd73fa6de0b1bfb402}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a5d9728d7f0159ccd73fa6de0b1bfb402}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+goal\+\_\+torque@{set\+\_\+goal\+\_\+torque}}
+\index{set\+\_\+goal\+\_\+torque@{set\+\_\+goal\+\_\+torque}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+goal\+\_\+torque()}{set\_goal\_torque()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+goal\+\_\+torque (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{torque }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the servo to torque control mode (similar to wheel mode, but controlling the torque)
+Valid values are from -1023 to 1023.
+Anything outside this range or 'None' disables torque control.
+\end{DoxyVerb}
+ 
+
+Definition at line 573 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+model\+\_\+number(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+573     \textcolor{keyword}{def }set\_goal\_torque(self, servo\_id, torque):
+574         \textcolor{stringliteral}{"""}
+575 \textcolor{stringliteral}{        Set the servo to torque control mode (similar to wheel mode, but controlling the torque)}
+576 \textcolor{stringliteral}{        Valid values are from -1023 to 1023.}
+577 \textcolor{stringliteral}{        Anything outside this range or 'None' disables torque control.}
+578 \textcolor{stringliteral}{        """}
+579 
+580         model = self.get\_model\_number(servo\_id)
+581         \textcolor{keywordflow}{if} \textcolor{keywordflow}{not} model \textcolor{keywordflow}{in} DXL\_MODEL\_TO\_PARAMS:
+582             \textcolor{keywordflow}{raise} UnsupportedFeatureError(model, DXL\_TORQUE\_CONTROL\_MODE)
+583 
+584         valid\_torque = torque \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None} \textcolor{keywordflow}{and} torque >= -1023 \textcolor{keywordflow}{and} torque <= 1023
+585         \textcolor{keywordflow}{if} torque \textcolor{keywordflow}{is} \textcolor{keywordflow}{not} \textcolor{keywordtype}{None} \textcolor{keywordflow}{and} torque < 0:
+586             torque = 1024 - torque
+587 
+588         \textcolor{keywordflow}{if} DXL\_TORQUE\_CONTROL\_MODE \textcolor{keywordflow}{in} DXL\_MODEL\_TO\_PARAMS[model][\textcolor{stringliteral}{'features'}]:
+589             \textcolor{keywordflow}{if} valid\_torque:
+590                 loVal = int(torque % 256); hiVal = int(torque >> 8);
+591                 response = self.write(servo\_id, DXL\_GOAL\_TORQUE\_L, (loVal, hiVal))
+592                 \textcolor{keywordflow}{if} response:
+593                     self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting goal torque to %d'} % torque)
+594             response = self.write(servo\_id, DXL\_TORQUE\_CONTROL\_MODE, (int(valid\_torque), ))
+595             \textcolor{keywordflow}{if} response:
+596                 self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'enabling torque mode'})
+597             \textcolor{keywordflow}{return} response
+598         \textcolor{keywordflow}{else}:
+599             \textcolor{keywordflow}{raise} UnsupportedFeatureError(model, DXL\_TORQUE\_CONTROL\_MODE)
+600 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a5d9728d7f0159ccd73fa6de0b1bfb402_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3d65dc76f96e3c11e2319a1dd79e85dd}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3d65dc76f96e3c11e2319a1dd79e85dd}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+i\+\_\+gain@{set\+\_\+i\+\_\+gain}}
+\index{set\+\_\+i\+\_\+gain@{set\+\_\+i\+\_\+gain}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+i\+\_\+gain()}{set\_i\_gain()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+i\+\_\+gain (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{i\+\_\+gain }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the value of integral action of PID controller.
+Gain value is in range 0 to 254.
+\end{DoxyVerb}
+ 
+
+Definition at line 474 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+474     \textcolor{keyword}{def }set\_i\_gain(self, servo\_id, i\_gain):
+475         \textcolor{stringliteral}{"""}
+476 \textcolor{stringliteral}{        Sets the value of integral action of PID controller.}
+477 \textcolor{stringliteral}{        Gain value is in range 0 to 254.}
+478 \textcolor{stringliteral}{        """}
+479         response = self.write(servo\_id, DXL\_I\_GAIN, [i\_gain])
+480         \textcolor{keywordflow}{if} response:
+481             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting I gain value of PID controller to %d'} %
+       i\_gain)
+482         \textcolor{keywordflow}{return} response
+483 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3d65dc76f96e3c11e2319a1dd79e85dd_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_afccabc02484af88d2343715225d92194}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_afccabc02484af88d2343715225d92194}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+id@{set\+\_\+id}}
+\index{set\+\_\+id@{set\+\_\+id}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+id()}{set\_id()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+id (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{old\+\_\+id,  }\item[{}]{new\+\_\+id }\end{DoxyParamCaption})}
+
+
+
+These function modify E\+E\+P\+R\+OM data which persists after power cycle \#. 
+
+\begin{DoxyVerb}Sets a new unique number to identify a motor. The range from 1 to 253
+(0xFD) can be used.
+\end{DoxyVerb}
+ 
+
+Definition at line 260 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+260     \textcolor{keyword}{def }set\_id(self, old\_id, new\_id):
+261         \textcolor{stringliteral}{"""}
+262 \textcolor{stringliteral}{        Sets a new unique number to identify a motor. The range from 1 to 253}
+263 \textcolor{stringliteral}{        (0xFD) can be used.}
+264 \textcolor{stringliteral}{        """}
+265         response = self.write(old\_id, DXL\_ID, [new\_id])
+266         \textcolor{keywordflow}{if} response:
+267             self.exception\_on\_error(response[4], old\_id, \textcolor{stringliteral}{'setting id to %d'} % new\_id)
+268         \textcolor{keywordflow}{return} response
+269 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_afccabc02484af88d2343715225d92194_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a72228e3b0c55a624300a4cfba0e2d07f}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a72228e3b0c55a624300a4cfba0e2d07f}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+led@{set\+\_\+led}}
+\index{set\+\_\+led@{set\+\_\+led}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+led()}{set\_led()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+led (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{led\+\_\+state }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Turn the LED of servo motor on/off.
+Possible boolean state values:
+    True - turn the LED on,
+    False - turn the LED off.
+\end{DoxyVerb}
+ 
+
+Definition at line 623 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+623     \textcolor{keyword}{def }set\_led(self, servo\_id, led\_state):
+624         \textcolor{stringliteral}{"""}
+625 \textcolor{stringliteral}{        Turn the LED of servo motor on/off.}
+626 \textcolor{stringliteral}{        Possible boolean state values:}
+627 \textcolor{stringliteral}{            True - turn the LED on,}
+628 \textcolor{stringliteral}{            False - turn the LED off.}
+629 \textcolor{stringliteral}{        """}
+630         response = self.write(servo\_id, DXL\_LED, [led\_state])
+631         \textcolor{keywordflow}{if} response:
+632             self.exception\_on\_error(response[4], servo\_id,
+633                     \textcolor{stringliteral}{'setting a LED to %s'} % led\_state)
+634         \textcolor{keywordflow}{return} response
+635 
+636 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a72228e3b0c55a624300a4cfba0e2d07f_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a20243d60946e850c4bccf94edfa2504a}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a20243d60946e850c4bccf94edfa2504a}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+ccw@{set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+ccw}}
+\index{set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+ccw@{set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+ccw}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+ccw()}{set\_multi\_compliance\_margin\_ccw()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+ccw (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set different CCW compliance margin for multiple servos.
+Should be called as such:
+set_multi_compliance_margin_ccw( ( (id1, margin1), (id2, margin2), (id3, margin3) ) )
+\end{DoxyVerb}
+ 
+
+Definition at line 660 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+660     \textcolor{keyword}{def }set\_multi\_compliance\_margin\_ccw(self, valueTuples):
+661         \textcolor{stringliteral}{"""}
+662 \textcolor{stringliteral}{        Set different CCW compliance margin for multiple servos.}
+663 \textcolor{stringliteral}{        Should be called as such:}
+664 \textcolor{stringliteral}{        set\_multi\_compliance\_margin\_ccw( ( (id1, margin1), (id2, margin2), (id3, margin3) ) )}
+665 \textcolor{stringliteral}{        """}
+666         self.sync\_write(DXL\_CCW\_COMPLIANCE\_MARGIN, tuple(valueTuples))
+667 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a20243d60946e850c4bccf94edfa2504a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a57b4bb815b4946e8759c512c3a7aec90}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a57b4bb815b4946e8759c512c3a7aec90}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+cw@{set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+cw}}
+\index{set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+cw@{set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+cw}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+cw()}{set\_multi\_compliance\_margin\_cw()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+cw (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set different CW compliance margin for multiple servos.
+Should be called as such:
+set_multi_compliance_margin_cw( ( (id1, margin1), (id2, margin2), (id3, margin3) ) )
+\end{DoxyVerb}
+ 
+
+Definition at line 652 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+652     \textcolor{keyword}{def }set\_multi\_compliance\_margin\_cw(self, valueTuples):
+653         \textcolor{stringliteral}{"""}
+654 \textcolor{stringliteral}{        Set different CW compliance margin for multiple servos.}
+655 \textcolor{stringliteral}{        Should be called as such:}
+656 \textcolor{stringliteral}{        set\_multi\_compliance\_margin\_cw( ( (id1, margin1), (id2, margin2), (id3, margin3) ) )}
+657 \textcolor{stringliteral}{        """}
+658         self.sync\_write(DXL\_CW\_COMPLIANCE\_MARGIN, tuple(valueTuples))
+659 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a57b4bb815b4946e8759c512c3a7aec90_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab6ae4c7448f85ee22a95510a23be04b2}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab6ae4c7448f85ee22a95510a23be04b2}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+compliance\+\_\+margins@{set\+\_\+multi\+\_\+compliance\+\_\+margins}}
+\index{set\+\_\+multi\+\_\+compliance\+\_\+margins@{set\+\_\+multi\+\_\+compliance\+\_\+margins}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+compliance\+\_\+margins()}{set\_multi\_compliance\_margins()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+margins (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set different CW and CCW compliance margins for multiple servos.
+Should be called as such:
+set_multi_compliance_margins( ( (id1, cw_margin1, ccw_margin1), (id2, cw_margin2, ccw_margin2) ) )
+\end{DoxyVerb}
+ 
+
+Definition at line 668 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+668     \textcolor{keyword}{def }set\_multi\_compliance\_margins(self, valueTuples):
+669         \textcolor{stringliteral}{"""}
+670 \textcolor{stringliteral}{        Set different CW and CCW compliance margins for multiple servos.}
+671 \textcolor{stringliteral}{        Should be called as such:}
+672 \textcolor{stringliteral}{        set\_multi\_compliance\_margins( ( (id1, cw\_margin1, ccw\_margin1), (id2, cw\_margin2, ccw\_margin2) ) )}
+673 \textcolor{stringliteral}{        """}
+674         self.sync\_write(DXL\_CW\_COMPLIANCE\_MARGIN, tuple(valueTuples))
+675 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ab6ae4c7448f85ee22a95510a23be04b2_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3c59c5ea5e5e0262fc43d0b2603ca444}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3c59c5ea5e5e0262fc43d0b2603ca444}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+ccw@{set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+ccw}}
+\index{set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+ccw@{set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+ccw}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+ccw()}{set\_multi\_compliance\_slope\_ccw()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+ccw (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set different CCW compliance slope for multiple servos.
+Should be called as such:
+set_multi_compliance_slope_ccw( ( (id1, slope1), (id2, slope2), (id3, slope3) ) )
+\end{DoxyVerb}
+ 
+
+Definition at line 684 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+684     \textcolor{keyword}{def }set\_multi\_compliance\_slope\_ccw(self, valueTuples):
+685         \textcolor{stringliteral}{"""}
+686 \textcolor{stringliteral}{        Set different CCW compliance slope for multiple servos.}
+687 \textcolor{stringliteral}{        Should be called as such:}
+688 \textcolor{stringliteral}{        set\_multi\_compliance\_slope\_ccw( ( (id1, slope1), (id2, slope2), (id3, slope3) ) )}
+689 \textcolor{stringliteral}{        """}
+690         self.sync\_write(DXL\_CCW\_COMPLIANCE\_SLOPE, tuple(valueTuples))
+691 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a3c59c5ea5e5e0262fc43d0b2603ca444_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a115695cc45ce343d0787fcc3c0bf6e7b}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a115695cc45ce343d0787fcc3c0bf6e7b}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+cw@{set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+cw}}
+\index{set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+cw@{set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+cw}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+cw()}{set\_multi\_compliance\_slope\_cw()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+cw (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set different CW compliance slope for multiple servos.
+Should be called as such:
+set_multi_compliance_slope_cw( ( (id1, slope1), (id2, slope2), (id3, slope3) ) )
+\end{DoxyVerb}
+ 
+
+Definition at line 676 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+676     \textcolor{keyword}{def }set\_multi\_compliance\_slope\_cw(self, valueTuples):
+677         \textcolor{stringliteral}{"""}
+678 \textcolor{stringliteral}{        Set different CW compliance slope for multiple servos.}
+679 \textcolor{stringliteral}{        Should be called as such:}
+680 \textcolor{stringliteral}{        set\_multi\_compliance\_slope\_cw( ( (id1, slope1), (id2, slope2), (id3, slope3) ) )}
+681 \textcolor{stringliteral}{        """}
+682         self.sync\_write(DXL\_CW\_COMPLIANCE\_SLOPE, tuple(valueTuples))
+683 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a115695cc45ce343d0787fcc3c0bf6e7b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af3b2a4bd581266a9dd067a0c1f34687a}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af3b2a4bd581266a9dd067a0c1f34687a}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+compliance\+\_\+slopes@{set\+\_\+multi\+\_\+compliance\+\_\+slopes}}
+\index{set\+\_\+multi\+\_\+compliance\+\_\+slopes@{set\+\_\+multi\+\_\+compliance\+\_\+slopes}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+compliance\+\_\+slopes()}{set\_multi\_compliance\_slopes()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+slopes (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set different CW and CCW compliance slopes for multiple servos.
+Should be called as such:
+set_multi_compliance_slopes( ( (id1, cw_slope1, ccw_slope1), (id2, cw_slope2, ccw_slope2) ) )
+\end{DoxyVerb}
+ 
+
+Definition at line 692 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+692     \textcolor{keyword}{def }set\_multi\_compliance\_slopes(self, valueTuples):
+693         \textcolor{stringliteral}{"""}
+694 \textcolor{stringliteral}{        Set different CW and CCW compliance slopes for multiple servos.}
+695 \textcolor{stringliteral}{        Should be called as such:}
+696 \textcolor{stringliteral}{        set\_multi\_compliance\_slopes( ( (id1, cw\_slope1, ccw\_slope1), (id2, cw\_slope2, ccw\_slope2) ) )}
+697 \textcolor{stringliteral}{        """}
+698         self.sync\_write(DXL\_CW\_COMPLIANCE\_SLOPE, tuple(valueTuples))
+699 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af3b2a4bd581266a9dd067a0c1f34687a_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aca2d90dab958dcc6d058c1eb6d7a6e11}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aca2d90dab958dcc6d058c1eb6d7a6e11}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+position@{set\+\_\+multi\+\_\+position}}
+\index{set\+\_\+multi\+\_\+position@{set\+\_\+multi\+\_\+position}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+position()}{set\_multi\_position()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+position (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set different positions for multiple servos.
+Should be called as such:
+set_multi_position( ( (id1, position1), (id2, position2), (id3, position3) ) )
+\end{DoxyVerb}
+ 
+
+Definition at line 719 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+719     \textcolor{keyword}{def }set\_multi\_position(self, valueTuples):
+720         \textcolor{stringliteral}{"""}
+721 \textcolor{stringliteral}{        Set different positions for multiple servos.}
+722 \textcolor{stringliteral}{        Should be called as such:}
+723 \textcolor{stringliteral}{        set\_multi\_position( ( (id1, position1), (id2, position2), (id3, position3) ) )}
+724 \textcolor{stringliteral}{        """}
+725         \textcolor{comment}{# prepare value tuples for call to syncwrite}
+726         writeableVals = []
+727 
+728         \textcolor{keywordflow}{for} vals \textcolor{keywordflow}{in} valueTuples:
+729             sid = vals[0]
+730             position = vals[1]
+731             \textcolor{comment}{# split position into 2 bytes}
+732             loVal = int(position % 256)
+733             hiVal = int(position >> 8)
+734             writeableVals.append( (sid, loVal, hiVal) )
+735 
+736         \textcolor{comment}{# use sync write to broadcast multi servo message}
+737         self.sync\_write(DXL\_GOAL\_POSITION\_L, writeableVals)
+738 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aca2d90dab958dcc6d058c1eb6d7a6e11_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a124b89dc055f8f5ff807d8d976115529}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a124b89dc055f8f5ff807d8d976115529}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+position\+\_\+and\+\_\+speed@{set\+\_\+multi\+\_\+position\+\_\+and\+\_\+speed}}
+\index{set\+\_\+multi\+\_\+position\+\_\+and\+\_\+speed@{set\+\_\+multi\+\_\+position\+\_\+and\+\_\+speed}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+position\+\_\+and\+\_\+speed()}{set\_multi\_position\_and\_speed()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+position\+\_\+and\+\_\+speed (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set different positions and speeds for multiple servos.
+Should be called as such:
+set_multi_position_and_speed( ( (id1, position1, speed1), (id2, position2, speed2), (id3, position3, speed3) ) )
+\end{DoxyVerb}
+ 
+
+Definition at line 783 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+783     \textcolor{keyword}{def }set\_multi\_position\_and\_speed(self, valueTuples):
+784         \textcolor{stringliteral}{"""}
+785 \textcolor{stringliteral}{        Set different positions and speeds for multiple servos.}
+786 \textcolor{stringliteral}{        Should be called as such:}
+787 \textcolor{stringliteral}{        set\_multi\_position\_and\_speed( ( (id1, position1, speed1), (id2, position2, speed2), (id3,
+       position3, speed3) ) )}
+788 \textcolor{stringliteral}{        """}
+789         \textcolor{comment}{# prepare value tuples for call to syncwrite}
+790         writeableVals = []
+791 
+792         \textcolor{keywordflow}{for} vals \textcolor{keywordflow}{in} valueTuples:
+793             sid = vals[0]
+794             position = vals[1]
+795             speed = vals[2]
+796 
+797             \textcolor{comment}{# split speed into 2 bytes}
+798             \textcolor{keywordflow}{if} speed >= 0:
+799                 loSpeedVal = int(speed % 256)
+800                 hiSpeedVal = int(speed >> 8)
+801             \textcolor{keywordflow}{else}:
+802                 loSpeedVal = int((1023 - speed) % 256)
+803                 hiSpeedVal = int((1023 - speed) >> 8)
+804 
+805             \textcolor{comment}{# split position into 2 bytes}
+806             loPositionVal = int(position % 256)
+807             hiPositionVal = int(position >> 8)
+808             writeableVals.append( (sid, loPositionVal, hiPositionVal, loSpeedVal, hiSpeedVal) )
+809 
+810         \textcolor{comment}{# use sync write to broadcast multi servo message}
+811         self.sync\_write(DXL\_GOAL\_POSITION\_L, tuple(writeableVals))
+812 
+813 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a124b89dc055f8f5ff807d8d976115529_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a113e6ff1c59d67480dc779fe7fa1ba52}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a113e6ff1c59d67480dc779fe7fa1ba52}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+punch@{set\+\_\+multi\+\_\+punch}}
+\index{set\+\_\+multi\+\_\+punch@{set\+\_\+multi\+\_\+punch}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+punch()}{set\_multi\_punch()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+punch (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set different punch values for multiple servos.
+NOTE: according to documentation, currently this value is not being used.
+Should be called as such:
+set_multi_punch( ( (id1, punch1), (id2, punch2), (id3, punch3) ) )
+\end{DoxyVerb}
+ 
+
+Definition at line 700 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+700     \textcolor{keyword}{def }set\_multi\_punch(self, valueTuples):
+701         \textcolor{stringliteral}{"""}
+702 \textcolor{stringliteral}{        Set different punch values for multiple servos.}
+703 \textcolor{stringliteral}{        NOTE: according to documentation, currently this value is not being used.}
+704 \textcolor{stringliteral}{        Should be called as such:}
+705 \textcolor{stringliteral}{        set\_multi\_punch( ( (id1, punch1), (id2, punch2), (id3, punch3) ) )}
+706 \textcolor{stringliteral}{        """}
+707         \textcolor{comment}{# prepare value tuples for call to syncwrite}
+708         writeableVals = []
+709 
+710         \textcolor{keywordflow}{for} sid,punch \textcolor{keywordflow}{in} valueTuples:
+711             \textcolor{comment}{# split punch into 2 bytes}
+712             loVal = int(punch % 256)
+713             hiVal = int(punch >> 8)
+714             writeableVals.append( (sid, loVal, hiVal) )
+715 
+716         \textcolor{comment}{# use sync write to broadcast multi servo message}
+717         self.sync\_write(DXL\_PUNCH\_L, writeableVals)
+718 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a113e6ff1c59d67480dc779fe7fa1ba52_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a8150f8a015df1441f348eb0a6c6ccaee}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a8150f8a015df1441f348eb0a6c6ccaee}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+speed@{set\+\_\+multi\+\_\+speed}}
+\index{set\+\_\+multi\+\_\+speed@{set\+\_\+multi\+\_\+speed}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+speed()}{set\_multi\_speed()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+speed (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set different speeds for multiple servos.
+Should be called as such:
+set_multi_speed( ( (id1, speed1), (id2, speed2), (id3, speed3) ) )
+\end{DoxyVerb}
+ 
+
+Definition at line 739 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+739     \textcolor{keyword}{def }set\_multi\_speed(self, valueTuples):
+740         \textcolor{stringliteral}{"""}
+741 \textcolor{stringliteral}{        Set different speeds for multiple servos.}
+742 \textcolor{stringliteral}{        Should be called as such:}
+743 \textcolor{stringliteral}{        set\_multi\_speed( ( (id1, speed1), (id2, speed2), (id3, speed3) ) )}
+744 \textcolor{stringliteral}{        """}
+745         \textcolor{comment}{# prepare value tuples for call to syncwrite}
+746         writeableVals = []
+747 
+748         \textcolor{keywordflow}{for} vals \textcolor{keywordflow}{in} valueTuples:
+749             sid = vals[0]
+750             speed = vals[1]
+751 
+752             \textcolor{comment}{# split speed into 2 bytes}
+753             \textcolor{keywordflow}{if} speed >= 0:
+754                 loVal = int(speed % 256)
+755                 hiVal = int(speed >> 8)
+756             \textcolor{keywordflow}{else}:
+757                 loVal = int((1023 - speed) % 256)
+758                 hiVal = int((1023 - speed) >> 8)
+759 
+760             writeableVals.append( (sid, loVal, hiVal) )
+761 
+762         \textcolor{comment}{# use sync write to broadcast multi servo message}
+763         self.sync\_write(DXL\_GOAL\_SPEED\_L, writeableVals)
+764 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a8150f8a015df1441f348eb0a6c6ccaee_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a131a8a5ce4168f260e0661c2867155d2}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a131a8a5ce4168f260e0661c2867155d2}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+torque\+\_\+enabled@{set\+\_\+multi\+\_\+torque\+\_\+enabled}}
+\index{set\+\_\+multi\+\_\+torque\+\_\+enabled@{set\+\_\+multi\+\_\+torque\+\_\+enabled}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+torque\+\_\+enabled()}{set\_multi\_torque\_enabled()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+torque\+\_\+enabled (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+
+
+These functions can send multiple commands to multiple servos \# These commands are used in R\+OS wrapper as they don\textquotesingle{}t send a \# response packet, R\+OS wrapper gets motor states at a set rate \#. 
+
+\begin{DoxyVerb}Method to set multiple servos torque enabled.
+Should be called as such:
+set_multi_servos_to_torque_enabled( (id1, True), (id2, True), (id3, True) )
+\end{DoxyVerb}
+ 
+
+Definition at line 643 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+643     \textcolor{keyword}{def }set\_multi\_torque\_enabled(self, valueTuples):
+644         \textcolor{stringliteral}{"""}
+645 \textcolor{stringliteral}{        Method to set multiple servos torque enabled.}
+646 \textcolor{stringliteral}{        Should be called as such:}
+647 \textcolor{stringliteral}{        set\_multi\_servos\_to\_torque\_enabled( (id1, True), (id2, True), (id3, True) )}
+648 \textcolor{stringliteral}{        """}
+649         \textcolor{comment}{# use sync write to broadcast multi servo message}
+650         self.sync\_write(DXL\_TORQUE\_ENABLE, tuple(valueTuples))
+651 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a131a8a5ce4168f260e0661c2867155d2_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a1e05872bf62fd6726255c423219ca569}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a1e05872bf62fd6726255c423219ca569}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+multi\+\_\+torque\+\_\+limit@{set\+\_\+multi\+\_\+torque\+\_\+limit}}
+\index{set\+\_\+multi\+\_\+torque\+\_\+limit@{set\+\_\+multi\+\_\+torque\+\_\+limit}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+multi\+\_\+torque\+\_\+limit()}{set\_multi\_torque\_limit()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+torque\+\_\+limit (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{value\+Tuples }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set different torque limits for multiple servos.
+Should be called as such:
+set_multi_torque_limit( ( (id1, torque1), (id2, torque2), (id3, torque3) ) )
+\end{DoxyVerb}
+ 
+
+Definition at line 765 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write().
+
+
+\begin{DoxyCode}
+765     \textcolor{keyword}{def }set\_multi\_torque\_limit(self, valueTuples):
+766         \textcolor{stringliteral}{"""}
+767 \textcolor{stringliteral}{        Set different torque limits for multiple servos.}
+768 \textcolor{stringliteral}{        Should be called as such:}
+769 \textcolor{stringliteral}{        set\_multi\_torque\_limit( ( (id1, torque1), (id2, torque2), (id3, torque3) ) )}
+770 \textcolor{stringliteral}{        """}
+771         \textcolor{comment}{# prepare value tuples for call to syncwrite}
+772         writeableVals = []
+773 
+774         \textcolor{keywordflow}{for} sid,torque \textcolor{keywordflow}{in} valueTuples:
+775             \textcolor{comment}{# split torque into 2 bytes}
+776             loVal = int(torque % 256)
+777             hiVal = int(torque >> 8)
+778             writeableVals.append( (sid, loVal, hiVal) )
+779 
+780         \textcolor{comment}{# use sync write to broadcast multi servo message}
+781         self.sync\_write(DXL\_TORQUE\_LIMIT\_L, writeableVals)
+782 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a1e05872bf62fd6726255c423219ca569_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aaf22ae60cdc22b26bc6b1fb3f8c87197}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aaf22ae60cdc22b26bc6b1fb3f8c87197}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+p\+\_\+gain@{set\+\_\+p\+\_\+gain}}
+\index{set\+\_\+p\+\_\+gain@{set\+\_\+p\+\_\+gain}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+p\+\_\+gain()}{set\_p\_gain()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+p\+\_\+gain (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{p\+\_\+gain }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the value of proportional action of PID controller.
+Gain value is in range 0 to 254.
+\end{DoxyVerb}
+ 
+
+Definition at line 484 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+484     \textcolor{keyword}{def }set\_p\_gain(self, servo\_id, p\_gain):
+485         \textcolor{stringliteral}{"""}
+486 \textcolor{stringliteral}{        Sets the value of proportional action of PID controller.}
+487 \textcolor{stringliteral}{        Gain value is in range 0 to 254.}
+488 \textcolor{stringliteral}{        """}
+489         response = self.write(servo\_id, DXL\_P\_GAIN, [p\_gain])
+490         \textcolor{keywordflow}{if} response:
+491             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting P gain value of PID controller to %d'} %
+       p\_gain)
+492         \textcolor{keywordflow}{return} response
+493 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aaf22ae60cdc22b26bc6b1fb3f8c87197_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a9fe99ffb450e3d2df5a4ffe188a74c27}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a9fe99ffb450e3d2df5a4ffe188a74c27}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+position@{set\+\_\+position}}
+\index{set\+\_\+position@{set\+\_\+position}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+position()}{set\_position()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+position (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{position }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the servo with servo_id to the specified goal position.
+Position value must be positive.
+\end{DoxyVerb}
+ 
+
+Definition at line 526 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+526     \textcolor{keyword}{def }set\_position(self, servo\_id, position):
+527         \textcolor{stringliteral}{"""}
+528 \textcolor{stringliteral}{        Set the servo with servo\_id to the specified goal position.}
+529 \textcolor{stringliteral}{        Position value must be positive.}
+530 \textcolor{stringliteral}{        """}
+531         loVal = int(position % 256)
+532         hiVal = int(position >> 8)
+533 
+534         response = self.write(servo\_id, DXL\_GOAL\_POSITION\_L, (loVal, hiVal))
+535         \textcolor{keywordflow}{if} response:
+536             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting goal position to %d'} % position)
+537         \textcolor{keywordflow}{return} response
+538 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a9fe99ffb450e3d2df5a4ffe188a74c27_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af71f76e0add41cdb296082acf75fbe2c}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af71f76e0add41cdb296082acf75fbe2c}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+position\+\_\+and\+\_\+speed@{set\+\_\+position\+\_\+and\+\_\+speed}}
+\index{set\+\_\+position\+\_\+and\+\_\+speed@{set\+\_\+position\+\_\+and\+\_\+speed}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+position\+\_\+and\+\_\+speed()}{set\_position\_and\_speed()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+position\+\_\+and\+\_\+speed (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{position,  }\item[{}]{speed }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the servo with servo_id to specified position and speed.
+Speed can be negative only if the dynamixel is in "freespin" mode.
+\end{DoxyVerb}
+ 
+
+Definition at line 601 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+601     \textcolor{keyword}{def }set\_position\_and\_speed(self, servo\_id, position, speed):
+602         \textcolor{stringliteral}{"""}
+603 \textcolor{stringliteral}{        Set the servo with servo\_id to specified position and speed.}
+604 \textcolor{stringliteral}{        Speed can be negative only if the dynamixel is in "freespin" mode.}
+605 \textcolor{stringliteral}{        """}
+606         \textcolor{comment}{# split speed into 2 bytes}
+607         \textcolor{keywordflow}{if} speed >= 0:
+608             loSpeedVal = int(speed % 256)
+609             hiSpeedVal = int(speed >> 8)
+610         \textcolor{keywordflow}{else}:
+611             loSpeedVal = int((1023 - speed) % 256)
+612             hiSpeedVal = int((1023 - speed) >> 8)
+613 
+614         \textcolor{comment}{# split position into 2 bytes}
+615         loPositionVal = int(position % 256)
+616         hiPositionVal = int(position >> 8)
+617 
+618         response = self.write(servo\_id, DXL\_GOAL\_POSITION\_L, (loPositionVal, hiPositionVal, loSpeedVal, 
+      hiSpeedVal))
+619         \textcolor{keywordflow}{if} response:
+620             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting goal position to %d and moving speed to
+       %d'} %(position, speed))
+621         \textcolor{keywordflow}{return} response
+622 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_af71f76e0add41cdb296082acf75fbe2c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a71006ce4b2eed14fbf7189813b168086}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a71006ce4b2eed14fbf7189813b168086}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+punch@{set\+\_\+punch}}
+\index{set\+\_\+punch@{set\+\_\+punch}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+punch()}{set\_punch()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+punch (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{punch }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the limit value of torque being reduced when the output torque is
+decreased in the Compliance Slope area. In other words, it is the mimimum
+torque. The initial value is 32 (0x20) and can be extended up to 1023
+(0x3FF). (Refer to Compliance margin & Slope)
+\end{DoxyVerb}
+ 
+
+Definition at line 494 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+494     \textcolor{keyword}{def }set\_punch(self, servo\_id, punch):
+495         \textcolor{stringliteral}{"""}
+496 \textcolor{stringliteral}{        Sets the limit value of torque being reduced when the output torque is}
+497 \textcolor{stringliteral}{        decreased in the Compliance Slope area. In other words, it is the mimimum}
+498 \textcolor{stringliteral}{        torque. The initial value is 32 (0x20) and can be extended up to 1023}
+499 \textcolor{stringliteral}{        (0x3FF). (Refer to Compliance margin & Slope)}
+500 \textcolor{stringliteral}{        """}
+501         loVal = int(punch % 256)
+502         hiVal = int(punch >> 8)
+503         response = self.write(servo\_id, DXL\_PUNCH\_L, (loVal, hiVal))
+504         \textcolor{keywordflow}{if} response:
+505             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting punch to %d'} % punch)
+506         \textcolor{keywordflow}{return} response
+507 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a71006ce4b2eed14fbf7189813b168086_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abb71028869bffa449bc0c6f94f44de26}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abb71028869bffa449bc0c6f94f44de26}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+return\+\_\+delay\+\_\+time@{set\+\_\+return\+\_\+delay\+\_\+time}}
+\index{set\+\_\+return\+\_\+delay\+\_\+time@{set\+\_\+return\+\_\+delay\+\_\+time}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+return\+\_\+delay\+\_\+time()}{set\_return\_delay\_time()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+return\+\_\+delay\+\_\+time (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{delay }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the delay time from the transmission of Instruction Packet until
+the return of Status Packet. 0 to 254 (0xFE) can be used, and the delay
+time per data value is 2 usec.
+\end{DoxyVerb}
+ 
+
+Definition at line 279 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+279     \textcolor{keyword}{def }set\_return\_delay\_time(self, servo\_id, delay):
+280         \textcolor{stringliteral}{"""}
+281 \textcolor{stringliteral}{        Sets the delay time from the transmission of Instruction Packet until}
+282 \textcolor{stringliteral}{        the return of Status Packet. 0 to 254 (0xFE) can be used, and the delay}
+283 \textcolor{stringliteral}{        time per data value is 2 usec.}
+284 \textcolor{stringliteral}{        """}
+285         response = self.write(servo\_id, DXL\_RETURN\_DELAY\_TIME, [delay])
+286         \textcolor{keywordflow}{if} response:
+287             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting return delay time to %d'} % delay)
+288         \textcolor{keywordflow}{return} response
+289 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_abb71028869bffa449bc0c6f94f44de26_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_add7657922014d85bd52aeb1f0d9d2d41}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_add7657922014d85bd52aeb1f0d9d2d41}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+speed@{set\+\_\+speed}}
+\index{set\+\_\+speed@{set\+\_\+speed}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+speed()}{set\_speed()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+speed (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{speed }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the servo with servo_id to the specified goal speed.
+Speed can be negative only if the dynamixel is in "freespin" mode.
+\end{DoxyVerb}
+ 
+
+Definition at line 539 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+539     \textcolor{keyword}{def }set\_speed(self, servo\_id, speed):
+540         \textcolor{stringliteral}{"""}
+541 \textcolor{stringliteral}{        Set the servo with servo\_id to the specified goal speed.}
+542 \textcolor{stringliteral}{        Speed can be negative only if the dynamixel is in "freespin" mode.}
+543 \textcolor{stringliteral}{        """}
+544         \textcolor{comment}{# split speed into 2 bytes}
+545         \textcolor{keywordflow}{if} speed >= 0:
+546             loVal = int(speed % 256)
+547             hiVal = int(speed >> 8)
+548         \textcolor{keywordflow}{else}:
+549             loVal = int((1023 - speed) % 256)
+550             hiVal = int((1023 - speed) >> 8)
+551 
+552         \textcolor{comment}{# set two register values with low and high byte for the speed}
+553         response = self.write(servo\_id, DXL\_GOAL\_SPEED\_L, (loVal, hiVal))
+554         \textcolor{keywordflow}{if} response:
+555             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting moving speed to %d'} % speed)
+556         \textcolor{keywordflow}{return} response
+557 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_add7657922014d85bd52aeb1f0d9d2d41_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aab00b3a67df7330d6ab230b4c477550c}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aab00b3a67df7330d6ab230b4c477550c}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+torque\+\_\+enabled@{set\+\_\+torque\+\_\+enabled}}
+\index{set\+\_\+torque\+\_\+enabled@{set\+\_\+torque\+\_\+enabled}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+torque\+\_\+enabled()}{set\_torque\_enabled()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+torque\+\_\+enabled (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{enabled }\end{DoxyParamCaption})}
+
+
+
+These functions can send a single command to a single servo \#. 
+
+\begin{DoxyVerb}Sets the value of the torque enabled register to 1 or 0. When the
+torque is disabled the servo can be moved manually while the motor is
+still powered.
+\end{DoxyVerb}
+ 
+
+Definition at line 390 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+390     \textcolor{keyword}{def }set\_torque\_enabled(self, servo\_id, enabled):
+391         \textcolor{stringliteral}{"""}
+392 \textcolor{stringliteral}{        Sets the value of the torque enabled register to 1 or 0. When the}
+393 \textcolor{stringliteral}{        torque is disabled the servo can be moved manually while the motor is}
+394 \textcolor{stringliteral}{        still powered.}
+395 \textcolor{stringliteral}{        """}
+396         response = self.write(servo\_id, DXL\_TORQUE\_ENABLE, [enabled])
+397         \textcolor{keywordflow}{if} response:
+398             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'%sabling torque'} % \textcolor{stringliteral}{'en'} \textcolor{keywordflow}{if} enabled \textcolor{keywordflow}{else} \textcolor{stringliteral}{'dis'})
+399         \textcolor{keywordflow}{return} response
+400 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aab00b3a67df7330d6ab230b4c477550c_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a77333ce0f4d09a02be80b48cdc4abda3}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a77333ce0f4d09a02be80b48cdc4abda3}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+torque\+\_\+limit@{set\+\_\+torque\+\_\+limit}}
+\index{set\+\_\+torque\+\_\+limit@{set\+\_\+torque\+\_\+limit}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+torque\+\_\+limit()}{set\_torque\_limit()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+torque\+\_\+limit (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{torque }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Sets the value of the maximum torque limit for servo with id servo_id.
+Valid values are 0 to 1023 (0x3FF), and the unit is about 0.1%.
+For example, if the value is 512 only 50% of the maximum torque will be used.
+If the power is turned on, the value of Max Torque (Address 14, 15) is used as the initial value.
+\end{DoxyVerb}
+ 
+
+Definition at line 558 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+558     \textcolor{keyword}{def }set\_torque\_limit(self, servo\_id, torque):
+559         \textcolor{stringliteral}{"""}
+560 \textcolor{stringliteral}{        Sets the value of the maximum torque limit for servo with id servo\_id.}
+561 \textcolor{stringliteral}{        Valid values are 0 to 1023 (0x3FF), and the unit is about 0.1%.}
+562 \textcolor{stringliteral}{        For example, if the value is 512 only 50% of the maximum torque will be used.}
+563 \textcolor{stringliteral}{        If the power is turned on, the value of Max Torque (Address 14, 15) is used as the initial value.}
+564 \textcolor{stringliteral}{        """}
+565         loVal = int(torque % 256)
+566         hiVal = int(torque >> 8)
+567 
+568         response = self.write(servo\_id, DXL\_TORQUE\_LIMIT\_L, (loVal, hiVal))
+569         \textcolor{keywordflow}{if} response:
+570             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting torque limit to %d'} % torque)
+571         \textcolor{keywordflow}{return} response
+572 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a77333ce0f4d09a02be80b48cdc4abda3_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa3057aa0c2b3efcbac7c8e5fb606b267}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa3057aa0c2b3efcbac7c8e5fb606b267}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+voltage\+\_\+limit\+\_\+max@{set\+\_\+voltage\+\_\+limit\+\_\+max}}
+\index{set\+\_\+voltage\+\_\+limit\+\_\+max@{set\+\_\+voltage\+\_\+limit\+\_\+max}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+voltage\+\_\+limit\+\_\+max()}{set\_voltage\_limit\_max()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+voltage\+\_\+limit\+\_\+max (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{max\+\_\+voltage }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the maximum voltage limit.
+NOTE: the absolute min is 25v
+\end{DoxyVerb}
+ 
+
+Definition at line 354 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+354     \textcolor{keyword}{def }set\_voltage\_limit\_max(self, servo\_id, max\_voltage):
+355         \textcolor{stringliteral}{"""}
+356 \textcolor{stringliteral}{        Set the maximum voltage limit.}
+357 \textcolor{stringliteral}{        NOTE: the absolute min is 25v}
+358 \textcolor{stringliteral}{        """}
+359 
+360         \textcolor{keywordflow}{if} max\_voltage > 25: max\_voltage = 25
+361         maxVal = int(max\_voltage * 10)
+362 
+363         response = self.write(servo\_id, DXL\_UP\_LIMIT\_VOLTAGE, [maxVal])
+364         \textcolor{keywordflow}{if} response:
+365             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting maximum voltage level to %d'} % 
+      max\_voltage)
+366         \textcolor{keywordflow}{return} response
+367 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa3057aa0c2b3efcbac7c8e5fb606b267_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a59bee3249a66ca51b57d22c85d640e9b}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a59bee3249a66ca51b57d22c85d640e9b}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+voltage\+\_\+limit\+\_\+min@{set\+\_\+voltage\+\_\+limit\+\_\+min}}
+\index{set\+\_\+voltage\+\_\+limit\+\_\+min@{set\+\_\+voltage\+\_\+limit\+\_\+min}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+voltage\+\_\+limit\+\_\+min()}{set\_voltage\_limit\_min()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+voltage\+\_\+limit\+\_\+min (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{min\+\_\+voltage }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the minimum voltage limit.
+NOTE: the absolute min is 5v
+\end{DoxyVerb}
+ 
+
+Definition at line 340 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+340     \textcolor{keyword}{def }set\_voltage\_limit\_min(self, servo\_id, min\_voltage):
+341         \textcolor{stringliteral}{"""}
+342 \textcolor{stringliteral}{        Set the minimum voltage limit.}
+343 \textcolor{stringliteral}{        NOTE: the absolute min is 5v}
+344 \textcolor{stringliteral}{        """}
+345 
+346         \textcolor{keywordflow}{if} min\_voltage < 5: min\_voltage = 5
+347         minVal = int(min\_voltage * 10)
+348 
+349         response = self.write(servo\_id, DXL\_DOWN\_LIMIT\_VOLTAGE, [minVal])
+350         \textcolor{keywordflow}{if} response:
+351             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting minimum voltage level to %d'} % 
+      min\_voltage)
+352         \textcolor{keywordflow}{return} response
+353 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a59bee3249a66ca51b57d22c85d640e9b_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a993cc60ca00c86d68fbc1cf342e51181}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a993cc60ca00c86d68fbc1cf342e51181}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!set\+\_\+voltage\+\_\+limits@{set\+\_\+voltage\+\_\+limits}}
+\index{set\+\_\+voltage\+\_\+limits@{set\+\_\+voltage\+\_\+limits}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{set\+\_\+voltage\+\_\+limits()}{set\_voltage\_limits()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+voltage\+\_\+limits (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{min\+\_\+voltage,  }\item[{}]{max\+\_\+voltage }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Set the min and max voltage limits.
+NOTE: the absolute min is 5v and the absolute max is 25v
+\end{DoxyVerb}
+ 
+
+Definition at line 368 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+\begin{DoxyCode}
+368     \textcolor{keyword}{def }set\_voltage\_limits(self, servo\_id, min\_voltage, max\_voltage):
+369         \textcolor{stringliteral}{"""}
+370 \textcolor{stringliteral}{        Set the min and max voltage limits.}
+371 \textcolor{stringliteral}{        NOTE: the absolute min is 5v and the absolute max is 25v}
+372 \textcolor{stringliteral}{        """}
+373 
+374         \textcolor{keywordflow}{if} min\_voltage < 5: min\_voltage = 5
+375         \textcolor{keywordflow}{if} max\_voltage > 25: max\_voltage = 25
+376 
+377         minVal = int(min\_voltage * 10)
+378         maxVal = int(max\_voltage * 10)
+379 
+380         response = self.write(servo\_id, DXL\_DOWN\_LIMIT\_VOLTAGE, (minVal, maxVal))
+381         \textcolor{keywordflow}{if} response:
+382             self.exception\_on\_error(response[4], servo\_id, \textcolor{stringliteral}{'setting min and max voltage levels to %d and %d
+      '} %(min\_voltage, max\_voltage))
+383         \textcolor{keywordflow}{return} response
+384 
+385 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a993cc60ca00c86d68fbc1cf342e51181_cgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa61b3e4c17b04db3e5fa94f4f81a961d}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa61b3e4c17b04db3e5fa94f4f81a961d}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!sync\+\_\+write@{sync\+\_\+write}}
+\index{sync\+\_\+write@{sync\+\_\+write}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{sync\+\_\+write()}{sync\_write()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{address,  }\item[{}]{data }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Use Broadcast message to send multiple servos instructions at the
+same time. No "status packet" will be returned from any servos.
+"address" is an integer between 0 and 49. It is recommended to use the
+constants in module dynamixel_const for readability. "data" is a tuple of
+tuples. Each tuple in "data" must contain the servo id followed by the
+data that should be written from the starting address. The amount of
+data can be as long as needed.
+
+To set servo with id 1 to position 276 and servo with id 2 to position
+550, the method should be called like:
+    sync_write(DXL_GOAL_POSITION_L, ( (1, 20, 1), (2 ,38, 2) ))
+\end{DoxyVerb}
+ 
+
+Definition at line 183 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+write\+\_\+serial(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+serial\+\_\+mutex.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+ccw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+margin\+\_\+cw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+margins(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+ccw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+slope\+\_\+cw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+compliance\+\_\+slopes(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+position(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+position\+\_\+and\+\_\+speed(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+punch(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+speed(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+torque\+\_\+enabled(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+multi\+\_\+torque\+\_\+limit().
+
+
+\begin{DoxyCode}
+183     \textcolor{keyword}{def }sync\_write(self, address, data):
+184         \textcolor{stringliteral}{""" Use Broadcast message to send multiple servos instructions at the}
+185 \textcolor{stringliteral}{        same time. No "status packet" will be returned from any servos.}
+186 \textcolor{stringliteral}{        "address" is an integer between 0 and 49. It is recommended to use the}
+187 \textcolor{stringliteral}{        constants in module dynamixel\_const for readability. "data" is a tuple of}
+188 \textcolor{stringliteral}{        tuples. Each tuple in "data" must contain the servo id followed by the}
+189 \textcolor{stringliteral}{        data that should be written from the starting address. The amount of}
+190 \textcolor{stringliteral}{        data can be as long as needed.}
+191 \textcolor{stringliteral}{}
+192 \textcolor{stringliteral}{        To set servo with id 1 to position 276 and servo with id 2 to position}
+193 \textcolor{stringliteral}{        550, the method should be called like:}
+194 \textcolor{stringliteral}{            sync\_write(DXL\_GOAL\_POSITION\_L, ( (1, 20, 1), (2 ,38, 2) ))}
+195 \textcolor{stringliteral}{        """}
+196         \textcolor{comment}{# Calculate length and sum of all data}
+197         flattened = [value \textcolor{keywordflow}{for} servo \textcolor{keywordflow}{in} data \textcolor{keywordflow}{for} value \textcolor{keywordflow}{in} servo]
+198 
+199         \textcolor{comment}{# Number of bytes following standard header (0xFF, 0xFF, id, length) plus data}
+200         length = 4 + len(flattened)
+201 
+202         checksum = 255 - ((DXL\_BROADCAST + length + \(\backslash\)
+203                           DXL\_SYNC\_WRITE + address + len(data[0][1:]) + \(\backslash\)
+204                           sum(flattened)) % 256)
+205 
+206         \textcolor{comment}{# packet: FF  FF  ID LENGTH INSTRUCTION PARAM\_1 ... CHECKSUM}
+207         packet = [0xFF, 0xFF, DXL\_BROADCAST, length, DXL\_SYNC\_WRITE, address, len(data[0][1:])]
+208         packet.extend(flattened)
+209         packet.append(checksum)
+210 
+211         packetStr = array(\textcolor{stringliteral}{'B'}, packet).tostring() \textcolor{comment}{# packetStr = ''.join([chr(byte) for byte in packet])}
+212 
+213         with self.serial\_mutex:
+214             self.\_\_write\_serial(packetStr)
+215 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa61b3e4c17b04db3e5fa94f4f81a961d_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa61b3e4c17b04db3e5fa94f4f81a961d_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ac617d4150cfc51f64cde863cc5902a8f}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ac617d4150cfc51f64cde863cc5902a8f}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!test\+\_\+bit@{test\+\_\+bit}}
+\index{test\+\_\+bit@{test\+\_\+bit}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{test\+\_\+bit()}{test\_bit()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+test\+\_\+bit (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{number,  }\item[{}]{offset }\end{DoxyParamCaption})}
+
+
+
+Definition at line 251 of file dynamixel\+\_\+io.\+py.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+get\+\_\+feedback().
+
+
+\begin{DoxyCode}
+251     \textcolor{keyword}{def }test\_bit(self, number, offset):
+252         mask = 1 << offset
+253         \textcolor{keywordflow}{return} (number & mask)
+254 
+255 
+\end{DoxyCode}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ac617d4150cfc51f64cde863cc5902a8f_icgraph}
+\end{center}
+\end{figure}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a32049f3a322d37054032b9d44be39192}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a32049f3a322d37054032b9d44be39192}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!write@{write}}
+\index{write@{write}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{write()}{write()}}
+{\footnotesize\ttfamily def dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write (\begin{DoxyParamCaption}\item[{}]{self,  }\item[{}]{servo\+\_\+id,  }\item[{}]{address,  }\item[{}]{data }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}Write the values from the "data" list to the servo with "servo_id"
+starting with data[0] at "address", continuing through data[n-1] at
+"address" + (n-1), where n = len(data). "address" is an integer between
+0 and 49. It is recommended to use the constants in module dynamixel_const
+for readability. "data" is a list/tuple of integers.
+
+To set servo with id 1 to position 276, the method should be called
+like:
+    write(1, DXL_GOAL_POSITION_L, (20, 1))
+\end{DoxyVerb}
+ 
+
+Definition at line 144 of file dynamixel\+\_\+io.\+py.
+
+
+
+References dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+read\+\_\+response(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+write\+\_\+serial(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+serial\+\_\+mutex.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+write\+\_\+serial(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+acceleration(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+angle\+\_\+limit\+\_\+ccw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+angle\+\_\+limit\+\_\+cw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+angle\+\_\+limits(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+baud\+\_\+rate(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+margin\+\_\+ccw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+margin\+\_\+cw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+margins(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+slope\+\_\+ccw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+slope\+\_\+cw(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+compliance\+\_\+slopes(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+d\+\_\+gain(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+drive\+\_\+mode(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+goal\+\_\+torque(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+i\+\_\+gain(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+id(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+led(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+p\+\_\+gain(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+position(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+position\+\_\+and\+\_\+speed(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+punch(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+return\+\_\+delay\+\_\+time(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+speed(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+torque\+\_\+enabled(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+torque\+\_\+limit(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+voltage\+\_\+limit\+\_\+max(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+voltage\+\_\+limit\+\_\+min(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+set\+\_\+voltage\+\_\+limits().
+
+
+\begin{DoxyCode}
+144     \textcolor{keyword}{def }write(self, servo\_id, address, data):
+145         \textcolor{stringliteral}{""" Write the values from the "data" list to the servo with "servo\_id"}
+146 \textcolor{stringliteral}{        starting with data[0] at "address", continuing through data[n-1] at}
+147 \textcolor{stringliteral}{        "address" + (n-1), where n = len(data). "address" is an integer between}
+148 \textcolor{stringliteral}{        0 and 49. It is recommended to use the constants in module dynamixel\_const}
+149 \textcolor{stringliteral}{        for readability. "data" is a list/tuple of integers.}
+150 \textcolor{stringliteral}{}
+151 \textcolor{stringliteral}{        To set servo with id 1 to position 276, the method should be called}
+152 \textcolor{stringliteral}{        like:}
+153 \textcolor{stringliteral}{            write(1, DXL\_GOAL\_POSITION\_L, (20, 1))}
+154 \textcolor{stringliteral}{        """}
+155         \textcolor{comment}{# Number of bytes following standard header (0xFF, 0xFF, id, length)}
+156         length = 3 + len(data)  \textcolor{comment}{# instruction, address, len(data), checksum}
+157 
+158         \textcolor{comment}{# directly from AX-12 manual:}
+159         \textcolor{comment}{# Check Sum = ~ (ID + LENGTH + INSTRUCTION + PARAM\_1 + ... + PARAM\_N)}
+160         \textcolor{comment}{# If the calculated value is > 255, the lower byte is the check sum.}
+161         checksum = 255 - ((servo\_id + length + DXL\_WRITE\_DATA + address + sum(data)) % 256)
+162 
+163         \textcolor{comment}{# packet: FF  FF  ID LENGTH INSTRUCTION PARAM\_1 ... CHECKSUM}
+164         packet = [0xFF, 0xFF, servo\_id, length, DXL\_WRITE\_DATA, address]
+165         packet.extend(data)
+166         packet.append(checksum)
+167 
+168         packetStr = array(\textcolor{stringliteral}{'B'}, packet).tostring() \textcolor{comment}{# packetStr = ''.join([chr(byte) for byte in packet])}
+169 
+170         with self.serial\_mutex:
+171             self.\_\_write\_serial(packetStr)
+172 
+173             \textcolor{comment}{# wait for response packet from the motor}
+174             timestamp = time.time()
+175             time.sleep(0.0013)
+176 
+177             \textcolor{comment}{# read response}
+178             data = self.\_\_read\_response(servo\_id)
+179             data.append(timestamp)
+180 
+181         \textcolor{keywordflow}{return} data
+182 
+\end{DoxyCode}
+Here is the call graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a32049f3a322d37054032b9d44be39192_cgraph}
+\end{center}
+\end{figure}
+Here is the caller graph for this function\+:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=550pt]{dd/d77/classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a32049f3a322d37054032b9d44be39192_icgraph}
+\end{center}
+\end{figure}
+
+
+\subsection{Member Data Documentation}
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ae4ec71fd84ab8709471d21970a070e31}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_ae4ec71fd84ab8709471d21970a070e31}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!port\+\_\+name@{port\+\_\+name}}
+\index{port\+\_\+name@{port\+\_\+name}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{port\+\_\+name}{port\_name}}
+{\footnotesize\ttfamily dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+port\+\_\+name}
+
+
+
+Definition at line 68 of file dynamixel\+\_\+io.\+py.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+serial\+\_\+proxy.\+Serial\+Proxy.\+\_\+\+\_\+publish\+\_\+diagnostic\+\_\+information().
+
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a5cc6e8617f26fe6af8add33bee3544fe}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a5cc6e8617f26fe6af8add33bee3544fe}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!readback\+\_\+echo@{readback\+\_\+echo}}
+\index{readback\+\_\+echo@{readback\+\_\+echo}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{readback\+\_\+echo}{readback\_echo}}
+{\footnotesize\ttfamily dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+readback\+\_\+echo}
+
+
+
+Definition at line 69 of file dynamixel\+\_\+io.\+py.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+write\+\_\+serial().
+
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa8889993f9c5ee4c23b535d81027bc77}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_aa8889993f9c5ee4c23b535d81027bc77}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!ser@{ser}}
+\index{ser@{ser}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{ser}{ser}}
+{\footnotesize\ttfamily dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+ser}
+
+
+
+Definition at line 66 of file dynamixel\+\_\+io.\+py.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+read\+\_\+response(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+\_\+\+\_\+write\+\_\+serial(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+close(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+exception\+\_\+on\+\_\+error().
+
+\mbox{\Hypertarget{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a67bb8729caac5df92342f0a0cb57ec8d}\label{classdynamixel__driver_1_1dynamixel__io_1_1_dynamixel_i_o_a67bb8729caac5df92342f0a0cb57ec8d}} 
+\index{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}!serial\+\_\+mutex@{serial\+\_\+mutex}}
+\index{serial\+\_\+mutex@{serial\+\_\+mutex}!dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO@{dynamixel\+\_\+driver\+::dynamixel\+\_\+io\+::\+Dynamixel\+IO}}
+\subsubsection{\texorpdfstring{serial\+\_\+mutex}{serial\_mutex}}
+{\footnotesize\ttfamily dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+serial\+\_\+mutex}
+
+
+
+Definition at line 65 of file dynamixel\+\_\+io.\+py.
+
+
+
+Referenced by dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+ping(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+read(), dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+sync\+\_\+write(), and dynamixel\+\_\+driver.\+dynamixel\+\_\+io.\+Dynamixel\+I\+O.\+write().
+
+
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+\hyperlink{dynamixel__io_8py}{dynamixel\+\_\+io.\+py}\end{DoxyCompactItemize}

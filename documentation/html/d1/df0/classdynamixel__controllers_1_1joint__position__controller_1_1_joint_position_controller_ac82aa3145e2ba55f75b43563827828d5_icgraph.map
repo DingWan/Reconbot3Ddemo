@@ -1,0 +1,4 @@
+<map id="dynamixel_controllers.joint_position_controller.JointPositionController.spd_rad_to_raw" name="dynamixel_controllers.joint_position_controller.JointPositionController.spd_rad_to_raw">
+<area shape="rect" id="node2" href="$db/d80/classdynamixel__controllers_1_1joint__torque__controller_1_1_joint_torque_controller.html#a4bd0cb20fdf14a34c2dfd0eaada3d925" title="dynamixel_controllers.joint\l_torque_controller.JointTorqueController.set_speed" alt="" coords="267,5,584,46"/>
+<area shape="rect" id="node3" href="$d1/df0/classdynamixel__controllers_1_1joint__position__controller_1_1_joint_position_controller.html#ad5d41a8353d4ddf33d8aa25dc3000efc" title="dynamixel_controllers.joint\l_position_controller.JointPosition\lController.set_speed" alt="" coords="319,69,532,125"/>
+</map>
