@@ -46,7 +46,7 @@
  /**
   * \mainpage
   * \author Jorge De La Cruz
-  * \version 1.0
+  * \version 0.1
   * \date February 28, 2017
   */
 
