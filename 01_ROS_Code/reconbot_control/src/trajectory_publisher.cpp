@@ -81,7 +81,7 @@ int main(int argc,char **argv){
   Publisher.motorsState(arg,6);
   Publisher.trajectoryPublisherStart(nh, 1000);
   Publisher.nameSpace = "reconbot_controller";
-  Publisher.sourceFile = path += "/catkin_ws/src/reconbot/trajectory/trajectory.txt";
+  Publisher.sourceFile = path += "/catkin_ws/src/reconbot/01_ROS_Code/trajectory/trajectory.txt";
   goal = Publisher.buildTrajectory();
   Publisher.publisher(goal);
 
