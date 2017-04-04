@@ -95,8 +95,8 @@ CPsA2C2 = plot3([0 0],[0 0],[0 0],'r-'); % Collision Points for chain A2C2
 setappdata(0,'patch_h',[L1,L2,L3,L4,L5,L6,L7,L8,L9,L10,L11,Tr,CPsA1C1,CPsA2C2])
 %
 setappdata(0,'xCollisionPoints_A1C1',[0;0]); % used for chain A1C1 Collision detecting.
-setappdata(0,'yCollisionPointsA1C1',[0;0]); % used for chain A1C1 Collision detecting.
-setappdata(0,'zCollisionPointsA1C1',[0;0]); % used for chain A1C1 Collision detecting.
+setappdata(0,'yCollisionPoints_A1C1',[0;0]); % used for chain A1C1 Collision detecting.
+setappdata(0,'zCollisionPoints_A1C1',[0;0]); % used for chain A1C1 Collision detecting.
 %
 setappdata(0,'xCollisionPoints_A2C2',[0;0]); % used for chain A2C2 Collision detecting.
 setappdata(0,'yCollisionPoints_A2C2',[0;0]); % used for chain A2C2 Collision detecting.

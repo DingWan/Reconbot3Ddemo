@@ -20,7 +20,7 @@
                         po = {po_num(1), po_num(2), po_num(3), po_num(4), [], []};
                         q11q12q21q22 = [];
                         obj3T1R = RCB3T1R(po,q11q12q21q22,l1,l2);
-                        [p, EulerAngle_q11_theta, ABC, q1q2] = obj3T1R.RCB_3T1R_IK;
+                        [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj3T1R.RCB_3T1R_IK;
                     end
                 case 2
                     %%------------------------ 2T2R IK: Six-bar ------------------------
