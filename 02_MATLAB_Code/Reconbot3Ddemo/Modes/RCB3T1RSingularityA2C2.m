@@ -1,4 +1,4 @@
-classdef RCB3T1R
+classdef RCB3T1RSingularityA2C2
     % RCB3T1R operational mode
     % RCB3T1R is one mode with the motion of platfrom 3 Transition motion
     % and 1 rotation around z-axis    
@@ -26,7 +26,7 @@ classdef RCB3T1R
         
     methods
         
-        function obj = RCB3T1R(pos,q11q12q21q22,L1,L2)% constructor
+        function obj = RCB3T1RSingularityA2C2(pos,q11q12q21q22,L1,L2)% constructor
             if nargin > 0
                 obj.l1 = L1;
                 obj.l2 = L2;
@@ -35,7 +35,7 @@ classdef RCB3T1R
             end
         end
         
-        function [p, EulerAngle_q11_theta, ABC_FeasibleSolution, q1q2_FeasibleSolution, WSvalue] = RCB_3T1R_IK(obj)
+        function [p, EulerAngle_q11_theta, ABC_FeasibleSolution, q1q2_FeasibleSolution, WSvalue] = RCB_3T1R_SingularityA2C2_IK(obj)
             %%--------------2-RER 3T1R and 2T2R states inverse kinematics-----------------
             %-----------------------------------------------------------------------------
             %     This function is to calculate the inverse kinematics of 4 DoF 2-RER PM
@@ -116,7 +116,8 @@ classdef RCB3T1R
                 % p = [x, y, z, alpha, [], []];
                 %name = '3T1R';                
                 %fprintf('%s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', name, po{1}, po{2}, po{3}, po{4}, po{5}, po{6});
-                RotationMatrix = rotz(alpha * 180 / pi);            
+                RotationMatrix = rotz(alpha * 180 / pi);
+            
             
             %% -----------------------Calculaion of Ai & Ci in frame op-xyz-----------------------
             A1 = [0, -L1/2, 0];
@@ -196,6 +197,7 @@ classdef RCB3T1R
                 gamma = 0;
                 EulerAngle_q11_theta = [alpha, beta, gamma, q11, theta];
                 EulerAngle = EulerAngle_q11_theta(1:3);
+            
             
             %% -----------------------Calculate 16 possbile outputs for ABC, q1q2-----------------------
             %--------------------- First step --------------------
@@ -399,7 +401,7 @@ classdef RCB3T1R
             p = [po{1}, po{2}, po{3}, EulerAngle];
         end
         
-        function [p, ABC, q1q2] = RCB_3T1R_FK(obj)
+        function [p, ABC, q1q2] = RCB_3T1R_SingularityA2C2_FK(obj)
             %[p, ABC, q1q2] = RCB3T1RFKq11q12q21q22(q, l1, l2)
             %%-----------Inputs-------------
             % In the 3T1R mode, the FK can't get the analytical solution, so, we must solve

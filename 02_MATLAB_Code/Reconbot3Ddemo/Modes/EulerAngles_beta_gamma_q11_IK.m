@@ -107,11 +107,11 @@ if isempty(beta) == 1 && isempty(gamma) ~= 1 && isempty(q11) ~= 1 && q11 ~= pi/2
         end        
    
             cos_theta_2solutions = [abs_cos_theta,   abs_cos_theta];
-            tan_beta_2solutions  = [abs_tan_beta,   -abs_tan_beta];
+            tan_gamma_2solutions  = [abs_tan_beta,   -abs_tan_beta];
             % We set theta belongs to [-pi/2, pi/2], then, theta has 8 solutions
             theta_4solutions = [acos(cos_theta_2solutions), -acos(cos_theta_2solutions)];
             % We set beta belongs to [-pi/2, pi/2], then, beta has 2 solutions
-            beta_4solutions =  [atan(tan_beta_2solutions), -atan(tan_beta_2solutions)];
+            gamma_4solutions =  [atan(tan_gamma_2solutions), -atan(tan_gamma_2solutions)];
 
           q11_4solutions = [q11, q11, q11, q11];
         
@@ -122,7 +122,7 @@ if isempty(beta) == 1 && isempty(gamma) ~= 1 && isempty(q11) ~= 1 && q11 ~= pi/2
          end 
        %% Verfication
          for k = 1:IterationNumber
-            if isreal(beta_4solutions(k)) == 0 || isreal(theta_4solutions(k)) == 0
+            if isreal(gamma_4solutions(k)) == 0 || isreal(theta_4solutions(k)) == 0
                continue; 
             end
             u_RotationAxis = [cos(q11_4solutions(k)), sin(q11_4solutions(k)), 0];
@@ -132,20 +132,74 @@ if isempty(beta) == 1 && isempty(gamma) ~= 1 && isempty(q11) ~= 1 && q11 ~= pi/2
             %-- eul = tform2eul(tform): Extract Euler angles from homogeneous transformation--
             eul_alpha_beta_gamma = rotm2eul(RotationMatrix_from_axis_angle,'ZYX');
 
-                if abs(alpha_4solutions(k) - eul_alpha_beta_gamma(1)) <= 1e-5 && abs(beta_4solutions(k) - eul_alpha_beta_gamma(2)) <= 1e-5 && abs(gamma - eul_alpha_beta_gamma(3)) <= 1e-5 
+                if abs(alpha_4solutions(k) - eul_alpha_beta_gamma(1)) <= 1e-5 && abs(gamma_4solutions(k) - eul_alpha_beta_gamma(2)) <= 1e-5 && abs(gamma - eul_alpha_beta_gamma(3)) <= 1e-5 
                     m = m + 1;
                     alpha = alpha_4solutions(k);
-                    beta = beta_4solutions(k);
+                    beta = gamma_4solutions(k);
                     q11 = q11_4solutions(k);
                     theta = theta_4solutions(k);
                     % Each Euler angle has two symmetric postions corrsponding to it
                         EulerAngle_q11_theta(m,:) = [alpha, beta, gamma, q11, theta];
                         break
-                elseif k == IterationNumber && abs(beta_4solutions(k) - eul_alpha_beta_gamma(2)) > 1e-5 && abs(gamma - eul_alpha_beta_gamma(3)) > 1e-5  
+                elseif k == IterationNumber && abs(gamma_4solutions(k) - eul_alpha_beta_gamma(2)) > 1e-5 && abs(gamma - eul_alpha_beta_gamma(3)) > 1e-5  
                     display('No solution exist!');
                 end
          end              
-         
+elseif isempty(beta) ~= 1 && isempty(gamma) == 1 && isempty(q11) ~= 1 && q11 ~= pi/2 && q11 ~= -pi/2
+       %% q11 (x) and beta (v,(tan(beta)^2 + 1)) as inputs to calculate the output cos_q11 (x) and gamma (w, tan(gamma)^2)
+        % beta  = []; gamma = pi/3; q11 = -pi/3 ;
+        x = cos(q11);
+        v = tan(beta)^2 + 1;
+        
+        abs_cos_theta = abs(((v*x^2 - 1)/(v*(x - 1)*(x + 1)))^(1/2));
+        abs_tan_gamma = sqrt(-(v*x^2 - x^2)/(v*x^2 - 1));    
+        %choose 1e-8 is because we set resolution of motor is 0.02degree
+        % cos(0.02*pi/180)-1 = -6.0925e-08
+        if abs_cos_theta < 1e-8
+            abs_cos_theta = 0 ;
+        elseif abs(abs_cos_theta - 1) < 1e-8
+            abs_cos_theta = 1 ;
+        end        
+   
+            cos_theta_2solutions = [abs_cos_theta,   abs_cos_theta];
+            tan_gamma_2solutions  = [abs_tan_gamma,   -abs_tan_gamma];
+            % We set theta belongs to [-pi/2, pi/2], then, theta has 8 solutions
+            theta_4solutions = [acos(cos_theta_2solutions), -acos(cos_theta_2solutions)];
+            % We set beta belongs to [-pi/2, pi/2], then, beta has 2 solutions
+            gamma_4solutions =  [atan(tan_gamma_2solutions), -atan(tan_gamma_2solutions)];
+
+          q11_4solutions = [q11, q11, q11, q11];
+        
+          IterationNumber = 4;
+         for k = 1:IterationNumber
+             alpha_4solutions(k) = atan((cos(q11_4solutions(k)) * sin(q11_4solutions(k))...
+                 * (1 - cos(theta_4solutions(k))))/(cos(q11_4solutions(k))^2 * (1 - cos(theta_4solutions(k))) + cos(theta_4solutions(k))));
+         end 
+       %% Verfication
+         for k = 1:IterationNumber
+            if isreal(gamma_4solutions(k)) == 0 || isreal(theta_4solutions(k)) == 0
+               continue; 
+            end
+            u_RotationAxis = [cos(q11_4solutions(k)), sin(q11_4solutions(k)), 0];
+            r = [u_RotationAxis, theta_4solutions(k)];
+            %-- m=vrrotvec2mat(r):Convert rotation from axis-angle to matrix representation--
+            RotationMatrix_from_axis_angle = vrrotvec2mat(r);
+            %-- eul = tform2eul(tform): Extract Euler angles from homogeneous transformation--
+            eul_alpha_beta_gamma = rotm2eul(RotationMatrix_from_axis_angle,'ZYX');
+
+                if abs(alpha_4solutions(k) - eul_alpha_beta_gamma(1)) <= 1e-5 && abs(gamma_4solutions(k) - eul_alpha_beta_gamma(3)) <= 1e-5 && abs(beta - eul_alpha_beta_gamma(2)) <= 1e-5 
+                    m = m + 1;
+                    alpha = alpha_4solutions(k);
+                    gamma = gamma_4solutions(k);
+                    q11 = q11_4solutions(k);
+                    theta = theta_4solutions(k);
+                    % Each Euler angle has two symmetric postions corrsponding to it
+                        EulerAngle_q11_theta(m,:) = [alpha, beta, gamma, q11, theta];
+                        break
+                elseif k == IterationNumber && abs(gamma_4solutions(k) - eul_alpha_beta_gamma(3)) > 1e-5 && abs(beta - eul_alpha_beta_gamma(2)) > 1e-5  
+                    display('No solution exist!');
+                end
+         end         
 elseif isempty(beta) ~= 1 && isempty(gamma) ~= 1 && isempty(q11) == 1 || q11 == pi/2 || q11 == -pi/2
        %% beta (x) and gamma (y) as inputs to calculate the output v (tan(beta)^2+1) and w (tan(gamma)^2)
         % beta = -pi/3; gamma = pi/3; q11 = [] or pi/2 or -pi/2; 
