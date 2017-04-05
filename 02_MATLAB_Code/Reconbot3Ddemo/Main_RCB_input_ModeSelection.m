@@ -121,7 +121,7 @@ for IntepPointNum = 1 : length(MPOTP_cell)
     p_0 = [0 0 255.0445 0 0 0, 0 0];
    
     %MotionPlanningOptimalSoultion;
-    MotionPlanningOptimalSoultion_debugging;
+    MotionPlanningOptimalSoultion;
     
     % Here we should let self-adjustment motion run first. (Modified further!!!)
     % The way is,
@@ -140,7 +140,10 @@ for IntepPointNum = 1 : length(MPOTP_cell)
         % Second,exchange the postion of the self-adjustment motion and execute motion
         q0q1q2_mat([n*(IntepPointNum-2)+1:n*(IntepPointNum-1), n*(IntepPointNum-1)+1:n*IntepPointNum],:)...
             = q0q1q2_mat([n*(IntepPointNum-1)+1:n*IntepPointNum, n*(IntepPointNum-2)+1:n*(IntepPointNum-1)],:);
-    else        
+    elseif IntepPointNum == 1 && MPOTP_cell{1}{1} == 5 && MPOTP_cell{2}{1} == 5
+        break
+    else
+        
     end
 end
 toc

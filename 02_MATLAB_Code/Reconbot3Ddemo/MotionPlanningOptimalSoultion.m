@@ -1,7 +1,7 @@
 % Motion planning and Optimal Solution
 
 %%
-n = 20;
+n = 50;
 
 % po_current = MPOTP_cell{IntepPointNum};
 % po = MPOTP_cell{IntepPointNum};
@@ -19,18 +19,27 @@ for i = 1:length(po)
     end
 end
 
+% In case the current step is 2T2R_Fivebar and previous step is
+% 2T2R_Sixbar, Then, force the 2T2R_Fivebar mode (8) equals to Mode = 6
+if MPOTP_cell{IntepPointNum}{1} == 8 && MPOTP_cell{IntepPointNum - 1}{1} == 6
+    MPOTP_cell{IntepPointNum}{1} = 6;
+    MPOTP_cell{IntepPointNum}{7} = [];
+end
+
+if IntepPointNum == 1 
+    Self_adjustment_Enable = 1;    
+end
+
 %% =================== Mode 3T1R-SingularityA1C1A2C2 to any Mode ====================
-% Only because in mode 3T1R-SingularityA1C1A2C2 the q11 and q21 need to be adjusted so as to adapt the next step. 
-if MPOTP_cell{IntepPointNum}{1} >= 3 && MPOTP_cell{IntepPointNum}{1} <= 5 && IntepPointNum + 1 <= length(MPOTP_cell) ...
-        && MPOTP_cell{IntepPointNum + 1}{1} ~= 5%(MPOTP_cell{IntepPointNum + 1}{1} < 3 || MPOTP_cell{IntepPointNum + 1}{1} > 5)
-    % First step: Calculate the next step and get the second row values of q11 and q21 after
+if Self_adjustment_Enable == 1
+   % First step: Calculate the next step and get the second row values of q11 and q21 after
     % interpotation, and assign to the previous step.
     Mode_current = MPOTP_cell{IntepPointNum + 1}{1};
     po_current = {  MPOTP_cell{IntepPointNum + 1}{2:length(MPOTP_cell{IntepPointNum + 1})} };
     po = po_current;
     po_previous = p_cell{IntepPointNum};
-elseif IntepPointNum - 1 >= 1 && MPOTP_cell{IntepPointNum - 1}{1} >= 3 && MPOTP_cell{IntepPointNum - 1}{1} <= 5   ...
-         && MPOTP_cell{IntepPointNum}{1} ~= 5%(MPOTP_cell{IntepPointNum}{1} < 3 || MPOTP_cell{IntepPointNum}{1} > 5) 
+    Self_adjustment_Enable = 2;
+elseif Self_adjustment_Enable == 2 && MPOTP_cell{IntepPointNum}{1} ~= 5  
     % Second step: assign the pre-calculated value q11 and q21 as the end
     % of interpotation values to po{1,7:8}
     Mode_current = MPOTP_cell{IntepPointNum - 1}{1};
@@ -46,81 +55,42 @@ elseif IntepPointNum - 1 >= 1 && MPOTP_cell{IntepPointNum - 1}{1} >= 3 && MPOTP_
     MPOTP_cell{IntepPointNum - 1} = { MPOTP_cell{IntepPointNum - 1}{1}, po_current{:} };
     po = po_current;       
     po_previous = p_cell{IntepPointNum - 1};
+    Self_adjustment_Enable = 0;
 else
-    if MPOTP_cell{IntepPointNum}{1} == 5 
+    Self_adjustment_Enable = 0;
+    if MPOTP_cell{IntepPointNum}{1} == 5
         if  IntepPointNum == 1 || MPOTP_cell{IntepPointNum - 1}{1} == 5 && IntepPointNum + 1 <= length(MPOTP_cell)
             Mode_current = MPOTP_cell{IntepPointNum + 1}{1};
             po_current = {  MPOTP_cell{IntepPointNum  + 1}{2:length(MPOTP_cell{IntepPointNum  + 1})}  };
             po = po_current;
             po_previous = p_cell{IntepPointNum};
         else
-            break
+            for i = 1:length(q0q1q2_mat(n*(IntepPointNum-1),:))
+                q0q1q2_mat(n*(IntepPointNum-1)+1:n*IntepPointNum,i) = linspace(q0q1q2_mat(n*(IntepPointNum-1),i),q0q1q2_mat(1,i), n);
+            end      
+            %break
         end
     else
-    % both steps are non-singularity
+        if  (MPOTP_cell{IntepPointNum - 1}{1} == 3 && MPOTP_cell{IntepPointNum}{1} == 3) ...
+                || (MPOTP_cell{IntepPointNum - 1}{1} == 4 && MPOTP_cell{IntepPointNum}{1} == 4)
+            if MPOTP_cell{IntepPointNum - 1}{1} == 3
+                po_current{1,7} = q0q1q2_mat(n*(IntepPointNum-1),2);
+            elseif MPOTP_cell{IntepPointNum - 1}{1} == 4
+                po_current{1,8} = q0q1q2_mat(n*(IntepPointNum-1),7);
+            end
+        end
+        % both steps are non-singularity
         Mode_current = MPOTP_cell{IntepPointNum }{1};
-        po_current = {  MPOTP_cell{IntepPointNum }{2:length(MPOTP_cell{IntepPointNum })}  };
+        po_current = {  MPOTP_cell{IntepPointNum}{2:length(MPOTP_cell{IntepPointNum})}  };
         po = po_current;
         po_previous = p_cell{IntepPointNum - 1};
     end
 end
 %=============================== End ======================================
 
-%% =================== Mode 3T1R-SingularityA1C1A2C2 to any Mode ====================
-% % Only because in mode 3T1R-SingularityA1C1A2C2 the q11 and q21 need to be adjusted so as to adapt the next step. 
-% if MPOTP_cell{IntepPointNum}{1} >= 3 && MPOTP_cell{IntepPointNum}{1} <= 5 && IntepPointNum + 1 <= length(MPOTP_cell) ...
-%         && MPOTP_cell{IntepPointNum + 1}{1} ~= 5%(MPOTP_cell{IntepPointNum + 1}{1} < 3 || MPOTP_cell{IntepPointNum + 1}{1} > 5)
-%     % First step: Calculate the next step and get the second row values of q11 and q21 after
-%     % interpotation, and assign to the previous step.
-%     Mode_current = MPOTP_cell{IntepPointNum + 1}{1};
-%     po_current = {  MPOTP_cell{IntepPointNum + 1}{2:length(MPOTP_cell{IntepPointNum + 1})} };
-%     po = po_current;
-%     po_previous = p_cell{IntepPointNum};
-% elseif IntepPointNum - 1 >= 1 && MPOTP_cell{IntepPointNum - 1}{1} >= 3 && MPOTP_cell{IntepPointNum - 1}{1} <= 5   ...
-%          && MPOTP_cell{IntepPointNum}{1} ~= 5%(MPOTP_cell{IntepPointNum}{1} < 3 || MPOTP_cell{IntepPointNum}{1} > 5) 
-%     % Second step: assign the pre-calculated value q11 and q21 as the end
-%     % of interpotation values to po{1,7:8}
-%     Mode_current = MPOTP_cell{IntepPointNum - 1}{1};
-%     po_current = {  MPOTP_cell{IntepPointNum - 1}{2:length(MPOTP_cell{IntepPointNum - 1})}  };
-%     if MPOTP_cell{IntepPointNum - 1}{1} == 5
-%         po_current{1,7} = q0q1q2_mat(n*(IntepPointNum-2)+2,2);
-%         po_current{1,8} = q0q1q2_mat(n*(IntepPointNum-2)+2,7);
-%     elseif MPOTP_cell{IntepPointNum - 1}{1} == 3
-%         po_current{1,7} = q0q1q2_mat(n*(IntepPointNum-1),2);
-%     elseif MPOTP_cell{IntepPointNum - 1}{1} == 4
-%         po_current{1,8} = q0q1q2_mat(n*(IntepPointNum-1),7);
-%     end
-%     MPOTP_cell{IntepPointNum - 1} = { MPOTP_cell{IntepPointNum - 1}{1}, po_current{:} };
-%     po = po_current;       
-%     po_previous = p_cell{IntepPointNum - 1};
-% elseif IntepPointNum - 1 >= 1 && MPOTP_cell{IntepPointNum}{1} >= 3 && MPOTP_cell{IntepPointNum}{1} <= 5 ...
-%          && (MPOTP_cell{IntepPointNum - 1}{1} < 3 || MPOTP_cell{IntepPointNum - 1}{1} > 5) 
-%     % Third step: if start step is not sigularity and end step is singularity, %
-%     % we directly use the start mode to calculate the whole step
-%     Mode_current = MPOTP_cell{IntepPointNum - 1}{1};
-%     po_current = {  MPOTP_cell{IntepPointNum}{2:length(MPOTP_cell{IntepPointNum})}  };
-%     po = { po_current{1:6} };       
-%     po_previous = p_cell{IntepPointNum -1};
-% else
-%     %  both steps are non-singularity
-%     if MPOTP_cell{IntepPointNum}{1} < 3 && MPOTP_cell{IntepPointNum}{1} > 5
-%         Mode_current = MPOTP_cell{IntepPointNum}{1};
-%         po_current = {  MPOTP_cell{IntepPointNum}{2:length(MPOTP_cell{IntepPointNum})}  };
-%         po = po_current;
-%         po_previous = p_cell{IntepPointNum - 1};
-%     %  both steps are singularity    
-%     elseif MPOTP_cell{IntepPointNum}{1} == 5 && (MPOTP_cell{IntepPointNum + 1}{1} == 3 || MPOTP_cell{IntepPointNum + 1}{1} == 4)
-%         Mode_current = MPOTP_cell{IntepPointNum}{1};
-%         po_current = {  MPOTP_cell{IntepPointNum}{2:length(MPOTP_cell{IntepPointNum})}  };  
-%         MPOTP_cell{IntepPointNum} = { MPOTP_cell{IntepPointNum}{1}, po_current{:} };
-%         po = po_current;
-%         po_previous = p_cell{IntepPointNum};
-%     end
-% end
-%=============================== End ======================================
 
 %% =================== Catisian Space Trajctory Planning ====================
-if MPOTP_cell{IntepPointNum}{1} == 5 && MPOTP_cell{IntepPointNum + 1}{1} == 5
+if MPOTP_cell{IntepPointNum}{1} == 5 && IntepPointNum + 1 <= length(MPOTP_cell) && MPOTP_cell{IntepPointNum + 1}{1} == 5
     for i = 1:length(po)
         % Here uses to make sure the start singular configuration can go to the
         % selected first mode by adjusting q11 and q21
@@ -144,7 +114,7 @@ if MPOTP_cell{IntepPointNum}{1} == 5 && MPOTP_cell{IntepPointNum + 1}{1} == 5
             end
         end
     end
-elseif (MPOTP_cell{IntepPointNum}{1} == 5 || MPOTP_cell{IntepPointNum}{1} == 3) && MPOTP_cell{IntepPointNum + 1}{1} == 3
+elseif (MPOTP_cell{IntepPointNum}{1} == 5 || MPOTP_cell{IntepPointNum}{1} == 3) && IntepPointNum + 1 <= length(MPOTP_cell) && MPOTP_cell{IntepPointNum + 1}{1} == 3
      for i = 1:length(po)
         % Here uses to make sure the start singular configuration can go to the
         % selected first mode by adjusting q11 and q21
@@ -170,7 +140,7 @@ elseif (MPOTP_cell{IntepPointNum}{1} == 5 || MPOTP_cell{IntepPointNum}{1} == 3) 
      end     
      po_Intep(1,:) = -l1/2 * sin(po_Intep(4,:));
      po_Intep(2,:) = l1/2 * (cos(po_Intep(4,:)) - 1);     
-elseif (MPOTP_cell{IntepPointNum}{1} == 5  || MPOTP_cell{IntepPointNum}{1} == 4) && MPOTP_cell{IntepPointNum + 1}{1} == 4
+elseif (MPOTP_cell{IntepPointNum}{1} == 5  || MPOTP_cell{IntepPointNum}{1} == 4) && IntepPointNum + 1 <= length(MPOTP_cell) && MPOTP_cell{IntepPointNum + 1}{1} == 4
      for i = 1:length(po)
         % Here uses to make sure the start singular configuration can go to the
         % selected first mode by adjusting q11 and q21
@@ -180,9 +150,21 @@ elseif (MPOTP_cell{IntepPointNum}{1} == 5  || MPOTP_cell{IntepPointNum}{1} == 4)
             if i < 7
                 po_Intep(i,:) = linspace(po_previous(i),po_current{i}, n);
             elseif i == 7
-                po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-1)+1,2), po_current{i}, n);
+                if IntepPointNum == 1
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-1)+1,2), po_current{i}, n);
+                elseif MPOTP_cell{IntepPointNum - 1}{1} == 5
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-2)+1,2), po_current{i}, n);
+                else
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-1),2), po_current{i}, n);
+                end
             elseif i == 8
-                po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-1)+1,7), po_current{i}, n);
+                if IntepPointNum == 1
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-1)+1,7), po_current{i}, n);
+                elseif MPOTP_cell{IntepPointNum - 1}{1} == 5
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-2)+1,7), po_current{i}, n);
+                else
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-1),7), po_current{i}, n);
+                end
             end
         end
      end     
@@ -245,7 +227,11 @@ for i = 1:n
                 if Mode_current ~= MPOTP_cell{IntepPointNum}{1}
                     q11 = q0q1q2_mat(n*(IntepPointNum-1)+i,2);
                 else
-                    q11 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,2);
+                    if laststep ~= 0
+                        q11 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,2);
+                    else
+                        q11 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,2);
+                    end
                 end
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, []};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
@@ -254,7 +240,11 @@ for i = 1:n
                 if Mode_current ~= MPOTP_cell{IntepPointNum}{1}
                     q21 = q0q1q2_mat(n*(IntepPointNum-1)+i,7);
                 else
-                    q21 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,7);
+                    if laststep ~= 0
+                        q21 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,7);
+                    else
+                        q21 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,7);
+                    end
                 end
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], [], q21};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
@@ -264,8 +254,13 @@ for i = 1:n
                     q11 = q0q1q2_mat(n*(IntepPointNum-1)+i,2);
                     q21 = q0q1q2_mat(n*(IntepPointNum-1)+i,7);
                 else
-                    q11 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,2);
-                    q21 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,7);
+                    if laststep ~= 0
+                        q11 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,2);
+                        q21 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,7);
+                    else
+                        q11 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,2);
+                        q21 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,7);
+                    end
                 end
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
@@ -290,7 +285,11 @@ for i = 1:n
                 if Mode_current ~= MPOTP_cell{IntepPointNum}{1}
                     q11 = q0q1q2_mat(n*(IntepPointNum-1)+i,2);
                 else
-                    q11 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,2);
+                    if laststep ~= 0
+                        q11 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,2);
+                    else
+                        q11 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,2);
+                    end
                 end
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, []};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
@@ -299,7 +298,11 @@ for i = 1:n
                 if Mode_current ~= MPOTP_cell{IntepPointNum}{1}
                     q21 = q0q1q2_mat(n*(IntepPointNum-1)+i,7);
                 else
-                    q21 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,7);
+                    if laststep ~= 0
+                        q21 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,7);
+                    else
+                        q21 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,7);
+                    end
                 end
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], [], q21};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
@@ -309,8 +312,13 @@ for i = 1:n
                     q11 = q0q1q2_mat(n*(IntepPointNum-1)+i,2);
                     q21 = q0q1q2_mat(n*(IntepPointNum-1)+i,7);
                 else
-                    q11 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,2);
-                    q21 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,7);
+                    if laststep ~= 0
+                        q11 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,2);
+                        q21 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,7);
+                    else
+                        q11 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,2);
+                        q21 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,7);
+                    end
                 end
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
@@ -323,8 +331,20 @@ for i = 1:n
             %We need to intepolate on a cylinder surface
             q11 = po_Intep(7,i);            
             q11q12q21q22 = [];
+            % Judge the sigularity as 1st+5th axes of C1A1 and C2A2 overlap
+            % We assume that the precision is 0.02mm (1) as industry manipulators
+            % Ci_in_Ob: Ci in frame Ob-xyz
+            C1_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0,-l1/2,0]')' + [po{1}, po{2}, po{3}];
+            C2_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0, l1/2,0]')' + [po{1}, po{2}, po{3}];
+            A1 = (rotz(q0)*[0, -l1/2, 0]')'; A2 = (rotz(q0)*[0, l1/2, 0]')';
+            % %-----------------------------------------------%
             if MPOTP_cell{IntepPointNum}{1} == 5 && i == 1
                 q21 = q0q1q2_mat(n*(IntepPointNum-1)+1,7);
+                PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
+            elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 ...
+                    && abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2
+                q0q1q2_mat(n*(IntepPointNum-1)+i,:) = q0q1q2_mat(n*(IntepPointNum-1)+i-1,:);
+                q21 = q0q1q2_mat(n*(IntepPointNum-1)+i,7);
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
             else
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, []};
@@ -335,11 +355,23 @@ for i = 1:n
             %We need to intepolate on a cylinder surface            
             q21 = po_Intep(8,i);                      
             q11q12q21q22 = [];
-            if MPOTP_cell{IntepPointNum}{1} == 5 && i == 1
+            % Judge the sigularity as 1st+5th axes of C1A1 and C2A2 overlap
+            % We assume that the precision is 0.02mm (1) as industry manipulators
+            % Ci_in_Ob: Ci in frame Ob-xyz
+            C1_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0,-l1/2,0]')' + [po{1}, po{2}, po{3}];
+            C2_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0, l1/2,0]')' + [po{1}, po{2}, po{3}];
+            A1 = (rotz(q0)*[0, -l1/2, 0]')'; A2 = (rotz(q0)*[0, l1/2, 0]')';
+            % %-----------------------------------------------%
+            if MPOTP_cell{IntepPointNum}{1} == 5 && i == 1 ...
                 q11 = q0q1q2_mat(n*(IntepPointNum-1)+1,2);
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
+            elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 ...
+                    && abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2
+                q0q1q2_mat(n*(IntepPointNum-1)+i,:) = q0q1q2_mat(n*(IntepPointNum-1)+i-1,:);
+                q11 = q0q1q2_mat(n*(IntepPointNum-1)+i,2);
+                PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
             else
-            PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], [], q21};
+                PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], [], q21};
             end
             obj3T1R = RCB3T1RSingularityA2C2(PosOri, q11q12q21q22, l1, l2);
             [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj3T1R.RCB_3T1R_SingularityA2C2_IK;
@@ -366,17 +398,20 @@ for i = 1:n
                     q21 = po{8};
                 end
                 PosOri = {po{1}, po{2}, po{3}, [], [], po{6}, q11, q21};
+            else
+                PosOri = {po{1}, po{2}, po{3}, [], [], po{6}};
             end
             if abs(po{2}) > 1e-12 % y ~= 0
-                obj2T2Rsixbar = RCB2T2Rsixbar(po,q11q12q14q23,l1,l2);
-                [p, EulerAngle_q11_theta, ABC, q1q2] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
+                obj2T2Rsixbar = RCB2T2Rsixbar(PosOri,q11q12q14q23,l1,l2);
+                [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
                 beta_FiveBar = EulerAngle_q11_theta(2);
-            elseif abs(po{1}) < 1e-12 && abs(po{2}) < 1e-12 % x = y = 0
-                q0q1q2_mat(i,:) = q0q1q2_mat(i-1,:);
-                continue;
-            elseif abs(po{2}) < 1e-12 % y = 0
+            elseif abs(po{1}) < 1e-12 && abs(po{2}) < 1e-12% && IntepPointNum ~= 1% x = y = 0                
+                    q0q1q2_mat(n*(IntepPointNum-1) + i,:) = q0q1q2_mat(n*(IntepPointNum-1) + i - 1,:);
+            elseif abs(po{1}) > 1e-12 && abs(po{2}) < 1e-12 % y = 0
                 po = {po{1}, 0, po{3}, [], beta_FiveBar, 0};
-                [~, ~, q1q2] = RCB_2T2R_FiveBar_IK(po, l1, l2);
+                q11q12q14q22 = [];
+                obj2T2Rfivebar = RCB2T2Rfivebar(PosOri,q11q12q14q22,l1,l2);
+                [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rfivebar.RCB_2T2R_FiveBar_IK;
             end
         case 7 % 2T2R-6-Bar(xy=0)
             % Mechanism rotate around point p(1:3):  [0 0 1 0 1 1]
@@ -386,7 +421,9 @@ for i = 1:n
             %We need to intepolate on o-xz plane
             % Mechanism transfers into Planar five-bar Linkage:  [1 1 1 1 1 1]
             % p = [x, 0, z, [], beta, 0]
-            [EulerAngle_q11_theta, ABC, q1q2] = RCB_2T2R_FiveBar_IK(po, l1, l2);
+            q11q12q14q22 = [];
+            obj2T2Rfivebar = RCB2T2Rfivebar(po,q11q12q14q22,l1,l2);
+            [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rfivebar.RCB_2T2R_FiveBar_IK;
         case 9 % 2T1R-3-BarSerial
             %We need to intepolate on o-xz plane
             % Mechanism transfers into Planar three-bar Linkage:  [1 1 1 1 1 1]
@@ -413,6 +450,7 @@ for i = 1:n
     %========================== Optimal Solution ========================
     q1q2A1C1_norm = [];
     q1q2A2C2_norm = [];
+    q1q2A1C1A1C1_norm = [];
     for j = 1:length(q1q2(:,1))
         
         if Mode_current ~= MPOTP_cell{IntepPointNum}{1} && (Mode_current == 5 || MPOTP_cell{IntepPointNum}{1} == 5) && i == 1
@@ -420,16 +458,27 @@ for i = 1:n
             if Mode_current ~= 5
                 q0q1q2_matrix_start = q0q1q2_cell{IntepPointNum};
                 q0q1q2_matrix_end = q0q1q2_cell{IntepPointNum + 1};
-                for k = 1:length(q0q1q2_matrix_end(:,1))
-                    q1_matrix_norm(k) = norm(q0q1q2_matrix_end(k,2:6) - q0q1q2_matrix_start(1,2:6));
-                    q2_matrix_norm(k) = norm(q0q1q2_matrix_end(k,7:11) - q0q1q2_matrix_start(1,7:11));
+                %========= Here we must judge five-bar or three-bar sparately;=====
+                % Because Five/Three-bar should be judge as whole, and other mode should judge sparate
+                if Mode_current == 8 || Mode_current == 9
+                    for k = 1:length(q0q1q2_matrix_end(:,1))
+                        q1q2_matrix_norm(k) = norm(q0q1q2_matrix_end(k,2:11) - q0q1q2_matrix_start(1,2:11));
+                    end
+                    [rowsq1q2,colsq1q2] = find(q1q2_matrix_norm == min(min(q1q2_matrix_norm)));
+                    SolutionRow_q1q2 = colsq1q2(1);
+                    q0q1q2_required_endpoint = [q0q1q2_matrix_end(1), q0q1q2_matrix_end(SolutionRow_q1q2,2:11)];
+                else
+                    for k = 1:length(q0q1q2_matrix_end(:,1))
+                        q1_matrix_norm(k) = norm(q0q1q2_matrix_end(k,2:6) - q0q1q2_matrix_start(1,2:6));
+                        q2_matrix_norm(k) = norm(q0q1q2_matrix_end(k,7:11) - q0q1q2_matrix_start(1,7:11));
+                    end
+                    [rowsq1,colsq1] = find(q1_matrix_norm == min(min(q1_matrix_norm)));
+                    [rowsq2,colsq2] = find(q2_matrix_norm == min(min(q2_matrix_norm)));
+                    SolutionRow_q1 = colsq1(1);
+                    SolutionRow_q2 = colsq2(1);
+                    q0q1q2_required_endpoint = [q0q1q2_matrix_end(1), q0q1q2_matrix_end(SolutionRow_q1,2:6), q0q1q2_matrix_end(SolutionRow_q2,7:11)];
                 end
-                [rowsq1,colsq1] = find(q1_matrix_norm == min(min(q1_matrix_norm)));
-                [rowsq2,colsq2] = find(q2_matrix_norm == min(min(q2_matrix_norm)));
-                %
-                SolutionRow_q1 = colsq1(1);
-                SolutionRow_q2 = colsq2(1);
-                q0q1q2_required_endpoint = [q0q1q2_matrix_end(1), q0q1q2_matrix_end(SolutionRow_q1,2:6), q0q1q2_matrix_end(SolutionRow_q2,7:11)];
+                %==================================================================
             end
             if MPOTP_cell{IntepPointNum}{1} == 5% 3T1R-SingularityA1C1A2C2
                 q0q1q2_mat(i,:) = q0q1q2_cell{IntepPointNum,:};
@@ -440,8 +489,14 @@ for i = 1:n
             end
         elseif Mode_current ~= MPOTP_cell{IntepPointNum}{1} && (Mode_current == 5 || MPOTP_cell{IntepPointNum}{1} == 5) && i == 2 && Mode_current ~= 5
             % Secondly, confirm the second value that has minimum norm value with the end point (q0q1q2_required_endpoint)
-            q1q2A1C1_norm(j) = norm(q1q2(j,1:5) - q0q1q2_required_endpoint(2:6));
-            q1q2A2C2_norm(j) = norm(q1q2(j,6:10) - q0q1q2_required_endpoint(7:11));               
+            %========= Here we must judge five-bar or three-bar sparately;=====
+            if Mode_current == 8 || Mode_current == 9
+                q1q2A1C1A2C2_norm(j) = norm(q1q2(j,1:10) - q0q1q2_required_endpoint(2:11));
+            else
+                q1q2A1C1_norm(j) = norm(q1q2(j,1:5) - q0q1q2_required_endpoint(2:6));
+                q1q2A2C2_norm(j) = norm(q1q2(j,6:10) - q0q1q2_required_endpoint(7:11));
+            end
+            %==================================================================
         else
             % Thirdly, confirm the following value that has minimum norm value with the last step value (q0q1q2_mat(LastOneStep))
             if Mode_current == MPOTP_cell{IntepPointNum}{1} && i == 1
@@ -455,8 +510,14 @@ for i = 1:n
                     q0q1q2_mat(n*(IntepPointNum-1)+1,2:11) = q0q1q2_mat(n*(IntepPointNum-1),2:11);
                 end
             else
-                q1q2A1C1_norm(j) = norm(q1q2(j,1:5) - q0q1q2_mat(n*(IntepPointNum-1)+i-1,2:6));
-                q1q2A2C2_norm(j) = norm(q1q2(j,6:10) - q0q1q2_mat(n*(IntepPointNum-1)+i-1,7:11));
+                %========= Here we must judge five-bar or three-bar sparately;=====
+                if Mode_current == 8 || Mode_current == 9
+                    q1q2A1C1A2C2_norm(j) = norm(q1q2(j,1:10) - q0q1q2_mat(n*(IntepPointNum-1)+i-1,2:11));
+                else
+                    q1q2A1C1_norm(j) = norm(q1q2(j,1:5) - q0q1q2_mat(n*(IntepPointNum-1)+i-1,2:6));
+                    q1q2A2C2_norm(j) = norm(q1q2(j,6:10) - q0q1q2_mat(n*(IntepPointNum-1)+i-1,7:11));
+                end
+                %==================================================================
             end
         end
         
@@ -469,12 +530,17 @@ for i = 1:n
         if Mode_current == MPOTP_cell{IntepPointNum}{1} && i == 1
             %%%%% if the two steps are the same, so, this step is the same as the last step
         else
-            [rowsA1C1,colsA1C1] = find(q1q2A1C1_norm == min(min(q1q2A1C1_norm)));
-            [rowsA2C2,colsA2C2] = find(q1q2A2C2_norm == min(min(q1q2A2C2_norm)));
-            %
-            SolutionRow_A1C1 = colsA1C1(1);
-            SolutionRow_A2C2 = colsA2C2(1);
-            q0q1q2_mat(n*(IntepPointNum-1)+i,:) = [q0, q1q2(SolutionRow_A1C1,1:5), q1q2(SolutionRow_A2C2,6:10)];
+            if Mode_current == 8 || Mode_current == 9
+                [rowsA1C1A2C2,colsA1C1A2C2] = find(q1q2A1C1A2C2_norm == min(min(q1q2A1C1A2C2_norm)));
+                SolutionRow_A1C1A2C2 = colsA1C1A2C2(1);
+                q0q1q2_mat(n*(IntepPointNum-1)+i,:) = [q0, q1q2(SolutionRow_A1C1A2C2,1:10)];
+            else
+                [rowsA1C1,colsA1C1] = find(q1q2A1C1_norm == min(min(q1q2A1C1_norm)));
+                [rowsA2C2,colsA2C2] = find(q1q2A2C2_norm == min(min(q1q2A2C2_norm)));
+                SolutionRow_A1C1 = colsA1C1(1);
+                SolutionRow_A2C2 = colsA2C2(1);
+                q0q1q2_mat(n*(IntepPointNum-1)+i,:) = [q0, q1q2(SolutionRow_A1C1,1:5), q1q2(SolutionRow_A2C2,6:10)];
+            end
         end
     end
     %============================= End =================================    
