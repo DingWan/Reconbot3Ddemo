@@ -35,21 +35,15 @@ for i = 1:length(MPOTP_cell)
         end
         
         % We assign the q11 and q21 with previous one step value
-        if i == 1
-            if j == 1
-                q0 = q0q1q2_previous_trajpoint(1);
-                q11 = q0q1q2_previous_trajpoint(2);
-                q21 = q0q1q2_previous_trajpoint(7);
-                q0q1q2_OptimalRow(1,:) = q0q1q2_previous_trajpoint;
-            else
-                q0 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,1);
-                q11 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,2);
-                q21 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,7);
-            end
+        if i == 1 && j == 1
+             q0 = q0q1q2_previous_trajpoint(1);
+            q11 = q0q1q2_previous_trajpoint(2);
+            q21 = q0q1q2_previous_trajpoint(7);
+            q0q1q2_OptimalRow(1,:) = q0q1q2_previous_trajpoint;
         else
              q0 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,1);
-            q11 = PosOri{7};
-            q21 = PosOri{8};
+            q11 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,2);
+            q21 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,7);
         end
         
         % IK solution 
@@ -62,25 +56,20 @@ for i = 1:length(MPOTP_cell)
         
     end
     
-    %q0q1q2_P2P = [q0q1q2_P2P; q0q1q2_OptimalRow(i,:,:)];    
+    q0q1q2_P2P = [q0q1q2_P2P; q0q1q2_OptimalRow(i,:,:)];    
     
-    if Self_adjustment_Enable_Disable == 1       
-        Mode_current = Mode_previous;
-        PosOri_current = PosOri_previous;
-        PosOri_current{7} = q0q1q2_OptimalRow(2,2);
-        PosOri_current{8} = q0q1q2_OptimalRow(2,7);
-        %----di yi bu 21 ti huan
+    if Self_adjustment_Enable_Disable == 1
+        
+        
     end
     
 end
 
 if Self_adjustment_Enable_Disable == 1
-    q0q1q2_P2P = [q0q1q2_OptimalRow((NumIntepoPoints+1):2*NumIntepoPoints,:); q0q1q2_OptimalRow(1:NumIntepoPoints,:) ];
+    
 end
 
 
 end
 
-function c = exchange(a, b)
-c = [b; a];
-end
+function c = exchange()

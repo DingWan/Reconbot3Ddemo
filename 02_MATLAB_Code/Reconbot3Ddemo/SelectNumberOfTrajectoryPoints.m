@@ -45,6 +45,7 @@ for NumTP = 1:NumTrajPoints_num
             if SolutionRow >= 1 && SolutionRow <= length(q1q2(:,1))
                 %%------------ Plot two branch chain--------------
                 q0q1q2_display = [0, q1q2(SolutionRow,:)];
+                q0q1q2_all = [zeros(length(q1q2(:,1)),1), q1q2];
                 ReconbotANI(q0q1q2_display);
                 %--------------------------------------------------
                 SolutionRow_cell = {};
@@ -59,19 +60,14 @@ for NumTP = 1:NumTrajPoints_num
     
     Pos_Ori = [p, EulerAngle_q11_theta(1,1:3)];
     q0q1q2_current = [zeros(length(q1q2(:,1)),1), q1q2];
-    s_SelectedMode(NumTP) = Mode;    
+    SelectMode(NumTP) = Mode;    
     
     if NumTP == 1 % The starting step is always the singularity position in 3T1R mode
-        Modes_q0q1q2_cell{NumTP,1} = {Mode, q0q1q2_0};
-        Mode_Pos_Ori_TrajPoints_cell{NumTP,1} = {5, 0, 0, 255.0445, 0, [], [], 0, 0};
-        TrajPointsAndOperationalModes(NumTP,:) = [5, [0 0 255.0445 0 0 0], q0q1q2_0];        
+        Mode_Pos_Ori_TrajPoints_cell{1,1} = {5,{0, 0, 255.0445, 0, [], [], 0, 0},q0q1q2_0};     
     end
-        Mode_Pos_Ori_TrajPoints_cell{NumTP + 1,1} = {Mode, po{:}};
-        % Selected modes, trajectory points, and possible estimate value for each step with out interference.
-        TrajPointsAndOperationalModes(NumTP + 1,:) = [Mode, Pos_Ori, q0q1q2_display];
-        % Selected operational mode and its input value q0q1q2 in each step
-        Modes_q0q1q2_cell{NumTP + 1,1} = {Mode, q0q1q2_current};
+    
+    Mode_Pos_Ori_TrajPoints_cell{NumTP + 1,1} = {Mode, {po{:}},q0q1q2_all};
 
 end
 
-save('InsertRowTransiConfig_Test.mat')
+%save('InsertRowTransiConfig_Test.mat')

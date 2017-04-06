@@ -16,7 +16,7 @@
                     if po_num(1) == 0 && po_num(2) == 0 && po_num(3) == 0
                         po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
                     else
-                        po = {po_num(1), po_num(2), po_num(3), 0, [], [], [], []};                        
+                        po = {po_num(1), po_num(2), po_num(3), 0, [], []};                        
                         q11q12q21q22 = [];
                         % Judge the sigularity as 1st+5th axes of C1A1 and C2A2 overlap
                         % We assume that the precision is 0.02mm (1) as industry manipulators

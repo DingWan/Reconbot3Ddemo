@@ -1,0 +1,57 @@
+function [ po_Intep ] =  IntepotationP2P(Mode, PosOri_previous, PosOri_current, NumIntepoPoint)
+
+%% =================== Catisian Space Trajctory Planning ====================
+PosOri = PosOri_previous;
+n = NumIntepoPoint;
+for i = 1:length(PosOri)
+    % Here uses to make sure the start singular configuration can go to the
+    % selected first mode by adjusting q11 and q21
+    if isempty(PosOri{i}) == 1
+        po_Intep(i,:) = 0;
+    else
+        po_Intep(i,:) = linspace(PosOri_previous(i),PosOri_current{i}, n);
+    end
+end
+
+if Mode == 3
+     po_Intep(1,:) = -l1/2 * sin(po_Intep(4,:));
+     po_Intep(2,:) = l1/2 * (cos(po_Intep(4,:)) - 1);     
+elseif Mode == 4
+     
+     po_Intep(1,:) = l1/2 * sin(po_Intep(4,:));
+     po_Intep(2,:) = l1/2 * (- cos(po_Intep(4,:)) + 1);    
+else
+    for i = 1:length(po)
+        % Here uses to make sure the start singular configuration can go to the
+        % selected first mode by adjusting q11 and q21
+        if isempty(po{i}) == 1
+            p_BinaryCode(i) = 0;
+            po_Intep(i,:) = 0;
+        else
+            p_BinaryCode(i) = 1;
+            if i < 7
+                po_Intep(i,:) = linspace(po_previous(i),po_current{i}, n);
+            elseif i == 7
+                if IntepPointNum == 1
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-1)+1,2), po_current{i}, n);
+                elseif Mode_current == 5
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-2)+1,2), po_current{i}, n);
+                else
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-1),2), po_current{i}, n);
+                end
+            elseif i == 8
+                if IntepPointNum == 1
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-1)+1,7), po_current{i}, n);
+                elseif Mode_current == 5
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-2)+1,7), po_current{i}, n);
+                else
+                    po_Intep(i,:) = linspace(q0q1q2_mat(n*(IntepPointNum-1),7), po_current{i}, n);
+                end
+            end
+        end
+    end
+end
+%=============================== End ======================================
+
+
+end
