@@ -180,10 +180,13 @@ if MPOTP_cell{length(MPOTP_cell)}{1} ~= 5
     end
 end
 %% Save the value as '.mat' file
-q0q1q2_mat_Angle = q0q1q2_mat * 180 / pi;
-save('q0q1q2_mat_Angle')
-q11q12q13q21q22q23_matrix_Angle = [q0q1q2_mat_Angle(:,2:4),q0q1q2_mat_Angle(:,7:9)];
-save('q11q12q13q21q22q23_matrix_Angle')
+% q0q1q2_mat_Angle = q0q1q2_mat * 180 / pi;
+% save('q0q1q2_mat_Angle')
+% q11q12q13q21q22q23_matrix_Angle = [q0q1q2_mat_Angle(:,2:4),q0q1q2_mat_Angle(:,7:9)];
+% save('q11q12q13q21q22q23_matrix_Angle')
+
+%% Plot joint Angles
+PlotAngleValue;
 
 %% 3D Animation
 for i = 1:length(q0q1q2_mat)
