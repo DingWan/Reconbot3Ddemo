@@ -35,8 +35,13 @@ for i = 1:length(MPOTP_cell)
     %% Iterative IK solution of all intepolation points
     for j = 1:NumIntepoPoints
         %
-        for k = 1:length(PosOri_current)
-            if isempty(PosOri_current{k}) ~= 1
+        if Mode == Mode_current
+            PosOri_Effect = PosOri_current;
+        elseif Mode == Mode_previous
+            PosOri_Effect = PosOri_previous;
+        end
+        for k = 1:length(PosOri_Effect)
+            if isempty(PosOri_Effect{k}) ~= 1
                 PosOri{k} = po_Intep(k,j);
             else
                 PosOri{k} = [];
@@ -59,8 +64,13 @@ for i = 1:length(MPOTP_cell)
                 elseif Mode == 4
                     q21 = PosOri{8};
                 elseif Mode == 5                    
-                    q11 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,2);
-                    q21 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,7);
+                    if Mode_previous == 5 && Mode_previous == Mode_current
+                        q11 = PosOri{7};
+                        q21 = PosOri{8};
+                    else
+                        q11 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,2);
+                        q21 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,7);
+                    end
                 end
             end
         else
@@ -70,7 +80,7 @@ for i = 1:length(MPOTP_cell)
         end
         
         % IK solution 
-        [ ~, ~, ~, q1q2, ~ ] = IK(Mode, PosOri, q0, q11, q21, l1, l2);
+        [ ~, ~, ~, q1q2, ~ ] = IK(Mode, PosOri, q0, q11, q21, q0q1q2_OptimalRow(length(q0q1q2_OptimalRow(:,1)),:), l1, l2);
         q0q1q2_CurrentStep = [zeros(length(q1q2(:,1)),1),q1q2];
         
         % Optimal Joints Solution

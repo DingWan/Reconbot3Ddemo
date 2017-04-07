@@ -197,18 +197,22 @@ InsertRowInfos = [0, 0];
                          %We need to intepolate on a line along z-axis
                          Self_adjustment_Enable_Disable = 0;
                     case 6 % 2T2R-6-Bar
-                        %We need to intepolate 3D space                        
-%                         InsertRow_TransiConfig{1,:} = {TPOM(IntepPointSeq,2), TPOM(IntepPointSeq,3), TPOM(IntepPointSeq,4), [], [], 0};
-%                         InsertRow_q0q1q2 = {0};
-%                         NumberofInsertRows = 1;  
+                        %We need to intepolate 3D space  
+                        InsertRow_TransiConfig{1,:} = {5, Posture_previous};
+                        NumberofInsertRows = 1;      
+                        Self_adjustment_Enable_Disable = 1;  
                     case 7 % 2T2R-6-Bar(xy=0) 
                         
                     case 8 % 2T2R-5-Bar
                          %We need to intepolate on o-xz plane
-                        
+                        InsertRow_TransiConfig{1,:} = {5, Posture_previous};
+                        NumberofInsertRows = 1;      
+                        Self_adjustment_Enable_Disable = 1; 
                     case 9 % 2T1R-3-BarSerial
                         %We need to intepolate on o-xz plane
-                        
+                        InsertRow_TransiConfig{1,:} = {5, Posture_previous};
+                        NumberofInsertRows = 1;      
+                        Self_adjustment_Enable_Disable = 1; 
                     case 10 % 2R-SerialA1C1
                         %We need to intepolate on shpere surface
                         
@@ -225,15 +229,15 @@ InsertRowInfos = [0, 0];
                     case 1 % 3T2R
                         
                     case 2 % 3T1R
-                        InsertRow_TransiConfig{1,:} = {TPOM(IntepPointSeq,2), TPOM(IntepPointSeq,3), TPOM(IntepPointSeq,4), [], [], 0};
-                        InsertRow_q0q1q2 = {0};
-                        NumberofInsertRows = 1;    
+                        
                     case 3 % 3T1R-SingularityA1C1
                         
                     case 4 % 3T1R-SingularityA2C2
                         
-                    case 5 % 3T1R-SingularityA1C1A2C2    
-                        
+                    case 5 % 3T1R-SingularityA1C1A2C2 
+                        InsertRow_TransiConfig{1,:} = {5, Posture_previous};
+                        NumberofInsertRows = 1;      
+                        Self_adjustment_Enable_Disable = 2; 
                     case 6 % 2T2R-6-Bar
                         
                     case 7 % 2T2R-6-Bar(xy=0) 
@@ -290,7 +294,9 @@ InsertRowInfos = [0, 0];
                     case 4 % 3T1R-SingularityA2C2
                         
                     case 5 % 3T1R-SingularityA1C1A2C2    
-                        
+                        InsertRow_TransiConfig{1,:} = {5, Posture_previous};
+                        NumberofInsertRows = 1;      
+                        Self_adjustment_Enable_Disable = 2; 
                     case 6 % 2T2R-6-Bar
                         
                     case 7 % 2T2R-6-Bar(xy=0) 
@@ -319,8 +325,10 @@ InsertRowInfos = [0, 0];
                         
                     case 4 % 3T1R-SingularityA2C2
                         
-                    case 5 % 3T1R-SingularityA1C1A2C2    
-                        
+                    case 5 % 3T1R-SingularityA1C1A2C2 
+                        InsertRow_TransiConfig{1,:} = {5, Posture_previous};
+                        NumberofInsertRows = 1;      
+                        Self_adjustment_Enable_Disable = 2; 
                     case 6 % 2T2R-6-Bar
                         
                     case 7 % 2T2R-6-Bar(xy=0) 
