@@ -83,10 +83,12 @@ for i = 1:length(MPOTP_cell)
     if i == 1 && Self_adjustment_Enable_Disable == 1       
         Mode_current = Mode_previous;        
         if Mode == 3        
+            PosOri_current{7} = PosOri_previous{7};
             PosOri_current{8} = q0q1q2_OptimalRow(2,7);
         elseif Mode == 4
             PosOri_current{7} = q0q1q2_OptimalRow(2,2);
-        elseif Mode == 5
+            PosOri_current{8} = PosOri_previous{8};
+        else%if Mode == 5
             PosOri_current{7} = q0q1q2_OptimalRow(2,2);
             PosOri_current{8} = q0q1q2_OptimalRow(2,7);
         end
@@ -100,9 +102,14 @@ for i = 1:length(MPOTP_cell)
         elseif Mode == 4
             q0q1q2_OptimalRow(NumIntepoPoints,2) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
             q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints - 1,6);
+        else
+            q0q1q2_OptimalRow(NumIntepoPoints,2) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
+            q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints - 1,6);
+            q0q1q2_OptimalRow(NumIntepoPoints,7) = q0q1q2_OptimalRow(NumIntepoPoints - 1,7);
+            q0q1q2_OptimalRow(NumIntepoPoints,11) = q0q1q2_OptimalRow(NumIntepoPoints - 1,11);
         end        
-        PosOri_previous{7} = q0q1q2_OptimalRow(NumIntepoPoints*i - 1,2);
-        PosOri_previous{8} = q0q1q2_OptimalRow(NumIntepoPoints*i - 1,7);
+        PosOri_previous{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
+        PosOri_previous{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
     end
     
 end

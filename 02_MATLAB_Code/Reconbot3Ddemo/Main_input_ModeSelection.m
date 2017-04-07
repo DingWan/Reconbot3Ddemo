@@ -142,7 +142,7 @@ for IntepPointNum = 1 : NumTP
    q0q1q2_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum + 1,1}{3};
    
    % Intepotation Points and Time
-   NumIntepoPoints = 50;
+   NumIntepoPoints = 20;
    Time = 4;
    
    % Motion Planning and Optimal Soultion;
@@ -187,7 +187,7 @@ toc
 %PlotAngleValue;
 
 %% 3D Animation
-for i = 241:length(q0q1q2_mat)-0
+for i = 1:length(q0q1q2_mat)-0
     %========================== Animation ============================
     ReconbotANI(q0q1q2_mat(i,:));
 %     set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off

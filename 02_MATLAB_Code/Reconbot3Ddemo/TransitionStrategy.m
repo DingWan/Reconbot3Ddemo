@@ -118,9 +118,7 @@ InsertRowInfos = [0, 0];
                     case 2 % 3T1R
                         
                     case 3 % 3T1R-SingularityA1C1
-%                         InsertRow_TransiConfig{1,:} = {5, Posture_previous};
-%                         NumberofInsertRows = 1;      
-%                         Self_adjustment_Enable_Disable = 1;                       
+                        
                     case 4 % 3T1R-SingularityA2C2
                         
                     case 5 % 3T1R-SingularityA1C1A2C2 
@@ -151,10 +149,8 @@ InsertRowInfos = [0, 0];
                         
                     case 3 % 3T1R-SingularityA1C1
                         
-                    case 4 % 3T1R-SingularityA2C2                        
-                        InsertRow_TransiConfig{1,:} = {Mode_current, TPOM(IntepPointSeq + 1,2), TPOM(IntepPointSeq + 1,3), TPOM(IntepPointSeq + 1, 4), 0, [], [], [], TPOM(IntepPointSeq + 1, 14)};
-                        InsertRow_q0q1q2{1,:} = {0};
-                        NumberofInsertRows = 1; 
+                    case 4 % 3T1R-SingularityA2C2 
+                        
                     case 5 % 3T1R-SingularityA1C1A2C2  
                         InsertRow_TransiConfig{1,:} = {5, Posture_previous};
                         NumberofInsertRows = 1;      
