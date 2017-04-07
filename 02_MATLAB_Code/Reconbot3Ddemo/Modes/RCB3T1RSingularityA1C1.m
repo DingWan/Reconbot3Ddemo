@@ -133,7 +133,7 @@ classdef RCB3T1RSingularityA1C1
             
                 % Judge the singularity as 1st+5th axes of C1A1 and C2A2 overlap
                 % We assume that the precision is 0.02mm (1) as industry manipulators
-                if abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && abs((C2_in_Ob(1) - A2(1)) > 1e-2 || abs(C2_in_Ob(2) - A2(2)) > 1e-2)
+                if abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && (abs((C2_in_Ob(1) - A2(1))) > 1e-2 || abs(C2_in_Ob(2) - A2(2)) > 1e-2)
                     %display('Notice:The 1st+5th axes of kinematic chain A1C1 overlapped')
                     % Display the output value, we use angle to show it properly
                     name = '3T1R-A1C1 Singularity';

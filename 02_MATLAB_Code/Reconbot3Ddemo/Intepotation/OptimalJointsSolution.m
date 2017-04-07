@@ -1,7 +1,4 @@
-% function [ q0q1q2_OptimalRow ] = OptimalJointsSolution(CurrentStep, Mode_current, q0q1q2_previous_trajpoint, ...
-%                                                        q0q1q2_current_trajpoint, q0q1q2_OptimalRow_previous, q0q1q2_CurrentStep)
-
-    
+  
     %========================== Optimal Solution ========================
     q1q2A1C1_norm = [];
     q1q2A2C2_norm = [];
@@ -35,7 +32,7 @@
                 end
                 %==================================================================            
                 q0q1q2_Optimal_SingleRow = q0q1q2_previous_trajpoint;
-        elseif j == 2
+        elseif j == 2 && Mode_current ~= 5
             % Secondly, confirm the second value that has minimum norm value with the end point (q0q1q2_required_endpoint)
             %========= Here we must judge five-bar or three-bar sparately;=====
             if Mode_current == 8 || Mode_current == 9
@@ -81,10 +78,6 @@
     end
     %============================= End =================================    
     
-    
     %========================== Collision Check ============================
     %CollisionCheck_LineDisplay;
     %============================= End =================================
-
-% end
-

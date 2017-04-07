@@ -14,7 +14,7 @@
 %%-------------------------------------------------------------------
 clc
 %close all
-clear all
+clear 
 %clf
 
 l1 = 220;
@@ -116,10 +116,9 @@ SelectNumberOfTrajectoryPoints;
 
 %% Motion planning
 tic
-
-q0q1q2_cell{1,:} = [0, 0, pi/3, pi/3, pi/6, 0, 0, pi/3, pi/3, pi/6, 0];
+q0q1q2_HomePosition = [0, 0, pi/3, pi/3, pi/6, 0, 0, pi/3, pi/3, pi/6, 0];
 p_0 = [0 0 255.0445 0 0 0, 0 0];
-    
+q0q1q2_mat = [];
 for IntepPointNum = 1 : NumTP
     
     if IntepPointNum == 1
@@ -135,45 +134,49 @@ for IntepPointNum = 1 : NumTP
    PosOri_previous = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum,1}{2};
    PosOri_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum + 1,1}{2};
    
-   q0q1q2_previous = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum,1}{3};
+   if IntepPointNum == 1
+       q0q1q2_previous = q0q1q2_HomePosition;
+   else
+       q0q1q2_previous = q0q1q2_mat(length(q0q1q2_mat),:);
+   end
    q0q1q2_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum + 1,1}{3};
    
    % Intepotation Points and Time
-   NumIntepoPoints = 20;
+   NumIntepoPoints = 50;
    Time = 4;
    
    % Motion Planning and Optimal Soultion;
    q0q1q2_P2P = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
-                                              Mode_current, PosOri_current, q0q1q2_current, NumIntepoPoints,Time, l1, l2);
-
+                                              Mode_current, PosOri_current, q0q1q2_current,  NumIntepoPoints,Time, l1, l2);
+   q0q1q2_mat = [q0q1q2_mat; q0q1q2_P2P];
 end
 toc
 
+
+IntepPointNum = IntepPointNum + 2;
 %% Last step for returnning to HomePosition
-if MPOTP_cell{length(MPOTP_cell)}{1} ~= 5
-    for laststep = 1:2
-        IntepPointNum = IntepPointNum + 1;
-        if laststep == 1
-            MPOTP_cell{IntepPointNum} = {MPOTP_cell{IntepPointNum - 1}{1}, 0 0 255.0445 0 0 0, 0 0};
-            % First step: Calculate the next step and get the second row values of q11 and q21 after
-            % interpotation, and assign to the previous step.0
-            Mode_current = MPOTP_cell{IntepPointNum - 1}{1};
-            po_current = {  MPOTP_cell{IntepPointNum}{2:length(MPOTP_cell{IntepPointNum})} };
-            po = po_current;
-            po_previous = p_cell{IntepPointNum - 1};
-        else
-            MPOTP_cell{IntepPointNum} = {5, 0 0 255.0445 0 0 0, 0 0};
-            Mode_current = MPOTP_cell{IntepPointNum}{1};
-            po_current = {  MPOTP_cell{IntepPointNum}{2:length(MPOTP_cell{IntepPointNum})} };
-            po = po_current;
-            po_previous = [0 0 255.0445 0 0 0, q0q1q2_mat(n*(IntepPointNum-1),2),q0q1q2_mat(n*(IntepPointNum-1),7)];
-        end
-        Modes_q0q1q2_cell{IntepPointNum} =  { 0, 0, pi/3, pi/3, pi/6, 0, 0, pi/3, pi/3, pi/6, 0};
-        
-        
-        goHome;
-    end
-end
+tic
+%---------------
+Mode_Pos_Ori_TrajPoints_cell{IntepPointNum} = { 5, {0 0 255.0445 0 [] [], 0 ,0},q0q1q2_HomePosition};
+% First step: Calculate the next step and get the second row values of q11 and q21 after
+% interpotation, and assign to the previous step.0
+% Assgin Input value
+Mode_previous = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum - 1,1}{1};
+Mode_current  = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum,1}{1};
+
+PosOri_previous = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum - 1,1}{2};
+PosOri_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum,1}{2};
+
+q0q1q2_previous = q0q1q2_mat(length(q0q1q2_mat(:,1)),:);
+q0q1q2_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum,1}{3};
+
+% Motion Planning and Optimal Soultion;
+   q0q1q2_P2P_HomePosition = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+                                                           Mode_current, PosOri_current, q0q1q2_current, NumIntepoPoints,Time, l1, l2);
+q0q1q2_mat = [q0q1q2_mat; q0q1q2_P2P_HomePosition];
+%---------------
+toc
+
 %% Save the value as '.mat' file
 % q0q1q2_mat_Angle = q0q1q2_mat * 180 / pi;
 % save('q0q1q2_mat_Angle')
@@ -181,14 +184,14 @@ end
 % save('q11q12q13q21q22q23_matrix_Angle')
 
 %% Plot joint Angles
-PlotAngleValue;
+%PlotAngleValue;
 
 %% 3D Animation
-for i = 1:length(q0q1q2_mat)
+for i = 241:length(q0q1q2_mat)-0
     %========================== Animation ============================
     ReconbotANI(q0q1q2_mat(i,:));
-    set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
-    set(CPsA2C2,'xdata',xCPsA2C2data(:,i+1),'ydata',yCPsA2C2data(:,i+1),'zdata',zCPsA2C2data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
+%     set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
+%     set(CPsA2C2,'xdata',xCPsA2C2data(:,i+1),'ydata',yCPsA2C2data(:,i+1),'zdata',zCPsA2C2data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
     %============================ End ================================
 end
 

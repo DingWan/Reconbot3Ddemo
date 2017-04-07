@@ -23,7 +23,7 @@ function  [ MPOTP_cell, Self_adjustment_Enable_Disable] = TransitionStrategy(Mod
 %       TPOM                                           Trajectory Points And Operational Modes
 %       MPOTP_Mat                                      Mode_Position_Orientation_TrajectoryPoints_Matrix 
 %       MPOTP_cell                                     Mode_Position_Orientation_TrajectoryPoints_cell
-%       Self_adjustment_Enable_Disable = 0/1/2         0: without adjustment; 1: from step 3/4/5 to other modes; 2 from other mode to step 3/4/5
+%
 %%-------------------------------------------------------------------
 
 %MPOTP_cell{1} = {Mode_previous,Posture_previous};
@@ -118,9 +118,9 @@ InsertRowInfos = [0, 0];
                     case 2 % 3T1R
                         
                     case 3 % 3T1R-SingularityA1C1
-%                         InsertRow_TransiConfig{1,:} = {5, Posture_previous};
-%                         NumberofInsertRows = 1;      
-%                         Self_adjustment_Enable_Disable = 1;                       
+                        InsertRow_TransiConfig{1,:} = {Mode_current, TPOM(IntepPointSeq + 1,2), TPOM(IntepPointSeq + 1,3), TPOM(IntepPointSeq + 1, 4), 0, [], [], 0, 0};
+                        InsertRow_q0q1q2 = {0};
+                        NumberofInsertRows = 1;                         
                     case 4 % 3T1R-SingularityA2C2
                         
                     case 5 % 3T1R-SingularityA1C1A2C2 

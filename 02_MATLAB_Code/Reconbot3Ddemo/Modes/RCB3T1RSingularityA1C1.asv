@@ -1,4 +1,4 @@
-classdef RCB3T1RSingularityA1C1A2C2
+classdef RCB3T1RSingularityA1C1
     % RCB3T1R operational mode
     % RCB3T1R is one mode with the motion of platfrom 3 Transition motion
     % and 1 rotation around z-axis    
@@ -26,7 +26,7 @@ classdef RCB3T1RSingularityA1C1A2C2
         
     methods
         
-        function obj = RCB3T1RSingularityA1C1A2C2(pos,q11q12q21q22,L1,L2)% constructor
+        function obj = RCB3T1RSingularityA1C1(pos,q11q12q21q22,L1,L2)% constructor
             if nargin > 0
                 obj.l1 = L1;
                 obj.l2 = L2;
@@ -35,7 +35,7 @@ classdef RCB3T1RSingularityA1C1A2C2
             end
         end
         
-        function [p, EulerAngle_q11_theta, ABC_FeasibleSolution, q1q2_FeasibleSolution, WSvalue] = RCB_3T1R_SingularityA1C1A2C2_IK(obj)
+        function [p, EulerAngle_q11_theta, ABC_FeasibleSolution, q1q2_FeasibleSolution, WSvalue] = RCB_3T1R_SingularityA1C1_IK(obj)
             %%--------------2-RER 3T1R and 2T2R states inverse kinematics-----------------
             %-----------------------------------------------------------------------------
             %     This function is to calculate the inverse kinematics of 4 DoF 2-RER PM
@@ -133,7 +133,7 @@ classdef RCB3T1RSingularityA1C1A2C2
             
                 % Judge the singularity as 1st+5th axes of C1A1 and C2A2 overlap
                 % We assume that the precision is 0.02mm (1) as industry manipulators
-                if abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && (abs(C2_in_Ob(1) - A2(1)) > 1e-2 || abs(C2_in_Ob(2) - A2(2)) > 1e-2)
+                if abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && (abs((C2_in_Ob(1) - A2(1)) > 1e-2 || abs(C2_in_Ob(2) - A2(2)) > 1e-2))
                     %display('Notice:The 1st+5th axes of kinematic chain A1C1 overlapped')
                     % Display the output value, we use angle to show it properly
                     name = '3T1R-A1C1 Singularity';
@@ -148,7 +148,7 @@ classdef RCB3T1RSingularityA1C1A2C2
                     %--------------------- Assign Value --------------------
                     q21 = -atan((C2_in_Ob(1) - A2(1))/(C2_in_Ob(2) - A2(2))); % Clockwise is positive direction. top view
                     q11 = q11_SP_A1C1overlap;
-                elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2 && (abs(C1_in_Ob(1) - A1(1)) > 1e-2 || abs(C1_in_Ob(2) - A1(2)) > 1e-2)
+                elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2 && abs((C1_in_Ob(1) - A1(1)) > 1e-2 || abs(C1_in_Ob(2) - A1(2)) > 1e-2)
                     %display('Notice:The 1st+5th axes of kinematic chain A2C2 overlapped')
                     name = '3T1R-A2C2 Singularity';
                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
@@ -197,7 +197,7 @@ classdef RCB3T1RSingularityA1C1A2C2
                 gamma = 0;
                 EulerAngle_q11_theta = [alpha, beta, gamma, q11, theta];
                 EulerAngle = EulerAngle_q11_theta(1:3);
-           
+            
             
             %% -----------------------Calculate 16 possbile outputs for ABC, q1q2-----------------------
             %--------------------- First step --------------------
@@ -401,7 +401,7 @@ classdef RCB3T1RSingularityA1C1A2C2
             p = [po{1}, po{2}, po{3}, EulerAngle];
         end
         
-        function [p, ABC, q1q2] = RCB_3T1R_SingularityA1C1A2C2_FK(obj)
+        function [p, ABC, q1q2] = RCB_3T1R_SingularityA1C1_FK(obj)
             %[p, ABC, q1q2] = RCB3T1RFKq11q12q21q22(q, l1, l2)
             %%-----------Inputs-------------
             % In the 3T1R mode, the FK can't get the analytical solution, so, we must solve

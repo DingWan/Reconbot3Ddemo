@@ -45,44 +45,18 @@ q0 = inputq0;
             A1 = (rotz(q0)*[0, -l1/2, 0]')'; A2 = (rotz(q0)*[0, l1/2, 0]')';
             % %-----------------------------------------------%
             if abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && abs((C2_in_Ob(1) - A2(1)) > 1e-2 || abs(C2_in_Ob(2) - A2(2)) > 1e-2)
-                if Mode_current ~= MPOTP_cell{IntepPointNum}{1}
-                    q11 = q0q1q2_mat(n*(IntepPointNum-1)+i,2);
-                else
-                    if laststep ~= 0
-                        q11 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,2);
-                    else
-                        q11 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,2);
-                    end
-                end
+                q11 = inputq11;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, []};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
                 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj3T1R.RCB_3T1R_IK;
             elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2 && abs((C1_in_Ob(1) - A1(1)) > 1e-2 || abs(C1_in_Ob(2) - A1(2)) > 1e-2)
-                if Mode_current ~= MPOTP_cell{IntepPointNum}{1}
-                    q21 = q0q1q2_mat(n*(IntepPointNum-1)+i,7);
-                else
-                    if laststep ~= 0
-                        q21 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,7);
-                    else
-                        q21 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,7);
-                    end
-                end
+                q21 = inputq21;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], [], q21};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
                 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj3T1R.RCB_3T1R_IK;
             elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2
-                if Mode_current ~= MPOTP_cell{IntepPointNum}{1}
-                    q11 = q0q1q2_mat(n*(IntepPointNum-1)+i,2);
-                    q21 = q0q1q2_mat(n*(IntepPointNum-1)+i,7);
-                else
-                    if laststep ~= 0
-                        q11 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,2);
-                        q21 = q0q1q2_mat(n*(IntepPointNum-1)+i-1,7);
-                    else
-                        q11 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,2);
-                        q21 = q0q1q2_mat(n*(IntepPointNum-2)+i-1,7);
-                    end
-                end
+                q11 = inputq11;
+                q21 = inputq21;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
                 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj3T1R.RCB_3T1R_IK;
@@ -92,7 +66,7 @@ q0 = inputq0;
             end
         case 3 % 3T1R-SingularityA1C1
             %We need to intepolate on a cylinder surface
-            q11 = po_Intep(7,i);            
+            q11 = inputq11;            
             q11q12q21q22 = [];
             % Judge the sigularity as 1st+5th axes of C1A1 and C2A2 overlap
             % We assume that the precision is 0.02mm (1) as industry manipulators
@@ -101,13 +75,15 @@ q0 = inputq0;
             C2_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0, l1/2,0]')' + [po{1}, po{2}, po{3}];
             A1 = (rotz(q0)*[0, -l1/2, 0]')'; A2 = (rotz(q0)*[0, l1/2, 0]')';
             % %-----------------------------------------------%
-            if MPOTP_cell{IntepPointNum}{1} == 5 && i == 1
-                q21 = q0q1q2_mat(n*(IntepPointNum-1)+1,7);
+            if Mode == 5 
+                %q21 = q0q1q2_mat(n*(IntepPointNum-1)+1,7);
+                q21 = inputq21;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
             elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 ...
                     && abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2
-                q0q1q2_mat(n*(IntepPointNum-1)+i,:) = q0q1q2_mat(n*(IntepPointNum-1)+i-1,:);
-                q21 = q0q1q2_mat(n*(IntepPointNum-1)+i,7);
+                %q0q1q2_mat(n*(IntepPointNum-1)+i,:) = q0q1q2_mat(n*(IntepPointNum-1)+i-1,:);
+                %q21 = q0q1q2_mat(n*(IntepPointNum-1)+i,7);
+                q21 = inputq21;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
             else
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, []};
@@ -116,7 +92,7 @@ q0 = inputq0;
             [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj3T1R.RCB_3T1R_SingularityA1C1_IK;
         case 4 % 3T1R-SingularityA2C2
             %We need to intepolate on a cylinder surface            
-            q21 = po_Intep(8,i);                      
+            q21 = inputq21;                      
             q11q12q21q22 = [];
             % Judge the sigularity as 1st+5th axes of C1A1 and C2A2 overlap
             % We assume that the precision is 0.02mm (1) as industry manipulators
@@ -125,13 +101,13 @@ q0 = inputq0;
             C2_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0, l1/2,0]')' + [po{1}, po{2}, po{3}];
             A1 = (rotz(q0)*[0, -l1/2, 0]')'; A2 = (rotz(q0)*[0, l1/2, 0]')';
             % %-----------------------------------------------%
-            if MPOTP_cell{IntepPointNum}{1} == 5 && i == 1 ...
-                q11 = q0q1q2_mat(n*(IntepPointNum-1)+1,2);
+            if Mode == 5
+                q11 = inputq11;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
             elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 ...
                     && abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2
-                q0q1q2_mat(n*(IntepPointNum-1)+i,:) = q0q1q2_mat(n*(IntepPointNum-1)+i-1,:);
-                q11 = q0q1q2_mat(n*(IntepPointNum-1)+i,2);
+                %q0q1q2_mat(n*(IntepPointNum-1)+i,:) = q0q1q2_mat(n*(IntepPointNum-1)+i-1,:);
+                q11 = inputq11;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
             else
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], [], q21};
