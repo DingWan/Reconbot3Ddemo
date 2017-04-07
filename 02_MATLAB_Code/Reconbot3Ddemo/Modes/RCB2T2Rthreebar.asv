@@ -90,13 +90,13 @@ classdef RCB2T2Rthreebar
                 WSvalue_2T2R_SinguPosA2C2 = 1;
             else
                 % Euler angle IK
-                % Mechanism transfers into Three-bar Linkage:  [1 1 1 0 1 1]
-                % p = [x, 0, z, 0, beta, 0]
-                name = '2T2R-ThreeBar';
-                fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                    name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
-                q11 = pi/2; % inputs: beta, q11;
-                gamma = 0;
+                    % Mechanism transfers into Planar five-bar Linkage:  [1 1 1 0 1 1]
+                    % p = [x, 0, z, 0, beta, 0]
+                    name = '2T2R-ThreeBar';
+                    fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
+                    q11 = pi/2; % inputs: beta, q11;
+                    gamma = 0;    
                 [EulerAngle_q11_theta] = EulerAngles_beta_gamma_q11_IK(beta, gamma, q11);
             end
             
@@ -146,7 +146,7 @@ classdef RCB2T2Rthreebar
             angleA2B2C2 = acos((A2B2^2 + B2C2^2 - lengthA2C2^2)/(2 * A2B2 * B2C2));
             % calculate: angleA1B1C1, q13, angleB1A1C1;  angleA2B2C2, q23, angleB2A2C2
             
-            %% ----------------------- Calculate one solutions for one input  -----------------------
+             %% ----------------------- Calculate one solutions for one input  -----------------------
             if p(1) == 0 && p(2) == 0 && p(3) == 0
                 WSvalue_2T2R_SinguPosA1C1 = 1;
                 WSvalue_2T2R_SinguPosA2C2 = 1;
@@ -272,7 +272,7 @@ classdef RCB2T2Rthreebar
                         B1(jA1C1,:) = [L2 * cos(q1q2(i,2)) * sin(q1q2(i,1)), -L1/2 - L2 * cos(q1q2(i,2)) * cos(q1q2(i,1)), L2 * sin(q1q2(i,2))];
                         C1(jA1C1,:) = [L2 * (cos(q1q2(i,2)) + cos(q1q2(i,2) + q1q2(i,3))) * sin(q1q2(i,1)), -L1/2 - L2 * (cos(q1q2(i,2))...
                             + cos(q1q2(i,2) + q1q2(i,3))) * cos(q1q2(i,1)), L2 * (sin(q1q2(i,2)) + sin(q1q2(i,2) + q1q2(i,3)))];
-                        %%------------------------------------------------------------------------
+                        %%------------------------------------------------------------------------                        
                         if C1(jA1C1,:) - C1_in_Ob <= 1e-6
                             q1(jA1C1,1:5) = q1q2(i,1:5);
                             A1B1C1(jA1C1,:) = [A1(jA1C1,:), B1(jA1C1,:), C1(jA1C1,:)];
@@ -291,7 +291,7 @@ classdef RCB2T2Rthreebar
                         B2(jA2C2,:) = [- L2 * cos(q1q2(i,7)) * sin(q1q2(i,6)), L1/2 + L2 * cos(q1q2(i,7)) * cos(q1q2(i,6)), L2 * sin(q1q2(i,7))];
                         C2(jA2C2,:) = [- L2 * (cos(q1q2(i,7)) + cos(q1q2(i,7) + q1q2(i,8))) * sin(q1q2(i,6)), L1/2 + L2 * (cos(q1q2(i,7))...
                             + cos(q1q2(i,7) + q1q2(i,8))) * cos(q1q2(i,6)), L2 * (sin(q1q2(i,7)) + sin(q1q2(i,7) + q1q2(i,8)))];
-                        %%------------------------------------------------------------------------
+                        %%------------------------------------------------------------------------                        
                         if C2(jA2C2,:) - C2_in_Ob <= 1e-6
                             q2(jA2C2,1:5) = q1q2(i,6:10);
                             A2B2C(jA2C2,:) = [A2(jA2C2,:), B2(jA2C2,:), C2(jA2C2,:)];
@@ -304,41 +304,39 @@ classdef RCB2T2Rthreebar
                 % so, I force the number to be the same by compensating the
                 % fewer one with the missing number (jA1C1-jA2C2) of first value q1(1,1:5) and A1B1C1(1,:)
                 Num_iijj = 0;
-                if jA1C1 ~= 0 && jA2C2 ~= 0
+                if jA1C1 ~= 0 && jA2C2 ~= 0                    
                     for ii = 1:1:jA1C1
-                        for jj = 1:1:jA2C2
+                        for jj = 1:1:jA2C2 
                             % Here you must calculate the x values of B1 and B2,
                             % compare it again, so as to make sure its three-bar not five-bar state
                             B1x = L2 * cos(q1(ii,2)) * sin(q1(ii,1));
-                            B2x = - L2 * cos(q2(jj,2)) * sin(q2(jj,1));
-                            if abs(B1x - B2x) > 1e-6
-                                WSvalue_ThreeBar = 0;
-                            else
+                            B2x = - L2 * cos(q2(jj,2)) * sin(q2(jj,1));                            
+                            if abs(B1x - B2x) <= 1e-6
+                                WSvalue_ThreeBar = 0;                                 
+                            else  
                                 Num_iijj = Num_iijj + 1;
                                 WSvalue_ThreeBar = 1;
                                 q1q2_FeasibleSolution(Num_iijj,:) = [q1(ii,1:5), q2(jj,1:5)];
                                 ABC_FeasibleSolution(Num_iijj,:) = [A1B1C1(ii,:),A2B2C(jj,:)];
                             end
-                        end
+                        end 
                     end
                 else
                     WSvalue_ThreeBar = 0;
                     q1q2_FeasibleSolution = [];
                     ABC_FeasibleSolution = [];
                 end
-                if Num_iijj > 0
-                    WSvalue_ThreeBar = 1;
-                else
+                if WSvalue_ThreeBar == 0                    
                     q1q2_FeasibleSolution = [];
                     ABC_FeasibleSolution = [];
                 end
                 WSvalue_2T2R_SinguPosA1C1 = 0;
                 WSvalue_2T2R_SinguPosA2C2 = 0;
             end
-            WSvalue = [WSvalue_ThreeBar, WSvalue_2T2R_SinguPosA1C1, WSvalue_2T2R_SinguPosA2C2];
-            p = [po{1}, po{2}, po{3}, EulerAngle];
-        end
+            WSvalue = [WSvalue_ThreeBar, WSvalue_2T2R_SinguPosA1C1, WSvalue_2T2R_SinguPosA2C2];      
+            p = [po{1}, po{2}, po{3}, EulerAngle];  
         
+            
         function [p, ABC, q1q2] = RCB2T2RFKq11q12q14q23ThreeBar(obj)
             %%------------Inputs-------------
             % Variable value assignment
@@ -452,5 +450,6 @@ classdef RCB2T2Rthreebar
             axis equal;
             %%------------------------------------------------------------------------
         end
-    end
+     
 end
+

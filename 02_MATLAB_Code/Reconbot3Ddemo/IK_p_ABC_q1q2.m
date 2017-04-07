@@ -212,7 +212,9 @@
                     for i=1:2 po_num(i) = str2num(po_cell{i}); end
                     po_num(3) = str2num(po_cell{3}) * pi / 180;
                     po = {po_num(1), 0, po_num(2), 0, po_num(3), []};
-                    [EulerAngle_q11_theta, ABC, q1q2] = RCB_ThreeBar_IK(po, l1, l2);
+                    q11q12q14q23 = [];
+                    obj2T2Rthreebar = RCB2T2Rthreebar(po,q11q12q14q23,l1,l2);
+                    [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rthreebar.RCB_2T2R_ThreeBar_IK;
                 case 10
                     %-------------------------- Branch Chain A1C1 --------------------------------
                     % Four-bar linkage with Serial Chain A1C1:  [1 1 0 0 0 0]

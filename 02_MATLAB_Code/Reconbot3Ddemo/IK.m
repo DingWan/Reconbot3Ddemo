@@ -166,7 +166,9 @@ q0 = inputq0;
             %We need to intepolate on o-xz plane
             % Mechanism transfers into Planar three-bar Linkage:  [1 1 1 1 1 1]
             % p = [x, 0, z, 0, beta, []]
-            [EulerAngle_q11_theta, ABC, q1q2] = RCB_ThreeBar_IK(po, l1, l2);
+            q11q12q14q23 = [];
+            obj2T2Rthreebar = RCB2T2Rthreebar(po,q11q12q14q23,l1,l2);
+            [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rthreebar.RCB_2T2R_ThreeBar_IK;
         case 10 % 2R-SerialA1C1
             %We need to intepolate on shpere surface
             % Four-bar linkage with Serial Chain A1C1: ----- isempty(p) = [1 1 0 0 0 0]
