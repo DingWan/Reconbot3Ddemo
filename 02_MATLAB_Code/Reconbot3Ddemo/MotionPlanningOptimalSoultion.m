@@ -80,7 +80,7 @@ for i = 1:length(MPOTP_cell)
         end
         
         % IK solution 
-        [ ~, ~, ~, q1q2, ~ ] = IK(Mode, PosOri, q0, q11, q21, q0q1q2_OptimalRow(length(q0q1q2_OptimalRow(:,1)),:), l1, l2);
+        [ p, ~, ~, q1q2, ~ ] = IK(Mode, PosOri, q0, q11, q21, q0q1q2_OptimalRow(length(q0q1q2_OptimalRow(:,1)),:), l1, l2);
         q0q1q2_CurrentStep = [zeros(length(q1q2(:,1)),1),q1q2];
         
         % Optimal Joints Solution
@@ -114,9 +114,9 @@ for i = 1:length(MPOTP_cell)
             q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints - 1,6);
         else
             q0q1q2_OptimalRow(NumIntepoPoints,2) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
-            q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints - 1,6);
+            q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
             q0q1q2_OptimalRow(NumIntepoPoints,7) = q0q1q2_OptimalRow(NumIntepoPoints - 1,7);
-            q0q1q2_OptimalRow(NumIntepoPoints,11) = q0q1q2_OptimalRow(NumIntepoPoints - 1,11);
+            q0q1q2_OptimalRow(NumIntepoPoints,11) = q0q1q2_OptimalRow(NumIntepoPoints - 1,7);
         end        
         PosOri_previous{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
         PosOri_previous{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
@@ -133,8 +133,4 @@ else
     q0q1q2_P2P = q0q1q2_OptimalRow(1:NumIntepoPoints,:);
 end
 
-end
-
-function c = exchange(a, b)
-c = [b; a];
 end

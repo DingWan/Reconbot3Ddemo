@@ -1,8 +1,8 @@
  
 
 %========================== Collision Check ============================
-    [CollisionOccur_DistanceA1C1(n*(IntepPointNum-1)+i,:), CollisionPoints_A1C1, CollisionOccur_DistanceA2C2(n*(IntepPointNum-1)+i,:), CollisionPoints_A2C2]...
-        = CollisionCheck(q0q1q2_mat(n*(IntepPointNum-1)+i,:)*180/pi);    
+    [CollisionOccur_DistanceA1C1(NumIntepoPoints*(i-1)+j,:), CollisionPoints_A1C1, CollisionOccur_DistanceA2C2(NumIntepoPoints*(i-1)+j,:), CollisionPoints_A2C2]...
+        = CollisionCheck(q0q1q2_Optimal_SingleRow * 180/pi);    
     %============================= End =================================
     
      %========================== Collision Line ============================

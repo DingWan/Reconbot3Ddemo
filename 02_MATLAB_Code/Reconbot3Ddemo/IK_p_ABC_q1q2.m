@@ -1,11 +1,4 @@
- %%  --------------------------------- Method I: Start ---------------------------------------
-%             str = {'3T1R';'2T2R-6-Bar';'2T2R-6-Bar(xy=0)';'2T2R-5-Bar';'2T1R-3-BarSerial';'2R-SerialA1C1';'2R-SerialA2C2';'Fixed-SerialA1C1A2C2';};
-%             [s,v] = listdlg('PromptString','Select a Operation Mode:','SelectionMode','single',...
-%                 'ListString',str);
-%             if v == 0
-%                 break;
-%             end
-            
+            %%
             switch Mode
                 case 1 % 3T2R
                     %%------------------------ 3T1R IK ------------------------
