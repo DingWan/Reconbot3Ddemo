@@ -69,7 +69,7 @@ function [T_01,T_1_02,T_1_03,T_1_04,T_1_05,T_1_06,T_2_02,T_2_03,T_2_04,T_2_05] =
         % Forward Kinematics - BaseJointA1C1
         Trans_BaseUP_CenterPointA1C1 = [[eye(3,3);0,0,0], [BaseUP_CenterPointA1C1, 1]'];
         Trans_BaseJointA1C1_CenterPointMotor = [[eye(3,3);0,0,0],[- BaseJointA1C1A2C2_CenterPointMotor, 1]'];        
-        T_BaseJointA1C1_Trans2OrigPoint_Rotq11 =  rotm2tform(rotz(q11)) * Trans_BaseJointA1C1_CenterPointMotor;
+        T_BaseJointA1C1_Trans2OrigPoint_Rotq11 =  rotm2tform(rotz( - q11)) * Trans_BaseJointA1C1_CenterPointMotor;
         T_1_01 = Trans_BaseUP_CenterPointA1C1 * rotm2tform(rotz(90)) * T_BaseJointA1C1_Trans2OrigPoint_Rotq11;
         
         % Forward Kinematics - LowLinkA1C1
@@ -93,13 +93,13 @@ function [T_01,T_1_02,T_1_03,T_1_04,T_1_05,T_1_06,T_2_02,T_2_03,T_2_04,T_2_05] =
         % Forward Kinematics - Moving Platform
         Trans_UPjointA1C1A2C2_CenterPointConnectWithMP = [[eye(3,3);0,0,0], [UPjointA1C1A2C2_CenterPointConnectWithMP, 1]'];
         Trans_MovingPlatform_CenterPointA1C1 = [[eye(3,3);0,0,0],[- MovingPlatform_CenterPointA1C1, 1]'];        
-        T_1_45 = Trans_UPjointA1C1A2C2_CenterPointConnectWithMP * rotm2tform(rotz(q15)) * rotm2tform(rotz(-90) * rotx(180)) * Trans_MovingPlatform_CenterPointA1C1;
+        T_1_45 = Trans_UPjointA1C1A2C2_CenterPointConnectWithMP * rotm2tform(rotz( - q15)) * rotm2tform(rotz(-90) * rotx(180)) * Trans_MovingPlatform_CenterPointA1C1;
         
         %------------------------ Chain A2C2 ------------------------
         % Forward Kinematics - BaseJointA2C2
         Trans_BaseUP_CenterPointA2C2 = [[eye(3,3);0,0,0], [BaseUP_CenterPointA2C2, 1]'];
         Trans_BaseJointA1C1_CenterPointMotor = [[eye(3,3);0,0,0],[- BaseJointA1C1A2C2_CenterPointMotor, 1]'];        
-        T_BaseJointA1C1_Trans2OrigPoint_Rotq11 = rotm2tform(rotz(180)) * rotm2tform(rotz(q21)) * Trans_BaseJointA1C1_CenterPointMotor;
+        T_BaseJointA1C1_Trans2OrigPoint_Rotq11 = rotm2tform(rotz(180)) * rotm2tform(rotz( - q21)) * Trans_BaseJointA1C1_CenterPointMotor;
         T_2_01 = Trans_BaseUP_CenterPointA2C2 * rotm2tform(rotz(90)) * T_BaseJointA1C1_Trans2OrigPoint_Rotq11;
         
         % Forward Kinematics - LowLinkA2C2
