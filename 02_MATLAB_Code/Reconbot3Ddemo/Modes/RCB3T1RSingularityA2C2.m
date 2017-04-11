@@ -324,7 +324,7 @@ classdef RCB3T1RSingularityA2C2
                     q24 = (q22 + q23 + theta) - pi/2;
                 end
                 %--------- q15 and q25 -----------%
-                q15 = - q11 + alpha;   q25 = q21 + alpha ;
+                q15 =  q11 - alpha;   q25 = q21 + alpha ;
                 
                 q1q2(i,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
             

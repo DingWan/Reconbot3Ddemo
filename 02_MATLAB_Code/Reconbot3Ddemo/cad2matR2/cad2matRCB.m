@@ -37,9 +37,9 @@ end
     % To use homogenous transforms, the n by 3 Vertices will be turned to 
     % n by 4 vertices, then back to 3 for the set command.
     % Note: n by 4 needed for translations, not used here, but could, using tl(x,y,z)
-[F1, V1, C1] = rndread(filename{1});
-V1 = [V1(:,1:3), ones(length(V1),1)];
-BaseLow = struct('F1',F1, 'V1',V1, 'C1',C1);
+% [F1, V1, C1] = rndread(filename{1});
+% V1 = [V1(:,1:3), ones(length(V1),1)];
+% BaseLow = struct('F1',F1, 'V1',V1, 'C1',C1);
 
 [F2, V2, C2] = rndread(filename{2});
 V2 = [V2(:,1:3), ones(length(V2),1)];
@@ -84,12 +84,13 @@ MP = struct('F11',F11, 'V11',V11, 'C11',C11);
 
 save('RCBLinkdata.mat', 'BaseLow','BaseUP','BaseJoint_A1C1','BaseJoint_A2C2','LowLink_A1C1','LowLink_A2C2',...
     'UpLink_A1C1','UpLink_A2C2','UPjoint_A1C1','UPjoint_A2C2','MP')
+
 %%
 %-------------------------------------------- 
 % Set File 3 as a example: 
-F = F3(:,1:3);
-V = V3(:,1:3);
-C = C3;
+F = F2(:,1:3);
+V = V2(:,1:3);
+C = C2;
 
 clf;
   p = patch('faces', F, 'vertices' ,V);
@@ -115,7 +116,7 @@ clf;
     axis([-vsize vsize -vsize vsize -vsize vsize]);
     %
   
-% Move it around   
+%% Move it around   
  %------------------------- 
 for ang = 0:1:90
     nv = rx(ang)*V;

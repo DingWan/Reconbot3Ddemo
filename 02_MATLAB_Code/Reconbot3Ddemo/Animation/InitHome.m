@@ -58,6 +58,9 @@ q21 = 0;        q22 = 60;       q23 = 60;        q24 = 30;        q25 = 0;
 q0q1q2 = [q0, q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
 [T_01,T_1_02,T_1_03,T_1_04,T_1_05,T_1_06,T_2_02,T_2_03,T_2_04,T_2_05] = RCB_3Ddemo_ForwardKinematics(q0q1q2);
 
+% We can display the collision lines of each components
+% [~, ~, ~] = CollisionPointsFK(q0q1q2);
+
 % Actual vertex data of robot links
 Link_BaseLow        =           BaseLow_data.V1;
 Link_BaseUP         = (T_01   * BaseUP_data.V2')';

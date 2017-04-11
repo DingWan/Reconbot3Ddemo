@@ -10,7 +10,7 @@ function ReconbotANI(q0q1q2)
             % Forward Kinematics
             [T_01,T_1_02,T_1_03,T_1_04,T_1_05,T_1_06,T_2_02,T_2_03,T_2_04,T_2_05] = RCB_3Ddemo_ForwardKinematics(q0q1q2(i,:)*180/pi);
             %-------------------------------------------------------
-            q0q1q2(i,:)*180/pi;
+            %q0q1q2(i,:)*180/pi;
             BaseLow_data = getappdata(0,'Link_BaseLow_data');
             BaseUP_data = getappdata(0,'Link_BaseUP_data');
             BaseJointA1C1_data = getappdata(0,'Link_BaseJointA1C1_data');

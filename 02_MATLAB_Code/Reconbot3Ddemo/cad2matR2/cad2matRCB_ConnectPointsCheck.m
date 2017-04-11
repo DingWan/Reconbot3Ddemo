@@ -1,4 +1,4 @@
-function cad2matCollisionCheck(filename)
+function cad2matRCB(filename)
 % CAD2MATDEMO, a demonstration of importing 3D CAD data into Matlab.
 % To get CAD data into Matlab, the process is:
 %
@@ -16,7 +16,8 @@ function cad2matCollisionCheck(filename)
 % Note: This routine has both the import function and some basic
 % manipulation for testing.  The actual reading mechanism is located
 % at the end of this file.
-  
+
+%% 
 if nargin == 0    
    filename = {   'RCB_BaseLow.stl';
                   'RCB_BaseUP.stl'; 
@@ -46,45 +47,50 @@ end
 % 
 % [F3, V3, C3] = rndread(filename{3});
 % V3 = [V3(:,1:3), ones(length(V3),1)];
-% BaseJoint_A1C1 = struct('F3',F3, 'V3',V3, 'C3',C3);
-
+% BaseJointA1C1 = struct('F3',F3, 'V3',V3, 'C3',C3);
+% 
 % [F4, V4, C4] = rndread(filename{4});
 % V4 = [V4(:,1:3), ones(length(V4),1)];
-% LowLink_A1C1 = struct('F4',F4, 'V4',V4, 'C4',C4);
-
+% LowLinkA1C1 = struct('F4',F4, 'V4',V4, 'C4',C4);
+% 
 % [F5, V5, C5] = rndread(filename{5});
 % V5 = [V5(:,1:3), ones(length(V5),1)];
-% UpLink_A1C1 = struct('F5',F5, 'V5',V5, 'C5',C5);
+% UpLinkA1C1 = struct('F5',F5, 'V5',V5, 'C5',C5);
 % 
 % [F6, V6, C6] = rndread(filename{6});
 % V6 = [V6(:,1:3), ones(length(V6),1)];
-% UPjoint_A1C1 = struct('F6',F6, 'V6',V6, 'C6',C6);
+% UPjointA1C1 = struct('F6',F6, 'V6',V6, 'C6',C6);
 % 
 % [F7, V7, C7] = rndread(filename{7});
 % V7 = [V7(:,1:3), ones(length(V7),1)];
-% BaseJoint_A2C2 = struct('F7',F7, 'V7',V7, 'C7',C7);
+% BaseJointA2C2 = struct('F7',F7, 'V7',V7, 'C7',C7);
 % 
-% [F8, V8, C8] = rndread(filename{8});
-% V8 = [V8(:,1:3), ones(length(V8),1)];
-% LowLink_A2C2 = struct('F8',F8, 'V8',V8, 'C8',C8);
+[F8, V8, C8] = rndread(filename{8});
+V8 = [V8(:,1:3), ones(length(V8),1)];
+LowLinkA2C2 = struct('F8',F8, 'V8',V8, 'C8',C8);
 % 
 % [F9, V9, C9] = rndread(filename{9});
 % V9 = [V9(:,1:3), ones(length(V9),1)];
-% UpLink_A2C2 = struct('F9',F9, 'V9',V9, 'C9',C9);
+% UpLinkA2C2 = struct('F9',F9, 'V9',V9, 'C9',C9);
 % 
 % [F10, V10, C10] = rndread(filename{10});
 % V10 = [V10(:,1:3), ones(length(V10),1)];
-% UPjoint_A2C2 = struct('F10',F10, 'V10',V10, 'C10',C10);
+% UPjointA2C2 = struct('F10',F10, 'V10',V10, 'C10',C10);
 % 
-[F11, V11, C11] = rndread(filename{11});
-V11 = [V11(:,1:3), ones(length(V11),1)];
-MP = struct('F11',F11, 'V11',V11, 'C11',C11);
+% [F11, V11, C11] = rndread(filename{11});
+% V11 = [V11(:,1:3), ones(length(V11),1)];
+% MovingPlatform = struct('F11',F11, 'V11',V11, 'C11',C11);
 %-------------------------------------------- 
- 
-% Set File '??' as a example: 
-F = F11(:,1:3);
-V = V11(:,1:3);
-C = C11;
+
+% save('RCBLinkdata.mat', 'BaseLow','BaseUP','BaseJointA1C1','BaseJointA2C2','LowLinkA1C1','LowLinkA2C2',...
+%     'UpLinkA1C1','UpLinkA2C2','UPjointA1C1','UPjointA2C2','MovingPlatform')
+
+%%
+%-------------------------------------------- 
+% Set File 3 as a example: 
+F = F8(:,1:3);
+V = V8(:,1:3);
+C = C8;
 
 clf;
   p = patch('faces', F, 'vertices' ,V);
@@ -102,13 +108,118 @@ clf;
     drawnow                             %, axis manual
     %
     disp(['CAD file ' filename{3} ' data is read, will now show object rotating'])
-    
-    hold on
-    
-    CollisionLines;
-
+%     pause(1) 
+    %
+    V = V';
+    V = [V(1,:); V(2,:); V(3,:); ones(1,length(V))];
+    vsize = maxv(V); %attempt to determine the maximum xyz vertex. 
+    axis([-vsize vsize -vsize vsize -vsize vsize]);
+    %
   
-%% Move it around
+%% Move it around   
+ %------------------------- 
+for ang = 0:1:90
+    nv = rx(ang)*V;
+    set(p,'Vertices',nv(1:3,:)')       
+    drawnow
+end
+for ang1 = 0:2:90
+    nv1 = ry(ang1)*nv;
+    set(p,'Vertices',nv1(1:3,:)')     
+    drawnow
+end
+for ang2 = 0:3:90
+    nv2= rz(ang2)*nv1;
+    set(p,'Vertices',nv2(1:3,:)')      
+    drawnow
+end
+for ang3 = 0:5:180
+    nv3 = rx(ang3)*ry(ang3)*rz(ang3)*nv2;
+    set(p,'Vertices',nv3(1:3,:)')      
+    drawnow
+end
+%-------------------------------------------- 
+
+%
+% End of main routine, here are the functions used:
+% Homogeneous manipulation functions follow:
+%
+function Rx = rx(THETA)
+% ROTATION ABOUT THE X-AXIS
+%
+% Rx = rx(THETA)
+%
+% This is the homogeneous transformation for
+% rotation about the X-axis.
+%
+%	    NOTE:  The angle THETA must be in DEGREES.
+%
+THETA = THETA*pi/180;  % Note: THETA in radians.
+c = cos(THETA);
+s = sin(THETA);
+Rx = [1 0 0 0; 0 c -s 0; 0 s c 0; 0 0 0 1];
+%
+function Ry = ry(THETA)
+% ROTATION ABOUT THE Y-AXIS
+%
+% Ry = ry(THETA)
+%
+% This is the homogeneous transformation for
+% rotation about the Y-axis.
+%
+%		NOTE: The angel THETA must be in DEGREES.
+%
+THETA = THETA*pi/180;  %Note: THETA is in radians.
+c = cos(THETA);
+s = sin(THETA);
+Ry = [c 0 s 0; 0 1 0 0; -s 0 c 0; 0 0 0 1];
+%
+function Rz = rz(THETA)
+% ROTATION ABOUT THE Z-AXIS
+%
+% Rz = rz(THETA)
+%
+% This is the homogeneous transformation for
+% rotation about the Z-axis.
+%
+%		NOTE:  The angle THETA must be in DEGREES.
+%
+THETA = THETA*pi/180;  %Note: THETA is in radians.
+c = cos(THETA);
+s = sin(THETA);
+Rz = [c -s 0 0; s c 0 0; 0 0 1 0; 0 0 0 1];
+%
+function T = tl(x,y,z)
+% TRANSLATION ALONG THE X, Y, AND Z AXES
+%
+% T = tl(x,y,z)
+%
+% This is the homogeneous transformation for
+% translation along the X, Y, and Z axes.
+%
+T = [1 0 0 x; 0 1 0 y; 0 0 1 z; 0 0 0 1];
+%
+function vsize = maxv(V)
+%
+% Look at the xyz elements of V, and determine the maximum
+% values during some simple rotations.
+    vsize = max(max(V));
+    % Rotate it a bit, and check for max and min vertex for viewing.
+    for ang = 0:10:360
+        vsizex = rx(ang)*V;
+        maxv = max(max(vsizex));
+        if maxv > vsize, vsize = maxv; end
+        vsizey = ry(ang)*V;
+        maxv = max(max(vsizey));
+        if maxv > vsize, vsize = maxv; end
+        vsizez = rz(ang)*V;
+        maxv = max(max(vsizez));
+        if maxv > vsize, vsize = maxv; end
+        vsizev = rx(ang)*ry(ang)*rz(ang)*V;
+        maxv = max(max(vsizev));
+        if maxv > vsize, vsize = maxv; end
+    end
+    %
 function [fout, vout, cout] = rndread(filename)
 % Reads CAD STL ASCII files, which most CAD programs can export.
 % Used to create Matlab patches of CAD 3D data.

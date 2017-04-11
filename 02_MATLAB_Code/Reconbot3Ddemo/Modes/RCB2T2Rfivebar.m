@@ -255,7 +255,7 @@ classdef RCB2T2Rfivebar
                         q24 = (q22 + q23 + theta) - pi/2;
                     end
                     %--------- q15 and q25 -----------%
-                    q15 = - q11;           q25 = q21;
+                    q15 = q11;           q25 = q21;
                     
                     q1q2(i,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
                     

@@ -17,7 +17,7 @@ clc
 clear 
 %clf
 
-l1 = 220;
+l1 = 230;
 l2 = 147.25;
 deg = pi/180;
 n = 25;
@@ -142,7 +142,7 @@ for IntepPointNum = 1 : NumTP
    q0q1q2_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum + 1,1}{3};
    
    % Intepotation Points and Time
-   NumIntepoPoints = 20;
+   NumIntepoPoints = 100;
    Time = 4;
    
    % Motion Planning and Optimal Soultion;

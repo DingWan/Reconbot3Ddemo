@@ -176,7 +176,7 @@ function [LinkA1C1_ColChe, LinkA2C2_ColChe, BaseUpPlatform_ColChe] = CollisionPo
         
         LinkA1C1_ColChe = [LowLinkA1C1_ColChe(:,1:3); UpLinkA1C1_ColChe(:,1:3)];
         LinkA2C2_ColChe = [LowLinkA2C2_ColChe(:,1:3); UpLinkA2C2_ColChe(:,1:3)];
-        BaseUpPlatform_ColChe = [BaseLow_ColChe(:,1:3); BaseUP_ColChe; MP_ColChe(:,1:3)];
+        BaseUpPlatform_ColChe = [BaseLow_ColChe(:,1:3); BaseUP_ColChe(:,1:3); MP_ColChe(:,1:3)];
         
         %--------------------------------------------------------------
         %LowLinkA1C1_ColChe
