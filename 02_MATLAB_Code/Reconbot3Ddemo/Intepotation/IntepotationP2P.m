@@ -26,7 +26,7 @@ for i = 1:length(PosOri)
                     PosOri_current{i} = 0;
                 end
             else
-                if length(PosOri_previous) ~= 8 || (length(PosOri_previous) == 8 && isempty(PosOri_previous{i}) == 1)
+                if (length(PosOri_previous) ~= 8 && (Mode ~= 10 && Mode ~= 11)) || (length(PosOri_previous) == 8 && isempty(PosOri_previous{i}) == 1)
                     PosOri_previous{i} = PosOri_current{i};
                 end
             end
@@ -39,7 +39,7 @@ for i = 1:length(PosOri)
                     PosOri_current{i} = 0;
                 end
             else
-                if length(PosOri_previous) ~= 8 || (length(PosOri_previous) == 8 && isempty(PosOri_previous{i}) == 1)
+                if (length(PosOri_previous) ~= 8 && (Mode ~= 10 && Mode ~= 11)) || (length(PosOri_previous) == 8 && isempty(PosOri_previous{i}) == 1)
                     PosOri_previous{i} = PosOri_current{i};
                 end
             end

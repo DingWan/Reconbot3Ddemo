@@ -86,8 +86,13 @@ for i = 1:length(MPOTP_cell)
         % Optimal Joints Solution
         OptimalJointsSolution;                                             
         q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j,:) = q0q1q2_Optimal_SingleRow;                                            
-        % Show debugging
+        %------ Show debugging
         %ReconbotANI(q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,:));
+        
+        %------ Show Center point of Moving Platform
+        %Displacement = [250,250,165.88];
+        %p_Base = p(1:3) + Displacement;
+        %plot3(p_Base(1),p_Base(2),p_Base(3),'r.');
     end       
     
     if i == 1 && Self_adjustment_Enable_Disable == 1       
@@ -108,10 +113,10 @@ for i = 1:length(MPOTP_cell)
         PosOri_previous = PosOri_current;
         if Mode == 3        
             q0q1q2_OptimalRow(NumIntepoPoints,7) = q0q1q2_OptimalRow(NumIntepoPoints - 1,7);
-            q0q1q2_OptimalRow(NumIntepoPoints,11) = q0q1q2_OptimalRow(NumIntepoPoints - 1,11);
+            q0q1q2_OptimalRow(NumIntepoPoints,11) = q0q1q2_OptimalRow(NumIntepoPoints - 1,7);
         elseif Mode == 4
             q0q1q2_OptimalRow(NumIntepoPoints,2) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
-            q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints - 1,6);
+            q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
         else
             q0q1q2_OptimalRow(NumIntepoPoints,2) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
             q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);

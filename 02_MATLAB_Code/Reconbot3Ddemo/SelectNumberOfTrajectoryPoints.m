@@ -66,7 +66,11 @@ for NumTP = 1:NumTrajPoints_num
         Mode_Pos_Ori_TrajPoints_cell{1,1} = {5,{0, 0, 255.0445, 0, [], [], 0, 0},q0q1q2_0};     
     end
     
-    Mode_Pos_Ori_TrajPoints_cell{NumTP + 1,1} = {Mode, {po{:}},q0q1q2_all};
+    if Mode == 10 || Mode == 11
+        Mode_Pos_Ori_TrajPoints_cell{NumTP + 1,1} = {Mode, {po{:}},q0q1q2_all, Pos_Ori};
+    else
+        Mode_Pos_Ori_TrajPoints_cell{NumTP + 1,1} = {Mode, {po{:}},q0q1q2_all};
+    end
 
 end
 

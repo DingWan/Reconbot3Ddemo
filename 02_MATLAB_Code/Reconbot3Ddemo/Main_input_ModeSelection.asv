@@ -82,23 +82,11 @@ for IntepPointNum = 1 : NumTP
        Mode_previous = 10;
        Mode_current = 10;
        PosOri_previous = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum + 1}{2};
-       
-               % Keep the first angles  q12 and q14  equals to the second angles  q12 and q14
-               %--- Here we assign the value by extrapolation ----
-               % Delta = ((last third value - last Second Value) + (last Forth value - last third Value))/2
-               % Here we get the new "q0q1q2_mat(Lenth,7:11)" value
-               Lenth = length(q0q1q2_mat(:,1));
-               delta_q0q1q2 = ((q0q1q2_mat(Lenth-2,:)-q0q1q2_mat(Lenth-1,:)) + (q0q1q2_mat(Lenth-3,:)-q0q1q2_mat(Lenth-2,:)))/2;
-               q0q1q2_mat(Lenth,8) = q0q1q2_mat(Lenth-1,8) - delta_q0q1q2(8);
-               PosOri_previous{7} = q0q1q2_mat(Lenth,8);
-               po = {PosOri_previous{1}, PosOri_previous{2}, [], [], [], [], PosOri_previous{7}};
-               obj2RserialA2C2 = RCB2RserialA2C2(po,[],l1,l2);
-               [~, ~, ~, q1q2, ~] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
-               for jj = 1:length(q1q2(:,1))
-                   q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_mat(Lenth-1,7:11));
-               end
-               [rowsA2C2,colsA2C2] = find(q1q2A2C2_norm == min(min(q1q2A2C2_norm)));
-               q0q1q2_mat(Lenth,7:11) = q1q2(colsA2C2(1),6:10);
+       % Keep the last angles  q12 and q14  equals to the last second angles  q12 and q14 
+       Lenth = length(q0q1q2_mat(:,1));
+       q0q1q2_mat(Lenth,3) = q0q1q2_mat(Lenth-1,3);
+       q0q1q2_mat(Lenth,5) = q0q1q2_mat(Lenth-1,5);
+       PosOri_previous{7} = q0q1q2_mat(Lenth,3);
        
        PosOri_previous{7} = q0q1q2_mat(length(q0q1q2_mat(:,1)),3);
        PosOri_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum + 1}{2};
@@ -111,22 +99,23 @@ for IntepPointNum = 1 : NumTP
        Mode_current = 11;
        PosOri_previous = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum + 1}{2};
        
-               % Keep the first angles  q12 and q14  equals to the second angles  q12 and q14
-               %--- Here we assign the value by extrapolation ----
-               % Delta = ((last third value - last Second Value) + (last Forth value - last third Value))/2
-               % Here we get the new "q0q1q2_mat(Lenth,7:11)" value
-               Lenth = length(q0q1q2_mat(:,1));
-               delta_q0q1q2 = ((q0q1q2_mat(Lenth-2,:)-q0q1q2_mat(Lenth-1,:)) + (q0q1q2_mat(Lenth-3,:)-q0q1q2_mat(Lenth-2,:)))/2;
-               q0q1q2_mat(Lenth,8) = q0q1q2_mat(Lenth-1,8) - delta_q0q1q2(8);
-               PosOri_previous{7} = q0q1q2_mat(Lenth,8);
-               po = {PosOri_previous{1}, PosOri_previous{2}, [], [], [], [], PosOri_previous{7}};
-               obj2RserialA2C2 = RCB2RserialA2C2(po,[],l1,l2);
-               [~, ~, ~, q1q2, ~] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
-               for jj = 1:length(q1q2(:,1))
-                   q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_mat(Lenth-1,7:11));
-               end
-               [rowsA2C2,colsA2C2] = find(q1q2A2C2_norm == min(min(q1q2A2C2_norm)));
-               q0q1q2_mat(Lenth,7:11) = q1q2(colsA2C2(1),6:10);
+       % Keep the first angles  q12 and q14  equals to the second angles  q12 and q14 
+       %--- Here we assign the value by extrapolation ----
+       % Delta = ((Third value - Second Value) + (Forth value - Third Value))/2 
+       Lenth = length(q0q1q2_mat(:,1));
+       delta_q0q1q2 = ((q0q1q2_mat(Lenth-2,:)-q0q1q2_mat(Lenth-1,:)) + (q0q1q2_mat(Lenth-3,:)-q0q1q2_mat(Lenth-2,:)))/2;
+       q0q1q2_mat(Lenth,8) = q0q1q2_mat(Lenth-1,8) - delta_q0q1q2(8);
+       PosOri_previous{7} = q0q1q2_mat(Lenth,8);
+       po = {PosOri_previous{1}, PosOri_previous{2}, [], [], [], [], PosOri_previous{7}};
+       obj2RserialA2C2 = RCB2RserialA2C2(po,[],l1,l2);
+       [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
+       for jj = 1:length(q1q2(:,1))
+           q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_mat(Lenth-1,7:11));
+       end
+       [rowsA2C2,colsA2C2] = find(q1q2A2C2_norm == min(min(q1q2A2C2_norm)));
+       SolutionRow_A1C1 = colsA1C1(1);
+       SolutionRow_A2C2 = colsA2C2(1);
+       q0q1q2_mat(Lenth,7:11) = q1q2(SolutionRow_A2C2,6:10);
        
        PosOri_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum + 1}{2};
        q0q1q2_previous = q0q1q2_mat(length(q0q1q2_mat),:);
@@ -224,7 +213,7 @@ toc
 %PlotAngleValue;
 
 %% 3D Animation
-for i = 31:length(q0q1q2_mat)-0    
+for i = 31:length(q0q1q2_mat)-80
     %========================== Animation ============================
     ReconbotANI(q0q1q2_mat(i,:));   
 %     set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off

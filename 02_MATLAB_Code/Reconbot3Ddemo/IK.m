@@ -140,11 +140,9 @@ q0 = inputq0;
                 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
                 beta_FiveBar = EulerAngle_q11_theta(2);
             elseif abs(po{1}) < 1e-12 && abs(po{2}) < 1e-12% && IntepPointNum ~= 1% x = y = 0                
-                q1q2 = q0q1q2_Previous(2:11);
-                p = [];
-                EulerAngle_q11_theta = [];
-                ABC = [];
-                WSvalue = [];
+                obj2T2Rsixbar = RCB2T2Rsixbar(PosOri,q11q12q14q23,l1,l2);
+                [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
+                
             elseif abs(po{1}) > 1e-12 && abs(po{2}) < 1e-12 % y = 0
                 po = {po{1}, 0, po{3}, [], beta_FiveBar, 0};
                 q11q12q14q22 = [];
@@ -154,7 +152,18 @@ q0 = inputq0;
         case 7 % 2T2R-6-Bar(xy=0)
             % Mechanism rotate around point p(1:3):  [0 0 1 0 1 1]
             % p = [[], [], z, [], beta, gamma]; x = y = 0
-            [EulerAngle_q11_theta, ABC, q1q2] = RCB_1T2R_RotAroundPoint_IK(po, l1, l2);
+            q11q12q14q23 = [];
+            if po{5} == 0 && po{6} == 0
+                q11q12q21q22 = [q0q1q2_Previous(2:3),q0q1q2_Previous(7:8)];
+                q11q12q14q23 = q11q12q21q22;
+                q11 = inputq11;
+                q21 = inputq21;
+                PosOri = {[], [], po{3}, [], po{5}, po{6}, q11, q21};
+            else
+                PosOri = {[], [], po{3}, [], po{5}, po{6}};
+            end
+            obj1T3RRotAroundPoint = RCB1T3RRotAroundPoint(PosOri,q11q12q14q23,l1,l2);
+            [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj1T3RRotAroundPoint.RCB_1T3R_RotAroundPoint_IK;
         case 8 % 2T2R-5-Bar
             %We need to intepolate on o-xz plane
             % Mechanism transfers into Planar five-bar Linkage:  [1 1 1 1 1 1]
@@ -173,12 +182,16 @@ q0 = inputq0;
             %We need to intepolate on shpere surface
             % Four-bar linkage with Serial Chain A1C1: ----- isempty(p) = [1 1 0 0 0 0]
             % p = [x, y, [], [], [], []]; y < 0
-            [EulerAngle_q11_theta, ABC, q1q2] = RCB_2R_SerialA1C1_IK(po, l1, l2);
+            q11q12q22q13 = [];
+            obj2RserialA1C1 = RCB2RserialA1C1(po,q11q12q22q13,l1,l2);
+            [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2RserialA1C1.RCB_2R_SerialA1C1_IK;
         case 11 % 2R-SerialA2C2
             %We need to intepolate on shpere surface
             % Four-bar linkage with Serial Chain A2C2: [1 1 0 0 0 0]
             % p = [x, y, [], [], [], []]; y > 0
-            [EulerAngle_q11_theta, ABC, q1q2] = RCB_2R_SerialA2C2_IK(po, l1, l2);
+            q11q12q22q13 = [];
+            obj2RserialA2C2 = RCB2RserialA2C2(po,q11q12q22q13,l1,l2);
+            [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
         case 12 % Fixed-SerialA1C1A2C2
             % Mechanism transit into two serial chain mechanism:  [1 1 1 0 0 0]
             % p = [0, 0, 0, [], [], []]

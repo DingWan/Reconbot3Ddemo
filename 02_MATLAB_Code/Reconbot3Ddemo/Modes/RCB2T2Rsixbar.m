@@ -174,22 +174,27 @@ classdef RCB2T2Rsixbar
                     q11 = [];                    
                 end
                 [EulerAngle_q11_theta] = EulerAngles_beta_gamma_q11_IK(beta, gamma, q11);
-                for i = 1:length(EulerAngle_q11_theta(:,1))
-                    RotationMatrix = eul2rotm(EulerAngle_q11_theta(i,1:3));
-                    alpha = EulerAngle_q11_theta(i,1);
-                    beta  = EulerAngle_q11_theta(i,2);
-                    gamma = EulerAngle_q11_theta(i,3);
-                    EulerAngle = EulerAngle_q11_theta(i,1:3);
-                    % Ci_in_Ob: Ci in frame Ob-xyz
-                    C1_in_Ob = (RotationMatrix * C1_in_op')' + p(1:3);
-                    C2_in_Ob = (RotationMatrix * C2_in_op')' + p(1:3);                    
-                    q11 = EulerAngle_q11_theta(i,4);
-                    theta = EulerAngle_q11_theta(i,5);
-                    q21 = q11;                    
-                    if (C2_in_Ob(3) -  C1_in_Ob(3)) * theta >= 0
-                        break;
-                    else
-                        continue;
+                if isempty(EulerAngle_q11_theta) == 1
+                    WSvalue = 0;
+                    return;
+                else                    
+                    for i = 1:length(EulerAngle_q11_theta(:,1))
+                        RotationMatrix = eul2rotm(EulerAngle_q11_theta(i,1:3));
+                        alpha = EulerAngle_q11_theta(i,1);
+                        beta  = EulerAngle_q11_theta(i,2);
+                        gamma = EulerAngle_q11_theta(i,3);
+                        EulerAngle = EulerAngle_q11_theta(i,1:3);
+                        % Ci_in_Ob: Ci in frame Ob-xyz
+                        C1_in_Ob = (RotationMatrix * C1_in_op')' + p(1:3);
+                        C2_in_Ob = (RotationMatrix * C2_in_op')' + p(1:3);
+                        q11 = EulerAngle_q11_theta(i,4);
+                        theta = EulerAngle_q11_theta(i,5);
+                        q21 = q11;
+                        if (C2_in_Ob(3) -  C1_in_Ob(3)) * theta >= 0
+                            break;
+                        else
+                            continue;
+                        end
                     end
                 end
             end
@@ -202,7 +207,7 @@ classdef RCB2T2Rsixbar
             k2 = [ sin(q21), -cos(q21), 0];
             A1C1 = C1_in_Ob - A1;
             A2C2 = C2_in_Ob - A2;
-            if norm(A1C1) == 0
+            if  norm(A1C1) == 0 || norm(A2C2) == 0  % norm(A1C1) < 1e-6 || norm(A2C2) < 1e-6
                 angle_A1C1_k1 = pi/2;
                 angle_A2C2_k2 = pi/2;
             else
@@ -335,7 +340,7 @@ classdef RCB2T2Rsixbar
                     %------------------Judge the workspace and solution existence of A1C1-------------------------
                     %---------------------------Position of A1-C1 ----------------------------
                     if q11 >= -2*pi && q12 >= 0 && q13 >= -pi && q14 >= -2*pi/3 && q15 >= -2*pi...
-                            && q11 <= 2*pi && q12 <= pi && q13 <= pi && q14 <= 105*pi/180 && q15 <= 2*pi...
+                            && q11 <= 2*pi && q12 <= pi && q13 <= pi && q14 <= 180*pi/180 && q15 <= 2*pi...
                             && isreal(q1q2(i,1:5)) ~= 0
                         jA1C1 = jA1C1 + 1;
                         %%-----------------Get the output values of Moving Platform-----------------------
@@ -355,7 +360,7 @@ classdef RCB2T2Rsixbar
                     %%------------------------------------------------------------------------
                     %---------------------------Position of A2-C2 ----------------------------
                     if q21 >= -2*pi && q22 >= 0 && q23 >= -pi && q24 >= -2*pi/3 && q25 >= -2*pi ...
-                            && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= 105*pi/180 && q25 <= 2*pi...
+                            && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= 180*pi/180 && q25 <= 2*pi...
                             && isreal(q1q2(i,6:10)) ~= 0
                         jA2C2 = jA2C2 + 1;
                         %%-----------------Get the output values of Moving Platform-----------------------

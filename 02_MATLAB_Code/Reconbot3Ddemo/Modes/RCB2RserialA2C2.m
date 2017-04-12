@@ -18,7 +18,7 @@ classdef RCB2RserialA2C2
     end
     
     methods
-        function obj = RCB2RserialA1C1(pos,q11q12q22q23,L1,L2)
+        function obj = RCB2RserialA2C2(pos,q11q12q22q23,L1,L2)
             if nargin > 0
                 obj.l1 = L1;
                 obj.l2 = L2;
@@ -27,7 +27,7 @@ classdef RCB2RserialA2C2
             end
         end
         
-        function [p, EulerAngle_q11_theta, ABC, q1q2] = RCB_2R_SerialA2C2_IK(obj)
+        function [p, EulerAngle_q11_theta, ABC_FeasibleSolution, q1q2_FeasibleSolution, WSvalue] = RCB_2R_SerialA2C2_IK(obj)
             % p = {-0.5, -0.5, 1, 0, [], []};
             %  p = str2num(cell2mat(po(1:3)));
             L1 = obj.l1;
@@ -59,6 +59,9 @@ classdef RCB2RserialA2C2
             %% -----------------------Calculaion of Ai & Ci in frame op-xyz-----------------------
             A1 = [0, -L1/2, 0];
             A2 = [0, L1/2, 0];
+            % Ci_in_op: Ci in frame op-xyz
+            C1_in_op = [0, -L1/2, 0];
+            C2_in_op = [0, L1/2, 0];  
             
             %%
             for i = 1:6
@@ -72,13 +75,17 @@ classdef RCB2RserialA2C2
             %% ----------------------- Calculate rotation matrix according to inputs -----------------------
             if isequal(p_BinaryCode, [1 1 0 0 0 0]) == 1
                 %% ----------------------- Calculate rotation matrix of two 2R modes -----------------------
-                if p(2) > 0
+                if p(2) <= 0
+                    WSvalue = [0, 0, 0];
+                    return;
+                elseif p(2) > 0
                     % Four-bar linkage with Serial Chain A2C2: [1 1 0 0 0 0]
                     % p = [x, y, [], [], [], []]; y > 0
-                    display('Notice: Inputs are:p = [x, y, [], [], [], []]; y < 0');
-                    display('Four-bar linkage with Serial Chain A1C1');
+                    name = '2R-SerialA2C2';
+                    fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
                     % 1.
-                    q21 = atan(p(1)/p(2));
+                    q21 = - atan(p(1)/p(2));
                     Oboppie = sqrt(p(1)^2 + p(2)^2);
                     A2Ob = L1/2;
                     A2op = L1/2;
@@ -87,8 +94,9 @@ classdef RCB2RserialA2C2
                     % 3.
                     zop = sqrt(A2op^2 - A2oppie^2);
                     % Judge the exisitence of soultion
-                    if isreal(zop) == 0
+                    if isreal(zop) == 0 || A2oppie > A2op %|| zop - p(3) > 1e-6 || p(3) < 0 || norm(p - A2) - A2op > 1e-6
                         display('There exist no solution')
+                        WSvalue = [0, 0, 0];
                         return;
                     end
                     p(3) = zop;
@@ -111,9 +119,10 @@ classdef RCB2RserialA2C2
                     vector_A1C1pie = C1pie - A1;
                     vector_A1C1 = C1 - A1;
                     angleC1pieA1C1 = atan(zC1 / norm(vector_A1C1pie));
+                    angle_A1C1_k1 = angleC1pieA1C1;
                     angleA1B1C1 = acos((2 * L2^2 - norm(vector_A1C1)^2) / (2 * L2^2));
                     %-------------------q11-q15, q21-q25------------------------------
-                    q11 = -q21;
+                    q11 = q21;
                     angleA2B2C2 = 0;
                 end
                 % ----------------------Calculate the Euler angle--------------------------
@@ -127,8 +136,15 @@ classdef RCB2RserialA2C2
                 EulerAngle_q11_theta = [EulerAngle, q11, theta];
             end
             
+            RotationMatrix = eul2rotm(EulerAngle_q11_theta(1:3));
+            % Ci_in_Ob: Ci in frame Ob-xyz
+            C1_in_Ob = (RotationMatrix * C1_in_op')' + p(1:3);
+            C2_in_Ob = (RotationMatrix * C2_in_op')' + p(1:3);
+            
             %% ----------------------- Calculate one solutions for one input  -----------------------
             if p(1) == 0 && p(2) == 0 && p(3) == 0
+                WSvalue_2R_SinguPosA2C2 = 1;
+                WSvalue_2R_SinguPosA2C2 = 1;                
                 IterationNumber = 1;
                 q13 = pi;
                 q14 = - q12;
@@ -143,229 +159,170 @@ classdef RCB2RserialA2C2
                 % and q21, which are used for i>5 due to the change of q11 and q21
                 q11_original = q11;
                 q21_original = q21;
-                if (q11 == 0 && q21 ~= 0) || (q11 ~= 0 && q21 == 0)
-                    % For situation: q11 = 0/pi/-pi, q21 = q21/[(pi+q21)/(-pi+q21)], there exist 6 combinations, with 24 solutions
-                    % For situation: q11 = q11/[(pi+q11)/(-pi+q11)], q21 = 0/pi/-pi, there exist 6 combinations, with 24 solutions
-                    IterationNumber = 24;
-                elseif q11 == 0 && q21 == 0
-                    % For situation: q11 = 0/pi/-pi, q21 = 0/pi/-pi,there exist 9 situations with 36 situations
-                    IterationNumber = 36;
+                if q11 == 0 || q11 == pi || q11 == -pi || q21 == 0 || q21 == pi || q21 == -pi
+                    IterationNumber = 5; % There exist five situations: 0/pi/-pi/2*pi/-2*pi
                 else
-                    % For situation: q11 = q11/[(pi+q11)/(-pi+q11)], q21 = q21/[(pi+q21)/(-pi+q21)],there exist 4 situations
-                    IterationNumber = 16;
+                    IterationNumber = 4;
                 end
-                % There exist 16 situations:
+                % There exist 4/5 situations:
+                jA1C1 = 0; % NumberofFeasibleSolutionA1C1 = 0;
+                jA2C2 = 0; % NumberofFeasibleSolutionA2C2 = 0;
                 for i = 1:IterationNumber
-                    switch rem(i,4)
-                        %--------- Situation I-IV: input q11 -----------%
-                        case 1
-                            %--------- Situation I -----------%
-                            q13 = pi - angleA1B1C1;
-                            q23 = pi - angleA2B2C2;
-                        case 2
-                            %--------- Situation II -----------%
-                            q13 = angleA1B1C1 - pi;
-                            q23 = pi - angleA2B2C2;
-                        case 3
-                            %--------- Situation III -----------%
-                            q13 = pi - angleA1B1C1;
-                            q23 = angleA2B2C2 - pi;
-                        case 0
-                            %--------- Situation IV -----------%
-                            q13 = angleA1B1C1 - pi;
-                            q23 = angleA2B2C2 - pi;
-                    end
+                    %--------- Situation I -----------%
+                    q13 = pi - angleA1B1C1;
+                    q23 = pi - angleA2B2C2;
                     angleB1A1C1 = q13 / 2;
                     angleB2A2C2 = q23 / 2;
                     % calculate: q12, q14; q22, q24;
-                    
-                    % For 36 situation: q11 = 0/pi/-pi, q21 = 0/pi/-pi,there exist 9 situations with 36 situations
-                    % [0,0],[0,pi],[0,-pi], [pi,0],[pi,pi],[pi,-pi], [-pi,0],[-pi,pi],[-pi,-pi]
-                    
-                    % For 24 situation: q11/[(pi+q11)/(-pi+q11)], q21 = q21/[(pi+q21)/(-pi+q21)],there exist 4 situations
-                    % [q11, q21], [q11, (pi+q21)/(-pi+q21)], [(pi+q11)/(-pi+q11), q21], [(pi+q11)/(-pi+q11), (pi+q21)/(-pi+q21)]
-                    
-                    % -------------------------------------------------------------------
-                    % ----------------------- Logic in this part  -----------------------
-                    % -------------------------------------------------------------------
-                    % 1. For 16 solutions, IterationNumber = 16;
-                    %   1.1 Steps i >= 1 && i < 17:
-                    % 2. For 36 solutions, IterationNumber = 36;
-                    %   3.1 Steps i >= 1 && i < 17:
-                    %   3.1 Steps i >= 17 && i < 25: q11 == 0; the 'if" part;
-                    %   3.2 Steps i >= 25 && i < 33: q21 == 0; the 'if" part;
-                    %   3.3 Steps i >= 33 && i < 37: q11 == 0 && q21 == 0; the 'if" part;
-                    
-                    if i < 5  % [q11, q21] or [0, 0]
-                        
-                    elseif i >= 5 && i < 9  % [(pi+q11)/(-pi+q11), q21] or [pi, 0]
-                        if q11_original <= 0 && i == 5
-                            q11 = pi + q11_original;
-                        elseif q11_original > 0 && i == 5
-                            q11 = -pi + q11_original;
-                        end
-                        q21 = q21_original;
-                    elseif i >= 9 && i < 13  % [q11, (pi+q21)/(-pi+q21)] or [0, pi]
-                        if q21_original <= 0 && i == 9
-                            q21 = pi + q21_original;
-                        elseif q21_original > 0 && i == 9
-                            q21 = -pi + q21_original;
-                        end
-                        q11 = q11_original;
-                    elseif i >= 13 && i < 17 % [(pi+q11)/(-pi+q11), (pi+q21)/(-pi+q21)] or [pi, pi]
-                        if q11_original <= 0 && i == 13
-                            q11 = pi + q11_original;
-                        elseif q11_original > 0 && i == 13
-                            q11 = -pi + q11_original;
-                        end
-                        if q21_original <= 0 && i == 13
-                            q21 = pi + q21_original;
-                        elseif q21_original > 0 && i == 13
-                            q21 = -pi + q21_original;
-                        end
-                    elseif i >= 17 && i < 21 % [-pi, q21] or [-pi, 0] or [0, -pi]
-                        if q11_original == 0 && i == 17% [-pi, q21] or [-pi, 0]
-                            q11 = -pi + q11_original;
-                            q21 = q21_original;
-                        elseif q11_original ~= 0 && q21_original == 0 && i == 17  % [q11, -pi] or [0, -pi]
-                            q21 = -pi + q21_original;
+                    switch i
+                        %--------- Situation I-IV: input q11 -----------%
+                        case 1
+                            %--------- Situation I -----------%
                             q11 = q11_original;
-                        end
-                    elseif i >= 21 && i < 25 && i == 21% [-pi, (pi+q21)/(-pi+q21)] or [-pi, pi] or [pi, -pi]
-                        if q11_original == 0 % [-pi, (pi+q21)/(-pi+q21)] or [-pi, pi]
-                            q11 = -pi + q11_original;
+                            q21 = q21_original;
+                        case 2
+                            %--------- Situation II -----------%
+                            if q11_original <= 0
+                                q11 = - pi + q11_original;
+                            elseif q11_original > 0
+                                q11 =  pi + q11_original;
+                            end
+                            if q21_original <= 0
+                                q21 = - pi + q21_original;
+                            elseif q21_original > 0
+                                q21 =  pi + q21_original;
+                            end
+                        case 3
+                            %--------- Situation III -----------%
+                            if q11_original <= 0
+                                q11 = pi + q11_original;
+                            elseif q11_original > 0
+                                q11 = -pi + q11_original;
+                            end
                             if q21_original <= 0
                                 q21 = pi + q21_original;
                             elseif q21_original > 0
                                 q21 = -pi + q21_original;
                             end
-                        elseif q11_original ~= 0 && q21_original == 0 && i == 21% [(pi+q11)/(-pi+q11), pi] or [pi, -pi]
-                            q21 = -pi + q21_original;
+                        case 4
+                            %--------- Situation IV -----------%
                             if q11_original <= 0
-                                q11 = pi + q11_original;
-                            elseif q21_original > 0
-                                q11 = -pi + q11_original;
+                                q11 = 2 * pi + q11_original;
+                            elseif q11_original > 0
+                                q11 = -2 * pi + q11_original;
                             end
-                        end
-                    elseif i >= 25 && i < 29 % [0, -pi]
-                        if  q21_original == 0 && i == 25
-                            q21 = -pi + q21_original;
-                            q11 = q11_original;
-                        end
-                    elseif i >= 29 && i < 33 % [pi, -pi]
-                        if  q21_original == 0 && i == 29
-                            q21 = -pi + q21_original;
-                            if q11_original <= 0
-                                q11 = pi + q11_original;
+                            if q21_original <= 0
+                                q21 = 2 * pi + q21_original;
                             elseif q21_original > 0
-                                q11 = -pi + q11_original;
+                                q21 = -2 * pi + q21_original;
                             end
-                        end
-                    elseif i >= 33 && i < 37 % [-pi, -pi]
-                        if q11_original == 0 && q21_original == 0 && i == 33
-                            q11 = -pi + q11_original;
-                            q21 = -pi + q21_original;
-                        end
+                        case 5
+                            %--------- Situation V -----------%
+                            if q11_original == 0
+                                q11 = -2 * pi + q11_original;
+                            elseif q11_original == pi
+                                q11 = -2 * pi;
+                            elseif q11_original == -pi
+                                q11 = 2 * pi;
+                            end
+                            if q21_original <= 0
+                                q21 = 2 * pi + q21_original;
+                            elseif q21_original == pi
+                                q21 = -2 * pi;
+                            elseif q21_original == -pi
+                                q21 = 2 * pi;
+                            end
                     end
                     %--------- q11-q14 and q21-q24 -----------%
                     % Two modes of 3T1R and 2T2R, and the rest modes
-                    if q11 == q11_original
-                        q12 = pi - angleC1pieA1C1 - q13/2;
+                    if q11 == q11_original || i > 3
+                        q12 = pi - angle_A1C1_k1 - angleB1A1C1;
                         q14 = (q12 + q13 + theta) - pi/2;
                     else
-                        q12 = angleC1pieA1C1 - q13/2;
+                        q12 = angle_A1C1_k1 - angleB1A1C1;
                         q14 = (q12 + q13) - theta - pi/2;
                     end
-                    if q21 == q21_original
-                        %q22 is a input;
+                    if q21 == q21_original || i > 3
+                        % q22 is a input;
                         q24 = (q22 + q23) - theta - pi/2;
                     else
+                        % q22 is a input;
                         q24 = (q22 + q23 + theta) - pi/2;
                     end
-                    %------------ q15 and q25 -----------%
+                    %--------- q15 and q25 -----------%
                     q15 = q11;           q25 = q21;
+                    
                     q1q2(i,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
+                    
+                    %------------------Judge the workspace and solution existence of A1C1-------------------------
+                    %---------------------------Position of A1-C1 ----------------------------
+                    if q11 >= -2*pi && q12 >= 0 && q13 >= -pi && q14 >= -2*pi/3 && q15 >= -2*pi...
+                            && q11 <= 2*pi && q12 <= pi && q13 <= pi && q14 <= 105*pi/180 && q15 <= 2*pi...
+                            && isreal(q1q2(i,1:5)) ~= 0
+                        jA1C1 = jA1C1 + 1;
+                        %%-----------------Get the output values of Moving Platform-----------------------
+                        %%--------------------Calculate the position of Ai Bi Ci------------------
+                        A1(jA1C1,:) = [0, -L1/2, 0];
+                        B1(jA1C1,:) = [L2 * cos(q1q2(i,2)) * sin(q1q2(i,1)), -L1/2 - L2 * cos(q1q2(i,2)) * cos(q1q2(i,1)), L2 * sin(q1q2(i,2))];
+                        C1(jA1C1,:) = [L2 * (cos(q1q2(i,2)) + cos(q1q2(i,2) + q1q2(i,3))) * sin(q1q2(i,1)), -L1/2 - L2 * (cos(q1q2(i,2))...
+                            + cos(q1q2(i,2) + q1q2(i,3))) * cos(q1q2(i,1)), L2 * (sin(q1q2(i,2)) + sin(q1q2(i,2) + q1q2(i,3)))];
+                        %%------------------------------------------------------------------------
+                        
+                        if norm(C1(jA1C1,:) - C1_in_Ob) <= 1e-6
+                            q1(jA1C1,1:5) = q1q2(i,1:5);
+                            A1B1C1(jA1C1,:) = [A1(jA1C1,:), B1(jA1C1,:), C1(jA1C1,:)];
+                        end
+                    end
+                    
+                    %%------------------------------------------------------------------------
+                    %---------------------------Position of A2-C2 ----------------------------
+                    if q21 >= -2*pi && q22 >= 0 && q23 >= -pi && q24 >= -2*pi/3 && q25 >= -2*pi ...
+                            && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= 105*pi/180 && q25 <= 2*pi...
+                            && isreal(q1q2(i,6:10)) ~= 0
+                        jA2C2 = jA2C2 + 1;
+                        %%-----------------Get the output values of Moving Platform-----------------------
+                        %%--------------------Calculate the position of Ai Bi Ci------------------
+                        A2(jA2C2,:) = [0, L1/2, 0];
+                        B2(jA2C2,:) = [- L2 * cos(q1q2(i,7)) * sin(q1q2(i,6)), L1/2 + L2 * cos(q1q2(i,7)) * cos(q1q2(i,6)), L2 * sin(q1q2(i,7))];
+                        C2(jA2C2,:) = [- L2 * (cos(q1q2(i,7)) + cos(q1q2(i,7) + q1q2(i,8))) * sin(q1q2(i,6)), L1/2 + L2 * (cos(q1q2(i,7))...
+                            + cos(q1q2(i,7) + q1q2(i,8))) * cos(q1q2(i,6)), L2 * (sin(q1q2(i,7)) + sin(q1q2(i,7) + q1q2(i,8)))];
+                        %%------------------------------------------------------------------------
+                        
+                        if norm(C2(jA2C2,:) - C2_in_Ob) <= 1e-6
+                            q2(jA2C2,1:5) = q1q2(i,6:10);
+                            A2B2C(jA2C2,:) = [A2(jA2C2,:), B2(jA2C2,:), C2(jA2C2,:)];
+                        end
+                    end
                 end
+                
+                % Here, I did a small trick:
+                % The number of correct value of q1 and q2 might be different,
+                % so, I force the number to be the same by compensating the
+                % fewer one with the missing number (jA1C1-jA2C2) of first value q1(1,1:5) and A1B1C1(1,:)
+                if jA1C1 ~= 0 && jA2C2 ~= 0 
+                    WSvalue_2R = 1;
+                    if jA1C1 > jA2C2
+                        for i = 1:1:(jA1C1-jA2C2)
+                            q2(jA2C2 + i,1:5) = q2(1,1:5);
+                            A2B2C(jA2C2 + i,:) = A2B2C(1,:);
+                        end
+                    elseif jA1C1 < jA2C2
+                        for i = 1:1:(jA2C2-jA1C1)
+                            q1(jA1C1 + i,1:5) = q1(1,1:5);
+                            A1B1C1(jA1C1 + i,:) = A1B1C1(1,:);
+                        end
+                    end
+                        q1q2_FeasibleSolution = [q1(:,1:5), q2(:,1:5)];
+                        ABC_FeasibleSolution = [A1B1C1(:,:),A2B2C(:,:)];
+                else
+                    WSvalue_2R = 0;
+                    q1q2_FeasibleSolution = [];
+                    ABC_FeasibleSolution = [];
+                end                
+                WSvalue_2R_SinguPosA2C2 = 0;
+                WSvalue_2R_SinguPosA2C2 = 0;
             end
-            
-            for i = 1:1:IterationNumber
-                %%-----------------------Get the output values of Moving Platform-----------------------
-                %%--------------------Calculate the position of Ai Bi Ci------------------
-                A1(i,:) = [0, -L1/2, 0];
-                B1(i,:) = [L2 * cos(q1q2(i,2)) * sin(q1q2(i,1)), -L1/2 - L2 * cos(q1q2(i,2)) * cos(q1q2(i,1)), L2 * sin(q1q2(i,2))];
-                C1(i,:) = [L2 * (cos(q1q2(i,2)) + cos(q1q2(i,2) + q1q2(i,3))) * sin(q1q2(i,1)), -L1/2 - L2 * (cos(q1q2(i,2))...
-                    + cos(q1q2(i,2) + q1q2(i,3))) * cos(q1q2(i,1)), L2 * (sin(q1q2(i,2)) + sin(q1q2(i,2) + q1q2(i,3)))];
-                
-                A2(i,:) = [0, L1/2, 0];
-                B2(i,:) = [L2 * cos(q1q2(i,7)) * sin(q1q2(i,6)), L1/2 + L2 * cos(q1q2(i,7)) * cos(q1q2(i,6)), L2 * sin(q1q2(i,7))];
-                C2(i,:) = [L2 * (cos(q1q2(i,7)) + cos(q1q2(i,7) + q1q2(i,8))) * sin(q1q2(i,6)), L1/2 + L2 * (cos(q1q2(i,7))...
-                    + cos(q1q2(i,7) + q1q2(i,8))) * cos(q1q2(i,6)), L2 * (sin(q1q2(i,7)) + sin(q1q2(i,7) + q1q2(i,8)))];
-                %%------------------------------------------------------------------------
-                
-                %----------------------Position of A1-C1 and A2-C2-------------------------
-                ABC(i,:) = [A1(i,:), B1(i,:), C1(i,:), A2(i,:), B2(i,:), C2(i,:)];
-                
-                %----------------------Judge the workspace and solution existence-------------------------
-                if norm(C1(i,:)-C2(i,:)) - L1 > 1e-6 || isreal(q1q2) == 0
-                    display('Notice:The solution is incorrect, mechanism recovery to original configuration')
-                    %q1q2(i+1,:) = [0, pi/3, pi/3, pi/3, 0, 0, pi/3, pi/3, pi/3, 0];
-                    break
-                end
-                %     %% --------------------Plot the mechanism Ai Bi Ci------------------
-                %              PA1B1C1x = [A1(i,1), B1(i,1), C1(i,1)];
-                %              PA1B1C1y = [A1(i,2), B1(i,2), C1(i,2)];
-                %              PA1B1C1z = [A1(i,3), B1(i,3), C1(i,3)];
-                %              plot3(PA1B1C1x, PA1B1C1y, PA1B1C1z,'b-'); hold on;
-                %
-                %              PA2B2C2x = [A2(i,1), B2(i,1), C2(i,1)];
-                %              PA2B2C2y = [A2(i,2), B2(i,2), C2(i,2)];
-                %              PA2B2C2z = [A2(i,3), B2(i,3), C2(i,3)];
-                %              plot3(PA2B2C2x, PA2B2C2y, PA2B2C2z,'r-'); hold on;
-                %
-                %              PC1C2x = [C1(i,1), C2(i,1)];
-                %              PC1C2y = [C1(i,2), C2(i,2)];
-                %              PC1C2z = [C1(i,3), C2(i,3)];
-                %              plot3(PC1C2x, PC1C2y, PC1C2z,'k-','linewidth',3); hold on;
-                %
-                %              PA1A2x = [A1(i,1), A2(i,1)];
-                %              PA1A2y = [A1(i,2), A2(i,2)];
-                %              PA1A2z = [A1(i,3), A2(i,3)];
-                %              plot3(PA1A2x, PA1A2y, PA1A2z,'k-','linewidth',3); hold on;
-                %
-                %             %----------------- plot xyz axes of base point --------------
-                %             x_axis = [0.5 0 0];
-                %             y_axis = [0 0.5 0];
-                %             z_axis = [0 0 0.5];
-                %             OP= [0 0 0];
-                %             xyz = [OP;x_axis;OP;y_axis;OP;z_axis];
-                %                 j = 1:2;
-                %                 plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-r','LineWidth',2); hold on
-                %                 j = 3:4;
-                %                 plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-g','LineWidth',2); hold on
-                %                 j = 5:6;
-                %                 plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-b','LineWidth',2); hold on
-                %             %-----------------------------------------------------------
-                %             %------------------plot xyz axes of Moving Platform----------------
-                %             RotationMatrix_from_axis_angle1 = eul2rotm(EulerAngle,'ZYX');
-                %             %RotationMatrix_from_axis_angle1 = eul2rotm(EulerAngle_q11_theta_2ndSolution(1:3),'ZYX');
-                %             xyz = [p(1:3);p(1:3);p(1:3);p(1:3);p(1:3);p(1:3)] + transpose(RotationMatrix_from_axis_angle1 * transpose(xyz));
-                %             j = 1:2;
-                %             plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-r','LineWidth',2);
-                %             j = 3:4;
-                %             plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-g','LineWidth',2);
-                %             j = 5:6;
-                %             plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-b','LineWidth',2);
-                %             hold on;
-                %             axis equal;
-                %             xlabel('x');
-                %             ylabel('y');
-                %             zlabel('z');
-                %             %----------------------------------------------
-                
-                RCB_ABCplot3;
-                hold off
-            end
-            %------------------------------------------------------------------------
+            WSvalue = [WSvalue_2R, WSvalue_2R_SinguPosA2C2, WSvalue_2R_SinguPosA2C2];      
             p = [po{1}, po{2}, po{3}, EulerAngle];
         end
         

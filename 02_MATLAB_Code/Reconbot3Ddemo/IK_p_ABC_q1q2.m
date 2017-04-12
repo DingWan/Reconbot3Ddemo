@@ -185,7 +185,9 @@
                     for i=2:3 po_num(i) = str2num(po_cell{i}) * pi / 180; end
                     po_num(1) = str2num(po_cell{1});
                     po = {[], [], po_num(1), [], po_num(2), po_num(3)};
-                    [EulerAngle_q11_theta, ABC, q1q2] = RCB_1T2R_RotAroundPoint_IK(po, l1, l2);
+                    q11q12q14q23 = [];
+                    obj1T3RRotAroundPoint = RCB1T3RRotAroundPoint(po,q11q12q14q23,l1,l2);
+                    [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj1T3RRotAroundPoint.RCB_1T3R_RotAroundPoint_IK;
                 case 8
                     %%------------------------ 2T1R IK£ºPlanar Five-bar ------------------------
                     % Mechanism transfers into Planar five-bar Linkage:  [1 1 1 1 1 1]
@@ -212,6 +214,7 @@
                     %-------------------------- Branch Chain A1C1 --------------------------------
                     % Four-bar linkage with Serial Chain A1C1:  [1 1 0 0 0 0]
                     % p = {x, y, [], [], [], []}; y < 0
+                    q11q12q22q13 = [];
                     po_cell = inputdlg({'x ([-L1/2,L1/2])','y ([-L1/2,0])', 'theta12'},'2R-SerialA1C1', [1 20; 1 20; 1 20]);
                     for i=1:2 po_num(i) = str2num(po_cell{i}); end
                     po_num(3) = str2num(po_cell{3}) * pi / 180;
@@ -219,12 +222,14 @@
                         po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
                     else
                         po = {po_num(1), po_num(2), [], [], [], [], po_num(3)};
-                        [EulerAngle_q11_theta, ABC, q1q2] = RCB_2R_SerialA1C1_IK(po, l1, l2);
+                        obj2RserialA1C1 = RCB2RserialA1C1(po,q11q12q22q13,l1,l2);
+                        [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2RserialA1C1.RCB_2R_SerialA1C1_IK;
                     end
                 case 11
                     %-------------------------- Branch Chain A2C2 --------------------------------
                     % Four-bar linkage with Serial Chain A1C1:  [1 1 0 0 0 0]
                     % p = {x, y, [], [], [], []}; y > 0
+                    q11q12q22q23 = [];
                     po_cell = inputdlg({'x ([-L1/2,L1/2])','y ([0,L1/2])','theta22'},'2R-SerialA1C1', [1 20; 1 20; 1 20]);
                     for i=1:2 po_num(i) = str2num(po_cell{i}); end
                     po_num(3) = str2num(po_cell{3}) * pi / 180;
@@ -232,7 +237,8 @@
                         po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
                     else
                         po = {po_num(1), po_num(2), [], [], [], [], po_num(3)};
-                        [EulerAngle_q11_theta, ABC, q1q2] = RCB_2R_SerialA2C2_IK(po, l1, l2);
+                        obj2RserialA2C2 = RCB2RserialA2C2(po,q11q12q22q23,l1,l2);
+                        [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
                     end
                 case 12
                     %%------------------------- Two Serial Chains -----------------------------
