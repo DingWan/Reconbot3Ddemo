@@ -73,7 +73,7 @@ int main(int argc,char **argv){
   //spinner.start();
   ReConBotPub Publisher;
   Publisher.topicName = "/reconbot_trajectory";
-  int arg[] = {1,2,3,4,5,6};
+  int arg[] = {4,5,3,1,2,6};
 
   passwd* pw = getpwuid(getuid());
   std::string path(pw->pw_dir);

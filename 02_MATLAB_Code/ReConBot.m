@@ -44,15 +44,15 @@ classdef ReConBot
 
         function trajec=transform(obj)
           [m,n] = size(obj.pos);
-          trajec(:, 1) = -1*pos(:, 1);
-          trajec(:, 4) = pos(:, 2);
-          trajec(:, 7) = 1.8611*pi-pos(:, 3);
-          trajec(:, 10) = 0.5*pi+pos(:, 4);
-          trajec(:, 13) = pos(:, 5);
-          trajec(:, 16) = 1.1389*pi-pos(:, 6);
+          trajec(:, 1) = obj.pos(:, 1);
+          trajec(:, 4) = obj.pos(:, 2);
+          trajec(:, 7) = 1.8611*pi-obj.pos(:, 3);
+          trajec(:, 10) = 0.5*pi+obj.pos(:, 4);
+          trajec(:, 13) = obj.pos(:, 5);
+          trajec(:, 16) = 1.1389*pi-obj.pos(:, 6);
           i=1;
-          for i:m
-            trajec(i, 19) = i*timeFromStart;
+          for i=1:m
+            trajec(i, 19) = i*obj.timeFromStart;
           end
         end
 

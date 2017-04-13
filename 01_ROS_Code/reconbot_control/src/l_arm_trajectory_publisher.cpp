@@ -21,7 +21,7 @@ int main(int argc,char **argv){
   //spinner.start();
   ReConBotPub Publisher;
   Publisher.topicName = "/l_arm_reconbot_trajectory";
-  int arg[] = {1,2,3};
+  int arg[] = {4,5,3};
 
   passwd* pw = getpwuid(getuid());
   std::string path(pw->pw_dir);

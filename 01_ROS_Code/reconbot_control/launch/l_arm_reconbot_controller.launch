@@ -5,8 +5,8 @@
     <node name="controller_spawner_l_joints" pkg="dynamixel_controllers" type="controller_spawner.py"
           args="--manager=dxl_manager
                 --port pan_tilt_port
-                joint1_controller
-                joint2_controller
+                joint4_controller
+                joint5_controller
                 joint3_controller
                 "
           output="screen"/>
@@ -17,8 +17,8 @@
           args="--manager=dxl_manager
                 --type=meta
                 l_arm_reconbot_controller
-                joint1_controller
-                joint2_controller
+                joint4_controller
+                joint5_controller
                 joint3_controller
 
                 "
