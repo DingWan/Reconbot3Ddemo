@@ -85,9 +85,10 @@ for i = 1:length(MPOTP_cell)
         
         % Optimal Joints Solution
         OptimalJointsSolution;                                             
-        q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j,:) = q0q1q2_Optimal_SingleRow;                                            
+        q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j,:) = q0q1q2_Optimal_SingleRow;    
+        %q0q1q2_Optimal_SingleRow * 180 / pi
         %------ Show debugging
-        %ReconbotANI(q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,:));
+        %ReconbotANI(q0q1q2_Optimal_SingleRow);
         
         %------ Show Center point of Moving Platform
         %Displacement = [250,250,165.88];

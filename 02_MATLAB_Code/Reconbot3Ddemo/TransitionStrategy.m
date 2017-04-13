@@ -218,12 +218,12 @@ InsertRowInfos = [0, 0];
                     case 10 % 2R-SerialA1C1
                         %We need to intepolate on shpere surface
                         InsertRow_TransiConfig{1,:} = {5, Posture_previous};
-                        NumberofInsertRows = 0;      
+                        NumberofInsertRows = 1;      
                         Self_adjustment_Enable_Disable = 1; 
                     case 11 % 2R-SerialA2C2
                         %We need to intepolate on shpere surface
                         InsertRow_TransiConfig{1,:} = {5, Posture_previous};
-                        NumberofInsertRows = 0;      
+                        NumberofInsertRows = 1;      
                         Self_adjustment_Enable_Disable = 1;                         
                     case 12 % Fixed-SerialA1C1A2C2
                         
