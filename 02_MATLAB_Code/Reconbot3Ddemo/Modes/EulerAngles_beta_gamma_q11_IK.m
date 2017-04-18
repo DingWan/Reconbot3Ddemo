@@ -207,9 +207,10 @@ elseif isempty(beta) ~= 1 && isempty(gamma) ~= 1 && isempty(q11) == 1 || q11 == 
         % If q11 = pi/2 or -pi/2, Mechanism transfers into Planar five-bar Linkage
         if isempty(beta) == 1 && (q11 == pi/2 || q11 == -pi/2)
             gamma = 0;
-            display('User must input Euler angle: beta, and with alpha = gamma = 0')
-            x = inputdlg('Enter EulerAngle Beta (degree)(alpha=gamma=0):','Five-Bar Linkage State', [1 50]);
-            beta = str2num(x{:}) * pi / 180;
+            beta = 0;
+            %display('User must input Euler angle: beta, and with alpha = gamma = 0')
+            %x = inputdlg('Enter EulerAngle Beta (degree)(alpha=gamma=0):','Five-Bar Linkage State', [1 50]);
+            %beta = str2num(x{:}) * pi / 180;
         end 
         
         v = 1 + tan(beta)^2; 

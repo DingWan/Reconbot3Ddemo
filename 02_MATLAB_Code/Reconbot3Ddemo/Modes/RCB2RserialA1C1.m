@@ -93,7 +93,7 @@ classdef RCB2RserialA1C1
                     % 3.
                     zop = sqrt(A1op^2 - A1oppie^2);
                     % Judge the exisitence of soultion
-                    if isreal(zop) == 0
+                    if isreal(zop) == 0 || A1oppie > A1op
                         display('There exist no solution')
                         WSvalue = [0, 0, 0];
                         return;

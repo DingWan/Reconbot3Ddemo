@@ -207,7 +207,13 @@ classdef RCB2T2Rsixbar
             k2 = [ sin(q21), -cos(q21), 0];
             A1C1 = C1_in_Ob - A1;
             A2C2 = C2_in_Ob - A2;
-            if  norm(A1C1) <= 1e-12 || norm(A2C2) <= 1e-12  % norm(A1C1) < 1e-6 || norm(A2C2) < 1e-6
+            if  norm(A1C1) <= 1e-12  % norm(A1C1) < 1e-6 
+                angle_A1C1_k1 = pi/2;
+                angle_A2C2_k2 = acos(dot(A2C2,k2)/(norm(A2C2)*norm(k2)));
+            elseif  norm(A2C2) <= 1e-12 %|| norm(A2C2) < 1e-6
+                angle_A2C2_k2 = pi/2;
+                angle_A1C1_k1 = acos(dot(A1C1,k1)/(norm(A1C1)*norm(k1)));
+            elseif norm(A1C1) <= 1e-12 && norm(A2C2) <= 1e-12
                 angle_A1C1_k1 = pi/2;
                 angle_A2C2_k2 = pi/2;
             else

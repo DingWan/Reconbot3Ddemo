@@ -1,4 +1,4 @@
-function [ po_Intep ] =  IntepotationP2P(Mode, PosOri_previous, PosOri_current, NumIntepoPoint, l1, l2)
+function [ po_Intep ] =  IntepotationP2P(Mode, PosOri_previous,q0q1q2_previous_trajpoint, PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, l1, l2)
 
 %% =================== Catisian Space Trajctory Planning ====================
 PosOri = PosOri_current;
@@ -10,7 +10,7 @@ for i = 1:6
         PosOri_current{i} = 0;
     end
 end
-n = NumIntepoPoint;
+n = NumIntepoPoints;
 for i = 1:length(PosOri)
     % Here uses to make sure the start singular configuration can go to the
     % selected first mode by adjusting q11 and q21
