@@ -55,7 +55,7 @@ for jj = 1:length(q1q2(:,1))
             end
         else
             if Self_adjustment_Enable_Disable == 1
-                if length(MPOTP_cell) == 3 && (MPOTP_cell{3}{1} == 10 || MPOTP_cell{3}{1} == 11)
+                if length(MPOTP_cell) >= 3 && (MPOTP_cell{length(MPOTP_cell)}{1} == 10 || MPOTP_cell{length(MPOTP_cell)}{1} == 11)
                     if i < length(MPOTP_cell)
                         q1q2A1C1_norm(jj) = norm(q1q2(jj,1:5) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 2:6));
                         q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 7:11));
@@ -63,9 +63,10 @@ for jj = 1:length(q1q2(:,1))
                         q1q2A1C1_norm(jj) = norm(q1q2(jj,1:5) - q0q1q2_OptimalRow(NumIntepoPoints*(i-2)+j-1, 2:6));
                         q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_OptimalRow(NumIntepoPoints*(i-2)+j-1, 7:11));
                     end
-                elseif length(MPOTP_cell) == 2
+                else%if length(MPOTP_cell) == 2
                     if j == 1
                         q0q1q2_Optimal_SingleRow = q0q1q2_previous_trajpoint;
+                        continue
                     else
                         q1q2A1C1_norm(jj) = norm(q1q2(jj,1:5) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 2:6));
                         q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 7:11));
@@ -75,7 +76,7 @@ for jj = 1:length(q1q2(:,1))
                 q1q2A1C1_norm(jj) = norm(q1q2(jj,1:5) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 2:6));
                 q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 7:11));
             else
-                if j == 1  && i == 1
+                if j == 1 && i == 1
                     q0q1q2_Optimal_SingleRow = q0q1q2_previous_trajpoint;
                     continue
                 else% Start from the second step
@@ -93,7 +94,7 @@ if  j == 1 && Mode_current == 5
     %%%%% If the step it's self-adjustment,the first step is Homeconfiguration
     %%%%%  But we should also consider if it's not the first step, and it's other steps, it should be also possible to handle it
 else
-    if j == 1  && i < 3
+    if j == 1 && i <= 3
         %%%%% if the two steps are the same, so, this step is the same as the last step
     else
         if Mode_current == 8 || Mode_current == 9

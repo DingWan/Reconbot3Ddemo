@@ -32,7 +32,7 @@ addpath(genpath(pwd)); % Enalbe all folders inside "SSoop"
 %InitHome;       
 
 %% Select Mode + Posture
-SelectNumberOfTrajectoryPoints;
+% SelectNumberOfTrajectoryPoints;
 
 %------ Single Mode ----------
 % load('q0q1q2_3T2R.mat')
@@ -47,7 +47,7 @@ SelectNumberOfTrajectoryPoints;
 % load('q0q1q2_2RserialA1C1.mat')
 % load('q0q1q2_2RserialA2C2.mat')
 
-
+load('Modes_3to4.mat')
 
 %% Motion planning
 clc
@@ -94,7 +94,7 @@ IntepPointNum = IntepPointNum + 2;
 %% Last step for returnning to HomePosition
 tic
 %---------------
-for OnlyforFoldThisPart = 1:1
+for OnlyUsedforFoldingThisPart = 1:1
     Mode_Pos_Ori_TrajPoints_cell{IntepPointNum} = { 5, {0 0 255.0445 0 [] [], 0 ,0},q0q1q2_HomePosition};
     % First step: Calculate the next step and get the second row values of q11 and q21 after
     % interpotation, and assign to the previous step.0
@@ -106,9 +106,11 @@ for OnlyforFoldThisPart = 1:1
     PosOri_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum}{2};
     
     if Mode_previous == 10 && Mode_current  == 5
-        q0q1q2_previous = [q0q1q2_2RserialA1C1_x_0_y_30; q0q1q2_mat(length(q0q1q2_mat(:,1)),:)];
+        q0q1q2_2RserialA1C1_x_0_y_Positive30 = [0 -3.14159265358979 0.112270797444876 3.14159265358979 0.944049245225854 -3.14159265358979 0 0.968872484986974 1.94286556262976 0.601923841807922 0];
+        q0q1q2_previous = [q0q1q2_2RserialA1C1_x_0_y_Positive30; q0q1q2_mat(length(q0q1q2_mat(:,1)),:)];
     elseif Mode_previous == 11 && Mode_current  == 5
-        q0q1q2_previous = [q0q1q2_2RserialA2C2_x_0_y_30; q0q1q2_mat(length(q0q1q2_mat(:,1)),:)];    
+        q0q1q2_2RserialA2C2_x_0_y_Negative30 = [0 0 0.968872484986974 1.94286556262976 0.601923841807922 0 -3.14159265358979 0.112270797444876 3.14159265358979 0.944049245225854 -3.14159265358979];
+        q0q1q2_previous = [q0q1q2_2RserialA2C2_x_0_y_Negative30; q0q1q2_mat(length(q0q1q2_mat(:,1)),:)];    
     else
         q0q1q2_previous = q0q1q2_mat(length(q0q1q2_mat(:,1)),:);
     end
@@ -131,8 +133,7 @@ toc
 %PlotAngleValue;
 
 %% 3D Animation
-
-for i = 21:length(q0q1q2_mat)-0   
+for i = 41:length(q0q1q2_mat)-20   
     %========================== Animation ============================
     ReconbotANI(q0q1q2_mat(i,:));   
 %     set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
