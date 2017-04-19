@@ -34,7 +34,7 @@ light('Position',[-100 -100 700]);
 daspect([1 1 1])                    % Setting the aspect ratio
 view(45,25)
 xlabel('X'),ylabel('Y'),zlabel('Z');
-title('IGM Robotics Group - Reconbot Project');
+title('IGM Robotics - Reconbot');
 axis([-100 600 -100 600 0 700]);
 grid on;
 

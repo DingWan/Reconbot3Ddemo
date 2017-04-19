@@ -32,7 +32,7 @@ addpath(genpath(pwd)); % Enalbe all folders inside "SSoop"
 %InitHome;       
 
 %% Select Mode + Posture
-% SelectNumberOfTrajectoryPoints;
+SelectNumberOfTrajectoryPoints;
 
 %------ Single Mode ----------
 % load('q0q1q2_3T2R.mat')
@@ -47,7 +47,7 @@ addpath(genpath(pwd)); % Enalbe all folders inside "SSoop"
 % load('q0q1q2_2RserialA1C1.mat')
 % load('q0q1q2_2RserialA2C2.mat')
 
-load('Modes_3to4.mat')
+%  load('Modes_3to4.mat')
 
 %% Motion planning
 clc
@@ -77,9 +77,12 @@ for IntepPointNum = 1 : NumTP
    q0q1q2_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum + 1,1}{3};
         
    % Motion Planning and Optimal Soultion;
-   q0q1q2_P2P = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+%    q0q1q2_P2P = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+%                                               Mode_current, PosOri_current, q0q1q2_current, ...
+%                                               NumIntepoPoints,Time, l1, l2);
+    q0q1q2_P2P = MotionPlanningOptimalSoultion_debugging(Mode_previous,PosOri_previous,q0q1q2_previous,...
                                               Mode_current, PosOri_current, q0q1q2_current, ...
-                                              NumIntepoPoints,Time, l1, l2);
+                                              NumIntepoPoints,Time, l1, l2);                                      
    q0q1q2_mat = [q0q1q2_mat; q0q1q2_P2P];   
    
    if Mode_previous == 5 && Mode_current == 10
@@ -117,7 +120,9 @@ for OnlyUsedforFoldingThisPart = 1:1
     q0q1q2_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum}{3};
     
     % Motion Planning and Optimal Soultion;
-    q0q1q2_P2P_HomePosition = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+%     q0q1q2_P2P_HomePosition = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+%         Mode_current, PosOri_current, q0q1q2_current, NumIntepoPoints, Time, l1, l2);
+    q0q1q2_P2P_HomePosition = MotionPlanningOptimalSoultion_debugging(Mode_previous,PosOri_previous,q0q1q2_previous,...
         Mode_current, PosOri_current, q0q1q2_current, NumIntepoPoints, Time, l1, l2);
     
     q0q1q2_mat = [q0q1q2_mat; q0q1q2_P2P_HomePosition];
@@ -133,7 +138,7 @@ toc
 %PlotAngleValue;
 
 %% 3D Animation
-for i = 41:length(q0q1q2_mat)-20   
+for i = 1:length(q0q1q2_mat)-0   
     %========================== Animation ============================
     ReconbotANI(q0q1q2_mat(i,:));   
 %     set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
