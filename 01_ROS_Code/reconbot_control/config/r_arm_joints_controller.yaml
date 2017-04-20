@@ -7,9 +7,9 @@ joint1_controller:
     joint_speed: 1.0
     motor:
         id: 1
-        init: 0
-        min: 0
-        max: 4095
+        init: 4607
+        min: 512
+        max: 8702
 
 joint2_controller:
     controller:
@@ -33,6 +33,6 @@ joint6_controller:
     joint_speed: 1.0
     motor:
         id: 6
-        init: 0
-        min: 0
-        max: 4095
+        init: 2298
+        min: 250
+        max: 2298
