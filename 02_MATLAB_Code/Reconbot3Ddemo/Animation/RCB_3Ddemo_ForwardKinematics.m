@@ -62,7 +62,7 @@ function [T_01,T_1_02,T_1_03,T_1_04,T_1_05,T_1_06,T_2_02,T_2_03,T_2_04,T_2_05] =
         Trans_BaseLow_CenterPointBearing = [[eye(3,3);0,0,0], [BaseLow_CenterPointBearing, 1]'];
         Trans_BaseUP_CenterPoint = [[eye(3,3);0,0,0],[- BaseUP_CenterPointBearing, 1]'];        
         T_BaseUP_Trans2OrigPoint_Rotq0 = Trans_BaseLow_CenterPointBearing *  tmat(0, 0, 0, q0) * rotm2tform(roty(180)) *...
-            rotm2tform(rotz(90)) *  Trans_BaseUP_CenterPoint;
+            rotm2tform(rotz(0)) *  Trans_BaseUP_CenterPoint;
         
                 
         %------------------------ Chain A1C1 ------------------------

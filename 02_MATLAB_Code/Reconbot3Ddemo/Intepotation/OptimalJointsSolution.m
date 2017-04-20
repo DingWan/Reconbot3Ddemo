@@ -6,8 +6,8 @@ q1q2A1C1A2C2_norm = [];
 q1q2 = q0q1q2_CurrentStep(:,2:11);
 for jj = 1:length(q1q2(:,1))
     % Here, for the first step, modes 1-9 execute once (length(MPOTP_cell) = 2); 
-    if  j == 1 && (Self_adjustment_Enable_Disable == 1 || Self_adjustment_Enable_Disable == 2) && ...
-            ( i ==1 || ( length(MPOTP_cell) > 3 && i == Length_Mode10or11 - 2) )
+    if  j == 1 && (Self_adjustment_Enable_Disable == 1) && ...
+            ( i ==1 || ( length(MPOTP_cell) > 3 && i == Length_Mode10or11 - 2) )% || Self_adjustment_Enable_Disable == 2
         % we first confirm the one value of the end point (q0q1q2_required_endpoint) by comparing it with Homeconfiguration
         q0q1q2_matrix_start = q0q1q2_previous_trajpoint;
         q0q1q2_matrix_end = q0q1q2_current_trajpoint;
@@ -33,8 +33,8 @@ for jj = 1:length(q1q2(:,1))
         end
         %==================================================================
         q0q1q2_Optimal_SingleRow = q0q1q2_previous_trajpoint;
-    elseif j == 2 && (Self_adjustment_Enable_Disable == 1 || Self_adjustment_Enable_Disable == 2) && ...
-            ( i ==1 || ( length(MPOTP_cell) > 3 && i == Length_Mode10or11 - 2) )
+    elseif j == 2 && (Self_adjustment_Enable_Disable == 1) && ...
+            ( i ==1 || ( length(MPOTP_cell) > 3 && i == Length_Mode10or11 - 2) )% || Self_adjustment_Enable_Disable == 2
         % Secondly, confirm the second value that has minimum norm value with the end point (q0q1q2_required_endpoint)
         %========= Here we must judge five-bar or three-bar sparately;=====
         if Mode_current == 8 || Mode_current == 9
@@ -48,7 +48,7 @@ for jj = 1:length(q1q2(:,1))
         % Thirdly, confirm the following value that has minimum norm value with the Previous step value (q0q1q2_mat(PreviousOneStep))
         %========= Here we must judge five-bar or three-bar sparately;=====
         if Mode_current == 8 || Mode_current == 9
-            if j == 1 && i == 1
+            if j == 1 && (i == 1 || Self_adjustment_Enable_Disable == 1 || Self_adjustment_Enable_Disable == 2)
                 q0q1q2_Optimal_SingleRow = q0q1q2_previous_trajpoint;
                 continue
             else
@@ -70,7 +70,7 @@ for jj = 1:length(q1q2(:,1))
                         end
                     end
                 else%if length(MPOTP_cell) == 2
-                    if j == 1
+                    if j == 1 
                         q0q1q2_Optimal_SingleRow = q0q1q2_previous_trajpoint;
                         continue
                     else
@@ -79,8 +79,13 @@ for jj = 1:length(q1q2(:,1))
                     end
                 end
             elseif Self_adjustment_Enable_Disable == 2
-                q1q2A1C1_norm(jj) = norm(q1q2(jj,1:5) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 2:6));
-                q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 7:11));
+                if j == 1 && i == 1
+                    q0q1q2_Optimal_SingleRow = q0q1q2_previous_trajpoint;
+                    continue
+                else
+                    q1q2A1C1_norm(jj) = norm(q1q2(jj,1:5) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 2:6));
+                    q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 7:11));
+                end
             else
                 if j == 1 && i == 1
                     q0q1q2_Optimal_SingleRow = q0q1q2_previous_trajpoint;
@@ -100,7 +105,7 @@ if  j == 1 && Mode_current == 5
     %%%%% If the step it's self-adjustment,the first step is Homeconfiguration
     %%%%%  But we should also consider if it's not the first step, and it's other steps, it should be also possible to handle it
 else
-    if j == 1 && i <= 3
+    if j == 1 
         %%%%% if the two steps are the same, so, this step is the same as the last step
     else
         if Mode_current == 8 || Mode_current == 9

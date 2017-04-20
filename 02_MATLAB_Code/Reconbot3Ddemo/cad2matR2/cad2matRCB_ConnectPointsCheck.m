@@ -41,9 +41,9 @@ end
 % V1 = [V1(:,1:3), ones(length(V1),1)];
 % BaseLow = struct('F1',F1, 'V1',V1, 'C1',C1);
 % 
-% [F2, V2, C2] = rndread(filename{2});
-% V2 = [V2(:,1:3), ones(length(V2),1)];
-% BaseUP = struct('F2',F2, 'V2',V2, 'C2',C2);
+[F2, V2, C2] = rndread(filename{2});
+V2 = [V2(:,1:3), ones(length(V2),1)];
+BaseUP = struct('F2',F2, 'V2',V2, 'C2',C2);
 % 
 % [F3, V3, C3] = rndread(filename{3});
 % V3 = [V3(:,1:3), ones(length(V3),1)];
@@ -65,9 +65,9 @@ end
 % V7 = [V7(:,1:3), ones(length(V7),1)];
 % BaseJointA2C2 = struct('F7',F7, 'V7',V7, 'C7',C7);
 % 
-[F8, V8, C8] = rndread(filename{8});
-V8 = [V8(:,1:3), ones(length(V8),1)];
-LowLinkA2C2 = struct('F8',F8, 'V8',V8, 'C8',C8);
+% [F8, V8, C8] = rndread(filename{8});
+% V8 = [V8(:,1:3), ones(length(V8),1)];
+% LowLinkA2C2 = struct('F8',F8, 'V8',V8, 'C8',C8);
 % 
 % [F9, V9, C9] = rndread(filename{9});
 % V9 = [V9(:,1:3), ones(length(V9),1)];
@@ -88,9 +88,9 @@ LowLinkA2C2 = struct('F8',F8, 'V8',V8, 'C8',C8);
 %%
 %-------------------------------------------- 
 % Set File 3 as a example: 
-F = F8(:,1:3);
-V = V8(:,1:3);
-C = C8;
+F = F2(:,1:3);
+V = V2(:,1:3);
+C = C2;
 
 clf;
   p = patch('faces', F, 'vertices' ,V);
