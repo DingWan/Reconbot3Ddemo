@@ -374,6 +374,9 @@ for i = 1:length(MPOTP_cell)
                 q0q1q2_OptimalRow(NumIntepoPoints*i,2) = q0q1q2_OptimalRow(NumIntepoPoints*i - 1,2);
             elseif Mode_current == 4 && Mode_previous == 4
                 q0q1q2_OptimalRow(NumIntepoPoints*i,7) = q0q1q2_OptimalRow(NumIntepoPoints*i - 1,7);
+            elseif Mode_previous_initial == 10 || Mode_previous_initial == 11
+                MPOTP_cell{length(MPOTP_cell)-2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
+                MPOTP_cell{i}{length(MPOTP_cell)-2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
             else
                 
             end

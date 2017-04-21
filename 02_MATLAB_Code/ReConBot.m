@@ -19,7 +19,9 @@ classdef ReConBot
     properties
         topic='';
         jointNames={};
-        points=[];
+        trajPoints=[];
+        pos = [];
+        timeFromStart ;
         tj;
     end
 
@@ -39,6 +41,24 @@ classdef ReConBot
         %
         function obj=ReConBot()
         end
+
+        function trajec=transform(obj)
+          [m,n] = size(obj.pos);
+          trajec(:, 1) = obj.pos(:, 1);
+          trajec(:, 4) = obj.pos(:, 4);
+          %trajec(:, 7) = 1.8611*pi-obj.pos(:, 3);
+          trajec(:, 7) = -obj.pos(:, 7);
+          %trajec(:, 10) = 0.5*pi+obj.pos(:, 4);
+          trajec(:, 10) = obj.pos(:, 10);
+          trajec(:, 13) = obj.pos(:, 13);
+          %trajec(:, 16) = 1.1389*pi-obj.pos(:, 6);
+          trajec(:, 16) = -obj.pos(:, 16);
+          i=1;
+          for i=1:m
+            trajec(i, 19) = i*obj.timeFromStart;
+          end
+        end
+
 
         %% The buildTrajectory Function
         % The _buildTrajectory_ method builds the _FollowJointTrajectoryGoal_
@@ -68,12 +88,12 @@ classdef ReConBot
         function traj=buildTrajectory(obj)
             traj = rosmessage('control_msgs/FollowJointTrajectoryGoal');
             traj.Trajectory.JointNames = obj.jointNames;
-            [m,n]=size(obj.points);
+            [m,n]=size(obj.trajPoints);
             for i=1:m
-                positions = obj.points(i,1:3:n-1);
-                velocities = obj.points(i,2:3:n);
-                accelerations = obj.points(i,3:3:n);
-                timefromstart = rosduration(obj.points(i,n));
+                positions = obj.trajPoints(i,1:3:n-1);
+                velocities = obj.trajPoints(i,2:3:n);
+                accelerations = obj.trajPoints(i,3:3:n);
+                timefromstart = rosduration(obj.trajPoints(i,n));
                 points_msg = rosmessage('trajectory_msgs/JointTrajectoryPoint');
                 points_msg.Positions = positions;
                 points_msg.Velocities = velocities;
