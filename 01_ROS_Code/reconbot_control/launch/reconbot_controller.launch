@@ -5,11 +5,11 @@
     <node name="controller_spawner" pkg="dynamixel_controllers" type="controller_spawner.py"
           args="--manager=dxl_manager
                 --port pan_tilt_port
-                joint1_controller
-                joint2_controller
-                joint3_controller
                 joint4_controller
                 joint5_controller
+                joint3_controller
+                joint1_controller
+                joint2_controller
                 joint6_controller
                 "
           output="screen"/>
@@ -20,11 +20,11 @@
           args="--manager=dxl_manager
                 --type=meta
                 reconbot_controller
-                joint1_controller
-                joint2_controller
-                joint3_controller
                 joint4_controller
                 joint5_controller
+                joint3_controller
+                joint1_controller
+                joint2_controller
                 joint6_controller
                 "
 
