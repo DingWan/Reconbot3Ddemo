@@ -27,7 +27,7 @@ p_0 = [0 0 255.0445 0 0 0, 0 0];
 % Intepotation Points and Time
 % q0q1q2_mat = [];
 % NumIntepoPoints = 20;
-% Time = 4;
+% Time = 4;0
 
 addpath(genpath(pwd)); % Enalbe all folders inside "SSoop"
 %InitHome;       
@@ -162,7 +162,7 @@ h = msgbox('Check Completed, Input values are correct!');
 %PlotAngleValue;
 
 %% 3D Animation
-for i = 41:length(q0q1q2_mat)-0  
+for i = 21:length(q0q1q2_mat)-20  
     %========================== Animation ============================
     ReconbotANI(q0q1q2_mat(i,:));   
 %     set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
