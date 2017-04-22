@@ -89,17 +89,10 @@ InsertRowInfos = [0, 0];
                         Self_adjustment_Enable_Disable = [3 1 1 1];                       
                     case 11 % 2R-SerialA2C2
                         InsertRow_TransiConfig{1,:} = {1, {0 0 255.0445 0 [] [], 0 0}};
-                        InsertRow_TransiConfig{2,:} = {5, {0 0 255.0445 0 [] [], 0 -pi}};
+                        InsertRow_TransiConfig{2,:} = {5, {0 0 255.0445 0 [] [], 0 0}};
                         InsertRow_TransiConfig{3,:} = {6, {0, 30, 77.459666924148340, [], [], -0.739017879013918}};
-                        NumberofInsertRows = 0;    
-                        %
-                        c = MPOTP_cell{1,:};
-                        MPOTP_cell{1,:} = InsertRow_TransiConfig{1,:};
-                        MPOTP_cell{2,:} = InsertRow_TransiConfig{2,:};
-                        MPOTP_cell{3,:} = InsertRow_TransiConfig{3,:};
-                        MPOTP_cell{4,:} = c;
-                        %
-                        Self_adjustment_Enable_Disable = 3;                          
+                        MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                        Self_adjustment_Enable_Disable = [3 1 1 1];                        
                     case 12 % Fixed-SerialA1C1A2C2
                         
                 end

@@ -30,7 +30,7 @@ for i = 1:length(MPOTP_cell)
         
     %% Assgin "Mode_Previous, Mode_Current, PosOri_Current, PosOri_Previous"
     for OnlyUsedforFoldingThisPart_Mode5andMode10and11 = 1:1
-        if i == 1 || (i == length(MPOTP_cell)-2 && Mode_current_initial == 10 || Mode_current_initial == 11)
+        if i == 1 || (i == length(MPOTP_cell)-2 && (Mode_current_initial == 10 || Mode_current_initial == 11))
             if  Self_adjustment_Enable_Disable == 1
                 Mode_previous = MPOTP_cell{i}{1};
                 PosOri_previous = MPOTP_cell{i}{2};
@@ -256,12 +256,6 @@ for i = 1:length(MPOTP_cell)
                 q0 = q0q1q2_previous_trajpoint(1);
                 q11 = q0q1q2_previous_trajpoint(2);
                 q21 = q0q1q2_previous_trajpoint(7);
-                 if i == length(MPOTP_cell) - 2
-                     q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+1,:) = q0q1q2_previous_trajpoint;
-                 else
-                     q0q1q2_previous_trajpoint = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+1,:);
-                     q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+1,:) = q0q1q2_previous_trajpoint;
-                 end
                 q0q1q2_OptimalRow(1,:) = q0q1q2_previous_trajpoint;
             else
                 %if self-adjustment exists
@@ -289,7 +283,12 @@ for i = 1:length(MPOTP_cell)
             q0 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,1);
             if j == 1
                 if Self_adjustment_Enable_Disable == 1
-                    q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+1,:) = q0q1q2_previous_trajpoint;
+                    if i == length(MPOTP_cell) - 2
+                        q0q1q2_previous_trajpoint = q0q1q2_OptimalRow(NumIntepoPoints*(i-1),:);
+                        q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+1,:) = q0q1q2_previous_trajpoint;
+                    else
+                        q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+1,:) = q0q1q2_previous_trajpoint;
+                    end
                 elseif Self_adjustment_Enable_Disable == 2
                     q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+1,:) = q0q1q2_OptimalRow(NumIntepoPoints*(i-1),:);
                     q0q1q2_Optimal_SingleRow = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+1,:);
