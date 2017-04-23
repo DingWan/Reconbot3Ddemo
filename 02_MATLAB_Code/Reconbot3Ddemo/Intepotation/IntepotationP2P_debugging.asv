@@ -45,6 +45,12 @@ for i = 1:length(PosOri)
             end
         end
         %po_Intep(i,:) = linspace(PosOri_previous{i},PosOri_current{i}, n);
+        PosOri = [PosOri_previous{i},PosOri_current{i}];
+        v = [0, 0];
+        a = [0, 0];
+        t = Time;
+        [ PosVelAcc ] = Intepotation(p, v, a, t);
+        po_Intep(i,:) = PosVelAcc
     end
 end
 
@@ -59,14 +65,16 @@ end
 
 end
 
-function [ PosVelAcc ] = Intepotation()
+function [ PosVelAcc ] = Intepotation(p, v, a, t)
 
-t = linspace(0,tau(i),100);
-px = [a5(j,i),a4(j,i),a3(j,i),a2(j,i),a1(j,i),a0(j,i)];
+[ a0,a1,a2,a3,a4,a5,T ] = Polynom5(p, v, a, t) ;
+
+t = linspace(0,T,100);
+px = [a5,a4,a3,a2,a1,a0];
 pxd = polyder(px);
 pxdd = polyder(pxd);
-s = polyval(px,t);
-v = polyval(pxd,t);
-a = polyval(pxdd,t);
+Pos = polyval(px,t);
+Vel = polyval(pxd,t);
+Acc = polyval(pxdd,t);
 
 end

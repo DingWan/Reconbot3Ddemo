@@ -54,7 +54,7 @@ SelectNumberOfTrajectoryPoints;
 clc
 % Intepotation Points and Time
 NumIntepoPoints = 20;
-Time = 4;
+Time_inteval = 5;
 q0q1q2_mat = [];
 tic
 for IntepPointNum = 1 : NumTP
@@ -86,7 +86,7 @@ for IntepPointNum = 1 : NumTP
 %                                               NumIntepoPoints,Time, l1, l2);
     q0q1q2_P2P = MotionPlanningOptimalSoultion_debugging(Mode_previous,PosOri_previous,q0q1q2_previous,...
                                               Mode_current, PosOri_current, q0q1q2_current, ...
-                                              NumIntepoPoints,Time, l1, l2);                                      
+                                              NumIntepoPoints, Time_inteval, l1, l2);                                      
    q0q1q2_mat = [q0q1q2_mat; q0q1q2_P2P];   
    
    if Mode_previous == 5 && Mode_current == 10
@@ -127,7 +127,7 @@ for OnlyUsedforFoldingThisPart = 1:1
 %     q0q1q2_P2P_HomePosition = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
 %         Mode_current, PosOri_current, q0q1q2_current, NumIntepoPoints, Time, l1, l2);
     q0q1q2_P2P_HomePosition = MotionPlanningOptimalSoultion_debugging(Mode_previous,PosOri_previous,q0q1q2_previous,...
-        Mode_current, PosOri_current, q0q1q2_current, NumIntepoPoints, Time, l1, l2);
+        Mode_current, PosOri_current, q0q1q2_current, NumIntepoPoints, Time_inteval, l1, l2);
     
     q0q1q2_mat = [q0q1q2_mat; q0q1q2_P2P_HomePosition];
 end
@@ -155,7 +155,7 @@ for i_CC_row = 1: length(q0q1q2_mat) - 1% CorrectnessCheck
             errordlg('Input values are incorrect!, Please Check!','Check Value Error');
             error('Error. \n Output increment is large than %g degree, in row: %g, colum: %g.', LimitCheck_Angle, i_CC_row + 1, i_CC_colum)
         end
-    end    
+    end     
 end
 h = msgbox('Check Completed, Input values are correct!');
 %% Plot joint Angles

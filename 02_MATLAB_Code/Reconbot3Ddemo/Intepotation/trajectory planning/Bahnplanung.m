@@ -7,9 +7,9 @@ tic
 % p = [ -500 , -150 , 150 , 500
 %      750 ,800 , 700 , 750
 %       100   , 50 ,  -50 ,  150];
-% p = [0 ,  2 ,  8 , 11 , 14 , 14
-%      1 , 10 ,  0 , 14 ,  1 ,  2
-%      0 ,  2 ,  5 , 14 , 13 , 10];
+% % p = [0 ,  2 ,  8 , 11 , 14 , 14
+% %      1 , 10 ,  0 , 14 ,  1 ,  2
+% %      0 ,  2 ,  5 , 14 , 13 , 10];
 p = [0,  14
      1,  8
      0,   10];
@@ -31,8 +31,8 @@ r = [1 , 3 , 3 , 5 , 2 , 1];
 
 % Verfahren
 % Verfahren = 'Polynom3';
-% Verfahren = 'Polynom5';
-Verfahren = 'Polynom7';
+Verfahren = 'Polynom5';
+% Verfahren = 'Polynom7';
 % Verfahren = 'Bezier_Curve';
 % Verfahren = 'Linear_Interpolation_with_Polynomial_Blends';
 % Verfahren = 'Linear_Interpolation_with_Polynomial4_Blends';

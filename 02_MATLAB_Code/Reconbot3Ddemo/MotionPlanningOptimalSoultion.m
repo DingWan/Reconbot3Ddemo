@@ -327,10 +327,16 @@ for i = 1:length(MPOTP_cell)
     
 end
 
-if Self_adjustment_Enable_Disable == 1 && (Mode_current_initial ~= 10 && Mode_current_initial ~= 11)
+
+if Self_adjustment_Enable_Disable == 1 %&& (Mode_current_initial ~= 10 && Mode_current_initial ~= 11)
     q0q1q2_P2P = q0q1q2_OptimalRow;
-    q0q1q2_P2P(1:NumIntepoPoints,:) = q0q1q2_OptimalRow((NumIntepoPoints+1):2*NumIntepoPoints,:);
-    q0q1q2_P2P((NumIntepoPoints+1):2*NumIntepoPoints,:) = q0q1q2_OptimalRow(1:NumIntepoPoints,:);
+    if Mode_current_initial == 10 || Mode_current_initial == 11
+        q0q1q2_P2P(((length(MPOTP_cell)-3)*NumIntepoPoints+1):(length(MPOTP_cell)-2)*NumIntepoPoints,:) = q0q1q2_OptimalRow(((length(MPOTP_cell)-2)*NumIntepoPoints+1):(length(MPOTP_cell)-1)*NumIntepoPoints,:);
+        q0q1q2_P2P(((length(MPOTP_cell)-2)*NumIntepoPoints+1):(length(MPOTP_cell)-1)*NumIntepoPoints,:) = q0q1q2_OptimalRow(((length(MPOTP_cell)-3)*NumIntepoPoints+1):(length(MPOTP_cell)-2)*NumIntepoPoints,:);
+    else        
+        q0q1q2_P2P(1:NumIntepoPoints,:) = q0q1q2_OptimalRow((NumIntepoPoints+1):2*NumIntepoPoints,:);
+        q0q1q2_P2P((NumIntepoPoints+1):2*NumIntepoPoints,:) = q0q1q2_OptimalRow(1:NumIntepoPoints,:);
+    end
 elseif Self_adjustment_Enable_Disable == 2
     q0q1q2_P2P = q0q1q2_OptimalRow;
 else

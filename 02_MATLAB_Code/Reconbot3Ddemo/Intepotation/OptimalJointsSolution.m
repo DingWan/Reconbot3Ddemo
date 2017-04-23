@@ -7,7 +7,7 @@ q1q2 = q0q1q2_CurrentStep(:,2:11);
 for jj = 1:length(q1q2(:,1))
     % Here, for the first step, modes 1-9 execute once (length(MPOTP_cell) = 2); 
     if  j == 1 && (Self_adjustment_Enable_Disable == 1) && ...
-            ( i ==1 || ( length(MPOTP_cell) > 3 && i == Length_Mode10or11 - 2) )% || Self_adjustment_Enable_Disable == 2
+            ( i == 1 || ( length(MPOTP_cell) > 3 && i == length(MPOTP_cell) - 2) )% || Self_adjustment_Enable_Disable == 2
         % we first confirm the one value of the end point (q0q1q2_required_endpoint) by comparing it with Homeconfiguration
         q0q1q2_matrix_start = q0q1q2_previous_trajpoint;
         q0q1q2_matrix_end = q0q1q2_current_trajpoint;
@@ -34,7 +34,7 @@ for jj = 1:length(q1q2(:,1))
         %==================================================================
         q0q1q2_Optimal_SingleRow = q0q1q2_previous_trajpoint;
     elseif j == 2 && (Self_adjustment_Enable_Disable == 1) && ...
-            ( i ==1 || ( length(MPOTP_cell) > 3 && i == Length_Mode10or11 - 2) )% || Self_adjustment_Enable_Disable == 2
+            ( i == 1 || ( length(MPOTP_cell) > 3 && i == length(MPOTP_cell) - 2) )% || Self_adjustment_Enable_Disable == 2
         % Secondly, confirm the second value that has minimum norm value with the end point (q0q1q2_required_endpoint)
         %========= Here we must judge five-bar or three-bar sparately;=====
         if Mode_current == 8 || Mode_current == 9
