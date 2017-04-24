@@ -12,17 +12,17 @@ q0 = inputq0;
             C2_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0, l1/2,0]')' + [po{1}, po{2}, po{3}];
             A1 = (rotz(q0)*[0, -l1/2, 0]')'; A2 = (rotz(q0)*[0, l1/2, 0]')';
             % %-----------------------------------------------%
-            if abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && abs((C2_in_Ob(1) - A2(1)) > 1e-2 || abs(C2_in_Ob(2) - A2(2)) > 1e-2)
+            if abs(C1_in_Ob(1) - A1(1)) <= 1e-6 && abs(C1_in_Ob(2) - A1(2)) <= 1e-6 && abs((C2_in_Ob(1) - A2(1)) > 1e-6 || abs(C2_in_Ob(2) - A2(2)) > 1e-6)
                 q11 = inputq11;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, []};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
                 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj3T1R.RCB_3T1R_IK;
-            elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2 && abs((C1_in_Ob(1) - A1(1)) > 1e-2 || abs(C1_in_Ob(2) - A1(2)) > 1e-2)
+            elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-6 && abs(C2_in_Ob(2) - A2(2)) <= 1e-6 && abs((C1_in_Ob(1) - A1(1)) > 1e-6 || abs(C1_in_Ob(2) - A1(2)) > 1e-6)
                 q21 = inputq21;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], [], q21};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
                 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj3T1R.RCB_3T1R_IK;
-            elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2
+            elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-6 && abs(C1_in_Ob(2) - A1(2)) <= 1e-6 && abs(C2_in_Ob(1) - A2(1)) <= 1e-6 && abs(C2_in_Ob(2) - A2(2)) <= 1e-6
                 q11 = inputq11;
                 q21 = inputq21;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
@@ -44,17 +44,17 @@ q0 = inputq0;
             C2_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0, l1/2,0]')' + [po{1}, po{2}, po{3}];
             A1 = (rotz(q0)*[0, -l1/2, 0]')'; A2 = (rotz(q0)*[0, l1/2, 0]')';
             % %-----------------------------------------------%
-            if abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && abs((C2_in_Ob(1) - A2(1)) > 1e-2 || abs(C2_in_Ob(2) - A2(2)) > 1e-2)
+            if abs(C1_in_Ob(1) - A1(1)) <= 1e-6 && abs(C1_in_Ob(2) - A1(2)) <= 1e-6 && abs((C2_in_Ob(1) - A2(1)) > 1e-6 || abs(C2_in_Ob(2) - A2(2)) > 1e-6)
                 q11 = inputq11;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, []};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
                 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj3T1R.RCB_3T1R_IK;
-            elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2 && abs((C1_in_Ob(1) - A1(1)) > 1e-2 || abs(C1_in_Ob(2) - A1(2)) > 1e-2)
+            elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-6 && abs(C2_in_Ob(2) - A2(2)) <= 1e-6 && abs((C1_in_Ob(1) - A1(1)) > 1e-6 || abs(C1_in_Ob(2) - A1(2)) > 1e-6)
                 q21 = inputq21;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], [], q21};
                 obj3T1R = RCB3T1R(PosOri, q11q12q21q22, l1, l2);
                 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj3T1R.RCB_3T1R_IK;
-            elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2
+            elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-6 && abs(C1_in_Ob(2) - A1(2)) <= 1e-6 && abs(C2_in_Ob(1) - A2(1)) <= 1e-6 && abs(C2_in_Ob(2) - A2(2)) <= 1e-6
                 q11 = inputq11;
                 q21 = inputq21;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
@@ -79,8 +79,8 @@ q0 = inputq0;
                 %q21 = q0q1q2_mat(n*(IntepPointNum-1)+1,7);
                 q21 = inputq21;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
-            elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 ...
-                    && abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2
+            elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-6 && abs(C1_in_Ob(2) - A1(2)) <= 1e-6 ...
+                    && abs(C2_in_Ob(1) - A2(1)) <= 1e-6 && abs(C2_in_Ob(2) - A2(2)) <= 1e-6
                 %q0q1q2_mat(n*(IntepPointNum-1)+i,:) = q0q1q2_mat(n*(IntepPointNum-1)+i-1,:);
                 %q21 = q0q1q2_mat(n*(IntepPointNum-1)+i,7);
                 q21 = inputq21;
@@ -104,8 +104,8 @@ q0 = inputq0;
             if Mode == 5
                 q11 = inputq11;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};
-            elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 ...
-                    && abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2
+            elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-6 && abs(C1_in_Ob(2) - A1(2)) <= 1e-6 ...
+                    && abs(C2_in_Ob(1) - A2(1)) <= 1e-6 && abs(C2_in_Ob(2) - A2(2)) <= 1e-6
                 %q0q1q2_mat(n*(IntepPointNum-1)+i,:) = q0q1q2_mat(n*(IntepPointNum-1)+i-1,:);
                 q11 = inputq11;
                 PosOri = {po{1}, po{2}, po{3}, po{4}, [], [], q11, q21};

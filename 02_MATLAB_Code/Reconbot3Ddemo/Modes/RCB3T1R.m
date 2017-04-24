@@ -132,7 +132,7 @@ classdef RCB3T1R
             
                 % Judge the singularity as 1st+5th axes of C1A1 and C2A2 overlap
                 % We assume that the precision is 0.02mm (1) as industry manipulators
-                if abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && (abs(C2_in_Ob(1) - A2(1)) > 1e-2 || abs(C2_in_Ob(2) - A2(2)) > 1e-2)
+                if abs(C1_in_Ob(1) - A1(1)) <= 1e-6 && abs(C1_in_Ob(2) - A1(2)) <= 1e-6 && (abs(C2_in_Ob(1) - A2(1)) > 1e-6 || abs(C2_in_Ob(2) - A2(2)) > 1e-6)
                     %display('Notice:The 1st+5th axes of kinematic chain A1C1 overlapped')
                     % Display the output value, we use angle to show it properly
                     name = '3T1R-A1C1 Singularity';
@@ -147,7 +147,7 @@ classdef RCB3T1R
                     %--------------------- Assign Value --------------------
                     q21 = -atan((C2_in_Ob(1) - A2(1))/(C2_in_Ob(2) - A2(2))); % Clockwise is positive direction. top view
                     q11 = q11_SP_A1C1overlap;
-                elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2 && (abs(C1_in_Ob(1) - A1(1)) > 1e-2 || abs(C1_in_Ob(2) - A1(2)) > 1e-2)
+                elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-6 && abs(C2_in_Ob(2) - A2(2)) <= 1e-6 && (abs(C1_in_Ob(1) - A1(1)) > 1e-6 || abs(C1_in_Ob(2) - A1(2)) > 1e-6)
                     %display('Notice:The 1st+5th axes of kinematic chain A2C2 overlapped')
                     name = '3T1R-A2C2 Singularity';
                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
@@ -163,7 +163,7 @@ classdef RCB3T1R
                     q21 = q21_SP_A2C2overlap;
                     % Display the output value, we use angle to show it properly
                     
-                elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2
+                elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-6 && abs(C1_in_Ob(2) - A1(2)) <= 1e-6 && abs(C2_in_Ob(1) - A2(1)) <= 1e-6 && abs(C2_in_Ob(2) - A2(2)) <= 1e-6
                     %display('Notice:The 1st+5th axes of kinematic chains A1C1 and A2C2 overlapped')
                     % Display the output value, we use angle to show it properly
                     name = '3T1R-A1C1+A2C2 Singularity';

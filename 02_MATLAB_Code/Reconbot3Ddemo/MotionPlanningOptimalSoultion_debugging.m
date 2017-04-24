@@ -1,25 +1,64 @@
-function [ q0q1q2_P2P ] = MotionPlanningOptimalSoultion_debugging(Mode_previous, PosOri_previous, q0q1q2_previous_trajpoint,...
-                                                                  Mode_current,PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, Time_inteval, l1, l2)
+function [ q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep ] = ...
+    MotionPlanningOptimalSoultion_debugging(Mode_previous, PosOri_previous, q0q1q2_previous_trajpoint,...
+    Mode_current,PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, Start_Time, Time_inteval, l1, l2)
 % Motion planning and Optimal Solution
 %
-%    Mode_previous: The mode (1~12) of previous one step;
-% Posture_previous: The Posture (Position + Orientation + q11 + q21) of previous one step;
-%  q0q1q2_previous: The joints value [q0, q11~q15, q21~q25] of previous one step;
-%     Mode_current: The mode (1~12) of previous one step;
-%  Posture_current: The Posture (Position + Orientation + q11 + q21) of previous one step;
-%   q0q1q2_current: The joints value [q0, q11~q15, q21~q25] of previous one step;
-%   NumIntepoPoint: Current intepotation number
-%             Time: Intepotation Time
+%      Mode_current_initial: The Selected mode in Main_ModeSelection at current step
+%     Mode_previous_initial: The Selected mode in Main_ModeSelection at previous step
+%             Mode_previous: The mode (1~12) of previous one step;
+%          Posture_previous: The Posture (Position + Orientation + q11 + q21) of previous one step;
+%           q0q1q2_previous: The joints value [q0, q11~q15, q21~q25] of previous one step;
+%              Mode_current: The mode (1~12) of previous one step;
+%           Posture_current: The Posture (Position + Orientation + q11 + q21) of previous one step;
+%            q0q1q2_current: The joints value [q0, q11~q15, q21~q25] of previous one step;
+%            NumIntepoPoint: Current intepotation number
+%                Start_Time: the Intepotation start Time for current step
+%              Time_inteval: the time interval for intepotation on each i step,  i = 1:length(MPOTP_cell)
+%
+%                            MPOTP_cell: Motion planning of Trajectory Points in cell mode with infos: {mode, {position, orientation, q11, q21}}
+%        Self_adjustment_Enable_Disable: The correct order of differernt value with ' = 1/2/3/0'
+%                                        1: The first to second mode, q11/q12 needs to be adjust
+%                                        2: Random Mode to HomePosition, q11/q12 needs to be adjust
+%                                        3: After Random Mode to mode, q11/q12 needs to be adjust
+%                                        0: No needs to be adjust
+%  Self_adjustment_Enable_Disable_Array: All possible self_adjustment assigned in each step
+%
+%                 Pos_Intep: Position intepotation for each i step
+%                 Vel_Intep: Velocity intepotation for each i step
+%                 Acc_Intep: Acceleration intepotation for each i step
+%                time_Intep: Intepotation Time for each i step
+% %
+%              MP_Pos_Intep: Position intepotation for all steps of Moving Platform
+%              MP_Vel_Intep: Velocity intepotation for all steps of Moving Platform
+%              MP_Acc_Intep: Acceleration intepotation for all steps of Moving Platform
+%             MP_time_Intep: Intepotation Time for all steps of Moving Platform
+% %
+%      q0q1q2_P2P_Pos_Intep: Angle intepotation for all steps of all input joint angles
+%      q0q1q2_P2P_Vel_Intep: Angular velocity intepotation for all steps of all input joints
+%      q0q1q2_P2P_Acc_Intep: Angular acceleration intepotation for all steps of all input joints
+%     q0q1q2_P2P_time_Intep: Intepotation Time for all steps of all input joints 
 
 %% Transition Strategy
-%[ MPOTP_cell, Self_adjustment_Enable_Disable ] = TransitionStrategy(Mode_previous,PosOri_previous, q0q1q2_previous_trajpoint, Mode_current,PosOri_current);
 [ MPOTP_cell, Self_adjustment_Enable_Disable_Array ] = TransitionStrategy_debugging(Mode_previous,PosOri_previous, q0q1q2_previous_trajpoint, Mode_current,PosOri_current);
 
-
 %%
-col = []; % Number and position of 'Self_adjustment_Enable_Disable == 1'
 Pos_Intep = [];
-q0q1q2_P2P = [];
+Vel_Intep = []; 
+Acc_Intep = []; 
+time_Intep = [];
+%
+MP_Pos_Intep = [];
+MP_Vel_Intep = [];
+MP_Acc_Intep = [];
+MP_time_Intep = [];
+%
+q0q1q2_P2P_Pos_Intep = [];
+q0q1q2_P2P_Vel_Intep = [];
+q0q1q2_P2P_Acc_Intep = [];
+q0q1q2_P2P_time_Intep = [];
+%
+col = []; % Number and position of 'Self_adjustment_Enable_Disable == 1'
+q0q1q2_P2P_Pos_Intep = [];
 Mode_previous_initial = Mode_previous;
 PosOri_previous_initial = PosOri_previous;
 Mode_current_initial = Mode_current;
@@ -28,10 +67,10 @@ PosOri_current_initial = PosOri_current;
 for i = 1:length(MPOTP_cell)
     %% Assign value to "Self_adjustment_Enable_Disable == 0/1/2/3"
     Self_adjustment_Enable_Disable = Self_adjustment_Enable_Disable_Array(i); 
-    [~,col] = find(Self_adjustment_Enable_Disable_Array == 1);
+    %[~,col] = find(Self_adjustment_Enable_Disable_Array == 1);
 
     %% Assgin "Mode_Previous, Mode_Current, PosOri_Current, PosOri_Previous"
-    for OnlyUsedforFoldingThisPart_Mode5andMode10and11 = 1:1
+    for OnlyUsedforFoldingThisPart_AssignValueofModeAndPosOri = 1:1
         if i == 1 || (i == length(MPOTP_cell)-2 && (Mode_current_initial == 10 || Mode_current_initial == 11)) || ...
                 (i == 2 && Mode_current_initial == 7)
             if  Self_adjustment_Enable_Disable == 1
@@ -210,9 +249,28 @@ for i = 1:length(MPOTP_cell)
     end
             
     %% Intepotation and Trajectory Planning
-        Time = [(i-1) * Time_inteval, i * Time_inteval];       
-        [ Pos_Intep, Vel_Intep, Acc_Intep, time_Intep ] =  IntepotationP2P_debugging(Mode, PosOri_previous,q0q1q2_previous_trajpoint, PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, Time, l1, l2);
-
+    for OnlyUsedforFoldingThisPart_TrajectoryPlanning = 1:1
+        Time = [(i-1) * Time_inteval, i * Time_inteval] + Start_Time * [1 1];
+        
+        [ Pos_Intep, Vel_Intep, Acc_Intep, time_Intep ] =  ...
+            IntepotationP2P_debugging(Mode, PosOri_previous,q0q1q2_previous_trajpoint, PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, Time, l1, l2);
+        
+        % Position, Velocity, Acceleration Calcuation
+        if length(Pos_Intep(:,1)) == 6
+            Pos_Intep(7:8,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
+            Vel_Intep(7:8,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
+            Acc_Intep(7:8,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
+        elseif length(Pos_Intep(:,1)) == 7
+            Pos_Intep(8,:) = zeros(1,NumIntepoPoints);
+            Vel_Intep(8,:) = zeros(1,NumIntepoPoints);
+            Acc_Intep(8,:) = zeros(1,NumIntepoPoints);
+        end
+        MP_Pos_Intep = [MP_Pos_Intep; Pos_Intep']; %MP: moving Platform
+        MP_Vel_Intep = [MP_Vel_Intep; Vel_Intep'];
+        MP_Acc_Intep = [MP_Acc_Intep; Acc_Intep'];
+        MP_time_Intep = [MP_time_Intep; time_Intep'];
+    end
+    
     %% Iterative IK solution of all intepolation points
     for j = 1:NumIntepoPoints
         %
@@ -295,9 +353,9 @@ for i = 1:length(MPOTP_cell)
             end
         end
 
-%         if j == 19
-%            x = 1; 
-%         end
+        if j == 19
+           x = 1; 
+        end
         % IK solution
         [ p, ~, ~, q1q2, ~ ] = IK(Mode, PosOri, q0, q11, q21, q0q1q2_OptimalRow(length(q0q1q2_OptimalRow(:,1)),:), l1, l2);
         q0q1q2_CurrentStep = [zeros(length(q1q2(:,1)),1),q1q2];
@@ -410,10 +468,38 @@ for i = 1:length(MPOTP_cell)
 end
 
 %% Assign the correct order of differernt value of 'Self_adjustment_Enable_Disable = 1/2/3/0'
-q0q1q2_P2P = q0q1q2_OptimalRow;
+q0q1q2_P2P_Pos_Intep = q0q1q2_OptimalRow;
 [~,col] = find(Self_adjustment_Enable_Disable_Array == 1);
 if isempty(col) ~= 1 
-    q0q1q2_P2P(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = q0q1q2_OptimalRow((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
-    q0q1q2_P2P((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = q0q1q2_OptimalRow(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
+    q0q1q2_P2P_Pos_Intep(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = q0q1q2_OptimalRow((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
+    q0q1q2_P2P_Pos_Intep((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = q0q1q2_OptimalRow(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
 end
+
+%% Position, Velocity, Acceleration Calcuation of joint angles
+% Velocity Calcuation
+for i = 1:length(MPOTP_cell)
+    for j = 1:NumIntepoPoints
+        if j == 1 || j == NumIntepoPoints
+            q0q1q2_P2P_Vel_Intep((i-1)*NumIntepoPoints + j,:) =  zeros(1,length(q0q1q2_P2P_Pos_Intep(1,:)));
+        else
+            q0q1q2_P2P_Vel_Intep((i-1)*NumIntepoPoints + j,:) = ...
+            ( q0q1q2_P2P_Pos_Intep((i-1)*NumIntepoPoints + j + 1,:) - q0q1q2_P2P_Pos_Intep((i-1)*NumIntepoPoints + j,:) ) / ...
+            (       MP_time_Intep((i-1)*NumIntepoPoints + j + 1, 1) - MP_time_Intep((i-1)*NumIntepoPoints + j, 1)       ); 
+        end
+    end
+end
+
+% Acceleration Calcuation
+for i = 1:length(MPOTP_cell)
+    for j = 1:NumIntepoPoints
+        if j == 1 || j == NumIntepoPoints
+            q0q1q2_P2P_Acc_Intep((i-1)*NumIntepoPoints + j,:) =  zeros(1,length(q0q1q2_P2P_Pos_Intep(1,:)));
+        else
+            q0q1q2_P2P_Acc_Intep((i-1)*NumIntepoPoints + j,:) = ...
+            ( q0q1q2_P2P_Vel_Intep((i-1)*NumIntepoPoints + j + 1,:) - q0q1q2_P2P_Vel_Intep((i-1)*NumIntepoPoints + j,:)  ) / ...
+            (       MP_time_Intep((i-1)*NumIntepoPoints + j + 1, 1) - MP_time_Intep((i-1)*NumIntepoPoints + j, 1)        ); 
+        end
+    end
+end
+
 end

@@ -100,9 +100,9 @@ if isempty(beta) == 1 && isempty(gamma) ~= 1 && isempty(q11) ~= 1 && q11 ~= pi/2
         abs_tan_beta = sqrt((x^2 + w)/(w*x^2 + x^2) - 1);    
         %choose 1e-8 is because we set resolution of motor is 0.02degree
         % cos(0.02*pi/180)-1 = -6.0925e-08
-        if abs_cos_theta < 1e-8
+        if abs_cos_theta < 1e-12
             abs_cos_theta = 0 ;
-        elseif abs(abs_cos_theta - 1) < 1e-8
+        elseif abs(abs_cos_theta - 1) < 1e-12
             abs_cos_theta = 1 ;
         end        
    
