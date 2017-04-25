@@ -41,13 +41,13 @@ end
 % V1 = [V1(:,1:3), ones(length(V1),1)];
 % BaseLow = struct('F1',F1, 'V1',V1, 'C1',C1);
 % 
-[F2, V2, C2] = rndread(filename{2});
-V2 = [V2(:,1:3), ones(length(V2),1)];
-BaseUP = struct('F2',F2, 'V2',V2, 'C2',C2);
+% [F2, V2, C2] = rndread(filename{2});
+% V2 = [V2(:,1:3), ones(length(V2),1)];
+% BaseUP = struct('F2',F2, 'V2',V2, 'C2',C2);
 % 
-% [F3, V3, C3] = rndread(filename{3});
-% V3 = [V3(:,1:3), ones(length(V3),1)];
-% BaseJointA1C1 = struct('F3',F3, 'V3',V3, 'C3',C3);
+[F3, V3, C3] = rndread(filename{3});
+V3 = [V3(:,1:3), ones(length(V3),1)];
+BaseJointA1C1 = struct('F3',F3, 'V3',V3, 'C3',C3);
 % 
 % [F4, V4, C4] = rndread(filename{4});
 % V4 = [V4(:,1:3), ones(length(V4),1)];
@@ -88,9 +88,9 @@ BaseUP = struct('F2',F2, 'V2',V2, 'C2',C2);
 %%
 %-------------------------------------------- 
 % Set File 3 as a example: 
-F = F2(:,1:3);
-V = V2(:,1:3);
-C = C2;
+F = F3(:,1:3);
+V = V3(:,1:3);
+C = C3;
 
 clf;
   p = patch('faces', F, 'vertices' ,V);

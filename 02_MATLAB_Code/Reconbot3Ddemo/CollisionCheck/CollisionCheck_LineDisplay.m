@@ -58,7 +58,7 @@
     
     %================== Center Point of Moving Platform ===================
 %     ReconbotANI(q0q1q2_mat(n*(IntepPointNum-1)+i,:));
-    Displacement = [250,250,165.88];
+    Displacement = [250,250,167.4400];
     p = p(1:3) + Displacement;
     handles = getappdata(0,'patch_h');
     Tr = handles(12);

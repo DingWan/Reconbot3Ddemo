@@ -121,11 +121,6 @@ for IntepPointNum = 1 : NumTP
             
    Start_Time = Time_mat(length(Time_mat(:,1)),1);
    
-   if Mode_previous == 5 && Mode_current == 10
-       q0q1q2_2RserialA1C1_x_0_y_30 = q0q1q2_Pos_mat(length(q0q1q2_Pos_mat)-NumIntepoPoints,:);
-   elseif Mode_previous == 5 && Mode_current == 11
-       q0q1q2_2RserialA2C2_x_0_y_30 = q0q1q2_Pos_mat(length(q0q1q2_Pos_mat)-NumIntepoPoints,:);
-   end
 end
 toc
 
@@ -145,10 +140,10 @@ for OnlyUsedforFoldingThisPart = 1:1
     PosOri_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum}{2};
     
     if Mode_previous == 10 && Mode_current  == 5
-        q0q1q2_2RserialA1C1_x_0_y_Positive30 = [0 -3.14159265358979 0.112270797444876 3.14159265358979 0.944049245225854 -3.14159265358979 0 0.968872484986974 1.94286556262976 0.601923841807922 0];
+        q0q1q2_2RserialA1C1_x_0_y_Positive30 = [0 -3.14159265358979 0.113660294459849 3.14159265358979 0.945555240920525 -3.14159265358979 0 0.973597013060958 1.93330000780210 0.597199313733938 0];
         q0q1q2_previous = [q0q1q2_2RserialA1C1_x_0_y_Positive30; q0q1q2_Pos_mat(length(q0q1q2_Pos_mat(:,1)),:)];
     elseif Mode_previous == 11 && Mode_current  == 5
-        q0q1q2_2RserialA2C2_x_0_y_Negative30 = [0 0 0.968872484986974 1.94286556262976 0.601923841807922 0 -3.14159265358979 0.112270797444876 3.14159265358979 0.944049245225854 -3.14159265358979];
+        q0q1q2_2RserialA2C2_x_0_y_Negative30 = [0 0 0.973597013060958 1.93330000780210 0.597199313733938 0 -3.14159265358979 0.113660294459849 3.14159265358979 0.945555240920525 -3.14159265358979];
         q0q1q2_previous = [q0q1q2_2RserialA2C2_x_0_y_Negative30; q0q1q2_Pos_mat(length(q0q1q2_Pos_mat(:,1)),:)];    
     else
         q0q1q2_previous = q0q1q2_Pos_mat(length(q0q1q2_Pos_mat(:,1)),:);
@@ -186,7 +181,9 @@ q11q12q14_q21q22q23 = [q0q1q2_Pos_mat(:,2), q0q1q2_Vel_mat(:,2), q0q1q2_Acc_mat(
                        q0q1q2_Pos_mat(:,9), q0q1q2_Vel_mat(:,9), q0q1q2_Acc_mat(:,9),...
                        Time_mat(:,1)
                        ];
-% save('q0q1q2_mat_Angle')
+
+%% Plot joint Angles
+PlotAngleValue;
 
 %% Check the correctness of the result by comparing the related adjunct values
 LimitCheck_Redius = (360/NumIntepoPoints)*pi/180;
@@ -201,11 +198,9 @@ for i_CC_row = 1: length(q0q1q2_Pos_mat) - 1% CorrectnessCheck
     end     
 end
 h = msgbox('Check Completed, Input values are correct!');
-%% Plot joint Angles
-%PlotAngleValue;
 
 %% 3D Animation
-for i = 1:length(q0q1q2_Pos_mat)-0  
+for i = 41:length(q0q1q2_Pos_mat)-40  
     %========================== Animation ============================
     ReconbotANI(q0q1q2_Pos_mat(i,:));   
 %     set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
@@ -213,4 +208,31 @@ for i = 1:length(q0q1q2_Pos_mat)-0
     %============================ End ================================
 end
 
-%clr_trail_CollisionPoints_button_press;
+%% Moving Platform Trajectory
+% Displacement = [250,250,167.4400];
+% for i = 1:length(q0q1q2_Pos_mat(:,1))
+%     Displacement_mat(i,:) = Displacement;
+% end
+% p = q0q1q2_Pos_mat(:,1:3) + Displacement_mat;
+% handles = getappdata(0,'patch_h');
+% Tr = handles(12);
+% %============= Center Point of Moving Platform ================= 
+% set(Tr,'xdata',p(1),'ydata',p(2),'zdata',p(3));
+% %============================ End ==============================
+%
+%----------------- plot xyz axes of base point --------------
+Displacement = [250,250,83.5+60.44+(45.5-22)];
+x_axis = [40 0 0] + Displacement;
+y_axis = [0 40 0] + Displacement;
+z_axis = [0 0 40] + Displacement;
+OP= [0 0 0] + Displacement;
+xyz = [OP;x_axis;OP;y_axis;OP;z_axis];
+j = 1:2;
+plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-r','LineWidth',2); hold on
+j = 3:4;
+plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-g','LineWidth',2); hold on
+j = 5:6;
+plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-b','LineWidth',2); hold on
+%------------------------------------------------------------
+%%
+% clr_trail_CollisionPoints_button_press;

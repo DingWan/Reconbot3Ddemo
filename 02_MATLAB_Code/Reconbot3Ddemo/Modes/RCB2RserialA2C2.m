@@ -323,7 +323,7 @@ classdef RCB2RserialA2C2
                 WSvalue_2R_SinguPosA2C2 = 0;
             end
             WSvalue = [WSvalue_2R, WSvalue_2R_SinguPosA2C2, WSvalue_2R_SinguPosA2C2];      
-            p = [po{1}, po{2}, po{3}, EulerAngle];
+            p = [p(1), p(2), p(3), EulerAngle];
         end
         
         function [p, ABC, q1q2] = RCB_2R_serialA2C2_FK(obj)
