@@ -7,7 +7,7 @@ deg = pi/180;
 addpath(genpath(pwd)); % Enalbe all folders
 
 PosOri = {0 0 253.3124 0 [] [], pi/2 -pi/2};
-q11q12q21q22 = [0.1*pi/2, pi/3, 0.1*-pi/2, pi/6];
+q11q12q21q22 = [1*pi/4, pi/3, -0.3*pi/4, pi/6];
 
 %Calculate the Jacobian
 deltaq = 0.000001;
@@ -51,6 +51,7 @@ B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)
 C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22)...
     + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
 %%------------------------------------------------------------------------
+ABC = [ A1; B1; C1; A2; B2; C2 ];
 
 norm(C2 - C1)
 
@@ -60,6 +61,10 @@ pitch = p_previous(5) * 180/pi;
 roll = p_previous(6) * 180/pi;
 RotationMatrix = rotz(roll) * roty(pitch) * rotx(yaw);  
 C1_Ob = (RotationMatrix * A1')' + p_previous(1:3)
+
+
+%% All joint screws are defined with respect to instantaneous frame on the moving platform
+ABC_op = (ABC - ones(6,1) * p_previous(1:3)) * RotationMatrix
 
 %% Vector
 % Branch Chain A1C1

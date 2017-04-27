@@ -535,15 +535,16 @@ classdef RCB3T1R
                 %Choose the column of minmum solution
                 [~,col] = find(JudgeLength_C1C2 == min(JudgeLength_C1C2));
                 
-                %% Note::::
-                %  The value from 8-degree polynomials equation is not
-                %  correct!!!!!
-                % In order to get the right value, here, I use a 
-                % Approching the desired points
+                %% Note:::::::::::::
+                %  The value from 8-degree polynomials equation is not correct!!!!!
+                % In order to get the right value, here, I use the calculated minimum q13SingleValue data to approch the correct value
+                
+                % Approching Algorithm is a iterative pocesss see below in
+                % While loop
                 if  abs(C1(3) - C2(3)) > 1e-8 || abs( q13all(Numq13) ) - pi > 1e-8 || abs(JudgeLength_C1C2(col(1))) > 1e-8
                     JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
-                    delta_q = 0.01;
-                    q13SingleValue = q13SingleValue - delta_q;
+                    delta_q13 = 0.01;
+                    q13SingleValue = q13SingleValue - delta_q13;
                     SignChange_1 = 0;
                     SignChange_2 = 0;
                     j = 0;    
@@ -558,9 +559,9 @@ classdef RCB3T1R
                         if JudgeLength_C1C2_min > 0
                             if SignChange_1 == 0
                                 if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min < 0
-                                    delta_q = 0.5 * delta_q;
+                                    delta_q13 = 0.5 * delta_q13;
                                 elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min >= 0
-                                    delta_q = - 0.5 * delta_q;
+                                    delta_q13 = - 0.5 * delta_q13;
                                 end
                                 SignChange_1 = SignChange_1 + 1;
                                 SignChange_2 = 0;
@@ -568,17 +569,18 @@ classdef RCB3T1R
                         elseif JudgeLength_C1C2_min < 0
                             if SignChange_2 == 0
                                 if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min > 0
-                                    delta_q = 0.5 * delta_q;
+                                    delta_q13 = 0.5 * delta_q13;
                                 elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min <= 0
-                                    delta_q = - 0.5 * delta_q;
+                                    delta_q13 = - 0.5 * delta_q13;
                                 end
                             end
                             SignChange_1 = 0;
                             SignChange_2 = SignChange_2 + 1;
                         end
-                        q13SingleValue = q13SingleValue - delta_q;
+                        q13SingleValue = q13SingleValue - delta_q13;
                         JudgeLength_C1C2_min = norm(C1 - C2) - L1;
                     end
+                    
                     
                     % assign the values to q13q23
                     q13 = q13SingleValue;

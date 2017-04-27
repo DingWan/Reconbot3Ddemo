@@ -511,8 +511,11 @@ classdef RCB3T1R
                 % sin(q12) + sin(q12+q13SingleValue) - sin(q22) - sin(q22+q23all) == 0
                 %  For real elements of x in the interval [-1,1], asin(x) returns values in the interval [-pi/2,pi/2]
                 q23all(1) = asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
-                q23all(2) =  - pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
-                q23all(3) =    pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
+                if sin(q12) + sin(q12 + q13SingleValue) - sin(q22) <= 0
+                    q23all(2) =  - pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
+                else
+                    q23all(2) =    pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
+                end
                 % q23all * 180 / pi
                 
                 for Numq23 = 1:length(q23all)
@@ -543,8 +546,8 @@ classdef RCB3T1R
                 % While loop
                 if  abs(C1(3) - C2(3)) > 1e-8 || abs( q13all(Numq13) ) - pi > 1e-8 || abs(JudgeLength_C1C2(col(1))) > 1e-8
                     JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
-                    delta_q = 0.01;
-                    q13SingleValue = q13SingleValue - delta_q;
+                    delta_q13 = 0.01;
+                    q13SingleValue = q13SingleValue - delta_q13;
                     SignChange_1 = 0;
                     SignChange_2 = 0;
                     j = 0;    
@@ -552,16 +555,40 @@ classdef RCB3T1R
                     % iterative method to get the optimal value
                     while(abs(norm(C1 - C2) - L1) > 1e-8 && j <= 500)
                         j = j + 1;
-                        C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
-                            L2 * (sin(q12) + sin(q12 + q13SingleValue))];
-                        C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
-                            L2 * (sin(q22) + sin(q22 + q23SingleValue))];
+                        %
+                        q23all(1) = asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
+                        if sin(q12) + sin(q12 + q13SingleValue) - sin(q22) <= 0
+                            q23all(2) =  - pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
+                        else
+                            q23all(2) =    pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
+                        end
+                        % Choose the correct q23all
+                        if j == 1
+                            for Numq23 = 1:length(q23all)
+                                q23SingleValue = q23all(Numq23);
+                                C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
+                                    L2 * (sin(q12) + sin(q12 + q13SingleValue))];
+                                C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
+                                    L2 * (sin(q22) + sin(q22 + q23SingleValue))];
+                                JudgeLength_C1C2(Numq23) = norm(C1 - C2) - L1;
+                            end
+                            %Choose the column of minmum solution
+                            [~,col] = find(JudgeLength_C1C2 == min(JudgeLength_C1C2));
+                            JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
+                        else
+                            q23SingleValue = q23all(col);
+                            C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
+                                L2 * (sin(q12) + sin(q12 + q13SingleValue))];
+                            C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
+                                L2 * (sin(q22) + sin(q22 + q23SingleValue))];
+                        end
+                        %
                         if JudgeLength_C1C2_min > 0
                             if SignChange_1 == 0
                                 if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min < 0
-                                    delta_q = 0.5 * delta_q;
+                                    delta_q13 = 0.5 * delta_q13;
                                 elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min >= 0
-                                    delta_q = - 0.5 * delta_q;
+                                    delta_q13 = - 0.5 * delta_q13;
                                 end
                                 SignChange_1 = SignChange_1 + 1;
                                 SignChange_2 = 0;
@@ -569,17 +596,18 @@ classdef RCB3T1R
                         elseif JudgeLength_C1C2_min < 0
                             if SignChange_2 == 0
                                 if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min > 0
-                                    delta_q = 0.5 * delta_q;
+                                    delta_q13 = 0.5 * delta_q13;
                                 elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min <= 0
-                                    delta_q = - 0.5 * delta_q;
+                                    delta_q13 = - 0.5 * delta_q13;
                                 end
                             end
                             SignChange_1 = 0;
                             SignChange_2 = SignChange_2 + 1;
                         end
-                        q13SingleValue = q13SingleValue - delta_q;
+                        q13SingleValue = q13SingleValue - delta_q13;
                         JudgeLength_C1C2_min = norm(C1 - C2) - L1;
                     end
+                    
                     
                     % assign the values to q13q23
                     q13 = q13SingleValue;
@@ -590,8 +618,7 @@ classdef RCB3T1R
                     C1C2 = C2 - C1;
                     yaxis = [0, 1, 0];
                     % Judge the direction of the rotation around Z-axis
-                    directionC1C2Xxaxis = cross(C1C2, yaxis);
-                    if directionC1C2Xxaxis(3) < 0
+                    if C1(1) < C2(1) 
                         gamma = -acos((C1C2 * yaxis')/(norm(C1C2)* norm(yaxis)));
                     else
                         gamma = acos((C1C2 * yaxis')/(norm(C1C2)* norm(yaxis)));
