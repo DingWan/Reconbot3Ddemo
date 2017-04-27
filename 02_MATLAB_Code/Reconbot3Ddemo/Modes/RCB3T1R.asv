@@ -535,12 +535,11 @@ classdef RCB3T1R
                 %Choose the column of minmum solution
                 [~,col] = find(JudgeLength_C1C2 == min(JudgeLength_C1C2));
                 
-                %% Note:::::::::::::
-                %  The value from 8-degree polynomials equation is not correct!!!!!
-                % In order to get the right value, here, I use the calculated minimum q13SingleValue data to approch the correct value
-                
-                % Approching Algorithm is a iterative pocesss see below in
-                % While loop
+                %% Note::::
+                %  The value from 8-degree polynomials equation is not
+                %  correct!!!!!
+                % In order to get the right value, here, I use a 
+                % Approching the desired points
                 if  abs(C1(3) - C2(3)) > 1e-8 || abs( q13all(Numq13) ) - pi > 1e-8 || abs(JudgeLength_C1C2(col(1))) > 1e-8
                     JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
                     delta_q = 0.01;
