@@ -12,7 +12,7 @@ L2 = 146.25;
 % L2 = 1.4725;
 % deg = pi/180;
 
-q11q12q21q22 = [1*pi/4, pi/3, -0.3*pi/4, pi/6];
+q11q12q21q22 = [1.2*pi/4, 1*pi/2, 1*pi/4, 0.6*pi/2];
 % q11q12q21q22 = [1.35283894173723    1.51568066620560    0.771619248250125    1.01963972090195];
 q11 = q11q12q21q22(1);
 q12 = q11q12q21q22(2);
@@ -122,22 +122,44 @@ NumRealq13 = length (x);
 % the programm should judge the sign of the value
 
 % For real elements of X, atan(X) returns values in the interval [-pi/2,pi/2]
- q13all = 2 * atan(x) - q12;
-
+% Here we elimate the q13all = +/-pi, namely, p = [0 0 0 0 0 0]
+for i = 1:length (x)
+    if  abs( abs(2 * atan(x(i)) - q12) - pi ) > 1e-8
+        if 2 * atan(x(i)) - q12 < 0
+            q13all(i) =  2*pi + 2 * atan(x(i)) - q12;
+        else
+            q13all(i) =  2 * atan(x(i)) - q12;
+        end
+    else
+        continue;
+    end
+end
 %% ------------------Obtain all of the correct values and assign to q13q23-------------------------
 % numbers of i and j are used to count the possible values that satisfy the
 % condiation of C1z = C2z; And then, assign all the possible values to
 % matrix q13q23;
-
- 
- for Numq13 = 1:length(q13all)
-     
-     q13SingleValue = q13all(Numq13);
-     
-   %% -------------- Calculate the value of q23 (theta23) ----------------      
+tic
+for Numq13 = 1:length(q13all)
+    
+    q13SingleValue = q13all(Numq13);
+    
+    %% -------------- Calculate the value of q23 (theta23) ----------------
     % (q22+q23all)*180/pi
-    % sin(q12) + sin(q12+q13SingleValue) - sin(q22) - sin(q22+q23all) == 0 
+    % sin(q12) + sin(q12+q13SingleValue) - sin(q22) - sin(q22+q23all) == 0
     %  For real elements of x in the interval [-1,1], asin(x) returns values in the interval [-pi/2,pi/2]
+    % iterative method to get the optimal value
+    % if
+    j = 0;
+    delta_q13 = 0.1;
+    while(abs(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) >= 1 && j <= 500)
+        j = j + 1;
+        if q12 + q13SingleValue > pi/2 || (q12 + q13SingleValue > -pi/2 && q12 + q13SingleValue <= 0)
+            q13SingleValue = q13SingleValue + delta_q13;
+        elseif q12 + q13SingleValue < -pi/2 || (q12 + q13SingleValue > 0 && q12 + q13SingleValue < pi/2)
+            q13SingleValue = q13SingleValue - delta_q13;
+        end
+    end
+    %
     q23all(1) = asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
     if sin(q12) + sin(q12 + q13SingleValue) - sin(q22) <= 0
         q23all(2) =  - pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
@@ -145,142 +167,165 @@ NumRealq13 = length (x);
         q23all(2) =    pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
     end
     % q23all * 180 / pi
-
-     for Numq23 = 1:length(q23all)
-         q23SingleValue = q23all(Numq23);
-       %% -----------------------Get the output values of Moving Platform-----------------------
+    
+    for Numq23 = 1:length(q23all)
+        q23SingleValue = q23all(Numq23);
+        %%-----------------------Get the output values of Moving Platform-----------------------
         %%--------------------Calculate the position of Ai Bi Ci------------------
-         A1 = [0, -L1/2, 0];
-         B1 = [L2 * cos(q12) * sin(q11), -L1/2 - L2 * cos(q12) * cos(q11), L2 * sin(q12)];
-         C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
-             L2 * (sin(q12) + sin(q12 + q13SingleValue))];
-         
-         A2 = [0, L1/2, 0];
-         B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)];
-         C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
-             L2 * (sin(q22) + sin(q22 + q23SingleValue))];
-         %%------------------------------------------------------------------------
-       JudgeLength_C1C2(Numq23) = norm(C1 - C2) - L1;
-     end
-     
-     %Choose the column of minmum solution
-     [row,col] = find(JudgeLength_C1C2 == min(JudgeLength_C1C2));
-         
-     % Approching the desired points
-     if  abs(C1(3) - C2(3)) > 1e-8 || abs( q13all(Numq13) ) - pi > 1e-8 || abs(JudgeLength_C1C2(col(1))) > 1e-8
-         JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
-         delta_q = 0.01;
-         q13SingleValue = q13SingleValue - delta_q;
-         SignChange_1 = 0;
-         SignChange_2 = 0;
-         j = 0;
-         
-         tic
-         % iterative method to get the optimal value
-         while(abs(norm(C1 - C2) - L1) > 1e-8 && j <= 500)
-             j = j + 1;
-             %
-             q23all(1) = asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
-             if sin(q12) + sin(q12 + q13SingleValue) - sin(q22) <= 0
-                 q23all(2) =  - pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
-             else
-                 q23all(2) =    pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
-             end
-             % Choose the correct q23all
-             if j == 1
-                 for Numq23 = 1:length(q23all)
-                     q23SingleValue = q23all(Numq23);
-                     C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
-                         L2 * (sin(q12) + sin(q12 + q13SingleValue))];
-                     C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
-                         L2 * (sin(q22) + sin(q22 + q23SingleValue))];
-                     JudgeLength_C1C2(Numq23) = norm(C1 - C2) - L1;
-                 end
-                 %Choose the column of minmum solution
-                 [~,col] = find(JudgeLength_C1C2 == min(JudgeLength_C1C2));
-                 JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
-             else                 
-                 q23SingleValue = q23all(col);
-                 C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
-                     L2 * (sin(q12) + sin(q12 + q13SingleValue))];
-                 C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
-                     L2 * (sin(q22) + sin(q22 + q23SingleValue))];
-             end
-             %
-             if JudgeLength_C1C2_min > 0
-                 if SignChange_1 == 0
-                     if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min < 0
-                         delta_q = 0.5 * delta_q;
-                     elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min >= 0
-                         delta_q = - 0.5 * delta_q;
-                     end
-                     SignChange_1 = SignChange_1 + 1;
-                     SignChange_2 = 0;
-                 end
-             elseif JudgeLength_C1C2_min < 0
-                 if SignChange_2 == 0
-                     if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min > 0
-                         delta_q = 0.5 * delta_q;
-                     elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min <= 0
-                         delta_q = - 0.5 * delta_q;
-                     end
-                 end
-                 SignChange_1 = 0;
-                 SignChange_2 = SignChange_2 + 1;
-             end
-             q13SingleValue = q13SingleValue - delta_q;
-             JudgeLength_C1C2_min = norm(C1 - C2) - L1;
-         end
-         toc 
-                  
-         % assign the values to q13q23
-         q13 = q13SingleValue;
-         q23 = q23SingleValue;
-         
-         % Calculate the center point of moving platform
-         p(1:3) = (C1 + C2) / 2;
-         C1C2 = C2 - C1;
-         yaxis = [0, 1, 0];
-         % Judge the direction of the rotation around Z-axis
-         directionC1C2Xxaxis = cross(C1C2, yaxis);
-         if directionC1C2Xxaxis(3) < 0
-             gamma = -acos((C1C2 * yaxis')/(norm(C1C2)* norm(yaxis)));
-         else
-             gamma = acos((C1C2 * yaxis')/(norm(C1C2)* norm(yaxis)));
-         end
-         p(4:6) = [0, 0, gamma];
-         ABC = [A1, B1, C1, A2, B2, C2];
-         
-         %%-------------------------q14q15 and q24q25------------------------------
-         % Calculate the angles of q14q15 and q24q25
-         q14 = q12 + q13 - pi/2;
-         q15 = q11;
-         q24 = q22 + q23 - pi/2;
-         q25 = q21;
-         %%------------------------------------------------------------------------
-         %%-------------------------q11-q15 and q21-q25------------------------------
-         q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-         break
-     elseif  abs( q13all(Numq13) ) - pi < 1e-8 && JudgeLength_C1C2(col(1)) < 1e-8
-         display('Zero Position, Calculation process needs to check!');
-         p = [0 0 0 0 0 0];
-         gamma = 0;
-         q13 = pi;
-         q23 = pi;
-         ABC = [A1, B1, C1, A2, B2, C2];
-         q14 = q12 + q13 - pi/2;
-         q15 = q11;
-         q24 = q22 + q23 - pi/2;
-         q25 = q21;
-         q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-     else
-         display('No solution for this input, Calculation process is stopped');
-         p = [];
-         ABC = [];
-         q1q2 = [0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
-     end
-            
- end
+        A1 = [0, -L1/2, 0];
+        B1 = [L2 * cos(q12) * sin(q11), -L1/2 - L2 * cos(q12) * cos(q11), L2 * sin(q12)];
+        C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
+            L2 * (sin(q12) + sin(q12 + q13SingleValue))];
+        
+        A2 = [0, L1/2, 0];
+        B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)];
+        C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
+            L2 * (sin(q22) + sin(q22 + q23SingleValue))];
+        %%------------------------------------------------------------------------
+        JudgeLength_C1C2(Numq23) = norm(C1 - C2) - L1;
+    end
+    
+    %Choose the column of minmum solution
+    [~,col] = find(JudgeLength_C1C2 == min(JudgeLength_C1C2));
+    
+    %% Note:::::::::::::
+    %  The value from 8-degree polynomials equation is not correct!!!!!
+    % In order to get the right value, here, I use the calculated minimum q13SingleValue data to approch the correct value
+    
+    % Approching Algorithm is a iterative pocesss see below in
+    % While loop
+    if  abs(C1(3) - C2(3)) > 1e-8 || abs( q13all(Numq13) ) - pi > 1e-8 || abs(JudgeLength_C1C2(col(1))) > 1e-8
+        JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
+        delta_q13 = 0.05;
+        q13SingleValue = q13SingleValue - delta_q13;
+        SignChange_1 = 0;
+        SignChange_2 = 0;
+        k = 0;
+        
+        % iterative method to get the optimal value
+        while(abs(norm(C1 - C2) - L1) > 1e-8 && k <= 500)
+            k = k + 1;
+            %j = 0;
+            % Here, we must make sure 'sin_value belongs to [-1 1]'
+            sin_value = sin(q12) + sin(q12 + q13SingleValue) - sin(q22);
+%             while(abs(sin_value) >= 1 && j <= 500)
+%                 j = j + 1;
+%                 if (q12 + q13SingleValue > pi/2 && q12 + q13SingleValue <= pi)||...
+%                         (q12 + q13SingleValue > 3*pi/2 && q12 + q13SingleValue <= 2*pi)
+%                     q13SingleValue = q13SingleValue + delta_q13;
+%                 elseif  (q12 + q13SingleValue >= 0 && q12 + q13SingleValue <= pi/2)||...
+%                         (q12 + q13SingleValue > pi && q12 + q13SingleValue <= 3*pi/2)
+%                     q13SingleValue = q13SingleValue - delta_q13;
+%                 end
+%                 sin_value = sin(q12) + sin(q12 + q13SingleValue) - sin(q22);
+%             end
+            %
+            q23all(1) = asin(sin_value) - q22;
+            if sin_value <= 0
+                q23all(2) =  - pi - asin(sin_value) - q22;
+            else
+                q23all(2) =    pi - asin(sin_value) - q22;
+            end
+            % Choose the correct q23all
+            if k == 1
+                for Numq23 = 1:length(q23all)
+                    q23SingleValue = q23all(Numq23);
+                    C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
+                        L2 * (sin(q12) + sin(q12 + q13SingleValue))];
+                    C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
+                        L2 * (sin(q22) + sin(q22 + q23SingleValue))];
+                    JudgeLength_C1C2(Numq23) = norm(C1 - C2) - L1;
+                end
+                %Choose the column of minmum solution
+                [~,col] = find(JudgeLength_C1C2 == min(JudgeLength_C1C2));
+                %JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
+            else
+                q23SingleValue = q23all(col);
+                C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
+                    L2 * (sin(q12) + sin(q12 + q13SingleValue))];
+                C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
+                    L2 * (sin(q22) + sin(q22 + q23SingleValue))];
+            end
+            %
+            if JudgeLength_C1C2_min > 0
+                if SignChange_1 == 0
+                    if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min < 0
+                        delta_q13 = 0.5 * delta_q13;
+                    elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min >= 0
+                        delta_q13 = - 0.5 * delta_q13;
+                    end                    
+                end
+                SignChange_1 = SignChange_1 + 1;
+                SignChange_2 = 0;
+            elseif JudgeLength_C1C2_min < 0
+                if SignChange_2 == 0
+                    if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min > 0
+                        delta_q13 = 0.5 * delta_q13;
+                    elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min <= 0
+                        delta_q13 = - 0.5 * delta_q13;
+                    end
+                end
+                SignChange_1 = 0;
+                SignChange_2 = SignChange_2 + 1;
+            end
+            q13SingleValue = q13SingleValue - delta_q13;
+            JudgeLength_C1C2_min = norm(C1 - C2) - L1;
+        end
+        
+        % assign the values to q13q23
+        q13 = q13SingleValue;
+        q23 = q23SingleValue;
+        
+        % Calculate the center point of moving platform
+        p(1:3) = (C1 + C2) / 2;
+        C1C2 = C2 - C1;
+        yaxis = [0, 1, 0];
+        % Judge the direction of the rotation around Z-axis
+        if C1(1) < C2(1)
+            gamma = -acos((C1C2 * yaxis')/(norm(C1C2)* norm(yaxis)));
+        else
+            gamma = acos((C1C2 * yaxis')/(norm(C1C2)* norm(yaxis)));
+        end
+        p(4:6) = [0, 0, gamma];
+        ABC = [A1, B1, C1, A2, B2, C2];
+        
+        %%-------------------------q14q15 and q24q25------------------------------
+        % Calculate the angles of q14q15 and q24q25
+        q14 = q12 + q13 - pi/2;
+        q15 = q11;
+        q24 = q22 + q23 - pi/2;
+        q25 = q21;
+        %%------------------------------------------------------------------------
+        %%-------------------------q11-q15 and q21-q25------------------------------
+        q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
+        if abs( abs(q13SingleValue) - pi ) < 1e-8
+            % q13SingleValue = +/- pi
+            continue;
+        else
+            break;
+        end
+    elseif  abs( q13all(Numq13) ) - pi < 1e-8 && JudgeLength_C1C2(col(1)) < 1e-8
+        display('Zero Position, Calculation process needs to check!');
+        p = [0 0 0 0 0 0];
+        gamma = 0;
+        q13 = pi;
+        q23 = pi;
+        ABC = [A1, B1, C1, A2, B2, C2];
+        q14 = q12 + q13 - pi/2;
+        q15 = q11;
+        q24 = q22 + q23 - pi/2;
+        q25 = q21;
+        q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
+    else
+        display('No solution for this input, Calculation process is stopped');
+        p = [];
+        ABC = [];
+        q1q2 = [0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
+    end
+    
+end
+toc
+ 
 norm(C1 - B1)
 norm(C1 - C2) - L1
 j

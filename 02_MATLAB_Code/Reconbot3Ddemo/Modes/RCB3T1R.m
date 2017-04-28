@@ -496,12 +496,18 @@ classdef RCB3T1R
             
             q13all = 2 * atan(x) - q12 ;
             %  q13all*180/pi
-            
+            for i = 1:length (x)
+                if q13all(i) < 0
+                    q13all(i) =  2*pi + q13all(i);
+                else
+                    continue;
+                end
+            end
             %% ------------------Obtain all of the correct values and assign to q13q23-------------------------
             % numbers of i and j are used to count the possible values that satisfy the
             % condiation of C1z = C2z; And then, assign all the possible values to
             % matrix q13q23;
-            
+            tic
             for Numq13 = 1:length(q13all)
                 
                 q13SingleValue = q13all(Numq13);
@@ -510,6 +516,19 @@ classdef RCB3T1R
                 % (q22+q23all)*180/pi
                 % sin(q12) + sin(q12+q13SingleValue) - sin(q22) - sin(q22+q23all) == 0
                 %  For real elements of x in the interval [-1,1], asin(x) returns values in the interval [-pi/2,pi/2]
+                % iterative method to get the optimal value
+                % if 
+                j = 0;
+                delta_q13 = 0.1;
+                while(abs(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) >= 1 && j <= 500)
+                    j = j + 1;
+                    if q12 + q13SingleValue > pi/2 || (q12 + q13SingleValue > -pi/2 && q12 + q13SingleValue <= 0)
+                        q13SingleValue = q13SingleValue + delta_q13;
+                    elseif q12 + q13SingleValue < -pi/2 || (q12 + q13SingleValue > 0 && q12 + q13SingleValue < pi/2)
+                        q13SingleValue = q13SingleValue - delta_q13;                        
+                    end
+                end
+                %
                 q23all(1) = asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
                 if sin(q12) + sin(q12 + q13SingleValue) - sin(q22) <= 0
                     q23all(2) =  - pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
@@ -546,24 +565,38 @@ classdef RCB3T1R
                 % While loop
                 if  abs(C1(3) - C2(3)) > 1e-8 || abs( q13all(Numq13) ) - pi > 1e-8 || abs(JudgeLength_C1C2(col(1))) > 1e-8
                     JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
-                    delta_q13 = 0.01;
+                    delta_q13 = 0.05;
                     q13SingleValue = q13SingleValue - delta_q13;
                     SignChange_1 = 0;
                     SignChange_2 = 0;
-                    j = 0;    
+                    k = 0;    
                     
                     % iterative method to get the optimal value
-                    while(abs(norm(C1 - C2) - L1) > 1e-8 && j <= 500)
-                        j = j + 1;
-                        %
-                        q23all(1) = asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
-                        if sin(q12) + sin(q12 + q13SingleValue) - sin(q22) <= 0
-                            q23all(2) =  - pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
-                        else
-                            q23all(2) =    pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
+                    while(abs(norm(C1 - C2) - L1) > 1e-8 && k <= 500)
+                        k = k + 1;
+                        j = 0;
+                        % Here, we must make sure 'sin_value belongs to [-1 1]'
+                        sin_value = sin(q12) + sin(q12 + q13SingleValue) - sin(q22);
+                        while(abs(sin_value) >= 1 && j <= 500)
+                            j = j + 1;
+                            if (q12 + q13SingleValue > pi/2 && q12 + q13SingleValue <= pi)||...
+                                    (q12 + q13SingleValue > 3*pi/2 && q12 + q13SingleValue <= 2*pi)
+                                q13SingleValue = q13SingleValue + delta_q13;
+                            elseif  (q12 + q13SingleValue >= 0 && q12 + q13SingleValue <= pi/2)||...
+                                    (q12 + q13SingleValue > pi && q12 + q13SingleValue <= 3*pi/2)
+                                q13SingleValue = q13SingleValue - delta_q13;
+                            end
+                            sin_value = sin(q12) + sin(q12 + q13SingleValue) - sin(q22);
                         end
+                        %
+                        q23all(1) = asin(sin_value) - q22;
+                        if sin_value <= 0
+                            q23all(2) =  - pi - asin(sin_value) - q22;
+                        else
+                            q23all(2) =    pi - asin(sin_value) - q22;
+                        end                        
                         % Choose the correct q23all
-                        if j == 1
+                        if k == 1
                             for Numq23 = 1:length(q23all)
                                 q23SingleValue = q23all(Numq23);
                                 C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
@@ -574,7 +607,7 @@ classdef RCB3T1R
                             end
                             %Choose the column of minmum solution
                             [~,col] = find(JudgeLength_C1C2 == min(JudgeLength_C1C2));
-                            JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
+                            %JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
                         else
                             q23SingleValue = q23all(col);
                             C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
@@ -608,7 +641,6 @@ classdef RCB3T1R
                         JudgeLength_C1C2_min = norm(C1 - C2) - L1;
                     end
                     
-                    
                     % assign the values to q13q23
                     q13 = q13SingleValue;
                     q23 = q23SingleValue;
@@ -635,7 +667,12 @@ classdef RCB3T1R
                     %%------------------------------------------------------------------------
                     %%-------------------------q11-q15 and q21-q25------------------------------
                     q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-                    break
+                    if abs( abs(q13SingleValue) - pi ) < 1e-8
+                        % q13SingleValue = +/- pi
+                        continue; 
+                    else
+                        break;
+                    end
                 elseif  abs( q13all(Numq13) ) - pi < 1e-8 && JudgeLength_C1C2(col(1)) < 1e-8
                     display('Zero Position, Calculation process needs to check!');
                     p = [0 0 0 0 0 0];
@@ -656,7 +693,7 @@ classdef RCB3T1R
                 end
                 
             end
-
+            toc
             %% --------------------Plot the mechanism Ai Bi Ci------------------
             PA1B1C1x = [A1(1), B1(1), C1(1)];
             PA1B1C1y = [A1(2), B1(2), C1(2)];

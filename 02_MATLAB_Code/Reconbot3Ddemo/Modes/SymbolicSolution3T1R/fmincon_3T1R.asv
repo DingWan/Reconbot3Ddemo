@@ -1,0 +1,42 @@
+l1 = 230.0692;
+l2 = 146.25;
+L1 = 230.0692;
+L2 = 146.25;
+q11q12q21q22 = [1.8*pi/4, 1*pi/2, 1.5*pi/4, 0.6*pi/2];
+q11 = q11q12q21q22(1);
+q12 = q11q12q21q22(2);
+q21 = q11q12q21q22(3);
+q22 = q11q12q21q22(4);
+
+
+q13 = pi/3;
+q23 = [-0.16369 1.42026];
+
+x0 = [q13, q23(1)];
+
+% C1 = [L2 * (cos(q12) + cos(q12 + x(1))) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + x(1))) * cos(q11),... 
+%     L2 * (sin(q12) + sin(q12 + x(1)))];
+% C2 = [- L2 * (cos(q22) + cos(q22 + x(2))) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + x(2))) * cos(q21),...
+%     L2 * (sin(q22) + sin(q22 + x(2)))];
+% 
+% norm(C1 - C2) = (L2*(cos(q12)+cos(q12+x(1)))*sin(q11) + L2*(cos(q22)+cos(q22+x(2)))*sin(q21))^2 + ...
+%     (L1 + L2*(cos(q12)+cos(q12 + x(1)))*cos(q11) + L2*(cos(q22)+cos(q22 + x(2)))*cos(q21))^2;
+ 
+
+fun = @(x)(L2*(cos(q12)+cos(q12+x(1)))*sin(q11) + L2*(cos(q22)+cos(q22+x(2)))*sin(q21))^2 + ...
+    (L1 + L2*(cos(q12)+cos(q12 + x(1)))*cos(q11) + L2*(cos(q22)+cos(q22 + x(2)))*cos(q21))^2;
+
+nonlcon = @Z_value_equal; 
+
+% q13 >= 0; q13 <= pi;
+% q23 >= 0; q23 <= pi;
+lb = [0,0];
+ub = [pi,pi];
+A = [];
+b = [];
+Aeq = [];
+beq = [];
+
+x = fmincon(fun, x0, A, b, lb, ub, nonlcon);
+
+
