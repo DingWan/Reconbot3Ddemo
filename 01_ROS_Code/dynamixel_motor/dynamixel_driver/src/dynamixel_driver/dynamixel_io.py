@@ -1064,4 +1064,3 @@ class UnsupportedFeatureError(Exception):
         self.message = "Feature %d not supported by model %d (%s)" %(feature_id, model_id, model)
     def __str__(self):
         return self.message
-
