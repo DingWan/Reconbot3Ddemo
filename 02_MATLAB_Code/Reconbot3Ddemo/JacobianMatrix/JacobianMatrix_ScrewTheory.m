@@ -62,7 +62,6 @@ roll = p_previous(6) * 180/pi;
 RotationMatrix = rotz(roll) * roty(pitch) * rotx(yaw);  
 C1_Ob = (RotationMatrix * A1')' + p_previous(1:3)
 
-
 %% All joint screws are defined with respect to instantaneous frame on the moving platform
 ABC_op = (ABC - ones(6,1) * p_previous(1:3)) * RotationMatrix
 
