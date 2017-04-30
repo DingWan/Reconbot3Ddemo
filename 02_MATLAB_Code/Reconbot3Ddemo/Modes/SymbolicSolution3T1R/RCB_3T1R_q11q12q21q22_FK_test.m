@@ -12,7 +12,7 @@ L2 = 146.25;
 % L2 = 1.4725;
 % deg = pi/180;
 
-q11q12q21q22 = [1.2*pi/4, 1*pi/2, 1*pi/4, 0.6*pi/2];
+q11q12q21q22 = [2.0*pi/3, 1.5*pi/3, 1.5*pi/2, 1.1*pi/3];
 % q11q12q21q22 = [1.35283894173723    1.51568066620560    0.771619248250125    1.01963972090195];
 q11 = q11q12q21q22(1);
 q12 = q11q12q21q22(2);
@@ -71,7 +71,7 @@ CoefficientMatrix8_Ji = [J1, J2, J3, J4, J5, J6, J7, J8, J9];
 % calculate the root of the 8-degree polynomials equation
 x = roots(CoefficientMatrix8_Ji);
 %%----------------------------------------------------------------------------  
-J1 * x.^8  + J2 * x.^7 + J3 * x.^6  + J4 * x.^5 + J5 * x.^4  + J6 * x.^3 + J7 * x.^2 + J8 * x.^1 + J9;
+% J1 * x.^8  + J2 * x.^7 + J3 * x.^6  + J4 * x.^5 + J5 * x.^4  + J6 * x.^3 + J7 * x.^2 + J8 * x.^1 + J9;
 
 %% Symbolic Solution
 % syms x
@@ -99,41 +99,43 @@ C8 =  (8*A2^4 + 16*A2^2*A5^2 + 8*A5^4)*x12^3 + (- 24*A2^4 - 48*A2^2*A5^2 - 24*A5
 C9 =  (A2^4 + 2*A2^2*A5^2 + A5^4)*x12^4 + (- 4*A2^4 - 8*A2^2*A5^2 - 4*A5^4)*x12^3*x22 + (6*A2^4 + 12*A2^2*A5^2 + 6*A5^4)*x12^2*x22^2 + (2*A1^2*A2^2 - 2*A1^2*A5^2 + 4*A1*A2^2*A3 - 8*A1*A2*A4*A5 - 8*A1*A2*A5*A6 - 4*A1*A3*A5^2 - 2*A2^4 + 2*A2^2*A3^2 - 2*A2^2*A4^2 - 4*A2^2*A4*A6 - 4*A2^2*A5^2 - 2*A2^2*A6^2 + 2*A2^2*l1^2 - 8*A2*A3*A4*A5 - 8*A2*A3*A5*A6 - 2*A3^2*A5^2 + 2*A4^2*A5^2 + 4*A4*A5^2*A6 - 2*A5^4 + 2*A5^2*A6^2 + 2*A5^2*l1^2)*x12^2 + (- 4*A2^4 - 8*A2^2*A5^2 - 4*A5^4)*x12*x22^3 + (- 4*A1^2*A2^2 + 4*A1^2*A5^2 - 8*A1*A2^2*A3 + 16*A1*A2*A4*A5 + 16*A1*A2*A5*A6 + 8*A1*A3*A5^2 + 4*A2^4 - 4*A2^2*A3^2 + 4*A2^2*A4^2 + 8*A2^2*A4*A6 + 8*A2^2*A5^2 + 4*A2^2*A6^2 - 4*A2^2*l1^2 + 16*A2*A3*A4*A5 + 16*A2*A3*A5*A6 + 4*A3^2*A5^2 - 4*A4^2*A5^2 - 8*A4*A5^2*A6 + 4*A5^4 - 4*A5^2*A6^2 - 4*A5^2*l1^2)*x12*x22 + (A2^4 + 2*A2^2*A5^2 + A5^4)*x22^4 + (2*A1^2*A2^2 - 2*A1^2*A5^2 + 4*A1*A2^2*A3 - 8*A1*A2*A4*A5 - 8*A1*A2*A5*A6 - 4*A1*A3*A5^2 - 2*A2^4 + 2*A2^2*A3^2 - 2*A2^2*A4^2 - 4*A2^2*A4*A6 - 4*A2^2*A5^2 - 2*A2^2*A6^2 + 2*A2^2*l1^2 - 8*A2*A3*A4*A5 - 8*A2*A3*A5*A6 - 2*A3^2*A5^2 + 2*A4^2*A5^2 + 4*A4*A5^2*A6 - 2*A5^4 + 2*A5^2*A6^2 + 2*A5^2*l1^2)*x22^2 + A1^4 + 4*A1^3*A3 - 2*A1^2*A2^2 + 6*A1^2*A3^2 + 2*A1^2*A4^2 + 4*A1^2*A4*A6 + 2*A1^2*A5^2 + 2*A1^2*A6^2 - 2*A1^2*l1^2 - 4*A1*A2^2*A3 + 8*A1*A2*A4*A5 + 8*A1*A2*A5*A6 + 4*A1*A3^3 + 4*A1*A3*A4^2 + 8*A1*A3*A4*A6 + 4*A1*A3*A5^2 + 4*A1*A3*A6^2 - 4*A1*A3*l1^2 + A2^4 - 2*A2^2*A3^2 + 2*A2^2*A4^2 + 4*A2^2*A4*A6 + 2*A2^2*A5^2 + 2*A2^2*A6^2 - 2*A2^2*l1^2 + 8*A2*A3*A4*A5 + 8*A2*A3*A5*A6 + A3^4 + 2*A3^2*A4^2 + 4*A3^2*A4*A6 + 2*A3^2*A5^2 + 2*A3^2*A6^2 - 2*A3^2*l1^2 + A4^4 + 4*A4^3*A6 - 2*A4^2*A5^2 + 6*A4^2*A6^2 - 2*A4^2*l1^2 - 4*A4*A5^2*A6 + 4*A4*A6^3 - 4*A4*A6*l1^2 + A5^4 - 2*A5^2*A6^2 - 2*A5^2*l1^2 + A6^4 - 2*A6^2*l1^2 + l1^4;
 
 % the coefficient matrix of the 8-degree polynomials equation
-CoefficientMatrix8_Ci = [C1, C2, C3, C4, C5, C6, C7, C8, C9]/2.13890625e4;
+CoefficientMatrix8_Ci = [C1, C2, C3, C4, C5, C6, C7, C8, C9];
 
 % calculate the root of the 8-degree polynomials equation
 %---------- x = roots()-----------
-% x = roots(CoefficientMatrix8_Ci);
-
-%---------- x = fzero(fun,x0)-----------
-% fun = @(x) J1 * x.^8  + J2 * x.^7 + J3 * x.^6  + J4 * x.^5 + J5 * x.^4  + J6 * x.^3 + J7 * x.^2 + J8 * x.^1 + J9;
-% x0 = 0;
-% x = fzero(fun,x0);
+%x = roots(CoefficientMatrix8_Ci);
+%x_verify = polyval(CoefficientMatrix8_Ji,x)
 %%----------------------------------------------------------------------------  
 
-%  error = CoefficientMatrix8_Ci/CoefficientMatrix8_Ji
+%error = CoefficientMatrix8_Ci/CoefficientMatrix8_Ji
 
 %%
 % get the value of real number (+/-)
 x = x(imag(x) == 0);
+% x = real(x);
 NumRealq13 = length (x);
 
 % the final value of "+/-theta13" 
 % the programm should judge the sign of the value
+% q13all =  2 * atan(x)  - q12;
 
 % For real elements of X, atan(X) returns values in the interval [-pi/2,pi/2]
 % Here we elimate the q13all = +/-pi, namely, p = [0 0 0 0 0 0]
-for i = 1:length (x)
-    if  abs( abs(2 * atan(x(i)) - q12) - pi ) > 1e-8
-        if 2 * atan(x(i)) - q12 < 0
-            q13all(i) =  2*pi + 2 * atan(x(i)) - q12;
-        else
-            q13all(i) =  2 * atan(x(i)) - q12;
-        end
+j =0;
+for i = 1:length (x)    
+    if  abs( abs(2 * atan(x(i)) - q12) - pi ) > 1e-8 
+        j = j + 1;
+%         if 2 * atan(x(i))  - q12 < 0
+%             q13all(j) =  2 * pi + 2 * atan(x(i))  - q12;
+%         else
+%             q13all(j) =  2 * atan(x(i))  - q12;
+%         end
+         q13all(j) =  2 * atan(x(i))  - q12;
     else
         continue;
     end
 end
+
 %% ------------------Obtain all of the correct values and assign to q13q23-------------------------
 % numbers of i and j are used to count the possible values that satisfy the
 % condiation of C1z = C2z; And then, assign all the possible values to
@@ -148,16 +150,17 @@ for Numq13 = 1:length(q13all)
     % sin(q12) + sin(q12+q13SingleValue) - sin(q22) - sin(q22+q23all) == 0
     %  For real elements of x in the interval [-1,1], asin(x) returns values in the interval [-pi/2,pi/2]
     % iterative method to get the optimal value
-    % if
-    j = 0;
-    delta_q13 = 0.1;
-    while(abs(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) >= 1 && j <= 500)
-        j = j + 1;
-        if q12 + q13SingleValue > pi/2 || (q12 + q13SingleValue > -pi/2 && q12 + q13SingleValue <= 0)
-            q13SingleValue = q13SingleValue + delta_q13;
-        elseif q12 + q13SingleValue < -pi/2 || (q12 + q13SingleValue > 0 && q12 + q13SingleValue < pi/2)
-            q13SingleValue = q13SingleValue - delta_q13;
-        end
+    for OnlyUsedForFolding_IterativeSolution = 1:1
+        %     j = 0;
+        %     delta_q13 = 0.1;
+        %     while(abs(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) >= 1 && j <= 500)
+        %         j = j + 1;
+        %         if q12 + q13SingleValue > pi/2 || (q12 + q13SingleValue > -pi/2 && q12 + q13SingleValue <= 0)
+        %             q13SingleValue = q13SingleValue + delta_q13;
+        %         elseif q12 + q13SingleValue < -pi/2 || (q12 + q13SingleValue > 0 && q12 + q13SingleValue < pi/2)
+        %             q13SingleValue = q13SingleValue - delta_q13;
+        %         end
+        %     end
     end
     %
     q23all(1) = asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
@@ -183,8 +186,10 @@ for Numq13 = 1:length(q13all)
             L2 * (sin(q22) + sin(q22 + q23SingleValue))];
         %%------------------------------------------------------------------------
         JudgeLength_C1C2(Numq23) = norm(C1 - C2) - L1;
-    end
-    
+        
+        %Plot;
+    end    
+    %norm(C1 - C2) - L1;
     %Choose the column of minmum solution
     [~,col] = find(JudgeLength_C1C2 == min(JudgeLength_C1C2));
     
@@ -195,82 +200,136 @@ for Numq13 = 1:length(q13all)
     % Approching Algorithm is a iterative pocesss see below in
     % While loop
     if  abs(C1(3) - C2(3)) > 1e-8 || abs( q13all(Numq13) ) - pi > 1e-8 || abs(JudgeLength_C1C2(col(1))) > 1e-8
-        JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
-        delta_q13 = 0.05;
-        q13SingleValue = q13SingleValue - delta_q13;
-        SignChange_1 = 0;
-        SignChange_2 = 0;
-        k = 0;
-        
-        % iterative method to get the optimal value
-        while(abs(norm(C1 - C2) - L1) > 1e-8 && k <= 500)
-            k = k + 1;
-            %j = 0;
-            % Here, we must make sure 'sin_value belongs to [-1 1]'
-            sin_value = sin(q12) + sin(q12 + q13SingleValue) - sin(q22);
-%             while(abs(sin_value) >= 1 && j <= 500)
-%                 j = j + 1;
-%                 if (q12 + q13SingleValue > pi/2 && q12 + q13SingleValue <= pi)||...
-%                         (q12 + q13SingleValue > 3*pi/2 && q12 + q13SingleValue <= 2*pi)
-%                     q13SingleValue = q13SingleValue + delta_q13;
-%                 elseif  (q12 + q13SingleValue >= 0 && q12 + q13SingleValue <= pi/2)||...
-%                         (q12 + q13SingleValue > pi && q12 + q13SingleValue <= 3*pi/2)
-%                     q13SingleValue = q13SingleValue - delta_q13;
-%                 end
-%                 sin_value = sin(q12) + sin(q12 + q13SingleValue) - sin(q22);
-%             end
-            %
-            q23all(1) = asin(sin_value) - q22;
-            if sin_value <= 0
-                q23all(2) =  - pi - asin(sin_value) - q22;
-            else
-                q23all(2) =    pi - asin(sin_value) - q22;
-            end
-            % Choose the correct q23all
-            if k == 1
-                for Numq23 = 1:length(q23all)
-                    q23SingleValue = q23all(Numq23);
+            %---------- Method II ----------
+            for OnlyUsedForFolding_IterativeSolution = 1:1
+                
+                
+                % We simple the one cycle points
+                ii = 0;
+                for i_angle = 0:1*pi/180:pi                    
+                    q13SingleValue = i_angle;
+                    sin_value = sin(q12) + sin(q12 + q13SingleValue) - sin(q22);
+                    if sin_value > 1
+                       continue; 
+                    end
+                    ii = ii + 1;
+                    q13SingleValue_mat(ii) = i_angle;
+                    %
+                    q23all(1) = asin(sin_value) - q22;
+                    if sin_value <= 0
+                        q23all(2) =  - pi - asin(sin_value) - q22;
+                    else
+                        q23all(2) =    pi - asin(sin_value) - q22;
+                    end  
+                    for i_q23all = 1:2
+                        q23SingleValue = q23all(i_q23all);
+                        C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
+                            L2 * (sin(q12) + sin(q12 + q13SingleValue))];
+                        C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
+                            L2 * (sin(q22) + sin(q22 + q23SingleValue))];
+                        JudgeLength_C1C2_Solution(i_q23all,ii) = norm(C1 - C2) - L1; 
+                        q23SingleValue_mat(i_q23all,ii) = q23all(i_q23all);
+                    end
+                end                
+                
+                for i_q23all = 1:2
+                    B = JudgeLength_C1C2_Solution(i_q23all,:);
+                    col_B_positive = find(B>0);
+                    j = 0;
+                    Changepoint_postive = [];
+                    for i = 1:length(col_B_positive)
+                        if i == 1 && col_B_positive(1)>1
+                            j = j + 1;
+                            %seq_postive(1) = 1;
+                            Changepoint_postive(j) = col_B_positive(i);
+                        elseif i < length(col_B_positive) && col_B_positive(i+1) - col_B_positive(i) > 1
+                            j = j + 1;
+                            Changepoint_postive(j) = col_B_positive(i);
+                            j = j + 1;
+                            Changepoint_postive(j) = col_B_positive(i+1);
+                        elseif i == length(col_B_positive) && col_B_positive(length(col_B_positive))<length(B)
+                            %seq_postive(i) = col_B_positive(i) - col_B_positive(i-1);
+                            j = j + 1;
+                            Changepoint_postive(j) = col_B_positive(i);
+                        end
+                        Changepoint_positive_min = min(Changepoint_postive);
+                    end
+                    
+                    if isempty(Changepoint_postive) == 1
+                        JudgeLength_C1C2_min = [];
+                        Changepoint_positive_min = [];
+                        continue
+                        %JudgeLength_C1C2_min = min(abs(B));
+                        %Changepoint_positive_min = find(B == min(abs(B)));
+                    else
+                        JudgeLength_C1C2_min = min(B(Changepoint_postive));
+                    end  
+                    
+                    q13SingleValue = q13SingleValue_mat(Changepoint_positive_min);
+                    q23SingleValue = q23SingleValue_mat(i_q23all,Changepoint_positive_min);                    
+                    %
                     C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
                         L2 * (sin(q12) + sin(q12 + q13SingleValue))];
                     C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
                         L2 * (sin(q22) + sin(q22 + q23SingleValue))];
-                    JudgeLength_C1C2(Numq23) = norm(C1 - C2) - L1;
+                    %
+                    
+                    delta_q13 = 0.05;
+                    q13SingleValue = q13SingleValue - delta_q13;
+                    SignChange_1 = 0;
+                    SignChange_2 = 0;
+                    k = 0;
+                    % iterative method to get the optimal value
+                    while(abs(norm(C1 - C2) - L1) > 1e-8 && k <= 500)
+                        k = k + 1;
+                        % Here, we must make sure 'sin_value belongs to [-1 1]'
+                        sin_value = sin(q12) + sin(q12 + q13SingleValue) - sin(q22);
+                        %
+                        q23all(1) = asin(sin_value) - q22;
+                        if sin_value <= 0
+                            q23all(2) =  - pi - asin(sin_value) - q22;
+                        else
+                            q23all(2) =    pi - asin(sin_value) - q22;
+                        end
+                        
+                        % Choose the correct q23all
+                        q23SingleValue = q23all(i_q23all);
+                        C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
+                            L2 * (sin(q12) + sin(q12 + q13SingleValue))];
+                        C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
+                            L2 * (sin(q22) + sin(q22 + q23SingleValue))];
+                                                
+                        %JudgeLength_C1C2_min
+                        if JudgeLength_C1C2_min > 0
+                            if SignChange_1 == 0
+                                if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min < 0
+                                    delta_q13 = 0.5 * delta_q13;
+                                elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min >= 0
+                                    delta_q13 = - 0.5 * delta_q13;
+                                end
+                            end
+                            SignChange_1 = SignChange_1 + 1;
+                            SignChange_2 = 0;
+                        elseif JudgeLength_C1C2_min < 0
+                            if SignChange_2 == 0
+                                if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min > 0
+                                    delta_q13 = 0.5 * delta_q13;
+                                elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min <= 0
+                                    delta_q13 = - 0.5 * delta_q13;
+                                end
+                            end
+                            SignChange_1 = 0;
+                            SignChange_2 = SignChange_2 + 1;
+                        end
+                        
+                        q13SingleValue = q13SingleValue - delta_q13;
+                        JudgeLength_C1C2_min = norm(C1 - C2) - L1;
+                        
+                        %hold off
+                        %Plot;
+                    end              
                 end
-                %Choose the column of minmum solution
-                [~,col] = find(JudgeLength_C1C2 == min(JudgeLength_C1C2));
-                %JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
-            else
-                q23SingleValue = q23all(col);
-                C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
-                    L2 * (sin(q12) + sin(q12 + q13SingleValue))];
-                C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
-                    L2 * (sin(q22) + sin(q22 + q23SingleValue))];
             end
-            %
-            if JudgeLength_C1C2_min > 0
-                if SignChange_1 == 0
-                    if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min < 0
-                        delta_q13 = 0.5 * delta_q13;
-                    elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min >= 0
-                        delta_q13 = - 0.5 * delta_q13;
-                    end                    
-                end
-                SignChange_1 = SignChange_1 + 1;
-                SignChange_2 = 0;
-            elseif JudgeLength_C1C2_min < 0
-                if SignChange_2 == 0
-                    if(norm(C1 - C2) - L1) - JudgeLength_C1C2_min > 0
-                        delta_q13 = 0.5 * delta_q13;
-                    elseif (norm(C1 - C2) - L1) - JudgeLength_C1C2_min <= 0
-                        delta_q13 = - 0.5 * delta_q13;
-                    end
-                end
-                SignChange_1 = 0;
-                SignChange_2 = SignChange_2 + 1;
-            end
-            q13SingleValue = q13SingleValue - delta_q13;
-            JudgeLength_C1C2_min = norm(C1 - C2) - L1;
-        end
         
         % assign the values to q13q23
         q13 = q13SingleValue;
@@ -297,12 +356,11 @@ for Numq13 = 1:length(q13all)
         q25 = q21;
         %%------------------------------------------------------------------------
         %%-------------------------q11-q15 and q21-q25------------------------------
-        q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-        if abs( abs(q13SingleValue) - pi ) < 1e-8
-            % q13SingleValue = +/- pi
-            continue;
+        q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];   
+        if isempty(JudgeLength_C1C2_min) == 1|| JudgeLength_C1C2_min < 1e-8 
+            break
         else
-            break;
+            continue
         end
     elseif  abs( q13all(Numq13) ) - pi < 1e-8 && JudgeLength_C1C2(col(1)) < 1e-8
         display('Zero Position, Calculation process needs to check!');
@@ -321,14 +379,19 @@ for Numq13 = 1:length(q13all)
         p = [];
         ABC = [];
         q1q2 = [0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
-    end
-    
+    end        
+
 end
 toc
  
-norm(C1 - B1)
+if  abs(q13 - pi) < 1e-8 && abs(norm(C1 - C2) - L1) < 1e-8
+    display('Zero Position, Calculation process needs to check Please!');
+end
+
+
+
 norm(C1 - C2) - L1
-j
+%k
  %% --------------------Plot the mechanism Ai Bi Ci------------------
  PA1B1C1x = [A1(1), B1(1), C1(1)];
  PA1B1C1y = [A1(2), B1(2), C1(2)];
@@ -371,11 +434,4 @@ plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-b');
 axis equal;
 %-----------------------------------------------------------
 
-%%Here is used to judge the existance of the solution
-if j > 500
-    display('No solution for this input, Calculation process is stopped');
-    p = [];
-    ABC = [];
-    q1q2 = [0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
-end
 
