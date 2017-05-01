@@ -23,19 +23,21 @@ deltaq = 0.000001;
 Num_joint_variables = 4;
 delta_q = deltaq * eye(Num_joint_variables);
 J_dx_dq_rpy = zeros(6, Num_joint_variables);
+% --3T1R--
+% % Previous
+% obj3T1R = RCB3T1R(PosOri, q11q12q21q22, L1, L2);
+% [p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
+% -- 2T2Rsixbar--
+% Previous
+obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
+[p_previous, ~, q1q2] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
 for i = 1:Num_joint_variables
-    %% --3T1R--
-%     % Previous
-%     obj3T1R = RCB3T1R(PosOri, q11q12q21q22, L1, L2);
-%     [p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
+    % --3T1R--
 %     % Current
 %     obj3T1R = RCB3T1R(PosOri, q11q12q21q22 + delta_q(i,:), L1, L2);
 %     [p_current, ~, ~] = obj3T1R.RCB_3T1R_FK;
     
-    %% -- 2T2Rsixbar--
-    % Previous
-    obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
-    [p_previous, ~, q1q2] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
+    % -- 2T2Rsixbar--
     % Current
     obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 + delta_q(i,:), l1, l2);
     [p_current, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;    
@@ -53,6 +55,10 @@ end
 q11 = q1q2(1); q12 = q1q2(2); q13 = q1q2(3); q14 = q1q2(4); q15 = q1q2(5);
 
 q21 = q1q2(6); q22 = q1q2(7); q23 = q1q2(8); q24 = q1q2(9); q25 = q1q2(10);
+ 
+q0q1q2 = [0, q1q2];
+% InitHome;  
+ReconbotANI(q0q1q2);
 
 %% =========== Jacobian Matrix by using screw theory ===========
 %q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
@@ -99,6 +105,11 @@ else
 end
 A1D1_Ob = [0, 0, z_A1D1_Ob];
 opD1_Ob = opC1_Ob - A1B1_Ob - B1C1_Ob + A1D1_Ob;
+% 
+PA1D1C1x = [A1(1), A1(1), C1(1)];
+PA1D1C1y = [A1(2), A1(2), C1(2)];
+PA1D1C1z = [A1(3), z_A1D1_Ob, C1(3)];
+plot3(PA1D1C1x(:),PA1D1C1y(:),PA1D1C1z(:),'b-.');
 %------ Branch Chain A2C2------
 opC2_Ob = C2 - op_Ob;
 A2B2_Ob = B2 - A2;
@@ -106,36 +117,17 @@ B2C2_Ob = C2 - B2;
 A2C2_Ob = C2 - A2;
 opA2_Ob = A2 - op_Ob;
 if C2(1) - A2(1) <= 0
-    z_A2D2_Ob = C2(3) + sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q12 + q13 + q14);
-else
     z_A2D2_Ob = C2(3) - sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q12 + q13 + q14);
+else
+    z_A2D2_Ob = C2(3) + sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q12 + q13 + q14);
 end
 A2D2_Ob = [0, 0, z_A2D2_Ob];
 opD2_Ob = opC2_Ob - A2B2_Ob - B2C2_Ob + A2D2_Ob;
-
-% +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 
-% In instantaneous frame on the Moving Platform Op-xyz
-A1_op = ABC_op(1,:); B1_op = ABC_op(2,:); C1_op = ABC_op(3,:);
-A2_op = ABC_op(4,:); B2_op = ABC_op(5,:); C2_op = ABC_op(6,:);
-op_op = [0 0 0];
-%----- Branch Chain A1C1------
-opC1_op = C1_op - op_op;
-A1B1_op = B1_op - A1_op;
-B1C1_op = C1_op - B1_op;
-A1C1_op = C1_op - A1_op;
-opA1_op = A1_op - op_op;
-A1D1_op = (A1D1_Ob - p_previous(1:3)) * RotationMatrix;
-opD1_op = opC1_op - A1B1_op - B1C1_op + A1D1_op;
-%------ Branch Chain A2C2------
-opC2_op = C2_op - op_op;
-A2B2_op = B2_op - A2_op;
-B2C2_op = C2_op - B2_op;
-A2C2_op = C2_op - A2_op;
-opA2_op = A2_op - op_op;
-A2D2_op = (A2D2_Ob - p_previous(1:3)) * RotationMatrix;
-opD2_op = opC2_op - A2B2_op - B2C2_op + A2D2_op;
-
-
+%
+PA2D2C2x = [A2(1), A2(1), C2(1)];
+PA2D2C2y = [A2(2), A2(2), C2(2)];
+PA2D2C2z = [A2(3), z_A2D2_Ob, C2(3)];
+plot3(PA2D2C2x(:),PA2D2C2y(:),PA2D2C2z(:),'r-.');
 %% ========================= screw unit =========================
 
 % In base frame Ob-XYZ
@@ -162,32 +154,6 @@ sr23_Ob = cross((opC2_Ob - A2B2_Ob), s23_Ob);
 sr24_Ob = cross(opC2_Ob, s24_Ob);
 sr25_Ob = cross(opC2_Ob, s25_Ob);
 
-% +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 
-% In instantaneous frame on the Moving Platform Op-xyz
-%----- Branch Chain A1C1------
-s11_op = (s11_Ob - p_previous(1:3)) * RotationMatrix;
-s12_op = (s12_Ob - p_previous(1:3)) * RotationMatrix;
-s13_op = (s13_Ob - p_previous(1:3)) * RotationMatrix;
-s14_op = (s14_Ob - p_previous(1:3)) * RotationMatrix;
-s15_op = (s15_Ob - p_previous(1:3)) * RotationMatrix;
-sr11_op = (sr11_Ob - p_previous(1:3)) * RotationMatrix;
-sr12_op = (sr13_Ob - p_previous(1:3)) * RotationMatrix;
-sr13_op = (sr13_Ob - p_previous(1:3)) * RotationMatrix;
-sr14_op = (sr14_Ob - p_previous(1:3)) * RotationMatrix;
-sr15_op = (sr15_Ob - p_previous(1:3)) * RotationMatrix;
-%------ Branch Chain A2C2------
-s21_op = (s21_Ob - p_previous(1:3)) * RotationMatrix;
-s22_op = (s22_Ob - p_previous(1:3)) * RotationMatrix;
-s23_op = (s23_Ob - p_previous(1:3)) * RotationMatrix;
-s24_op = (s24_Ob - p_previous(1:3)) * RotationMatrix;
-s25_op = (s25_Ob - p_previous(1:3)) * RotationMatrix;
-sr21_op = (sr21_Ob - p_previous(1:3)) * RotationMatrix;
-sr22_op = (sr22_Ob - p_previous(1:3)) * RotationMatrix;
-sr23_op = (sr23_Ob - p_previous(1:3)) * RotationMatrix;
-sr24_op = (sr24_Ob - p_previous(1:3)) * RotationMatrix;
-sr25_op = (sr25_Ob - p_previous(1:3)) * RotationMatrix;
-
-
 %% ========================= Reciprocal Screws =========================
 
 % In base frame Ob-XYZ
@@ -204,7 +170,7 @@ Jc_Ob = [  sr11c_Ob, 0 0 0;
            cross(opD2_Ob,s22_Ob), s22_Ob;
            cross(opC2_Ob,sr21c_Ob), sr21c_Ob;
            cross(opC2_Ob,s21_Ob), s21_Ob;
-      ];
+        ];
 % Jxk Reciprocal Screw as locking actuate joint
 Jx1_Ob = [  cross(opC1_Ob,s12_Ob),  s12_Ob;
             cross(opC1_Ob,B1C1_Ob), B1C1_Ob;
@@ -235,53 +201,6 @@ Jq2_3_Ob = A1B1_Ob * sr14_Ob' + s14_Ob * cross(opA1_Ob,A1B1_Ob)';
 Jq2_4_Ob = [0 0 0] * sr21_Ob' + s21_Ob * cross(s24_Ob,s25_Ob)';
 Jq2_5_Ob = B2C2_Ob * sr22_Ob' + s22_Ob * cross(opC2_Ob,B2C2_Ob)';
 Jq2_6_Ob = A2C2_Ob * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob)';
-
-% +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 
-% In instantaneous frame on the Moving Platform Op-xyz
-% Jc Common reciprocal screw 
-sr11c_op = (sr11c_Ob - p_previous(1:3)) * RotationMatrix;
-sr12c_op = (sr12c_Ob - p_previous(1:3)) * RotationMatrix;
-sr21c_op = (sr21c_Ob - p_previous(1:3)) * RotationMatrix;
-sr22c_op = (sr22c_Ob - p_previous(1:3)) * RotationMatrix;
-Jc_op = [  sr11c_op, 0 0 0;
-           cross(opD1_op,s12_op), s12_op;
-           cross(opC1_op,sr11c_op), sr11c_op;
-           cross(opC1_op,s11_op), s11_op;       
-           sr21c_op, 0 0 0;
-           cross(opD2_op,s22_op), s22_op;
-           cross(opC2_op,sr21c_op), sr21c_op;
-           cross(opC2_op,s21_op), s21_op;
-      ];
-% Jxk Reciprocal Screw as locking actuate joint
-Jx1_op = [  cross(opC1_op,s12_op),  s12_op;
-            cross(opC1_op,B1C1_op), B1C1_op;
-            cross(opA1_op,A1B1_op), A1B1_op;
-            cross(opC2_op,s22_op),  s22_op; 
-            cross(opC2_op,B2C2_op), B2C2_op;
-            cross(opC2_op,A2C2_op), A2C2_op;
-       ];
-Jx2_op = [  cross(s14_op,s15_op),   0 0 0;
-            cross(opC1_op,B1C1_op), B1C1_op;
-            cross(opA1_op,A1B1_op), A1B1_op;
-            cross(s24_op,s25_op),   0 0 0; 
-            cross(opC2_op,B2C2_op), B2C2_op;
-            cross(opC2_op,A2C2_op), A2C2_op;
-       ];
-% Jqk
-% Case I: Jq1
-Jq1_1_op = s12_op * sr11_op' + s11_op * cross(opC1_op,s12_op)';
-Jq1_2_op = B1C1_op * sr12_op' + s12_op * cross(opC1_op,B1C1_op)';
-Jq1_3_op = A1B1_op * sr14_op' + s14_op * cross(opA1_op,A1B1_op)';
-Jq1_4_op = s22_op * sr21_op' + s21_op * cross(opC2_op,s22_op)';
-Jq1_5_op = B2C2_op * sr22_op' + s22_op * cross(opC2_op,B2C2_op)';
-Jq1_6_op = A2C2_op * sr23_op' + s23_op * cross(opC2_op,A2C2_op)';
-% Case II: Jq2
-Jq2_1_op = [0 0 0] * sr11_op' + s11_op * cross(s14_op,s15_op)';
-Jq2_2_op = B1C1_op * sr12_op' + s12_op * cross(opC1_op,B1C1_op)';
-Jq2_3_op = A1B1_op * sr14_op' + s14_op * cross(opA1_op,A1B1_op)';
-Jq2_4_op = [0 0 0] * sr21_op' + s21_op * cross(s24_op,s25_op)';
-Jq2_5_op = B2C2_op * sr22_op' + s22_op * cross(opC2_op,B2C2_op)';
-Jq2_6_op = A2C2_op * sr23_op' + s23_op * cross(opC2_op,A2C2_op)';
 
 
 %% ========================= Jacobian Matrix Calculation =========================
@@ -317,46 +236,12 @@ Jq2_Ob_2T2Rsixbar = [  Jq2_1_Ob   0          0           0
                        0          0          0           0
                        0          0          0           0
               ];          
-          
-% +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 
-% In instantaneous frame on the Moving Platform Op-xyz
-% 3T1R Mode
-Jxc1_op_3T1R = [   Jx1_op(1,:);
-              Jx1_op(2,:);
-              Jx1_op(4,:);
-              Jx1_op(5,:);
-              Jc_op(1,:);
-              Jc_op(5,:);
-           ];
-Jq1_op_3T1R = [  Jq1_1_op   0          0           0
-            0          Jq1_2_op   0           0 
-            0          0          Jq1_4_op    0
-            0          0          0           Jq1_5_op
-            0          0          0           0
-            0          0          0           0
-          ]; 
-% 3T1R Mode
-Jxc2_op_2T2Rsixbar = [   Jx2_op(1,:);
-                         Jx2_op(2,:);
-                         Jx2_op(3,:);
-                         Jx2_op(6,:);
-                         Jc_op(2,:);
-                         Jc_op(6,:);
-                      ];
-Jq2_op_2T2Rsixbar = [  Jq2_1_op   0          0           0
-                       0          Jq2_2_op   0           0 
-                       0          0          Jq2_4_op    0
-                       0          0          0           Jq2_6_op
-                       0          0          0           0
-                       0          0          0           0
-                     ]; 
-      
+
       
 % +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 
 J_dx_dq_rpy
 % 3T1R Mode
-%J_Ob_3T1R = inv(Jxc1_Ob_3T1R) * Jq1_Ob_3T1R;
+% J_Ob_3T1R = inv(Jxc1_Ob_3T1R) * Jq1_Ob_3T1R;
 
 % 2T2Rsixbar Mode
 J_Ob_2T2Rsixbar = inv(Jxc2_Ob_2T2Rsixbar) * Jq2_Ob_2T2Rsixbar
-J_op_2T2Rsixbar = inv(Jxc2_op_2T2Rsixbar) * Jq2_op_2T2Rsixbar

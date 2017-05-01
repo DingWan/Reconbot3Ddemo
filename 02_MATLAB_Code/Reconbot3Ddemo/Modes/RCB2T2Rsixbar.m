@@ -236,7 +236,7 @@ classdef RCB2T2Rsixbar
                 IterationNumber = 1;
                 q13 = pi;
                 q14 = - q12;
-                q15 = - q11;
+                q15 = q11;
                 
                 q23 = pi;
                 q24 = - q22;
@@ -510,7 +510,7 @@ classdef RCB2T2Rsixbar
             
             %-------------------------q15 = q25------------------------------
             % Calculate the angles of q15
-            q15 = - q11;
+            q15 = q11;
             q25 = q21;
             %-------------------Transform into angle-------------------
             %q15_Angle = q15 * 180 / pi;
@@ -552,7 +552,7 @@ classdef RCB2T2Rsixbar
                      PC1C2x = [C1(1), C2(1)];
                      PC1C2y = [C1(2), C2(2)];
                      PC1C2z = [C1(3), C2(3)];
-                     plot3(PC1C2x, PC1C2y, PC1C2z,'k-','linewidth',3); hold on;
+                     plot3(PC1C2x, PC1C2y, PC1C2z,'g-','linewidth',3); hold on;
             
                      PA1A2x = [A1(1), A2(1)];
                      PA1A2y = [A1(2), A2(2)];
@@ -584,7 +584,7 @@ classdef RCB2T2Rsixbar
                         plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-b');
                        %----------------------------------------------
             
-                     %grid on;
+                     grid on;
                      xlabel('x');
                      ylabel('y');
                      zlabel('z');

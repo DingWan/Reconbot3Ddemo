@@ -387,9 +387,7 @@ for Numq13 = 1:length(q13all)
                     
                     q13SingleValue = q13SingleValue - delta_q13;
                     JudgeLength_C1C2_min = norm(C1 - C2) - L1;
-                    
-                    hold off
-                    Plot;                    
+                                   
                 end                
             end
         end        
