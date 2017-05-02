@@ -14,7 +14,7 @@ PosOri = {0 0 253.3124 0 [] [], pi/2 -pi/2};
 % [p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
 
 %% --2T2Rsixbar--
-q11q12q14q23 = [1*pi/3, 0*pi/4, 1*pi/3, 1*pi/2];
+q11q12q14q23 = [1*pi/3, 0*pi/4, -1*pi/6, 1*pi/2];
 obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
 [p, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
 
@@ -98,7 +98,7 @@ A1B1_Ob = B1 - A1;
 B1C1_Ob = C1 - B1;
 A1C1_Ob = C1 - A1;
 opA1_Ob = A1 - op_Ob;
-if C1(1) - A1(1) <= 0
+if C1(1) - A1(1) >= 0
     z_A1D1_Ob = C1(3) - sqrt((C1(1) - A1(1))^2 + (C1(2) - A1(2))^2) * tan(q12 + q13 + q14);
 else
     z_A1D1_Ob = C1(3) + sqrt((C1(1) - A1(1))^2 + (C1(2) - A1(2))^2) * tan(q12 + q13 + q14);
@@ -116,7 +116,7 @@ A2B2_Ob = B2 - A2;
 B2C2_Ob = C2 - B2;
 A2C2_Ob = C2 - A2;
 opA2_Ob = A2 - op_Ob;
-if C2(1) - A2(1) <= 0
+if C2(1) - A2(1) >= 0
     z_A2D2_Ob = C2(3) - sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q12 + q13 + q14);
 else
     z_A2D2_Ob = C2(3) + sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q12 + q13 + q14);
