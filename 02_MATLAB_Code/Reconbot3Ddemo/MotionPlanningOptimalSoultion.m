@@ -72,7 +72,7 @@ for i = 1:length(MPOTP_cell)
     %% Assgin "Mode_Previous, Mode_Current, PosOri_Current, PosOri_Previous"
     for OnlyUsedforFoldingThisPart_AssignValueofModeAndPosOri = 1:1
         if i == 1 || (i == length(MPOTP_cell)-2 && (Mode_current_initial == 10 || Mode_current_initial == 11)) || ...
-                (i == 2 && Mode_current_initial == 7)
+                (i == 2 && Mode_current_initial == 7 && Mode_previous_initial ~= 5)
             if  Self_adjustment_Enable_Disable == 1
                 Mode_previous = MPOTP_cell{i}{1};
                 PosOri_previous = MPOTP_cell{i}{2};

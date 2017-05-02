@@ -1,5 +1,5 @@
 %
-clf
+%clf
 clc
 L1 = 230.0692;
 L2 = 146.25;
@@ -14,7 +14,7 @@ PosOri = {0 0 253.3124 0 [] [], pi/2 -pi/2};
 % [p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
 
 %% --2T2Rsixbar--
-q11q12q14q23 = [pi/3, 0.5*pi/4,1*pi/6, 1*pi/3];
+q11q12q14q23 = [1*pi/3, 0*pi/4, 1*pi/3, 1*pi/2];
 obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
 [p, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
 

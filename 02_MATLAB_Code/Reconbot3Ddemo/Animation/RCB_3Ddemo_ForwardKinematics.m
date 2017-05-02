@@ -85,7 +85,7 @@ function [T_01,T_1_02,T_1_03,T_1_04,T_1_05,T_1_06,T_2_02,T_2_03,T_2_04,T_2_05] =
         % Forward Kinematics - UPjointA1C1
         Trans_UpLinkA1C1_CenterPointMotor = [[eye(3,3);0,0,0], [LowUpLinkA1C1_CenterPointMotor, 1]'];
         Trans_UPjointA1C1_CenterPointConnectWithA1C1 = [[eye(3,3);0,0,0],[- UPjointA1C1A2C2_CenterPointConnectWithA1C1A2C2, 1]'];        
-        T_1_34 = Trans_UpLinkA1C1_CenterPointMotor * rotm2tform(rotz( - q14)) * rotm2tform(rotz(90) * roty(90)) * Trans_UPjointA1C1_CenterPointConnectWithA1C1;
+        T_1_34 = Trans_UpLinkA1C1_CenterPointMotor * rotm2tform(rotz( q14)) * rotm2tform(rotz(90) * roty(90)) * Trans_UPjointA1C1_CenterPointConnectWithA1C1;
         
         %---------------------- Moving Platform ------------------------
         % Forward Kinematics - Moving Platform
@@ -112,7 +112,7 @@ function [T_01,T_1_02,T_1_03,T_1_04,T_1_05,T_1_06,T_2_02,T_2_03,T_2_04,T_2_05] =
         % Forward Kinematics - UPjointA2C2
         Trans_UpLinkA2C2_CenterPointMotor = [[eye(3,3);0,0,0], [UpLinkA2C2_CenterPointBearing, 1]'];
         Trans_UPjointA2C2_CenterPointConnectWithA2C2 = [[eye(3,3);0,0,0],[- UPjointA1C1A2C2_CenterPointConnectWithA1C1A2C2, 1]'];        
-        T_2_34 = Trans_UpLinkA2C2_CenterPointMotor * rotm2tform(rotz(- q24)) * rotm2tform(rotz(-90) * roty(90)) * Trans_UPjointA2C2_CenterPointConnectWithA2C2;
+        T_2_34 = Trans_UpLinkA2C2_CenterPointMotor * rotm2tform(rotz(q24)) * rotm2tform(rotz(-90) * roty(90)) * Trans_UPjointA2C2_CenterPointConnectWithA2C2;
         %--------------------------------------------------------------   
              
         %---------------------- Transformation Matrix --------------------

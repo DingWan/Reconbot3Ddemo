@@ -311,17 +311,17 @@ classdef RCB3T1RSingularityA1C1A2C2
                 % Two modes of 3T1R and 2T2R, and the rest modes
                 if q11 == q11_original || i > 3
                     q12 = pi - angle_A1C1_k1 - angleB1A1C1;
-                    q14 = (q12 + q13 + theta) - pi/2;
+                    q14 = pi/2 - (q12 + q13 + theta);
                 else
                     q12 = angle_A1C1_k1 - angleB1A1C1;
-                    q14 = (q12 + q13) - theta - pi/2;
+                    q14 = pi/2 + theta - (q12 + q13);
                 end
                 if q21 == q21_original || i > 3
                     q22 = pi - angle_A2C2_k2 - angleB2A2C2;
-                    q24 = (q22 + q23) - theta - pi/2;
+                    q24 = pi/2 + theta - (q22 + q23);
                 else
                     q22 = angle_A2C2_k2 - angleB2A2C2;
-                    q24 = (q22 + q23 + theta) - pi/2;
+                    q24 = pi/2 - (q22 + q23 + theta);
                 end
                 %--------- q15 and q25 -----------%
                 q15 = q11 - alpha;   q25 = q21 + alpha ;
