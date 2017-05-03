@@ -72,12 +72,12 @@ C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22)...
 ABC = [ A1; B1; C1; A2; B2; C2 ];
 %norm(C2 - C1)
 
-%% ===========  Roll/pitch/yaw to homogenous transform =============
-yaw = p_previous(4) * 180/pi;
-pitch = p_previous(5) * 180/pi;
-roll = p_previous(6) * 180/pi;
-RotationMatrix = rotz(roll) * roty(pitch) * rotx(yaw);  
-C1_Ob = (RotationMatrix * A1')' + p_previous(1:3);
+%% ===========  Euler Angle to homogenous transform =============
+alpha = p_previous(4) * 180/pi;
+beta = p_previous(5) * 180/pi;
+gamma = p_previous(6) * 180/pi;
+RotationMatrix = rotz(alpha) * roty(beta) * rotx(gamma); 
+% C1_Ob = (RotationMatrix * A1')' + p_previous(1:3);
 
 %% All joint screws are defined with respect to instantaneous frame on the moving platform
 ABC_op = (ABC - ones(6,1) * p_previous(1:3)) * RotationMatrix;

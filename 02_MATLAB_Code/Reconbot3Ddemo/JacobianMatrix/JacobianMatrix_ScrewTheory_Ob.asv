@@ -127,7 +127,7 @@ B1C1_Ob = C1 - B1;
 A1C1_Ob = C1 - A1;
 opA1_Ob = A1 - op_Ob;
 sr11c_Ob = [-sin(q11), cos(q11), 0];
-Angle_A1C1_to_sr11c = acos ( (A1C1_Ob * sr11c_Ob')/(norm(A1C1_Ob)*norm(sr11c_Ob)) ) * 180/pi
+Angle_A1C1_to_sr11c = acos ( (A1C1_Ob * sr11c_Ob')/(norm(A1C1_Ob)*norm(sr11c_Ob)) ) * 180/pi;
 if Angle_A1C1_to_sr11c >= 90
     z_D1A1_Ob = C1(3) - sqrt((C1(1) - A1(1))^2 + (C1(2) - A1(2))^2) * tan(q12 + q13 + q14);
 else
@@ -141,6 +141,7 @@ PA1D1C1_Dispx = [A1_Disp(1), A1_Disp(1), C1_Disp(1)];
 PA1D1C1_Dispy = [A1_Disp(2), A1_Disp(2), C1_Disp(2)];
 PA1D1C1_Dispz = [A1_Disp(3), D1A1_Ob_Disp(3), C1_Disp(3)];
 plot3(PA1D1C1_Dispx(:),PA1D1C1_Dispy(:),PA1D1C1_Dispz(:),'b-.');
+
 %------ Branch Chain A2C2------
 opC2_Ob = C2 - op_Ob;
 A2B2_Ob = B2 - A2;
@@ -177,13 +178,13 @@ sr12_Ob = cross((opC1_Ob - A1B1_Ob - B1C1_Ob), s12_Ob);
 sr13_Ob = cross((opC1_Ob - A1B1_Ob), s13_Ob);
 sr14_Ob = cross(opC1_Ob, s14_Ob);
 sr15_Ob = cross(opC1_Ob, s15_Ob);
-
-Origin_to_s15_Ob_x = []
-% Origin_to_s15_Ob_x = [0, s15_Ob(1)];
-% Origin_to_s15_Ob_y = [0, s15_Ob(2)];
-% Origin_to_s15_Ob_z = [0, s15_Ob(3)];
-% plot3(Origin_to_s15_Ob_x, Origin_to_s15_Ob_y, Origin_to_s15_Ob_z,'b-'); hold on;
-
+%
+op_Ob_Disp = (rotz(90) * (s15_Ob)')'
+s15_Ob_Disp = (rotz(90) * (s15_Ob)')' + Displacement + op_Ob;
+Origin_to_s15_Ob_x = [op_Ob(1), s15_Ob_Disp(1)];
+Origin_to_s15_Ob_y = [op_Ob(2), s15_Ob_Disp(2)];
+Origin_to_s15_Ob_z = [op_Ob(3), s15_Ob_Disp(3)];
+plot3(Origin_to_s15_Ob_x, Origin_to_s15_Ob_y, Origin_to_s15_Ob_z,'b-'); hold on;
 
 %------ Branch Chain A2C2------
 s21_Ob = [0, 0, 1];
