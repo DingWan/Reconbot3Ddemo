@@ -58,6 +58,11 @@ function [T_01,T_1_02,T_1_03,T_1_04,T_1_05,T_1_06,T_2_02,T_2_03,T_2_04,T_2_05] =
         % %--------------------------------------------------------------------
         %%
         %------------------------ Base Platform --------------------
+        % Forward Kinematics - BaseLow
+        %Displacement = [250,250,167.4400];
+        %Trans_BaseLow_2RERorigin = [[eye(3,3);0,0,0], [- Displacement, 1]'];
+        %T_BaseLow_TransTo2RERorigin = rotm2tform(rotz(0)) * Trans_BaseLow_2RERorigin; 
+        
         % Forward Kinematics - BaseUp
         Trans_BaseLow_CenterPointBearing = [[eye(3,3);0,0,0], [BaseLow_CenterPointBearing, 1]'];
         Trans_BaseUP_CenterPoint = [[eye(3,3);0,0,0],[- BaseUP_CenterPointBearing, 1]'];        
@@ -116,8 +121,9 @@ function [T_01,T_1_02,T_1_03,T_1_04,T_1_05,T_1_06,T_2_02,T_2_03,T_2_04,T_2_05] =
         %--------------------------------------------------------------   
              
         %---------------------- Transformation Matrix --------------------
+        %T_00 = T_BaseLow_TransTo2RERorigin;
         % BaseUp
-        T_01 = T_BaseUP_Trans2OrigPoint_Rotq0;
+        T_01 = T_BaseUP_Trans2OrigPoint_Rotq0;% * T_00;
         % Each link frame A1C1 to base frame transformation
         T_1_02 = T_01 * T_1_01;
         T_1_03 = T_1_02 * T_1_12;

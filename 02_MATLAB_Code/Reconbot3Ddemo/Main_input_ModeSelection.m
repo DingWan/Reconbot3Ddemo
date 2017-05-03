@@ -216,18 +216,19 @@ end
 % %============================ End ==============================
 
 %----------------- plot xyz axes of base point --------------
-    % Displacement = [250,250,83.5+60.44+(45.5-22)];
-    % x_axis = [40 0 0] + Displacement;
-    % y_axis = [0 40 0] + Displacement;
-    % z_axis = [0 0 40] + Displacement;
-    % OP= [0 0 0] + Displacement;
-    % xyz = [OP;x_axis;OP;y_axis;OP;z_axis];
-    % j = 1:2;
-    % plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-r','LineWidth',2); hold on
-    % j = 3:4;
-    % plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-g','LineWidth',2); hold on
-    % j = 5:6;
-    % plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-b','LineWidth',2); hold on
+    Displacement = [250,250,83.5+60.44+(45.5-22)];
+    x_axis = [40 0 0] + Displacement;
+    y_axis = [0 40 0] + Displacement;
+    z_axis = [0 0 40] + Displacement;
+    OP= [0 0 0] + Displacement;
+    xyz = (rotz(-90) * [OP;x_axis;OP;y_axis;OP;z_axis]')';
+    j = 1:2;
+    plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-r','LineWidth',2); hold on
+    j = 3:4;
+    plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-g','LineWidth',2); hold on
+    j = 5:6;
+    plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-b','LineWidth',2); hold on
+%------------------------------------------------------------
 %------------------------------------------------------------
 
 %%
