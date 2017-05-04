@@ -136,7 +136,8 @@ else
     z_D1A1_Ob = C1(3) + sqrt((C1(1) - A1(1))^2 + (C1(2) - A1(2))^2) * tan(q12 + q13 + q14);
 end
 D1A1_Ob = [0, 0, z_D1A1_Ob];
-opD1_Ob = opC1_Ob - A1B1_Ob - B1C1_Ob - D1A1_Ob;
+% opD1_Ob = opC1_Ob - A1B1_Ob - B1C1_Ob - D1A1_Ob;
+opD1_Ob = D1A1_Ob - op_Ob;
 % 
 D1A1_Ob_Disp = D1A1_Ob + Displacement;
 PA1D1C1_Dispx = [A1_Disp(1), A1_Disp(1), C1_Disp(1)];
@@ -158,7 +159,8 @@ else
     z_D2A2_Ob = C2(3) + sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q22 + q23 + q24);
 end
 D2A2_Ob = [0, 0, z_D2A2_Ob];
-opD2_Ob = opC2_Ob - A2B2_Ob - B2C2_Ob - D2A2_Ob;
+%opD2_Ob = opC2_Ob - A2B2_Ob - B2C2_Ob - D2A2_Ob;
+opD2_Ob = D2A2_Ob - op_Ob;
 %
 D2A2_Ob_Disp = D2A2_Ob  + Displacement;
 PA2D2C2_Dispx = [A2_Disp(1), A2_Disp(1), C2_Disp(1)];
@@ -299,8 +301,9 @@ Jc_Ob(2,1:3) * s12_Ob' + Jc_Ob(2,4:6) * sr12_Ob'
 Jc_Ob(2,1:3) * s13_Ob' + Jc_Ob(2,4:6) * sr13_Ob' 
 Jc_Ob(2,1:3) * s14_Ob' + Jc_Ob(2,4:6) * sr14_Ob' 
 Jc_Ob(2,1:3) * s15_Ob' + Jc_Ob(2,4:6) * sr15_Ob' 
+cross(opD1_Ob,s12_Ob) * s15_Ob' + s12_Ob * sr15_Ob'
 
-Jc_Ob(6,1:3) * s12_Ob' + Jc_Ob(6,4:6) * sr12_Ob' 
-Jc_Ob(6,1:3) * s13_Ob' + Jc_Ob(6,4:6) * sr13_Ob' 
-Jc_Ob(6,1:3) * s14_Ob' + Jc_Ob(6,4:6) * sr14_Ob' 
-Jc_Ob(6,1:3) * s15_Ob' + Jc_Ob(6,4:6) * sr15_Ob'
+% Jc_Ob(6,1:3) * s12_Ob' + Jc_Ob(6,4:6) * sr12_Ob' 
+% Jc_Ob(6,1:3) * s13_Ob' + Jc_Ob(6,4:6) * sr13_Ob' 
+% Jc_Ob(6,1:3) * s14_Ob' + Jc_Ob(6,4:6) * sr14_Ob' 
+% Jc_Ob(6,1:3) * s15_Ob' + Jc_Ob(6,4:6) * sr15_Ob'
