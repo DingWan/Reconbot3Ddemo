@@ -9,12 +9,12 @@ addpath(genpath(pwd)); % Enalbe all folders
 PosOri = {0 0 253.3124 0 [] [], pi/2 -pi/2};
 
 % --3T1R--
-% q11q12q21q22 = [1*pi/2, 1*pi/4, 1*pi/4, 1*pi/3];
+q11q12q21q22 = [1*pi/2, 1*pi/4, 1*pi/4, 1*pi/3];
 % obj3T1R = RCB3T1R(PosOri, q11q12q21q22, L1, L2);
 % [p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
 
 % --2T2Rsixbar--
- q11q12q14q23 = [1*pi/4, 0*pi/6, -1*pi/6, 1*pi/3];
+%  q11q12q14q23 = [1*pi/4, 0*pi/6, -1*pi/6, 1*pi/3];
 % obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
 % [p, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
 
@@ -25,22 +25,22 @@ delta_q = deltaq * eye(Num_joint_variables);
 J_dx_dq_eul = zeros(6, Num_joint_variables);
 % --3T1R--
 % % Previous
-% obj3T1R = RCB3T1R(PosOri, q11q12q21q22, L1, L2);
-% [p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
+obj3T1R = RCB3T1R(PosOri, q11q12q21q22, L1, L2);
+[p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
 % -- 2T2Rsixbar--
 % Previous
-obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
-[p_previous, ~, q1q2] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
+% obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
+% [p_previous, ~, q1q2] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
 for i = 1:Num_joint_variables
     % --3T1R--
 %     % Current
-%     obj3T1R = RCB3T1R(PosOri, q11q12q21q22 + delta_q(i,:), L1, L2);
-%     [p_current, ~, ~] = obj3T1R.RCB_3T1R_FK;
+    obj3T1R = RCB3T1R(PosOri, q11q12q21q22 + delta_q(i,:), L1, L2);
+    [p_current, ~, ~] = obj3T1R.RCB_3T1R_FK;
     
     % -- 2T2Rsixbar--
     % Current
-    obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 + delta_q(i,:), l1, l2);
-    [p_current, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;    
+%     obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 + delta_q(i,:), l1, l2);
+%     [p_current, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;    
     
     df(:,i) = p_current - p_previous;
     J_dx_dq_eul(:,i) = [  df(1,i) / deltaq; %This whole thing is a single column
@@ -330,8 +330,8 @@ Jq2_Ob_2T2Rsixbar = [  Jq2_1_Ob   0          0           0
 % +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 
 J_dx_dq_eul
 % 3T1R Mode
-% J_Ob_3T1R = inv(Jxc1_Ob_3T1R) * Jq1_Ob_3T1R;
+J_Ob_3T1R = inv(Jxc1_Ob_3T1R) * Jq1_Ob_3T1R;
 
 % 2T2Rsixbar Mode
-J_Ob_2T2Rsixbar = inv(Jxc2_Ob_2T2Rsixbar) * Jq2_Ob_2T2Rsixbar
+% J_Ob_2T2Rsixbar = inv(Jxc2_Ob_2T2Rsixbar) * Jq2_Ob_2T2Rsixbar
 
