@@ -9,12 +9,12 @@ addpath(genpath(pwd)); % Enalbe all folders
 PosOri = {0 0 253.3124 0 [] [], pi/2 -pi/2};
 
 % --3T1R--
-% q11q12q21q22 = [1*pi/2, 1*pi/4, 1*pi/4, 1*pi/3];
+q11q12q21q22 = [1*pi/2, 1*pi/4, 1*pi/4, 1*pi/3];
 % obj3T1R = RCB3T1R(PosOri, q11q12q21q22, L1, L2);
 % [p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
 
 % --2T2Rsixbar--
- q11q12q14q23 = [1*pi/4, 0*pi/6, -1*pi/6, 1*pi/3];
+%  q11q12q14q23 = [1*pi/4, 0*pi/6, -1*pi/6, 1*pi/3];
 % obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
 % [p, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
 
@@ -25,22 +25,22 @@ delta_q = deltaq * eye(Num_joint_variables);
 J_dx_dq_eul = zeros(6, Num_joint_variables);
 % --3T1R--
 % % Previous
-% obj3T1R = RCB3T1R(PosOri, q11q12q21q22, L1, L2);
-% [p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
+obj3T1R = RCB3T1R(PosOri, q11q12q21q22, L1, L2);
+[p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
 % -- 2T2Rsixbar--
 % Previous
-obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
-[p_previous, ~, q1q2] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
+% obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
+% [p_previous, ~, q1q2] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
 for i = 1:Num_joint_variables
     % --3T1R--
 %     % Current
-%     obj3T1R = RCB3T1R(PosOri, q11q12q21q22 + delta_q(i,:), L1, L2);
-%     [p_current, ~, ~] = obj3T1R.RCB_3T1R_FK;
+    obj3T1R = RCB3T1R(PosOri, q11q12q21q22 + delta_q(i,:), L1, L2);
+    [p_current, ~, ~] = obj3T1R.RCB_3T1R_FK;
     
     % -- 2T2Rsixbar--
     % Current
-    obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 + delta_q(i,:), l1, l2);
-    [p_current, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;    
+%     obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 + delta_q(i,:), l1, l2);
+%     [p_current, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;    
     
     df(:,i) = p_current - p_previous;
     J_dx_dq_eul(:,i) = [  df(1,i) / deltaq; %This whole thing is a single column
@@ -113,6 +113,16 @@ ABC = [ A1; B1; C1; A2; B2; C2 ];
 %     
 
 %% ===========  Euler Angle to homogenous transform =============
+<<<<<<< HEAD:02_MATLAB_Code/Reconbot3Ddemo/JacobianMatrix/JacobianMatrix_ScrewTheory_Ob.asv
+alpha = p_previous(4) * 180/pi;
+beta = p_previous(5) * 180/pi;
+gamma = p_previous(6) * 180/pi;
+RotationMatrix = rotz(alpha) * roty(beta) * rotx(gamma);  
+% C1_Ob = (RotationMatrix * A1')' + p_previous(1:3);
+% C2_Ob = (RotationMatrix * A2')' + p_previous(1:3);
+% norm(C2_Ob-C1_Ob)
+=======
+>>>>>>> be63ab615e09bf8e78c0b07c1740dccfb94bf71d:02_MATLAB_Code/Reconbot3Ddemo/JacobianMatrix/JacobianMatrix_ScrewTheory_Ob_FK.m
 
 alpha = p_previous(4) * 180/pi;
 beta = p_previous(5) * 180/pi;
@@ -140,7 +150,7 @@ if Angle_A1C1_to_sr11c >= 90
 else
     z_A1D1_Ob = C1(3) + sqrt((C1(1) - A1(1))^2 + (C1(2) - A1(2))^2) * tan(q12 + q13 + q14);
 end
-<<<<<<< HEAD
+<<<<<<< HEAD:02_MATLAB_Code/Reconbot3Ddemo/JacobianMatrix/JacobianMatrix_ScrewTheory_Ob.asv
 D1A1_Ob = [0, 0, z_D1A1_Ob];
 % opD1_Ob = opC1_Ob - A1B1_Ob - B1C1_Ob - D1A1_Ob;
 opD1_Ob = D1A1_Ob - op_Ob;
@@ -148,7 +158,7 @@ opD1_Ob = D1A1_Ob - op_Ob;
 D1A1_Ob = [0, 0, - z_A1D1_Ob];
 opD1_Ob = opA1_Ob - D1A1_Ob;
 %opD1_Ob = [0 A1(2) z_A1D1_Ob] - op_Ob
->>>>>>> be63ab615e09bf8e78c0b07c1740dccfb94bf71d
+>>>>>>> be63ab615e09bf8e78c0b07c1740dccfb94bf71d:02_MATLAB_Code/Reconbot3Ddemo/JacobianMatrix/JacobianMatrix_ScrewTheory_Ob_FK.m
 % 
 % D1A1_Ob_Disp = -D1A1_Ob + Displacement;
 % PA1D1C1_Dispx = [A1_Disp(1), A1_Disp(1), C1_Disp(1)];
@@ -170,21 +180,27 @@ if Angle_A2C2_to_sr21c >= 90
 else
     z_A2D2_Ob = C2(3) + sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q22 + q23 + q24);
 end
-<<<<<<< HEAD
+<<<<<<< HEAD:02_MATLAB_Code/Reconbot3Ddemo/JacobianMatrix/JacobianMatrix_ScrewTheory_Ob.asv
 D2A2_Ob = [0, 0, z_D2A2_Ob];
 %opD2_Ob = opC2_Ob - A2B2_Ob - B2C2_Ob - D2A2_Ob;
 opD2_Ob = D2A2_Ob - op_Ob;
+%
+D2A2_Ob_Disp = D2A2_Ob  + Displacement;
+PA2D2C2_Dispx = [A2_Disp(1), A2_Disp(1), C2_Disp(1)];
+PA2D2C2_Dispy = [A2_Disp(2), A2_Disp(2), C2_Disp(2)];
+PA2D2C2_Dispz = [A2_Disp(3), D2A2_Ob_Disp(3), C2_Disp(3)];
+plot3(PA2D2C2_Dispx(:),PA2D2C2_Dispy(:),PA2D2C2_Dispz(:),'r-.');
 =======
 D2A2_Ob = [0, 0, - z_A2D2_Ob];
 opD2_Ob = opA2_Ob - D2A2_Ob;
 %opD2_Ob = [0 A2(2) z_A2D2_Ob] - op_Ob
->>>>>>> be63ab615e09bf8e78c0b07c1740dccfb94bf71d
 %
 % D2A2_Ob_Disp = -D2A2_Ob  + Displacement;
 % PA2D2C2_Dispx = [A2_Disp(1), A2_Disp(1), C2_Disp(1)];
 % PA2D2C2_Dispy = [A2_Disp(2), A2_Disp(2), C2_Disp(2)];
 % PA2D2C2_Dispz = [A2_Disp(3), D2A2_Ob_Disp(3), C2_Disp(3)];
 % plot3(PA2D2C2_Dispx(:),PA2D2C2_Dispy(:),PA2D2C2_Dispz(:),'r-.');
+>>>>>>> be63ab615e09bf8e78c0b07c1740dccfb94bf71d:02_MATLAB_Code/Reconbot3Ddemo/JacobianMatrix/JacobianMatrix_ScrewTheory_Ob_FK.m
 
 %% ========================= screw unit =========================
 
@@ -202,12 +218,21 @@ sr13_Ob = cross(opB1_Ob, s13_Ob);
 sr14_Ob = cross(opC1_Ob, s14_Ob);
 sr15_Ob = cross(opC1_Ob, s15_Ob);
 %
+<<<<<<< HEAD:02_MATLAB_Code/Reconbot3Ddemo/JacobianMatrix/JacobianMatrix_ScrewTheory_Ob.asv
+Ob_Ob_origin = Displacement;
+s15_Ob_Disp = (rotz(90) * (s15_Ob*200)')' + Displacement;
+Origin_to_s15_Ob_x = [Ob_Ob_origin(1), s15_Ob_Disp(1)];
+Origin_to_s15_Ob_y = [Ob_Ob_origin(2), s15_Ob_Disp(2)];
+Origin_to_s15_Ob_z = [Ob_Ob_origin(3), s15_Ob_Disp(3)];
+plot3(Origin_to_s15_Ob_x, Origin_to_s15_Ob_y, Origin_to_s15_Ob_z,'G-'); hold on;
+=======
 % Ob_Ob_origin = Displacement;
 % s15_Ob_Disp = (rotz(90) * (s15_Ob*200)')' + Displacement;
 % Origin_to_s15_Ob_x = [Ob_Ob_origin(1), s15_Ob_Disp(1)];
 % Origin_to_s15_Ob_y = [Ob_Ob_origin(2), s15_Ob_Disp(2)];
 % Origin_to_s15_Ob_z = [Ob_Ob_origin(3), s15_Ob_Disp(3)];
 % plot3(Origin_to_s15_Ob_x, Origin_to_s15_Ob_y, Origin_to_s15_Ob_z,'G-'); hold on;
+>>>>>>> be63ab615e09bf8e78c0b07c1740dccfb94bf71d:02_MATLAB_Code/Reconbot3Ddemo/JacobianMatrix/JacobianMatrix_ScrewTheory_Ob_FK.m
 
 %------ Branch Chain A2C2------
 s21_Ob = [0, 0, 1];
@@ -342,12 +367,12 @@ Jq2_Ob_2T2Rsixbar = [  Jq2_1_Ob   0          0           0
 % +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 
 J_dx_dq_eul
 % 3T1R Mode
-% J_Ob_3T1R = inv(Jxc1_Ob_3T1R) * Jq1_Ob_3T1R;
+J_Ob_3T1R = inv(Jxc1_Ob_3T1R) * Jq1_Ob_3T1R;
 
 % 2T2Rsixbar Mode
-J_Ob_2T2Rsixbar = inv(Jxc2_Ob_2T2Rsixbar) * Jq2_Ob_2T2Rsixbar
+% J_Ob_2T2Rsixbar = inv(Jxc2_Ob_2T2Rsixbar) * Jq2_Ob_2T2Rsixbar
 
-<<<<<<< HEAD
+<<<<<<< HEAD:02_MATLAB_Code/Reconbot3Ddemo/JacobianMatrix/JacobianMatrix_ScrewTheory_Ob.asv
 Jc_Ob(2,1:3) * s11_Ob' + Jc_Ob(2,4:6) * sr11_Ob' 
 Jc_Ob(2,1:3) * s12_Ob' + Jc_Ob(2,4:6) * sr12_Ob' 
 Jc_Ob(2,1:3) * s13_Ob' + Jc_Ob(2,4:6) * sr13_Ob' 
@@ -360,4 +385,4 @@ cross(opD1_Ob,s12_Ob) * s15_Ob' + s12_Ob * sr15_Ob'
 % Jc_Ob(6,1:3) * s14_Ob' + Jc_Ob(6,4:6) * sr14_Ob' 
 % Jc_Ob(6,1:3) * s15_Ob' + Jc_Ob(6,4:6) * sr15_Ob'
 =======
->>>>>>> be63ab615e09bf8e78c0b07c1740dccfb94bf71d
+>>>>>>> be63ab615e09bf8e78c0b07c1740dccfb94bf71d:02_MATLAB_Code/Reconbot3Ddemo/JacobianMatrix/JacobianMatrix_ScrewTheory_Ob_FK.m
