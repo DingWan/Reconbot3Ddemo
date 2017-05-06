@@ -563,7 +563,7 @@ classdef RCB3T1R
                 
                 % Approching Algorithm is a iterative pocesss see below in
                 % While loop
-                if  abs(C1(3) - C2(3)) > 1e-8 || abs( q13all(Numq13) ) - pi > 1e-8 || abs(JudgeLength_C1C2(col(1))) > 1e-8
+                if  abs(C1(3) - C2(3)) > 1e-8 || abs(abs( q13all(Numq13) ) - pi) > 1e-8 || abs(JudgeLength_C1C2(col(1))) > 1e-8
                     
                     %--------------------------------------------------------------------
                     if abs(C1(3) - C2(3)) < 1e-8 && abs(abs( q13all(Numq13) ) - pi) > 1e-8 && ...
@@ -615,10 +615,11 @@ classdef RCB3T1R
                             plot3(C12_mat(:,1), C12_mat(:,2), C12_mat(:,3),'k-.','linewidth',1); hold on;
                             plot3(C22_mat(:,1), C22_mat(:,2), C22_mat(:,3),'k-.','linewidth',1); hold on;
                             
+                            JudgeLength_C1C2_min = [];
                             for i_q23all = 1:2
                                 B = JudgeLength_C1C2_Solution(i_q23all,:);
                                 col_B_positive = find(B>0);
-                                col_B_zero = find(B <= 1e-8);
+                                col_B_zero = find(abs(B) <= 1e-8);
                                 if isempty(col_B_zero) ~= 1 && min(col_B_zero) < length(B)
                                     Changepoint_positive_min = min(col_B_zero);
                                     i_q23all_selected = i_q23all;
@@ -643,8 +644,10 @@ classdef RCB3T1R
                                     end
                                     
                                     if isempty(Changepoint_postive) == 1
-                                        JudgeLength_C1C2_min = [];
-                                        Changepoint_positive_min = [];
+                                        if isempty(JudgeLength_C1C2_min) == 1
+                                            JudgeLength_C1C2_min = [];
+                                            Changepoint_positive_min = [];
+                                        end
                                         continue
                                     else
                                         JudgeLength_C1C2_min = min(B(Changepoint_postive));
@@ -749,7 +752,7 @@ classdef RCB3T1R
                     %%------------------------------------------------------------------------
                     %%-------------------------q11-q15 and q21-q25------------------------------
                     q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-                    if isempty(JudgeLength_C1C2_min) == 1 || JudgeLength_C1C2_min < 1e-8
+                    if isempty(JudgeLength_C1C2_min) == 1 || abs(JudgeLength_C1C2_min) < 1e-8
                         if isempty(JudgeLength_C1C2_min) == 1 || abs( abs(q13) - pi) < 1e-8
                             display('Only Zero Position exist, Calculation process is stopped!');
                         end
@@ -757,18 +760,11 @@ classdef RCB3T1R
                     else
                         continue
                     end
-                elseif  abs( q13all(Numq13) ) - pi < 1e-8 && JudgeLength_C1C2(col(1)) < 1e-8
+                elseif abs( abs(q13all(Numq13)) - pi ) < 1e-8 && abs( JudgeLength_C1C2(col(1)) ) < 1e-8
                     display('Zero Position, Calculation process needs to check!');
-                    p = [0 0 0 0 0 0];
-                    gamma = 0;
-                    q13 = pi;
-                    q23 = pi;
-                    ABC = [A1, B1, C1, A2, B2, C2];
-                    q14 = q12 + q13 - pi/2;
-                    q15 = q11;
-                    q24 = q22 + q23 - pi/2;
-                    q25 = q21;
-                    q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
+                    p = [];
+                    ABC = [];
+                    q1q2 = [0, pi/3, pi/3, -pi/6, 0, 0, pi/3, pi/3, -pi/6, 0];
                 else
                     display('No solution for this input, Calculation process is stopped');
                     p = [];
