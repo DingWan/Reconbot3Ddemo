@@ -1,49 +1,59 @@
 %
 %clf
 clc
+clear
+
 L1 = 230.0692;
 L2 = 146.25;
+l1 = 230.0692;
+l2 = 146.25;
+
 deg = pi/180;
 addpath(genpath(pwd)); % Enalbe all folders
 
 PosOri = {0 0 253.3124 0 [] [], pi/2 -pi/2};
 
 % --3T1R--
-q11q12q21q22 = [1*pi/2, 1*pi/4, 1*pi/4, 1*pi/3];
+% q11q12q21q22 = [ -0.3527    1.4831   -1.0780    0.4314  ];
+%[1*pi/3, 1*pi/4, 1*pi/4, 1*pi/3];
+%[0.8143    0.9044    1.9952   -1.3289    1.3379   -1.5117    0.1379    1.9104   -0.4775   -2.0353]
+%[-0.3527    1.4118    1.6916   -1.5325    0.1709   -1.0780    0.0510    1.2940    0.2257   -1.6016]
+%[-0.3527    1.4831    1.2780   -1.1903    0.1709   -1.0780    0.4314    0.8199    0.3195   -1.6016]
 % obj3T1R = RCB3T1R(PosOri, q11q12q21q22, L1, L2);
 % [p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
 
 % --2T2Rsixbar--
-%  q11q12q14q23 = [1*pi/4, 0*pi/6, -1*pi/6, 1*pi/3];
+ q11q12q14q23 = [-0.7854    1.6943    -0.7916   1.3574];
+ % [-0.7854    1.6943    0.9125   -0.7916   -0.7854   -0.7854    0.2354    1.3574   -0.2664   -0.7854]
 % obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
 % [p, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
 
 %% Calculate the FK Jacobian
-deltaq = 0.001;
+deltaq = 0.00001;
 Num_joint_variables = 4;
 delta_q = deltaq * eye(Num_joint_variables);
-J_dx_dq_eul = zeros(6, Num_joint_variables);
+J_dq2dx_eul = zeros(6, Num_joint_variables);
 % --3T1R--
 % % Previous
-obj3T1R = RCB3T1R(PosOri, q11q12q21q22, L1, L2);
-[p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
+% obj3T1R = RCB3T1R(PosOri, q11q12q21q22, L1, L2);
+% [p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
 % -- 2T2Rsixbar--
 % Previous
-% obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
-% [p_previous, ~, q1q2] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
+obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
+[p_previous, ~, q1q2] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
 for i = 1:Num_joint_variables
     % --3T1R--
 %     % Current
-    obj3T1R = RCB3T1R(PosOri, q11q12q21q22 + delta_q(i,:), L1, L2);
-    [p_current, ~, ~] = obj3T1R.RCB_3T1R_FK;
+%     obj3T1R = RCB3T1R(PosOri, q11q12q21q22 + delta_q(i,:), L1, L2);
+%     [p_current, ~, ~] = obj3T1R.RCB_3T1R_FK;
     
     % -- 2T2Rsixbar--
     % Current
-%     obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 + delta_q(i,:), l1, l2);
-%     [p_current, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;    
+    obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 + delta_q(i,:), l1, l2);
+    [p_current, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;    
     
     df(:,i) = p_current - p_previous;
-    J_dx_dq_eul(:,i) = [  df(1,i) / deltaq; %This whole thing is a single column
+    J_dq2dx_eul(:,i) = [  df(1,i) / deltaq; %This whole thing is a single column
                           df(2,i) / deltaq;
                           df(3,i) / deltaq;
                           df(4,i) / deltaq;
@@ -143,6 +153,7 @@ end
 D1A1_Ob = [0, 0, - z_A1D1_Ob];
 opD1_Ob = opA1_Ob - D1A1_Ob;
 %opD1_Ob = [0 A1(2) z_A1D1_Ob] - op_Ob
+
 % 
 % D1A1_Ob_Disp = -D1A1_Ob + Displacement;
 % PA1D1C1_Dispx = [A1_Disp(1), A1_Disp(1), C1_Disp(1)];
@@ -229,34 +240,34 @@ Jc_Ob = [  sr11c_Ob, 0 0 0;
         ];
 % Jxk Reciprocal Screw as locking actuate joint
 Jx1_Ob = [  cross(opC1_Ob,s12_Ob),  s12_Ob;
-            cross(opC1_Ob,B1C1_Ob), B1C1_Ob;
-            cross(opA1_Ob,A1B1_Ob), A1B1_Ob;
+            cross(opC1_Ob,B1C1_Ob/norm(B1C1_Ob)), B1C1_Ob/norm(B1C1_Ob);
+            cross(opA1_Ob,A1B1_Ob/norm(A1B1_Ob)), A1B1_Ob/norm(A1B1_Ob);
             cross(opC2_Ob,s22_Ob),  s22_Ob; 
-            cross(opC2_Ob,B2C2_Ob), B2C2_Ob;
-            cross(opC2_Ob,A2C2_Ob), A2C2_Ob;
+            cross(opC2_Ob,B2C2_Ob/norm(B2C2_Ob)), B2C2_Ob/norm(B2C2_Ob);
+            cross(opC2_Ob,A2C2_Ob/norm(A2C2_Ob)), A2C2_Ob/norm(A2C2_Ob);
          ];
 Jx2_Ob = [  cross(s14_Ob,s15_Ob),   0 0 0;
-            cross(opC1_Ob,B1C1_Ob), B1C1_Ob;
-            cross(opA1_Ob,A1B1_Ob), A1B1_Ob;
+            cross(opC1_Ob,B1C1_Ob/norm(B1C1_Ob)), B1C1_Ob/norm(B1C1_Ob);
+            cross(opA1_Ob,A1B1_Ob/norm(A1B1_Ob)), A1B1_Ob/norm(A1B1_Ob);
             cross(s24_Ob,s25_Ob),   0 0 0;
-            cross(opC2_Ob,B2C2_Ob), B2C2_Ob;
-            cross(opC2_Ob,A2C2_Ob), A2C2_Ob;
+            cross(opC2_Ob,B2C2_Ob/norm(B2C2_Ob)), B2C2_Ob/norm(B2C2_Ob);
+            cross(opC2_Ob,A2C2_Ob/norm(A2C2_Ob)), A2C2_Ob/norm(A2C2_Ob);
          ];
 % Jqk
 % Case I: Jq1
 Jq1_1_Ob = s12_Ob * sr11_Ob' + s11_Ob * cross(opC1_Ob,s12_Ob)';
-Jq1_2_Ob = B1C1_Ob * sr12_Ob' + s12_Ob * cross(opC1_Ob,B1C1_Ob)';
-Jq1_3_Ob = A1B1_Ob * sr14_Ob' + s14_Ob * cross(opA1_Ob,A1B1_Ob)';
+Jq1_2_Ob = B1C1_Ob/norm(B1C1_Ob) * sr12_Ob' + s12_Ob * cross(opC1_Ob,B1C1_Ob/norm(B1C1_Ob))';
+Jq1_3_Ob = A1B1_Ob/norm(A1B1_Ob) * sr14_Ob' + s14_Ob * cross(opA1_Ob,A1B1_Ob/norm(A1B1_Ob))';
 Jq1_4_Ob = s22_Ob * sr21_Ob' + s21_Ob * cross(opC2_Ob,s22_Ob)';
-Jq1_5_Ob = B2C2_Ob * sr22_Ob' + s22_Ob * cross(opC2_Ob,B2C2_Ob)';
-Jq1_6_Ob = A2C2_Ob * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob)';
+Jq1_5_Ob = B2C2_Ob/norm(B2C2_Ob) * sr22_Ob' + s22_Ob * cross(opC2_Ob,B2C2_Ob/norm(B2C2_Ob))';
+Jq1_6_Ob = A2C2_Ob/norm(A2C2_Ob) * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob/norm(A2C2_Ob))';
 % Case II: Jq2
 Jq2_1_Ob = [0 0 0] * sr11_Ob' + s11_Ob * cross(s14_Ob,s15_Ob)';
-Jq2_2_Ob = B1C1_Ob * sr12_Ob' + s12_Ob * cross(opC1_Ob,B1C1_Ob)';
-Jq2_3_Ob = A1B1_Ob * sr14_Ob' + s14_Ob * cross(opA1_Ob,A1B1_Ob)';
+Jq2_2_Ob = B1C1_Ob/norm(B1C1_Ob) * sr12_Ob' + s12_Ob * cross(opC1_Ob,B1C1_Ob/norm(B1C1_Ob))';
+Jq2_3_Ob = A1B1_Ob/norm(A1B1_Ob) * sr14_Ob' + s14_Ob * cross(opA1_Ob,A1B1_Ob/norm(A1B1_Ob))';
 Jq2_4_Ob = [0 0 0] * sr21_Ob' + s21_Ob * cross(s24_Ob,s25_Ob)';
-Jq2_5_Ob = B2C2_Ob * sr22_Ob' + s22_Ob * cross(opC2_Ob,B2C2_Ob)';
-Jq2_6_Ob = A2C2_Ob * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob)';
+Jq2_5_Ob = B2C2_Ob/norm(B2C2_Ob) * sr22_Ob' + s22_Ob * cross(opC2_Ob,B2C2_Ob/norm(B2C2_Ob))';
+Jq2_6_Ob = A2C2_Ob/norm(A2C2_Ob) * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob/norm(A2C2_Ob))';
 
 
 %% ========================= Jacobian Matrix Calculation =========================
@@ -328,10 +339,48 @@ Jq2_Ob_2T2Rsixbar = [  Jq2_1_Ob   0          0           0
 % Jc_Ob(6,1:3) * s25_Ob' + Jc_Ob(6,4:6) * sr25_Ob'
       
 % +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 
-J_dx_dq_eul
+
+J_dq2dx_eul
+%
+alpha = p_previous(4);
+beta = p_previous(5);
+gamma = p_previous(6);
+
+T_A = [0 -sin(alpha) cos(alpha)*cos(beta) ;
+       0  cos(alpha) sin(alpha)*cos(beta) ;
+       1  0          -sin(beta)
+       ];
+J_dx2dq_eul_Geom = T_A * J_dq2dx_eul(4:6,:)
+
+
 % 3T1R Mode
-J_Ob_3T1R = inv(Jxc1_Ob_3T1R) * Jq1_Ob_3T1R;
+% J_Ob_3T1R_dq2dx = inv(Jxc1_Ob_3T1R) * Jq1_Ob_3T1R
+
 
 % 2T2Rsixbar Mode
-% J_Ob_2T2Rsixbar = inv(Jxc2_Ob_2T2Rsixbar) * Jq2_Ob_2T2Rsixbar
+% Jx2_Ob_2T2Rsixbar = [   Jx2_Ob(1,:)
+%                         Jx2_Ob(2,:)
+%                         Jx2_Ob(3,:)
+%                         Jx2_Ob(6,:)
+%                      ];
+% Jq2_Ob_2T2Rsixbar = [  Jq2_1_Ob   0          0           0
+%                        0          Jq2_2_Ob   0           0 
+%                        0          0          Jq2_3_Ob    0
+%                        0          0          0           Jq2_6_Ob
+%                     ];   
+% 
+% Ja_Ob_2T2Rsixbar = inv(Jq2_Ob_2T2Rsixbar) * Jx2_Ob_2T2Rsixbar   
+J_Ob_2T2Rsixbar = inv(Jxc2_Ob_2T2Rsixbar) * Jq2_Ob_2T2Rsixbar
 
+
+% Jc_Ob(2,1:3) * s11_Ob' + Jc_Ob(2,4:6) * sr11_Ob' 
+% Jc_Ob(2,1:3) * s12_Ob' + Jc_Ob(2,4:6) * sr12_Ob' 
+% Jc_Ob(2,1:3) * s13_Ob' + Jc_Ob(2,4:6) * sr13_Ob' 
+% Jc_Ob(2,1:3) * s14_Ob' + Jc_Ob(2,4:6) * sr14_Ob' 
+% Jc_Ob(2,1:3) * s15_Ob' + Jc_Ob(2,4:6) * sr15_Ob' 
+% cross(opD1_Ob,s12_Ob) * s15_Ob' + s12_Ob * sr15_Ob'
+
+% Jc_Ob(6,1:3) * s12_Ob' + Jc_Ob(6,4:6) * sr12_Ob' 
+% Jc_Ob(6,1:3) * s13_Ob' + Jc_Ob(6,4:6) * sr13_Ob' 
+% Jc_Ob(6,1:3) * s14_Ob' + Jc_Ob(6,4:6) * sr14_Ob' 
+% Jc_Ob(6,1:3) * s15_Ob' + Jc_Ob(6,4:6) * sr15_Ob'

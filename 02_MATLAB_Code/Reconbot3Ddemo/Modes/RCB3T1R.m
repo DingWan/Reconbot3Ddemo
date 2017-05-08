@@ -624,6 +624,8 @@ classdef RCB3T1R
                                     Changepoint_positive_min = min(col_B_zero);
                                     i_q23all_selected = i_q23all;
                                     JudgeLength_C1C2_min = 0;
+                                elseif isempty(col_B_zero) ~= 1 && min(col_B_zero) == length(B)
+                                    continue
                                 else
                                     j = 0;
                                     Changepoint_postive = [];
@@ -654,7 +656,7 @@ classdef RCB3T1R
                                         i_q23all_selected = i_q23all;
                                     end
                                 end
-                                
+                            end  
                                 q13SingleValue = q13SingleValue_mat(Changepoint_positive_min);
                                 q23SingleValue = q23SingleValue_mat(i_q23all_selected,Changepoint_positive_min);
                                 C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
@@ -721,7 +723,6 @@ classdef RCB3T1R
                                 end
                                 
                                 %---------------------- Iterative end --------------------
-                            end
                         end
                     end
                     %--------------------------------------------------------------------

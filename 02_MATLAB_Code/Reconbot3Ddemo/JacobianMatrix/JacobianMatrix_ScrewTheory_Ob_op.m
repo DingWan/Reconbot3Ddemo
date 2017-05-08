@@ -87,53 +87,52 @@ ABC_op = (ABC - ones(6,1) * p_previous(1:3)) * RotationMatrix;
 % In base frame Ob-XYZ
 op_Ob = p_previous(1:3);
 %----- Branch Chain A1C1------
+opA1_Ob = A1 - op_Ob;
+opB1_Ob = B1 - op_Ob;
 opC1_Ob = C1 - op_Ob;
 A1B1_Ob = B1 - A1;
 B1C1_Ob = C1 - B1;
 A1C1_Ob = C1 - A1;
-opA1_Ob = A1 - op_Ob;
-if C1(1) - A1(1) <= 0
+sr11c_Ob = [-sin(q11), cos(q11), 0];
+Angle_A1C1_to_sr11c = acos ( (A1C1_Ob * sr11c_Ob')/(norm(A1C1_Ob)*norm(sr11c_Ob)) ) * 180/pi;
+if Angle_A1C1_to_sr11c >= 90
     z_A1D1_Ob = C1(3) - sqrt((C1(1) - A1(1))^2 + (C1(2) - A1(2))^2) * tan(q12 + q13 + q14);
 else
     z_A1D1_Ob = C1(3) + sqrt((C1(1) - A1(1))^2 + (C1(2) - A1(2))^2) * tan(q12 + q13 + q14);
 end
-A1D1_Ob = [0, 0, z_A1D1_Ob];
-opD1_Ob = opC1_Ob - A1B1_Ob - B1C1_Ob + A1D1_Ob;
+D1A1_Ob = [0, 0, - z_A1D1_Ob];
+opD1_Ob = opA1_Ob - D1A1_Ob;
+%opD1_Ob = [0 A1(2) z_A1D1_Ob] - op_Ob
+% 
+% D1A1_Ob_Disp = -D1A1_Ob + Displacement;
+% PA1D1C1_Dispx = [A1_Disp(1), A1_Disp(1), C1_Disp(1)];
+% PA1D1C1_Dispy = [A1_Disp(2), A1_Disp(2), C1_Disp(2)];
+% PA1D1C1_Dispz = [A1_Disp(3), D1A1_Ob_Disp(3), C1_Disp(3)];
+% plot3(PA1D1C1_Dispx(:),PA1D1C1_Dispy(:),PA1D1C1_Dispz(:),'b-.');
+
 %------ Branch Chain A2C2------
+opA2_Ob = A2 - op_Ob;
+opB2_Ob = B2 - op_Ob;
 opC2_Ob = C2 - op_Ob;
 A2B2_Ob = B2 - A2;
 B2C2_Ob = C2 - B2;
 A2C2_Ob = C2 - A2;
-opA2_Ob = A2 - op_Ob;
-if C2(1) - A2(1) <= 0
-    z_A2D2_Ob = C2(3) + sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q12 + q13 + q14);
+sr21c_Ob = [sin(q21), -cos(q21), 0];
+Angle_A2C2_to_sr21c = acos ( (A2C2_Ob * sr21c_Ob')/(norm(A2C2_Ob)*norm(sr21c_Ob)) ) * 180/pi;
+if Angle_A2C2_to_sr21c >= 90
+    z_A2D2_Ob = C2(3) - sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q22 + q23 + q24);
 else
-    z_A2D2_Ob = C2(3) - sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q12 + q13 + q14);
+    z_A2D2_Ob = C2(3) + sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q22 + q23 + q24);
 end
-A2D2_Ob = [0, 0, z_A2D2_Ob];
-opD2_Ob = opC2_Ob - A2B2_Ob - B2C2_Ob + A2D2_Ob;
-
-% +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 
-% In instantaneous frame on the Moving Platform Op-xyz
-A1_op = ABC_op(1,:); B1_op = ABC_op(2,:); C1_op = ABC_op(3,:);
-A2_op = ABC_op(4,:); B2_op = ABC_op(5,:); C2_op = ABC_op(6,:);
-op_op = [0 0 0];
-%----- Branch Chain A1C1------
-opC1_op = C1_op - op_op;
-A1B1_op = B1_op - A1_op;
-B1C1_op = C1_op - B1_op;
-A1C1_op = C1_op - A1_op;
-opA1_op = A1_op - op_op;
-A1D1_op = (A1D1_Ob - p_previous(1:3)) * RotationMatrix;
-opD1_op = opC1_op - A1B1_op - B1C1_op + A1D1_op;
-%------ Branch Chain A2C2------
-opC2_op = C2_op - op_op;
-A2B2_op = B2_op - A2_op;
-B2C2_op = C2_op - B2_op;
-A2C2_op = C2_op - A2_op;
-opA2_op = A2_op - op_op;
-A2D2_op = (A2D2_Ob - p_previous(1:3)) * RotationMatrix;
-opD2_op = opC2_op - A2B2_op - B2C2_op + A2D2_op;
+D2A2_Ob = [0, 0, - z_A2D2_Ob];
+opD2_Ob = opA2_Ob - D2A2_Ob;
+%opD2_Ob = [0 A2(2) z_A2D2_Ob] - op_Ob
+%
+% D2A2_Ob_Disp = -D2A2_Ob  + Displacement;
+% PA2D2C2_Dispx = [A2_Disp(1), A2_Disp(1), C2_Disp(1)];
+% PA2D2C2_Dispy = [A2_Disp(2), A2_Disp(2), C2_Disp(2)];
+% PA2D2C2_Dispz = [A2_Disp(3), D2A2_Ob_Disp(3), C2_Disp(3)];
+% plot3(PA2D2C2_Dispx(:),PA2D2C2_Dispy(:),PA2D2C2_Dispz(:),'r-.');
 
 
 %% ========================= screw unit =========================
@@ -141,24 +140,34 @@ opD2_op = opC2_op - A2B2_op - B2C2_op + A2D2_op;
 % In base frame Ob-XYZ
 %----- Branch Chain A1C1------
 s11_Ob = [0, 0, 1];
-s12_Ob = [cos(q11), sin(q11), 0];
-s13_Ob = [cos(q11), sin(q11), 0];
-s14_Ob = [cos(q11), sin(q11), 0];
-s15_Ob = [sin(q11)*cos(q12 + q13 + q14), cos(q11)*sin(q12 + q13 + q14), cos(q12 + q13 + q14)];
-sr11_Ob = cross((opC1_Ob - A1B1_Ob - B1C1_Ob), s11_Ob);
-sr12_Ob = cross((opC1_Ob - A1B1_Ob - B1C1_Ob), s12_Ob);
-sr13_Ob = cross((opC1_Ob - A1B1_Ob), s13_Ob);
+s12_Ob = [-cos(q11), -sin(q11), 0];
+s13_Ob = [-cos(q11), -sin(q11), 0];
+s14_Ob = [-cos(q11), -sin(q11), 0];
+s15_Ob = (RotationMatrix * [0 0 1]')';
+%[-sin(q11)*cos(q12 + q13 + q14), -cos(q11)*cos(q12 + q13 + q14), sin(q12 + q13 + q14)]
+sr11_Ob = cross(opA1_Ob, s11_Ob);
+sr12_Ob = cross(opA1_Ob, s12_Ob);
+sr13_Ob = cross(opB1_Ob, s13_Ob);
 sr14_Ob = cross(opC1_Ob, s14_Ob);
 sr15_Ob = cross(opC1_Ob, s15_Ob);
+%
+% Ob_Ob_origin = Displacement;
+% s15_Ob_Disp = (rotz(90) * (s15_Ob*200)')' + Displacement;
+% Origin_to_s15_Ob_x = [Ob_Ob_origin(1), s15_Ob_Disp(1)];
+% Origin_to_s15_Ob_y = [Ob_Ob_origin(2), s15_Ob_Disp(2)];
+% Origin_to_s15_Ob_z = [Ob_Ob_origin(3), s15_Ob_Disp(3)];
+% plot3(Origin_to_s15_Ob_x, Origin_to_s15_Ob_y, Origin_to_s15_Ob_z,'G-'); hold on;
+
 %------ Branch Chain A2C2------
 s21_Ob = [0, 0, 1];
 s22_Ob = [cos(q21), sin(q21), 0];
 s23_Ob = [cos(q21), sin(q21), 0];
 s24_Ob = [cos(q21), sin(q21), 0];
-s25_Ob = [sin(q11)*cos(q12 + q13 + q14), cos(q11)*sin(q12 + q13 + q14), cos(q12 + q13 + q14)];
-sr21_Ob = cross((opC2_Ob - A2B2_Ob - B2C2_Ob), s21_Ob);
-sr22_Ob = cross((opC2_Ob - A2B2_Ob - B2C2_Ob), s22_Ob);
-sr23_Ob = cross((opC2_Ob - A2B2_Ob), s23_Ob);
+s25_Ob = (RotationMatrix * [0 0 1]')';
+%[sin(q21)*cos(q22 + q23 + q24), cos(q21)*cos(q22 + q23 + q24), sin(q22 + q23 + q24)]
+sr21_Ob = cross(opA2_Ob, s21_Ob);
+sr22_Ob = cross(opA2_Ob, s22_Ob);
+sr23_Ob = cross(opB2_Ob, s23_Ob);
 sr24_Ob = cross(opC2_Ob, s24_Ob);
 sr25_Ob = cross(opC2_Ob, s25_Ob);
 
@@ -194,7 +203,7 @@ sr25_op = (sr25_Ob - p_previous(1:3)) * RotationMatrix;
 % Jc Common reciprocal screw 
 sr11c_Ob = [-sin(q11), cos(q11), 0];
 sr12c_Ob = [cos(q11), sin(q11), 0];
-sr21c_Ob = [-sin(q21), cos(q21), 0];
+sr21c_Ob = [sin(q21), -cos(q21), 0];
 sr22c_Ob = [cos(q21), sin(q21), 0];
 Jc_Ob = [  sr11c_Ob, 0 0 0;
            cross(opD1_Ob,s12_Ob), s12_Ob;
@@ -204,37 +213,37 @@ Jc_Ob = [  sr11c_Ob, 0 0 0;
            cross(opD2_Ob,s22_Ob), s22_Ob;
            cross(opC2_Ob,sr21c_Ob), sr21c_Ob;
            cross(opC2_Ob,s21_Ob), s21_Ob;
-      ];
+        ];
 % Jxk Reciprocal Screw as locking actuate joint
 Jx1_Ob = [  cross(opC1_Ob,s12_Ob),  s12_Ob;
-            cross(opC1_Ob,B1C1_Ob), B1C1_Ob;
-            cross(opA1_Ob,A1B1_Ob), A1B1_Ob;
+            cross(opC1_Ob,B1C1_Ob/norm(B1C1_Ob)), B1C1_Ob/norm(B1C1_Ob);
+            cross(opA1_Ob,A1B1_Ob/norm(A1B1_Ob)), A1B1_Ob/norm(A1B1_Ob);
             cross(opC2_Ob,s22_Ob),  s22_Ob; 
-            cross(opC2_Ob,B2C2_Ob), B2C2_Ob;
-            cross(opC2_Ob,A2C2_Ob), A2C2_Ob;
-       ];
+            cross(opC2_Ob,B2C2_Ob/norm(B2C2_Ob)), B2C2_Ob/norm(B2C2_Ob);
+            cross(opC2_Ob,A2C2_Ob/norm(A2C2_Ob)), A2C2_Ob/norm(A2C2_Ob);
+         ];
 Jx2_Ob = [  cross(s14_Ob,s15_Ob),   0 0 0;
-            cross(opC1_Ob,B1C1_Ob), B1C1_Ob;
-            cross(opA1_Ob,A1B1_Ob), A1B1_Ob;
+            cross(opC1_Ob,B1C1_Ob/norm(B1C1_Ob)), B1C1_Ob/norm(B1C1_Ob);
+            cross(opA1_Ob,A1B1_Ob/norm(A1B1_Ob)), A1B1_Ob/norm(A1B1_Ob);
             cross(s24_Ob,s25_Ob),   0 0 0;
-            cross(opC2_Ob,B2C2_Ob), B2C2_Ob;
-            cross(opC2_Ob,A2C2_Ob), A2C2_Ob;
-       ];
+            cross(opC2_Ob,B2C2_Ob/norm(B2C2_Ob)), B2C2_Ob/norm(B2C2_Ob);
+            cross(opC2_Ob,A2C2_Ob/norm(A2C2_Ob)), A2C2_Ob/norm(A2C2_Ob);
+         ];
 % Jqk
 % Case I: Jq1
 Jq1_1_Ob = s12_Ob * sr11_Ob' + s11_Ob * cross(opC1_Ob,s12_Ob)';
-Jq1_2_Ob = B1C1_Ob * sr12_Ob' + s12_Ob * cross(opC1_Ob,B1C1_Ob)';
-Jq1_3_Ob = A1B1_Ob * sr14_Ob' + s14_Ob * cross(opA1_Ob,A1B1_Ob)';
+Jq1_2_Ob = B1C1_Ob/norm(B1C1_Ob) * sr12_Ob' + s12_Ob * cross(opC1_Ob,B1C1_Ob/norm(B1C1_Ob))';
+Jq1_3_Ob = A1B1_Ob/norm(A1B1_Ob) * sr14_Ob' + s14_Ob * cross(opA1_Ob,A1B1_Ob/norm(A1B1_Ob))';
 Jq1_4_Ob = s22_Ob * sr21_Ob' + s21_Ob * cross(opC2_Ob,s22_Ob)';
-Jq1_5_Ob = B2C2_Ob * sr22_Ob' + s22_Ob * cross(opC2_Ob,B2C2_Ob)';
-Jq1_6_Ob = A2C2_Ob * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob)';
+Jq1_5_Ob = B2C2_Ob/norm(B2C2_Ob) * sr22_Ob' + s22_Ob * cross(opC2_Ob,B2C2_Ob/norm(B2C2_Ob))';
+Jq1_6_Ob = A2C2_Ob/norm(A2C2_Ob) * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob/norm(A2C2_Ob))';
 % Case II: Jq2
 Jq2_1_Ob = [0 0 0] * sr11_Ob' + s11_Ob * cross(s14_Ob,s15_Ob)';
-Jq2_2_Ob = B1C1_Ob * sr12_Ob' + s12_Ob * cross(opC1_Ob,B1C1_Ob)';
-Jq2_3_Ob = A1B1_Ob * sr14_Ob' + s14_Ob * cross(opA1_Ob,A1B1_Ob)';
+Jq2_2_Ob = B1C1_Ob/norm(B1C1_Ob) * sr12_Ob' + s12_Ob * cross(opC1_Ob,B1C1_Ob/norm(B1C1_Ob))';
+Jq2_3_Ob = A1B1_Ob/norm(A1B1_Ob) * sr14_Ob' + s14_Ob * cross(opA1_Ob,A1B1_Ob/norm(A1B1_Ob))';
 Jq2_4_Ob = [0 0 0] * sr21_Ob' + s21_Ob * cross(s24_Ob,s25_Ob)';
-Jq2_5_Ob = B2C2_Ob * sr22_Ob' + s22_Ob * cross(opC2_Ob,B2C2_Ob)';
-Jq2_6_Ob = A2C2_Ob * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob)';
+Jq2_5_Ob = B2C2_Ob/norm(B2C2_Ob) * sr22_Ob' + s22_Ob * cross(opC2_Ob,B2C2_Ob/norm(B2C2_Ob))';
+Jq2_6_Ob = A2C2_Ob/norm(A2C2_Ob) * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob/norm(A2C2_Ob))';
 
 % +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 
 % In instantaneous frame on the Moving Platform Op-xyz
