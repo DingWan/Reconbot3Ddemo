@@ -365,8 +365,16 @@ classdef RCB2T2Rsixbar
                     
                     %%------------------------------------------------------------------------
                     %---------------------------Position of A2-C2 ----------------------------
-                    if q21 >= -2*pi && q22 >= 0 && q23 >= -pi && q24 >= -105*pi/180 && q25 >= -2*pi ...
-                            && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= 105*pi/180 && q25 <= 2*pi...
+                    if q21 == 0 || q21 == pi || q21 == -pi || q21 == 2*pi || q21 == -2*pi 
+                        q22_LowerLimit = -pi/6;
+                        q24_LowerLimit = 135*pi/180;
+                    else
+                        q22_LowerLimit = 0;
+                        q24_LowerLimit = 105*pi/180;
+                    end
+                    
+                    if q21 >= -2*pi && q22 >= q22_LowerLimit && q23 >= -pi && q24 >= -105*pi/180 && q25 >= -2*pi ...
+                            && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= q24_LowerLimit && q25 <= 2*pi...
                             && isreal(q1q2(i,6:10)) ~= 0
                         jA2C2 = jA2C2 + 1;
                         %%-----------------Get the output values of Moving Platform-----------------------
@@ -380,8 +388,9 @@ classdef RCB2T2Rsixbar
                         if norm(C2(jA2C2,:) - C2_in_Ob) <= 1e-6
                             q2(jA2C2,1:5) = q1q2(i,6:10);
                             A2B2C(jA2C2,:) = [A2(jA2C2,:), B2(jA2C2,:), C2(jA2C2,:)];
-                        end   
+                        end
                     end
+                    
                 end
                 
                 % Here, I did a small trick:

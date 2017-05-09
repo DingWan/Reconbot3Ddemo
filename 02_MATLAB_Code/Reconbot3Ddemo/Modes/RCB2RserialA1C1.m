@@ -75,7 +75,10 @@ classdef RCB2RserialA1C1
             if isequal(p_BinaryCode, [1 1 0 0 0 0]) == 1
                 %% ----------------------- Calculate rotation matrix of two 2R modes -----------------------
                 if p(2) >= 0
-                    WSvalue = [0, 0, 0];
+                    WSvalue = [0, 0, 0];                    
+                    EulerAngle_q11_theta = [];
+                    q1q2_FeasibleSolution = [];
+                    ABC_FeasibleSolution = [];
                     return;
                 elseif p(2) < 0
                     % Four-bar linkage with Serial Chain A1C1: ----- isempty(p) = [1 1 0 0 0 0]
@@ -96,6 +99,9 @@ classdef RCB2RserialA1C1
                     if isreal(zop) == 0 || A1oppie > A1op
                         display('There exist no solution')
                         WSvalue = [0, 0, 0];
+                        EulerAngle_q11_theta = [];
+                        q1q2_FeasibleSolution = [];
+                        ABC_FeasibleSolution = [];
                         return;
                     end
                     p(3) = zop;

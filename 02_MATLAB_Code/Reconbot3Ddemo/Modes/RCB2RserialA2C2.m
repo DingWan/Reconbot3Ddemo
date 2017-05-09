@@ -96,7 +96,10 @@ classdef RCB2RserialA2C2
                     % Judge the exisitence of soultion
                     if isreal(zop) == 0 || A2oppie > A2op %|| zop - p(3) > 1e-6 || p(3) < 0 || norm(p - A2) - A2op > 1e-6
                         display('There exist no solution')
-                        WSvalue = [0, 0, 0];
+                        WSvalue = [0, 0, 0];    
+                        EulerAngle_q11_theta = [];
+                        q1q2_FeasibleSolution = [];
+                        ABC_FeasibleSolution = [];
                         return;
                     end
                     p(3) = zop;
