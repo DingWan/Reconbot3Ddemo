@@ -173,6 +173,7 @@ classdef RCB2T2Rsixbar
                 elseif isequal(p_BinaryCode, [1 1 1 0 1 1]) == 1
                     q11 = [];                    
                 end
+                
                 [EulerAngle_q11_theta] = EulerAngles_beta_gamma_q11_IK(beta, gamma, q11);
                 if isempty(EulerAngle_q11_theta) == 1
                     WSvalue = 0;

@@ -1,0 +1,37 @@
+clf
+clc
+clear 
+
+q11 = 0;
+q12 = q11;
+
+s12 = [ cos(q11),sin(q11) 0];
+s22 = [ -cos(q12), -sin(q12), 0];
+
+theta_start = -pi/3;
+
+e1 = cos(theta_start/2);
+e2 = s12(1)*sin(theta_start/2);
+e3 = s12(2)*sin(theta_start/2);
+e4 = s12(3)*sin(theta_start/2);
+quaternion_start =  quaternion( [ e1  e2  e3  e4 ] );
+
+theta_end = pi/3;
+e1 = cos(theta_end/2);
+e2 = s12(1)*sin(theta_end/2);
+e3 = s12(2)*sin(theta_end/2);
+e4 = s12(3)*sin(theta_end/2);
+quaternion_end = quaternion( [ e1  e2  e3  e4 ] );
+
+
+qn_start = quaternion_start.normalize;
+qn_end = quaternion_end.normalize;
+
+[angle, axis] = qn_start.AngleAxis
+[angle, axis] = qn_end.AngleAxis
+
+for t = 0.01;
+qs = slerp( qn_start, qn_end, t );
+
+PlotRotation(qn_start); hold on
+% PlotRotation(qn_end); hold on

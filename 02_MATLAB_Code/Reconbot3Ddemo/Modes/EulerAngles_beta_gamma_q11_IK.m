@@ -90,7 +90,7 @@
         EulerAngle_q11_theta = [];
 %         EulerAngle_q11_theta_2ndSolution = [];
 
-if isempty(beta) == 1 && isempty(gamma) ~= 1 && isempty(q11) ~= 1 %&& q11 ~= pi/2 && q11 ~= -pi/2
+if isempty(beta) == 1 && isempty(gamma) ~= 1 && isempty(q11) ~= 1 && q11 ~= pi/2 && q11 ~= -pi/2
        %% q11 (x£¬cos(q11)) and gamma (w,(tan(gamma)^2)) as inputs to calculate the output beta (x) and beta (v, tan(beta)^2+1)
         % beta  = []; gamma = pi/3; q11 = -pi/3 ;
         x = cos(q11);
