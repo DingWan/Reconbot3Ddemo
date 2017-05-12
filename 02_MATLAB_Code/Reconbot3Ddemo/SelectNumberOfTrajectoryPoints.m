@@ -23,14 +23,14 @@ for NumTP = 1:NumTrajPoints_num
     p_0 = [0 0 253.3124 0 0 0, 0 0];
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% ---------------------
-    IK_p_ABC_q1q2;
+    IK_ModeSelection;
     %%--------------------------
     
     %%
     if isreal(q1q2) == 0 || (WSvalue(1) == 0 && WSvalue(2) == 0 && WSvalue(3) == 0)
         errordlg('Inputs exceed workspace, Please Modify!','Workspace Error');
         while(WSvalue(1) == 0) 
-            IK_p_ABC_q1q2;
+            IK_ModeSelection;
         end
         %q1q2 = [0, pi/3, pi/3, pi/3, 0, 0, pi/3, pi/3, pi/3, 0];
     end

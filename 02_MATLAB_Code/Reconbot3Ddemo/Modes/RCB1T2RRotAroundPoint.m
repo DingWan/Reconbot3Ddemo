@@ -1,4 +1,4 @@
-classdef RCB1T3RRotAroundPoint
+classdef RCB1T2RRotAroundPoint
     % RCB1T2RRotAroundPoint operational mode
     % RCB1T2RRotAroundPoint is actually not a operational mode due to the
     % motion composed of 3T1R-2T2R-Fivebar-Threebar.
@@ -20,7 +20,7 @@ classdef RCB1T3RRotAroundPoint
         
     methods
         
-        function obj = RCB1T3RRotAroundPoint(pos,q11q12q14q23,L1,L2)
+        function obj = RCB1T2RRotAroundPoint(pos,q11q12q14q23,L1,L2)
             if nargin > 0
                 obj.l1 = L1;
                 obj.l2 = L2;
@@ -29,7 +29,7 @@ classdef RCB1T3RRotAroundPoint
             end
         end
         
-        function [p, EulerAngle_q11_theta, ABC_FeasibleSolution, q1q2_FeasibleSolution, WSvalue] = RCB_1T3R_RotAroundPoint_IK(obj)
+        function [p, EulerAngle_q11_theta, ABC_FeasibleSolution, q1q2_FeasibleSolution, WSvalue] = RCB_1T2R_RotAroundPoint_IK(obj)
             % Mechanism rotate around point p(1:3):  [1 1 1 0 1 1]
             % p = [[], [], z, [], beta, gamma]
             L1 = obj.l1;
@@ -43,9 +43,9 @@ classdef RCB1T3RRotAroundPoint
                     p(i) = 0;
                 end
             end
-            alpha = po{4};
-            beta  = po{5};
-            gamma = po{6};
+            
+            q11_Axis  = po{5};
+            theta = po{6};
             
             switch length(po)
                 case 7 % Serial A1C1 & A2C2
@@ -103,9 +103,7 @@ classdef RCB1T3RRotAroundPoint
                 WSvalue_2T2R_SinguPosA1C1 = 1;
                 WSvalue_1T3R_SinguPosA2C2 = 1;
             else
-                name = '2T2R-1T3RRotAroundPoint';
-                fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                    name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
+                
                 % Euler angle IK
                 if isequal(p_BinaryCode, [0 0 1 0 1 1]) == 1
                     % Mechanism rotate around point p(1:3):  [1 1 1 0 1 1]
@@ -117,10 +115,9 @@ classdef RCB1T3RRotAroundPoint
                     else
                         po{1} = 0;
                         po{2} = 0;
-                    end
-                        q11 = []; % inputs: beta, gamma;
+                    end                   
                 end
-                [EulerAngle_q11_theta] = EulerAngles_beta_gamma_q11_IK(beta, gamma, q11);
+                [EulerAngle_q11_theta] = EulerAngles_theta_q11_IK(theta, q11_Axis);
                 %%--------Choose one of the correct "EulerAngle_q11_theta" ----------
                 for i = 1:length(EulerAngle_q11_theta(:,1))
                     RotationMatrix = eul2rotm(EulerAngle_q11_theta(i,1:3));
@@ -141,7 +138,14 @@ classdef RCB1T3RRotAroundPoint
                     else
                         continue;
                     end
-                end                
+                end  
+                
+                po{4} = alpha;
+                po{5} = beta;
+                po{6} = gamma;
+                name = '2T2R-1T3RRotAroundPoint';
+                fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+                    name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
             end  
             
             %% -----------------------Calculate eight possbile outputs for ABC(1:8), q1q2(1:8)-----------------------

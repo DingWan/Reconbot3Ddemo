@@ -70,9 +70,8 @@ classdef RCB2T2Rsixbar
                     p(i) = po{i};
                 end
             end
-            alpha = po{4};
-            beta  = po{5};
-            gamma = po{6};
+            
+            theta = po{6};
             
             switch length(po)
                 case 7 % Serial A1C1 & A2C2
@@ -129,9 +128,7 @@ classdef RCB2T2Rsixbar
                 WSvalue_2T2R_SinguPosA1C1 = 1;
                 WSvalue_2T2R_SinguPosA2C2 = 1;
             else
-                name = '2T2R-SixBar';
-                    fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
+                
                 % Euler angle IK
                 % 1. Consider that when p(2)=0 (with two situation p(1)=0 or p(1)~=0), there exists no result of q11. how should we do?
                 % 2. When calculates IK, which method should we use: Euler-angle or axis-angle?
@@ -158,7 +155,7 @@ classdef RCB2T2Rsixbar
                     % p = [x, y, z, [], beta, []]
                     % display('Notice: Inputs are:p = [x, y, z, [], beta, []]');
                     % display('Mechanism in a general six-bar linkage');                    
-                    gamma = [];                    
+                    theta = [];                    
                     if p(1) == 0 && p(2) == 0 || p(3) < 0
                         WSvalue_2T2R = 0;
                         q11 = q11_SP_A1C1_A2C2_overlap;
@@ -174,7 +171,7 @@ classdef RCB2T2Rsixbar
                     q11 = [];                    
                 end
                 
-                [EulerAngle_q11_theta] = EulerAngles_beta_gamma_q11_IK(beta, gamma, q11);
+                [EulerAngle_q11_theta] = EulerAngles_theta_q11_IK(theta, q11);
                 if isempty(EulerAngle_q11_theta) == 1
                     WSvalue = 0;
                     return;
@@ -198,6 +195,12 @@ classdef RCB2T2Rsixbar
                         end
                     end
                 end
+                po{4} = alpha;
+                po{5} = beta;
+                po{6} = gamma;
+                name = '2T2R-SixBar';
+                    fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
             end
             
             %% -----------------------Calculate four possbile outputs for ABC(1:8), q1q2(1:8)-----------------------

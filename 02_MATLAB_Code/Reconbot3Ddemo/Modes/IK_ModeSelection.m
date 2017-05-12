@@ -53,7 +53,7 @@
                     %%------------------------ 3T1R IK ------------------------
                     % 3T1R mode:  [1 1 1 1 0 0]
                     % p = [x, y, z, alpha, [], []];
-                    po_cell = inputdlg({'x ([-L1/2,L1/2])','y ([-L1/2,L1/2])','z(z>0)','alpha ([0,pi/2])'},'3T1R', [1 20; 1 20; 1 20; 1 20]);
+                    po_cell = inputdlg({'x ([-L1/2,L1/2])','y ([-L1/2,L1/2])','z(z>0)','Theta =(-90~90)'},'3T1R', [1 20; 1 20; 1 20; 1 20]);
                     for i=1:3 po_num(i) = str2num(po_cell{i}); end
                     po_num(4) = str2num(po_cell{4}) * pi / 180;
                     %po_num = [77.781745930520227684092879831533, -32.2183, 150, -pi/4]; SingularityA1C1
@@ -105,7 +105,7 @@
                 case 3 % 3T1R-SingularityA1C1                      
                     %po_num = [77.781745930520227684092879831533, -32.2183, 150, -pi/4]; SingularityA1C1
                     display( 'Mode switch to: "3T1R-SingularityA1C1"');
-                    po_cell = inputdlg({'z(z>0)','alpha ([0,pi/2])', 'q11:SingularityA1C1'},'3T1R-SingularityA1C1', [1 20; 1 20; 1 20;]);
+                    po_cell = inputdlg({'z(z>0)','Theta =(-90~90)', 'q11:SingularityA1C1'},'3T1R-SingularityA1C1', [1 20; 1 20; 1 20;]);
                     po_num(3) = str2num(po_cell{1}); 
                     po_num(4) = str2num(po_cell{2}) * pi / 180;
                     po_num(1) = -l1/2 * sin(po_num(4));
@@ -119,7 +119,7 @@
                 case 4 % 3T1R-SingularityA2C2                    
                     %po_num = [77.781745930520227684092879831533, 32.2183,  150, pi/4]; SingularityA2C2
                     display( 'Mode switch to: "3T1R-SingularityA2C2"');
-                    po_cell = inputdlg({'z(z>0)','alpha ([0,pi/2])', 'q21:SingularityA2C2'},'3T1R-SingularityA2C2', [1 20; 1 20; 1 20;]);
+                    po_cell = inputdlg({'z(z>0)','Theta =(-90~90)', 'q21:SingularityA2C2'},'3T1R-SingularityA2C2', [1 20; 1 20; 1 20;]);
                     po_num(3) = str2num(po_cell{1}); 
                     po_num(4) = str2num(po_cell{2}) * pi / 180;
                     po_num(1) = l1/2 * sin(po_num(4));
@@ -147,7 +147,7 @@
                     %%------------------------ 2T2R IK: Six-bar ------------------------
                     % Mechanism in a general six-bar linkage:  [1 1 1 0 0 1]
                     % p = [x, y, z, [], [], gamma]
-                    po_cell = inputdlg({'x (-L2,L2)','y (-L2,L2)','z ([0, 2*L2])','gamma ([0,pi/2])'},'2T2R-6-Bar', [1 20; 1 20; 1 20; 1 20;]);
+                    po_cell = inputdlg({'x (-L2,L2)','y (-L2,L2)','z ([0, 2*L2])','Theta =(-90~90)'},'2T2R-6-Bar', [1 20; 1 20; 1 20; 1 20;]);
                     for i=1:3 po_num(i) = str2num(po_cell{i}); end
                     po_num(4) = str2num(po_cell{4}) * pi / 180;
                     if po_num(1) == 0 && po_num(2) == 0 && po_num(4) ~= 0
@@ -156,21 +156,14 @@
                         else
                             % Mechanism rotate around point p(1:3):  [0 0 1 0 1 1]
                             % p = [[], [], z, [], beta, gamma]; x = y = 0
-                            po_cell = inputdlg({'beta ([0,pi/2])'},'2T2R-6-Bar', [1 20]);
-                            po_num(5) = str2num(po_cell{1});
-                            po = {0, 0, po_num(3), [], po_num(5), po_num(4)};
+                            Mode = 7;
+                            po_cell = inputdlg({'q11 =(-360,360)'},'2T2R-6-Bar', [1 20]);
+                            po_num(5) = str2num(po_cell{1}) * pi / 180;
+                            po = {[], [], po_num(3), [], po_num(5), po_num(4)};
                             q11q12q14q23 = [];
-                            obj1T2RRotAroundPoint = RCB1T3RRotAroundPoint(po,q11q12q14q23,l1,l2);
-                            [EulerAngle_q11_theta, ABC, q1q2] = obj1T2RRotAroundPoint.RCB_1T2R_RotAroundPoint_IK;
+                            obj1T2RRotAroundPoint = RCB1T2RRotAroundPoint(po,q11q12q14q23,l1,l2);
+                            [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj1T2RRotAroundPoint.RCB_1T2R_RotAroundPoint_IK;
                         end
-                    elseif po_num(2) == 0
-                        po_cell = inputdlg({'beta ([0,pi/2])'},'2T2R-6-Bar', [1 20]);
-                        po_num(5) = str2num(po_cell{1}) * pi / 180;
-                        po = {po_num(1), po_num(2), po_num(3), [], po_num(5), 0};
-                        q11q12q14q22 = [];
-                        obj2T2Rfivebar = RCB2T2Rfivebar(po,q11q12q14q22,l1,l2);
-                        [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rfivebar.RCB_2T2R_FiveBar_IK;
-                        Mode = 8;
                     else
                         po = {po_num(1), po_num(2), po_num(3), [], [], po_num(4)};
                         q11q12q14q23 = [];
@@ -181,18 +174,18 @@
                     %%------------------------ 2T2R IK£ºRotate around point  ------------------------
                     % Mechanism rotate around point p(1:3):  [0 0 1 0 1 1]
                     % p = [[], [], z, [], beta, gamma]; x = y = 0
-                    po_cell = inputdlg({'z ([0, 2*L2])','beta ([0,pi/2])','gamma ([0,pi/2])'},'2T2R-6-Bar', [1 20; 1 20; 1 20;]);
+                    po_cell = inputdlg({'z ([0, 2*L2])','q11 =(-360,360)','Theta =(-90~90)'},'2T2R-6-Bar', [1 20; 1 20; 1 20;]);
                     for i=2:3 po_num(i) = str2num(po_cell{i}) * pi / 180; end
                     po_num(1) = str2num(po_cell{1});
                     po = {[], [], po_num(1), [], po_num(2), po_num(3)};
                     q11q12q14q23 = [];
-                    obj1T3RRotAroundPoint = RCB1T3RRotAroundPoint(po,q11q12q14q23,l1,l2);
-                    [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj1T3RRotAroundPoint.RCB_1T3R_RotAroundPoint_IK;
+                    obj1T2RRotAroundPoint = RCB1T2RRotAroundPoint(po,q11q12q14q23,l1,l2);
+                    [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj1T2RRotAroundPoint.RCB_1T2R_RotAroundPoint_IK;
                 case 8
                     %%------------------------ 2T1R IK£ºPlanar Five-bar ------------------------
                     % Mechanism transfers into Planar five-bar Linkage:  [1 1 1 1 1 1]
                     % p = [x, 0, z, [], beta, 0]
-                    po_cell = inputdlg({'x (-L2,L2)','z ([0, 2*L2])','beta ([0,pi/2])'},'2T2R-5-Bar', [1 20; 1 20; 1 20;]);
+                    po_cell = inputdlg({'x (-L2,L2)','z ([0, 2*L2])','Theta =(-90~90)'},'2T2R-5-Bar', [1 20; 1 20; 1 20;]);
                     for i=1:2 po_num(i) = str2num(po_cell{i}); end
                     po_num(3) = str2num(po_cell{3}) * pi / 180;
                     po = {po_num(1), 0, po_num(2), [], po_num(3), []};
@@ -203,7 +196,7 @@
                     %%------------------------- 2T1R IK£ºPlanar Three-bar -----------------------
                     % Mechanism transfers into Planar three-bar Linkage:  [1 1 1 1 1 1]
                     % p = [x, 0, z, 0, beta, []]
-                    po_cell = inputdlg({'x (-L2,L2)','z ([0, 2*L2])','beta ([0,pi/2])'},'2T1R-3-BarSerial', [1 20; 1 20; 1 20;]);
+                    po_cell = inputdlg({'x (-L2,L2)','z ([0, 2*L2])','Theta =(-90~90)'},'2T1R-3-BarSerial', [1 20; 1 20; 1 20;]);
                     for i=1:2 po_num(i) = str2num(po_cell{i}); end
                     po_num(3) = str2num(po_cell{3}) * pi / 180;
                     po = {po_num(1), 0, po_num(2), 0, po_num(3), []};

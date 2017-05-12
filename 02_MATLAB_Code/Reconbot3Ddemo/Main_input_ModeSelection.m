@@ -28,7 +28,7 @@ q0q1q2_HomePosition = [0, 0, pi/3, pi/3, -pi/6, 0, 0, pi/3, pi/3, -pi/6, 0];
 p_0 = [0 0 253.3124 0 0 0, 0 0];
 
 addpath(genpath(pwd)); % Enalbe all folders inside "SSoop"
- InitHome;       
+%  InitHome;       
 
 %% Select Mode + Posture
 SelectNumberOfTrajectoryPoints;
@@ -51,7 +51,7 @@ SelectNumberOfTrajectoryPoints;
 %% Motion planning
 clc
 % Intepotation Points and Time
-NumIntepoPoints = 20;
+NumIntepoPoints = 50;
 Start_Time = 0;
 Time_inteval = 5;
 %
@@ -195,7 +195,7 @@ end
 h = msgbox('Check Completed, Input values are correct!');
 
 %% 3D Animation
-for i = 41:length(q0q1q2_Pos_mat)-20  
+for i = 51:length(q0q1q2_Pos_mat)-50  
     %========================== Animation ============================
     ReconbotANI(q0q1q2_Pos_mat(i,:));   
 %     set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off

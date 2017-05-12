@@ -354,7 +354,7 @@ end
                     case 6 % 2T2R-6-Bar
                         
                     case 7 % 2T2R-6-Bar(xy=0) 
-                        
+                        Self_adjustment_Enable_Disable = 0;
                     case 8 % 2T2R-5-Bar
                         
                     case 9 % 2T1R-3-BarSerial

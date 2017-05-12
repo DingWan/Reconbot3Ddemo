@@ -128,30 +128,32 @@ q0 = inputq0;
             q11q12q14q23 = [];
             % Judge the start point
             % We assume that the precision is 0.02mm (1) as industry manipulators
-            if po{1} == 0 && po{2} == 0
-                q11 = inputq11;
-                q21 = inputq21;
-                PosOri = {po{1}, po{2}, po{3}, [], [], po{6}, q11, q21};
+            if isempty(po{1}) == 1 && isempty(po{2}) == 1
+                if po{5} == 0 && po{6} == 0
+                    q11 = inputq11;
+                    q21 = inputq21;
+                    PosOri = {[], [], po{3}, [], po{5}, po{6}, q11, q21};
+                else
+                    PosOri = po;
+                end                
+                obj1T2RRotAroundPoint = RCB1T2RRotAroundPoint(PosOri,q11q12q14q23,l1,l2);
+                [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj1T2RRotAroundPoint.RCB_1T2R_RotAroundPoint_IK;                
             else
-                if isempty(po{5}) == 1
-                    PosOri = {po{1}, po{2}, po{3}, [], [], po{6}};
-                elseif isempty(po{6}) == 1 % Only used for Mode 1/6 to Mode 8/9
-                    PosOri = {po{1}, po{2}, po{3}, [], po{5}, []};
-                else % Only used for Mode 1/6 to Mode 8/9
-                    PosOri = {po{1}, po{2}, po{3}, [], po{5}, po{6}};
+                if po{1} == 0 && po{2} == 0
+                    q11 = inputq11;
+                    q21 = inputq21;
+                    PosOri = {po{1}, po{2}, po{3}, [], [], po{6}, q11, q21};
+                else
+                    if isempty(po{5}) == 1
+                        PosOri = {po{1}, po{2}, po{3}, [], [], po{6}};
+                    elseif isempty(po{6}) == 1 % Only used for Mode 1/6 to Mode 8/9
+                        PosOri = {po{1}, po{2}, po{3}, [], po{5}, []};
+                    else % Only used for Mode 1/6 to Mode 8/9
+                        PosOri = {po{1}, po{2}, po{3}, [], po{5}, po{6}};
+                    end
                 end
-            end
-            if abs(po{2}) > 1e-12 % y ~= 0
                 obj2T2Rsixbar = RCB2T2Rsixbar(PosOri,q11q12q14q23,l1,l2);
                 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
-            elseif abs(po{1}) < 1e-12 && abs(po{2}) < 1e-12% && IntepPointNum ~= 1% x = y = 0                
-                obj2T2Rsixbar = RCB2T2Rsixbar(PosOri,q11q12q14q23,l1,l2);
-                [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;                
-            elseif abs(po{1}) > 1e-12 && abs(po{2}) < 1e-12 % y = 0
-                po = {po{1}, 0, po{3}, [], po{5}, 0};
-                q11q12q14q22 = [];
-                obj2T2Rfivebar = RCB2T2Rfivebar(PosOri,q11q12q14q22,l1,l2);
-                [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rfivebar.RCB_2T2R_FiveBar_IK;
             end
         case 7 % 2T2R-6-Bar(xy=0)
             % Mechanism rotate around point p(1:3):  [0 0 1 0 1 1]
@@ -166,8 +168,8 @@ q0 = inputq0;
             else
                 PosOri = {[], [], po{3}, [], po{5}, po{6}};
             end
-            obj1T3RRotAroundPoint = RCB1T3RRotAroundPoint(PosOri,q11q12q14q23,l1,l2);
-            [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj1T3RRotAroundPoint.RCB_1T3R_RotAroundPoint_IK;
+            obj1T3RRotAroundPoint = RCB1T2RRotAroundPoint(PosOri,q11q12q14q23,l1,l2);
+            [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj1T3RRotAroundPoint.RCB_1T2R_RotAroundPoint_IK;
         case 8 % 2T2R-5-Bar
             %We need to intepolate on o-xz plane
             % Mechanism transfers into Planar five-bar Linkage:  [1 1 1 1 1 1]

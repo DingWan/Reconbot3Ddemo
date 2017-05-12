@@ -37,9 +37,8 @@ classdef RCB2T2Rfivebar
                     p(i) = po{i};
                 end
             end
-            alpha = po{4};
-            beta  = po{5};
-            gamma = po{6};
+            
+            theta  = po{5};
             
             switch length(po)
                 case 7 % Serial A1C1 & A2C2
@@ -91,12 +90,9 @@ classdef RCB2T2Rfivebar
                 % Euler angle IK
                     % Mechanism transfers into Planar five-bar Linkage:  [1 1 1 0 1 1]
                     % p = [x, 0, z, 0, beta, 0]
-                    name = '2T2R-FiveBar';
-                    fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
-                    q11 = pi/2; % inputs: beta, q11;
-                    gamma = 0;    
-                [EulerAngle_q11_theta] = EulerAngles_beta_gamma_q11_IK(beta, gamma, q11);
+                    
+                q11 = pi/2; % inputs: beta, q11; 
+                [EulerAngle_q11_theta] = EulerAngles_theta_q11_IK(theta, q11);
             end
             
             %% --------Choose one of the correct "EulerAngle_q11_theta" ----------
@@ -121,6 +117,13 @@ classdef RCB2T2Rfivebar
                 end
             end
             
+            po{4} = alpha;
+            po{5} = beta;
+            po{6} = gamma;
+            name = '2T2R-FiveBar';
+            fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
+                    
             %% ------Calculate eight possbile outputs for ABC(1:8), q1q2(1:8)-----
             %--------------------- First step --------------------
             %Calculate k1(parallel to plane A1B1C1),k2(parallel to plane A2B2C2),
