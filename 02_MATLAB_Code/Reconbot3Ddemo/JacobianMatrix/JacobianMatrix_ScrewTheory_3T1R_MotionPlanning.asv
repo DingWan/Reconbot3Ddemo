@@ -14,7 +14,7 @@ PosOri = {0 0 0.2533124 0 [] [], pi/2 -pi/2};
 
 %% Calculate the IK Jacobian
 % -----------3T1R-------------
-    po = { 0.10 0.100 0.200 -0.1*pi/180 [] []};
+    po = { 0.100 0.100 0.200 -30*pi/180 [] []};
     q11q12q21q22 = [];
     deltapo = 0.000001;
     Num_po_variables = 4;
@@ -43,7 +43,7 @@ PosOri = {0 0 0.2533124 0 [] [], pi/2 -pi/2};
                         ];
     end
     J_dx2dq_eul
-    det(J_dx2dq_eul)
+    det()
     J_dx2dq_eul * [ 1  1  1  pi/180]' * 180/pi;
     [U,S,V] = svd(J_dx2dq_eul(1:4,:));
     inv(J_dx2dq_eul) ;
