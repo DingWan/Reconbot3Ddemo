@@ -20,12 +20,15 @@ clc
 clear 
 %clf
 
-l1 = 230.0692;
-l2 = 146.25;
-deg = pi/180;
+l1 = 0.2300692;
+l2 = 0.14625;
+% l1 = 230.1390;
+% l2 = 147.7;
 
 q0q1q2_HomePosition = [0, 0, pi/3, pi/3, -pi/6, 0, 0, pi/3, pi/3, -pi/6, 0];
-p_0 = [0 0 253.3124 0 0 0, 0 0];
+p_0 = [0 0 0.2533124 0 0 0, 0 0]; % 2 * l2 * sin(pi/3)
+
+deg = pi/180;
 
 addpath(genpath(pwd)); % Enalbe all folders inside "SSoop"
 %  InitHome;       
@@ -80,7 +83,7 @@ for IntepPointNum = 1 : NumTP
     
     if IntepPointNum == 1
         Mode = 5;
-        Posture = [0 0 253.3124 0 0 0, 0 0];
+        Posture = [0 0 0.2533124 0 0 0, 0 0];
     else        
     end
     
@@ -124,7 +127,7 @@ IntepPointNum = IntepPointNum + 2;
 tic
 %---------------
 for OnlyUsedforFoldingThisPart = 1:1
-    Mode_Pos_Ori_TrajPoints_cell{IntepPointNum} = { 5, {0 0 253.3124 0 [] [], 0 ,0},q0q1q2_HomePosition};
+    Mode_Pos_Ori_TrajPoints_cell{IntepPointNum} = { 5, {0 0 0.2533124 0 [] [], 0 ,0},q0q1q2_HomePosition};
     % First step: Calculate the next step and get the second row values of q11 and q21 after
     % interpotation, and assign to the previous step.0
     % Assgin Input value
@@ -204,7 +207,7 @@ for i = 51:length(q0q1q2_Pos_mat)-50
 end
 
 %% Moving Platform Trajectory
-% Displacement = [250,250,167.4400];
+% Displacement = [250,250,167.4400] / 1000;
 % for i = 1:length(q0q1q2_Pos_mat(:,1))
 %     Displacement_mat(i,:) = Displacement;
 % end
@@ -216,10 +219,10 @@ end
 % %============================ End ==============================
 
 %----------------- plot xyz axes of base point --------------
-    Displacement = [250,250,83.5+60.44+(45.5-22)];
-    x_axis = [40 0 0] + Displacement;
-    y_axis = [0 40 0] + Displacement;
-    z_axis = [0 0 40] + Displacement;
+    Displacement = [250,250,83.5+60.44+(45.5-22)] / 1000 ;
+    x_axis = [40 0 0] / 1000 + Displacement;
+    y_axis = [0 40 0] / 1000 + Displacement;
+    z_axis = [0 0 40] / 1000 + Displacement;
     OP= [0 0 0] + Displacement;
     xyz = (rotz(-90) * [OP;x_axis;OP;y_axis;OP;z_axis]')';
     j = 1:2;

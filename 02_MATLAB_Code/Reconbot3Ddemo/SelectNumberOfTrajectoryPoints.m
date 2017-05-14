@@ -20,7 +20,7 @@ for NumTP = 1:NumTrajPoints_num
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     q0 = 0; 
     q0q1q2_0 = [0, 0, pi/3, pi/3, -pi/6, 0, 0, pi/3, pi/3, -pi/6, 0];%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    p_0 = [0 0 253.3124 0 0 0, 0 0];
+    p_0 = [0 0 0.2533124 0 0 0, 0 0];
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %% ---------------------
     IK_ModeSelection;
@@ -63,7 +63,7 @@ for NumTP = 1:NumTrajPoints_num
     SelectMode(NumTP) = Mode;    
     
     if NumTP == 1 % The starting step is always the singularity position in 3T1R mode
-        Mode_Pos_Ori_TrajPoints_cell{1,1} = {5,{0, 0, 253.3124, 0, [], [], 0, 0},q0q1q2_0};     
+        Mode_Pos_Ori_TrajPoints_cell{1,1} = {5,{0, 0, 0.2533124, 0, [], [], 0, 0},q0q1q2_0};     
     end
     
     if Mode == 10 || Mode == 11
