@@ -118,6 +118,12 @@ public:
   //void mode();
 };
 
+/*************************************************************************
+ ** Function definition
+ ** All the class member functions have to be built or written below this
+ ** seccion.
+ *************************************************************************/
+
 void ReConBot::trajClient(){
   /**
    * tell the action client that we want to spin a thread by default
@@ -170,8 +176,11 @@ void ReConBotPub::trajectoryPublisherStart(ros::NodeHandle &nh, int topicQuery){
 
 void ReConBotPub::publisher(control_msgs::FollowJointTrajectoryGoal goal){
   int flag =0;
+  int flag1 =0;
   while (ros::ok()&&flag==0) {
-    ROS_INFO("Waiting for Subscribers...");
+    if (flag1==0) {
+      ROS_INFO("Waiting for Subscribers...");
+    }
   //ros::Rate loop_rate(0.1);
   //nhPub_pub.publish(goal);
   //ros::spinOnce();
@@ -185,6 +194,7 @@ void ReConBotPub::publisher(control_msgs::FollowJointTrajectoryGoal goal){
       ROS_INFO("Goal published!");
       flag = 1;
     }
+    flag1 =1;
   }
 }
 control_msgs::FollowJointTrajectoryGoal ReConBotPub::buildTrajectory(){

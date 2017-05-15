@@ -26,5 +26,13 @@ add_executable(l_arm_trajectory_publisher l_arm_trajectory_publisher.cpp)
 target_link_libraries(l_arm_trajectory_publisher ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS l_arm_trajectory_publisher DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+add_executable(T3R_trajectory_publisher T3R_trajectory_publisher.cpp)
+target_link_libraries(T3R_trajectory_publisher ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS T3R_trajectory_publisher DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+add_executable(T3R_move_group_interface T3R_move_group_interface.cpp)
+target_link_libraries(T3R_move_group_interface ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS T3R_move_group_interface DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 
 install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
