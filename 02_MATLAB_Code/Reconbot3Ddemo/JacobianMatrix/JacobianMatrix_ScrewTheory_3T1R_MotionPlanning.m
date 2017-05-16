@@ -10,7 +10,7 @@ l2 = 0.1477;
 deg = pi/180;
 addpath(genpath(pwd)); % Enalbe all folders
 
-PosOri = [0 0 0.1477 0 0 0, 0 0];
+PosOri = [0 0 0.208879343162506 0 0 0, 0 0];
 tic
 %% Calculate the IK Jacobian
 % -----------3T1R-------------

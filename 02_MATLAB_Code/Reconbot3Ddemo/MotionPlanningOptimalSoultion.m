@@ -358,9 +358,9 @@ for i = 1:length(MPOTP_cell)
             end
         end
 
-        if j == 20
-           x = 1; 
-        end
+%         if j == 20
+%            x = 1; 
+%         end
         % IK solution
         [ p, ~, ~, q1q2, ~ ] = IK(Mode, PosOri, q0, q11, q21, q0q1q2_OptimalRow(length(q0q1q2_OptimalRow(:,1)),:), l1, l2);
         q0q1q2_CurrentStep = [zeros(length(q1q2(:,1)),1),q1q2];
