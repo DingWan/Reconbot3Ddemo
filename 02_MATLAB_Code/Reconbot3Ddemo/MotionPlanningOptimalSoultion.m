@@ -258,13 +258,17 @@ for i = 1:length(MPOTP_cell)
         
         % Position, Velocity, Acceleration Calcuation
         if length(Pos_Intep(:,1)) == 6
-            Pos_Intep(7:8,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
-            Vel_Intep(7:8,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
-            Acc_Intep(7:8,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
+            Pos_Intep(7:10,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
+            Vel_Intep(7:10,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
+            Acc_Intep(7:10,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)]; 
         elseif length(Pos_Intep(:,1)) == 7
-            Pos_Intep(8,:) = zeros(1,NumIntepoPoints);
-            Vel_Intep(8,:) = zeros(1,NumIntepoPoints);
-            Acc_Intep(8,:) = zeros(1,NumIntepoPoints);
+            Pos_Intep(8:10,:) = [ zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
+            Vel_Intep(8:10,:) = [ zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
+            Acc_Intep(8:10,:) = [ zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];              
+        elseif length(Pos_Intep(:,1)) == 8
+            Pos_Intep(9:10,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
+            Vel_Intep(9:10,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];
+            Acc_Intep(9:10,:) = [zeros(1,NumIntepoPoints); zeros(1,NumIntepoPoints)];    
         end
         MP_Pos_Intep = [MP_Pos_Intep; Pos_Intep']; %MP: moving Platform
         MP_Vel_Intep = [MP_Vel_Intep; Vel_Intep'];
@@ -354,9 +358,9 @@ for i = 1:length(MPOTP_cell)
             end
         end
 
-%         if j == 20
-%            x = 1; 
-%         end
+        if j == 20
+           x = 1; 
+        end
         % IK solution
         [ p, ~, ~, q1q2, ~ ] = IK(Mode, PosOri, q0, q11, q21, q0q1q2_OptimalRow(length(q0q1q2_OptimalRow(:,1)),:), l1, l2);
         q0q1q2_CurrentStep = [zeros(length(q1q2(:,1)),1),q1q2];

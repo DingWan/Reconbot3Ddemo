@@ -201,7 +201,9 @@ q0 = inputq0;
         case 12 % Fixed-SerialA1C1A2C2
             % Mechanism transit into two serial chain mechanism:  [1 1 1 0 0 0]
             % p = [0, 0, 0, [], [], []]
-            [EulerAngle_q11_theta, ABC, q1q2] = RCB_FixedSerialChain_IK(po, l1, l2);
+            q11q12q21q22 = [];
+            objRCBFixedSerialChain = RCBFixedSerialChain(po,q11q12q21q22,l1,l2);
+            [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = objRCBFixedSerialChain.RCB_FixedSerialChain_IK;
     end    
     %%--------------------------- Method: End -----------------------------
     

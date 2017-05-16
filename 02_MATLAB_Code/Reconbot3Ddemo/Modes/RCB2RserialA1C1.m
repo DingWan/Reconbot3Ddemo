@@ -43,11 +43,14 @@ classdef RCB2RserialA1C1
             
             switch length(po)
                 case 7 % Serial A1C1 & A2C2
+                    %============== Method I ===============
                     if p(2) < 0
                         q12 = po{7};
                     elseif p(2) > 0
                         q22 = po{7};
                     end
+                    %============== Method II ===============
+%                     q12 = po{7};
                 case 10
                     q11 = po{7};
                     q12 = po{8};
@@ -74,6 +77,7 @@ classdef RCB2RserialA1C1
             %% ----------------------- Calculate rotation matrix according to inputs -----------------------
             if isequal(p_BinaryCode, [1 1 0 0 0 0]) == 1
                 %% ----------------------- Calculate rotation matrix of two 2R modes -----------------------
+                %============== Method I ===============
                 if p(2) >= 0
                     WSvalue = [0, 0, 0];                    
                     EulerAngle_q11_theta = [];
@@ -85,7 +89,7 @@ classdef RCB2RserialA1C1
                     % p = [x, y, [], [], [], []]; y < 0
                     name = '2R-SerialA1C1';
                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
+                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);                    
                     % 1.
                     q11 = - atan(p(1)/p(2));
                     Oboppie = sqrt(p(1)^2 + p(2)^2);
@@ -128,7 +132,7 @@ classdef RCB2RserialA1C1
                     angleA2B2C2 = acos((2 * L2^2 - norm(vector_A2C2)^2) / (2 * L2^2));
                     %-------------------q11-q15, q21-q25------------------------------
                     q21 = q11;
-                    angleA1B1C1 = 0;
+                    angleA1B1C1 = 0;    
                 end
                 % ----------------------Calculate the Euler angle--------------------------
                 u_RotationAxis = [cos(q11), sin(q11), 0];
@@ -136,15 +140,44 @@ classdef RCB2RserialA1C1
                 %-- m=vrrotvec2mat(r):Convert rotation from axis-angle to matrix representation--
                 Matrix_from_axis_angle = vrrotvec2mat(r);
                 %-- eul = rotm2eul(rotm): Extract Euler angles from homogeneous transformation--
-                EulerAngle = rotm2eul(Matrix_from_axis_angle);
-                
+                EulerAngle = rotm2eul(Matrix_from_axis_angle);                
                 EulerAngle_q11_theta = [EulerAngle, q11, theta];
+                
+                %============== Method II ===============
+%                 q11 = p(1);
+%                 theta = p(2);
+%                 % ----------------------Calculate the Euler angle--------------------------
+%                 u_RotationAxis = [cos(q11), sin(q11), 0];
+%                 r = [u_RotationAxis, theta];
+%                 %-- m=vrrotvec2mat(r):Convert rotation from axis-angle to matrix representation--
+%                 Matrix_from_axis_angle = vrrotvec2mat(r);
+%                 %-- eul = rotm2eul(rotm): Extract Euler angles from homogeneous transformation--
+%                 EulerAngle = rotm2eul(Matrix_from_axis_angle);
+%                 EulerAngle_q11_theta = [EulerAngle, q11, theta];
+%                 %1.
+%                 op = A1 - (Matrix_from_axis_angle * C1_in_op')';
+%                 p = op;
+%                 %2.
+%                 C2 = (Matrix_from_axis_angle * C2_in_op')' + op;
+%                 C2pie = [C2(1), C2(2), 0];
+%                 zC2 = C2(3);
+%                 %3.
+%                 vector_A2C2pie = C2pie - A2;
+%                 vector_A2C2 = C2 - A2;
+%                 angleC2pieA2C2 = atan(zC2 / norm(vector_A2C2pie));
+%                 angle_A2C2_k2 = angleC2pieA2C2;
+%                 angleA2B2C2 = acos((2 * L2^2 - norm(vector_A2C2)^2) / (2 * L2^2));
+%                 %-------------------q11-q15, q21-q25------------------------------
+%                 q21 = q11;
+%                 angleA1B1C1 = 0;
+                
             end
               
             RotationMatrix = eul2rotm(EulerAngle_q11_theta(1:3));
             % Ci_in_Ob: Ci in frame Ob-xyz
             C1_in_Ob = (RotationMatrix * C1_in_op')' + p(1:3);
             C2_in_Ob = (RotationMatrix * C2_in_op')' + p(1:3);
+            
             
             %% ----------------------- Calculate one solutions for one input  -----------------------
             if p(1) == 0 && p(2) == 0 && p(3) == 0
@@ -262,7 +295,7 @@ classdef RCB2RserialA1C1
                     
                     %------------------Judge the workspace and solution existence of A1C1-------------------------
                     %---------------------------Position of A1-C1 ----------------------------
-                    if q11 >= -2*pi && q12 >= 0 && q13 >= -pi && q14 >= -105*pi/180 && q15 >= -2*pi...
+                    if q11 >= -2*pi && q12 >= -1e-6 && q13 >= -pi && q14 >= -105*pi/180 && q15 >= -2*pi...
                             && q11 <= 2*pi && q12 <= pi && q13 <= pi && q14 <= 105*pi/180 && q15 <= 2*pi...
                             && isreal(q1q2(i,1:5)) ~= 0
                         jA1C1 = jA1C1 + 1;
@@ -282,7 +315,7 @@ classdef RCB2RserialA1C1
                     
                     %%------------------------------------------------------------------------
                     %---------------------------Position of A2-C2 ----------------------------
-                    if q21 >= -2*pi && q22 >= 0 && q23 >= -pi && q24 >= -105*pi/180 && q25 >= -2*pi ...
+                    if q21 >= -2*pi && q22 >= -1e-6 && q23 >= -pi && q24 >= -105*pi/180 && q25 >= -2*pi ...
                             && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= 105*pi/180 && q25 <= 2*pi...
                             && isreal(q1q2(i,6:10)) ~= 0
                         jA2C2 = jA2C2 + 1;

@@ -212,6 +212,8 @@
                     for i=1:2 po_num(i) = str2num(po_cell{i}) / 1000; end
                     po_num(3) = str2num(po_cell{3}) * pi / 180;
                     if po_num(1) == 0 && po_num(2) == 0
+                        po_cell = inputdlg({'theta11 =(-360~360)','theta12 =(0~45))','theta21 =(-360~360)','theta22 =(0~45))'},'Fixed-SerialA1C1A2C2', [1 20; 1 20; 1 20; 1 20]);
+                        for i=1:4 po_num(i) = str2num(po_cell{i}) * pi / 180; end
                         po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
                     else
                         po = {po_num(1), po_num(2), [], [], [], [], po_num(3)};
@@ -237,17 +239,19 @@
                     %%------------------------- Two Serial Chains -----------------------------
                     % Mechanism transit into two serial chain mechanism:  [1 1 1 0 0 0]
                     % p = {0, 0, 0, [], [], []}
-                    po_cell = inputdlg({'theta11 ([-pi, pi])','theta12 ([-pi/4, 5*pi/4])','theta21 ([-pi, pi])','theta22 ([-pi/4, 5*pi/4])'},'Fixed-SerialA1C1A2C2', [1 20; 1 20; 1 20; 1 20]);
+                    q11q12q21q22 = [];
+                    po_cell = inputdlg({'theta11 =(-360~360)','theta12 =(0~45))','theta21 =(-360~360)','theta22 =(0~45))'},'Fixed-SerialA1C1A2C2', [1 20; 1 20; 1 20; 1 20]);
                     for i=1:4 po_num(i) = str2num(po_cell{i}) * pi / 180; end
-                    po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
-                    [EulerAngle_q11_theta, ABC, q1q2] = RCB_FixedSerialChain_IK(po, l1, l2);
+                    po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};                    
+                    objRCBFixedSerialChain = RCBFixedSerialChain(po,q11q12q21q22,l1,l2);
+                    [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = objRCBFixedSerialChain.RCB_FixedSerialChain_IK;
             end
             %
             % Judge if mechanism recovery to fixed mode
-            if length(po) == 10 && Mode ~= 8
-                po_cell = inputdlg({'theta11 ([-pi, pi])','theta12 ([-pi/4, 5*pi/4])','theta21 ([-pi, pi])','theta22 ([-pi/4, 5*pi/4])'},'Fixed-SerialA1C1A2C2', [1 20; 1 20; 1 20; 1 20]);
-                for i=1:4 po_num(i) = str2num(po_cell{i}) * pi / 180; end
-                po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
-                [EulerAngle_q11_theta, ABC, q1q2] = RCB_FixedSerialChain_IK(po, l1, l2);
-            end
+%             if length(po) == 10 && Mode ~= 8
+%                 po_cell = inputdlg({'theta11 =(-360~360)','theta12 =(0~45))','theta21 =(-360~360)','theta22 =(0~45))'},'Fixed-SerialA1C1A2C2', [1 20; 1 20; 1 20; 1 20]);
+%                 for i=1:4 po_num(i) = str2num(po_cell{i}) * pi / 180; end
+%                 po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
+%                 [EulerAngle_q11_theta, ABC, q1q2] = RCB_FixedSerialChain_IK(po, l1, l2);
+%             end
             %%------------------------------ Method I: End ----------------------------------------

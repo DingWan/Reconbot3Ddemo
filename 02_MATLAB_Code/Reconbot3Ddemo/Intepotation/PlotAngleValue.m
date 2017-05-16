@@ -7,17 +7,17 @@ BaseUP_CenterPointBearing = [160, 110, 60.44];
 BaseJointA1C1A2C2_CenterPointMotor = [34.5, 48.1, 45.5];
 BaseJointA1C1A2C2_CenterPointSidePlate = [58.5, 48.1, 22];
 % in World frame
-Displacement = [250,250,83.5+60.44+(45.5-22)];
-MP_Pos = MP_Pos_mat(1:3) + Displacement;
+Displacement = [250,250,83.5+60.44+(45.5-22)] / 1000;
+MP_Pos = MP_Pos_mat(1:3) / 1000 + Displacement;
 
 %% Moving Platform
 subplot(3,2,[1 3 5]);
 % in local frame
 plot3(MP_Pos_mat(:,1),MP_Pos_mat(:,2),MP_Pos_mat(:,3),'b-', 'Linewidth', 2); hold on
 %----------------- plot xyz axes of base point --------------
-x_axis = [20 0 0];
-y_axis = [0 20 0];
-z_axis = [0 0 20];
+x_axis = [20 0 0] / 1000;
+y_axis = [0 20 0] / 1000;
+z_axis = [0 0 20] / 1000;
 OP= [0 0 0];
 xyz = [OP;x_axis;OP;y_axis;OP;z_axis];
 j = 1:2;
