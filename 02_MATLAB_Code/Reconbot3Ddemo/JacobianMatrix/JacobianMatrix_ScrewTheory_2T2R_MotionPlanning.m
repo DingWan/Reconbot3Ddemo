@@ -17,7 +17,7 @@ tic
  
 %%
 po_start = { 0.100, 0.100, 0.180, -30*pi/180};
-po_end = { -0.10, 0.100, 0.200,  20*pi/180};
+po_end = { -0.10, 0.100, 0.200,  0*pi/180};
 Time = [0 5];
 n = 50;
 %% 5-Grade Polynomial Intepotation
