@@ -11,16 +11,15 @@ deg = pi/180;
 addpath(genpath(pwd)); % Enalbe all folders
 q0q1q2_HomePosition = [0, 0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
 PosOri = [0 0 0.208879343162506 0 0 0, 0 0];
-
 tic
 %% Calculate the IK Jacobian
 
-
+ 
 %%
-po_start = { 0.10 0.100 0.23 -30*pi/180 [] []};
-po_end = { -0.010 0.100 0.15 10*pi/180 [] []};
+po_start = { 0.100, 0.100, 0.180, -30*pi/180};
+po_end = { -0.10, 0.100, 0.200,  20*pi/180};
 Time = [0 5];
-n = 200;
+n = 50;
 %% 5-Grade Polynomial Intepotation
 for i = 1: 4
 PO = [po_start{i}, po_end{i}];
@@ -46,25 +45,15 @@ end
 
 %%
 tic
-q11q12q21q22 = [];
+q11q12q14q23 = [];
 for i = 1:n
-    
-%     if i == 1
-%         POstart = po_start;
-%         POend = {Pos_Intep(1,1), Pos_Intep(2,1), Pos_Intep(3,1), Pos_Intep(4,1), [], []};
-%         e = POend - POstart; 
-%     else
-%         POstart =  {Pos_Intep(1,i-1), Pos_Intep(2,i-1), Pos_Intep(3,i-1), Pos_Intep(4,i-1), [], []};
-%         POend =  {Pos_Intep(1,i), Pos_Intep(2,i), Pos_Intep(3,i), Pos_Intep(4,i), [], []};
-%         e = POend - POstart;        
-%     end
-%     err = cell2mat(POend) - cell2mat(POstart);    
-    
-    po = {Pos_Intep(1,i), Pos_Intep(2,i), Pos_Intep(3,i), Pos_Intep(4,i), [], []};    
-    %while norm(err)>0.001        
+           
+       po = {Pos_Intep(1,i), Pos_Intep(2,i), Pos_Intep(3,i), [], [], Pos_Intep(4,i)};    
+        
        %% ============================ IK ==============================
-        obj3T1R = RCB3T1R(po, q11q12q21q22, l1, l2);
-        [p_current, ~, ~, q1q2_all, ~] = obj3T1R.RCB_3T1R_IK;
+        obj2T2Rsixbar = RCB2T2Rsixbar(po,q11q12q14q23,l1,l2);
+        [p_current, ~, ~, q1q2_all, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
+        SelectedRow = find(abs(q1q2_all(:,1)) == min(abs(q1q2_all(:,1))));
         if i == 1
             for j = 1:length(q1q2_all(:,1))
                 q1_matrix_norm(j) = norm(q1q2_all(j,1:5) - q0q1q2_HomePosition(1,2:6));
@@ -81,8 +70,7 @@ for i = 1:n
         SolutionRow_q1 = colsq1(1);
         SolutionRow_q2 = colsq2(1);        
         q1q2(i,:) = [q1q2_all(SolutionRow_q1,1:5), q1q2_all(SolutionRow_q2,6:10)];
-        
-        % initial Position        
+        % initial Position
         q11 = q1q2(i,1); q12 = q1q2(i,2); q13 = q1q2(i,3); q14 = q1q2(i,4); q15 = q1q2(i,5);
         q21 = q1q2(i,6); q22 = q1q2(i,7); q23 = q1q2(i,8); q24 = q1q2(i,9); q25 = q1q2(i,10);
         q0q1q2(i,:) = [0, q1q2(i,:)];
@@ -91,31 +79,21 @@ for i = 1:n
         % ===============================================================
         
         % Jacobian Matrix
-        Enable_JacoMat = 1;
+        Enable_JacoMat = 2;
         UnifiedJacobianMatrix_ScrewTheory;
         
-        det_Jq1_Ob_3T1R(i) = det(Jq1_Ob_3T1R) * 1000; % normized  /norm(Jq1_Ob_3T1R)
-        det_J_Ob_3T1R(i) = det(J_Ob_3T1R);
-        det_Jc_Ob_3T1R(i) = det(J_Ob_3T1R(5:6,1:2)/norm(J_Ob_3T1R(5:6,1:2))); % normized
+        det_Jq2_Ob_2T2R(i) = det(Jq2_Ob_2T2Rsixbar) * 1000; % /norm(Jq2_Ob_2T2Rsixbar)
+        det_J_Ob_2T2R(i) = det(J_Ob_2T2Rsixbar);
+        [~, S, ~] = svd(J_Ob_2T2Rsixbar(5:6,:)); % normized
+        det_Jc_Ob_2T2R(i,:) = [S(1,1), S(2,2)];
         
-        %q11q12q21q22_current_J = [ q11q12q21q22_previous 0 0 ] + (J_Ob_3T1R * [ 0, 0, deltapo, deltapo, deltapo, deltapo ]')';
-        
-%         qsdot = pinv(Jacob) * transpose(err);
-%         delta_q =  qsdot;
-%         q = q + factor * transpose(delta_q*delta_t);
-%         Jacob = PR9.jacob0(q,'eul');
-%         FTP = PR9.fkine(q);
-%         P =  [transpose(FTP(1:3,4)),tr2eul(FTP)];
-%         e = POend - P;
-   % end
 end
 toc
 %%
 figure(2)
-det_J_Ob_3T1R = det_J_Ob_3T1R/max(det_J_Ob_3T1R);
+[~,col] = find(abs(det_J_Ob_2T2R) == max(abs(det_J_Ob_2T2R)));
+det_J_Ob_2T2R = det_J_Ob_2T2R/abs(det_J_Ob_2T2R(col));
 i = 1:n;
-plot(i,det_Jq1_Ob_3T1R,'r-');hold on % with redundant actuation: det_Jq1_Ob_3T1R<0.2
-plot(i,det_Jc_Ob_3T1R,'g-');hold on
-plot(i,det_J_Ob_3T1R,'b-');hold on
+plot(i,det_Jq2_Ob_2T2R,'r-');hold on
+plot(i,det_J_Ob_2T2R,'g-');hold on
 grid on
-

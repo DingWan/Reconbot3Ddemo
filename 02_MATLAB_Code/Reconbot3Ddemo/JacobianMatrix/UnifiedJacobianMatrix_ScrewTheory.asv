@@ -166,7 +166,7 @@ elseif Enable_JacoMat == 2
                         ];
     Ja_Ob_2T2Rsixbar = inv(Jq2_Ob_2T2Rsixbar) * Jx2_Ob_2T2Rsixbar;  
     J_Ob_2T2Rsixbar = [   Ja_Ob_2T2Rsixbar;
-                          Jc_Ob(2,:)/norm(Jc_Ob(2,:));
-                          Jc_Ob(6,:)/norm(Jc_Ob(6,:));
+                          Jc_Ob(2,:);
+                          Jc_Ob(6,:);
                       ]; 
 end

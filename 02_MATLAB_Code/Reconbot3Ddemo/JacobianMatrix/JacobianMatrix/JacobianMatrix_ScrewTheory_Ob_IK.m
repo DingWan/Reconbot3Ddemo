@@ -3,19 +3,22 @@
 clc
 clear
 
-L1 = 230.0692;
-L2 = 146.25;
-l1 = 230.0692;
-l2 = 146.25;
+L1 = 0.2301390;
+L2 = 0.1477;
+% l1 = 0.2301390;
+% l2 = 0.1477;
 deg = pi/180;
 addpath(genpath(pwd)); % Enalbe all folders
 
-PosOri = {0 0 253.3124 0 [] [], pi/2 -pi/2};
+l1 = 0.2301390;
+l2 = 0.1477;
 
+q0q1q2_HomePosition = [0, 0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
+p_0 = [0 0 0.208879343162506 0 0 0, 0 0]; %  p = 2 * l2 * sin(pi/4)
 
 % =================== Calculate the IK Jacobian ======================
 %% -----------3T1R-------------
-%     po = { 100 100 200 -30*pi/180 [] []};
+%     po = { 0.100 0.100 0.200 -30*pi/180 [] []};
 %     q11q12q21q22 = [];
 %     deltapo = 0.000001;
 %     Num_po_variables = 4;
@@ -43,7 +46,7 @@ PosOri = {0 0 253.3124 0 [] [], pi/2 -pi/2};
 %                           %dq(8,i) / deltapo;
 %                         ];
 %     end
-%     J_dx2dq_eul ;
+%     J_dx2dq_eul
 %     J_dx2dq_eul * [ 1  1  1  pi/180]' * 180/pi;
 %     [U,S,V] = svd(J_dx2dq_eul(1:4,:));
 %     inv(J_dx2dq_eul)
@@ -55,101 +58,103 @@ PosOri = {0 0 253.3124 0 [] [], pi/2 -pi/2};
 %     delta_q11q12q21q22 = [delta_q1q2(1:2), delta_q1q2(6:7)];
 
 %% ------------2T2Rsixbar------------
-%     po = {100 100 200 [] [] -10*pi/180};
-%     q11q12q14q23 = [1*pi/4, 0*pi/6, -1*pi/6, 1*pi/3];
-%     deltapo = 0.000001;
-%     Num_po_variables = 4;
-%     delta_po = deltapo * eye(Num_po_variables);
-%     J_dq_dx_eul = zeros( Num_po_variables, 6 );
-%     % Previous
-%     obj2T2Rsixbar = RCB2T2Rsixbar(po,q11q12q14q23,l1,l2);
-%     [p_previous, Eulq11theta_previous, ~, q1q2_all, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
-%     SelectedRow = find(abs(q1q2_all(:,1)) == min(abs(q1q2_all(:,1))));
-%     q1q2 = q1q2_all(SelectedRow,:);
-%     q1q2_previous = q1q2;
-%     % Current
-%     for i = 1:Num_po_variables
-%     % Current
-%     po_delta_po = po;
-%     if i <= 3
-%         po_delta_po{i} = po{i} + deltapo;
-%     else
-%         po_delta_po{4} = po{4};
-%         po_delta_po{5} = po{5};
-%         po_delta_po{6} = po{6} + deltapo;
-%     end
-%     obj2T2Rsixbar = RCB2T2Rsixbar(po_delta_po,q11q12q14q23,l1,l2);
-%     [p_current, ~, ~, q1q2_all, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
-%     q1q2_current = q1q2_all(SelectedRow,:);
-%     delta_p = p_current - p_previous;
-%     dq(:,i) = (q1q2_current - q1q2_previous)';
-%     J_dx2dq_eul(:,i) = [  dq(1,i) / deltapo; %This whole thing is a single column
-%                           dq(2,i) / deltapo;
-%                           dq(4,i) / deltapo;
-%                           %dq(6,i) / deltapo;
-%                           %dq(7,i) / deltapo;
-%                           dq(8,i) / deltapo;
-%                         ];
-%     end
-%     J_col_6 = J_dx2dq_eul(:,4);   
-%     po_delta_po = {po{1}+0*deltapo,  po{2}+0*deltapo,  po{3}+0*deltapo,  [],  [],  po{6}+1*deltapo  };
-%     obj2T2Rsixbar = RCB2T2Rsixbar(po_delta_po,q11q12q14q23,l1,l2);
-%     [p_current, ~, ~, q1q2_all, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
-%     q1q2_current = q1q2_all(SelectedRow,:);
-%     delta_p = p_current - p_previous;
-%     dq = (q1q2_current - q1q2_previous)';
-%     J_dx2dq_eul(:,4:5) = [  dq(1)/delta_p(5)  dq(1)/delta_p(6); 
-%                             dq(2)/delta_p(5)  dq(2)/delta_p(6);
-%                             dq(4)/delta_p(5)  dq(4)/delta_p(6);
-%                             %5dq(6)/delta_p(5)  dq(6)/delta_p(6);
-%                             %dq(7)/delta_p(5)  dq(7)/delta_p(6);
-%                             dq(8)/delta_p(5)  dq(8)/delta_p(6);
-%                           ];
-%     J_dx2dq_eul = [J_dx2dq_eul J_col_6] %* 1000
-%     
-%     % delta_q11q12q21q22
-%     delta_p = p_current - p_previous;
-%     delta_q1q2 = q1q2_current - q1q2_previous;
-%     q11q12q14q23_previous = [ q1q2_previous(1:2), q1q2_previous(4),q1q2_previous(8)];
-%     q11q12q14q23_current = [ q1q2_current(1:2), q1q2_previous(4), q1q2_current(8)];
-%     delta_q11q12q14q23 = [delta_q1q2(3), delta_q1q2(8)];    
-    
-
-%% ------------RCB2RserialA2C2------------
-    po = {0 30 [] [] [] [] 0};
-    q11q12q22q23 = [1*pi/4, 0*pi/6, -1*pi/6, 1*pi/3];
+    po = {-0.010, 0.100, 0.2000, [] [] -30*pi/180};
+    q11q12q14q23 = [1*pi/4, 0*pi/6, -1*pi/6, 1*pi/3];
     deltapo = 0.000001;
-    Num_po_variables = 2;
+    Num_po_variables = 4;
     delta_po = deltapo * eye(Num_po_variables);
     J_dq_dx_eul = zeros( Num_po_variables, 6 );
     % Previous
-    obj2RserialA2C2 = RCB2RserialA2C2(po,q11q12q22q23,l1,l2);
-    [p_previous,  ~, ~, q1q2_all, ~] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
+    obj2T2Rsixbar = RCB2T2Rsixbar(po,q11q12q14q23,l1,l2);
+    [p_previous, Eulq11theta_previous, ~, q1q2_all, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
     SelectedRow = find(abs(q1q2_all(:,1)) == min(abs(q1q2_all(:,1))));
     q1q2 = q1q2_all(SelectedRow,:);
     q1q2_previous = q1q2;
-    q11q12q22q23_previous = [ q1q2_previous(2),q1q2_previous(6)];
     % Current
     for i = 1:Num_po_variables
     % Current
     po_delta_po = po;
-    po_delta_po{i} = po{i} + deltapo;
-    %
-    obj2RserialA2C2 = RCB2RserialA2C2(po_delta_po,q11q12q22q23,l1,l2);
-    [p_current, ~, ~, q1q2_all, ~] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
+    if i <= 3
+        po_delta_po{i} = po{i} + deltapo;
+    else
+        po_delta_po{4} = po{4};
+        po_delta_po{5} = po{5};
+        po_delta_po{6} = po{6} + deltapo;
+    end
+    obj2T2Rsixbar = RCB2T2Rsixbar(po_delta_po,q11q12q14q23,l1,l2);
+    [p_current, ~, ~, q1q2_all, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
     q1q2_current = q1q2_all(SelectedRow,:);
     delta_p = p_current - p_previous;
     dq(:,i) = (q1q2_current - q1q2_previous)';
-    J_dx2dq_eul(:,i) = [  %dq(1,i) / deltapo; %This whole thing is a single column
+    J_dx2dq_eul(:,i) = [  dq(1,i) / deltapo; %This whole thing is a single column
                           dq(2,i) / deltapo;
-                          %dq(4,i) / deltapo;
-                          dq(6,i) / deltapo;
+                          dq(4,i) / deltapo;
+                          %dq(6,i) / deltapo;
                           %dq(7,i) / deltapo;
-                          %dq(8,i) / deltapo;
+                          dq(8,i) / deltapo;
                         ];
     end
+%       J_dx2dq_eul
+    [U, S, ~] = svd(J_dx2dq_eul)
+    J_col_6 = J_dx2dq_eul(:,4);   
+    po_delta_po = {po{1}+0*deltapo,  po{2}+0*deltapo,  po{3}+0*deltapo,  [],  [],  po{6}+1*deltapo  };
+    obj2T2Rsixbar = RCB2T2Rsixbar(po_delta_po,q11q12q14q23,l1,l2);
+    [p_current, ~, ~, q1q2_all, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
+    q1q2_current = q1q2_all(SelectedRow,:);
+    delta_p = p_current - p_previous;
+    dq = (q1q2_current - q1q2_previous)';
+    J_dx2dq_eul(:,4:5) = [  dq(1)/delta_p(5)  dq(1)/delta_p(6); 
+                            dq(2)/delta_p(5)  dq(2)/delta_p(6);
+                            dq(4)/delta_p(5)  dq(4)/delta_p(6);
+                            %5dq(6)/delta_p(5)  dq(6)/delta_p(6);
+                            %dq(7)/delta_p(5)  dq(7)/delta_p(6);
+                            dq(8)/delta_p(5)  dq(8)/delta_p(6);
+                          ];
+    J_dx2dq_eul = [J_dx2dq_eul J_col_6]; %* 1000
     
-J_dx2dq_eul    
+    % delta_q11q12q21q22
+    delta_p = p_current - p_previous;
+    delta_q1q2 = q1q2_current - q1q2_previous;
+    q11q12q14q23_previous = [ q1q2_previous(2), q1q2_previous(4), q1q2_previous(6),q1q2_previous(8)];
+    q11q12q14q23_current = [ q1q2_current(2), q1q2_previous(4), q1q2_previous(6), q1q2_current(8)];
+    delta_q11q12q14q23 = [delta_q1q2(3), delta_q1q2(8)];    
+    
+
+%% ------------RCB2RserialA2C2------------
+%     po = {0 30 [] [] [] [] 0};
+%     q11q12q22q23 = [1*pi/4, 0*pi/6, -1*pi/6, 1*pi/3];
+%     deltapo = 0.000001;
+%     Num_po_variables = 2;
+%     delta_po = deltapo * eye(Num_po_variables);
+%     J_dq_dx_eul = zeros( Num_po_variables, 6 );
+%     % Previous
+%     obj2RserialA2C2 = RCB2RserialA2C2(po,q11q12q22q23,l1,l2);
+%     [p_previous,  ~, ~, q1q2_all, ~] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
+%     SelectedRow = find(abs(q1q2_all(:,1)) == min(abs(q1q2_all(:,1))));
+%     q1q2 = q1q2_all(SelectedRow,:);
+%     q1q2_previous = q1q2;
+%     q11q12q22q23_previous = [ q1q2_previous(2),q1q2_previous(6)];
+%     % Current
+%     for i = 1:Num_po_variables
+%     % Current
+%     po_delta_po = po;
+%     po_delta_po{i} = po{i} + deltapo;
+%     %
+%     obj2RserialA2C2 = RCB2RserialA2C2(po_delta_po,q11q12q22q23,l1,l2);
+%     [p_current, ~, ~, q1q2_all, ~] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
+%     q1q2_current = q1q2_all(SelectedRow,:);
+%     delta_p = p_current - p_previous;
+%     dq(:,i) = (q1q2_current - q1q2_previous)';
+%     J_dx2dq_eul(:,i) = [  %dq(1,i) / deltapo; %This whole thing is a single column
+%                           dq(2,i) / deltapo;
+%                           %dq(4,i) / deltapo;
+%                           dq(6,i) / deltapo;
+%                           %dq(7,i) / deltapo;
+%                           %dq(8,i) / deltapo;
+%                         ];
+%     end
+%     
+% J_dx2dq_eul    
 
 %% initial Position
 q11 = q1q2(1); q12 = q1q2(2); q13 = q1q2(3); q14 = q1q2(4); q15 = q1q2(5);
@@ -358,7 +363,7 @@ Jq2_6_Ob = A2C2_Ob/norm(A2C2_Ob) * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob/nor
 
 % In base frame Ob-XYZ
 %% ------ 3T1R Mode ------
-% Jx1_Ob_3T1R = [   Jx1_Ob(1,:);
+% Jx1_Ob_3T1R = [    Jx1_Ob(1,:);
 %                    Jx1_Ob(2,:);
 %                    Jx1_Ob(4,:);
 %                    Jx1_Ob(5,:);
@@ -377,27 +382,30 @@ Jq2_6_Ob = A2C2_Ob/norm(A2C2_Ob) * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob/nor
 % svd(J_Ob_3T1R);
 
 %% ------ 2T2Rsixbar ------
-% Jx2_Ob_2T2Rsixbar = [   Jx2_Ob(1,:)
-%                         Jx2_Ob(2,:)
-%                         Jx2_Ob(3,:)
-%                         Jx2_Ob(6,:)
-%                      ];
-% Jq2_Ob_2T2Rsixbar = [  Jq2_1_Ob   0          0           0
-%                        0          Jq2_2_Ob   0           0 
-%                        0          0          Jq2_3_Ob    0
-%                        0          0          0           Jq2_6_Ob
-%                     ];
-% Ja_Ob_2T2Rsixbar = inv(Jq2_Ob_2T2Rsixbar) * Jx2_Ob_2T2Rsixbar;  
-% J_Ob_2T2Rsixbar = [   Ja_Ob_2T2Rsixbar;
-%                       Jc_Ob(2,:);
-%                       Jc_Ob(6,:);
-%                   ]; 
-% det(J_Ob_2T2Rsixbar)
+Jx2_Ob_2T2Rsixbar = [   Jx2_Ob(2,:)
+                        Jx2_Ob(3,:)
+                        Jx2_Ob(4,:)
+                        Jx2_Ob(6,:)
+                     ];
+Jq2_Ob_2T2Rsixbar = [  Jq2_2_Ob   0          0           0
+                       0          Jq2_3_Ob   0           0 
+                       0          0          Jq2_4_Ob    0
+                       0          0          0           Jq2_6_Ob
+                    ]
+Ja_Ob_2T2Rsixbar = inv(Jq2_Ob_2T2Rsixbar) * Jx2_Ob_2T2Rsixbar;  
+J_Ob_2T2Rsixbar = [   Ja_Ob_2T2Rsixbar;
+                      Jc_Ob(2,:);
+                      Jc_Ob(6,:);
+                  ];
+det(J_Ob_2T2Rsixbar)
+% [U, S, ~] = svd(J_Ob_2T2Rsixbar(5:6,:));
+det(Jq2_Ob_2T2Rsixbar)*1000 %/norm(Jq2_Ob_2T2Rsixbar)
+
 % % Verfiy the correctness
-% po_delta_po = {po{1}+0.01,  po{2}+0.01,  po{3}+0.01,  [],  [],  po{6}+0.0001  };
+% po_delta_po = {po{1}+0.001,  po{2}+0.000,  po{3}+0.000,  [],  [],  po{6}+0.0000  };
 % obj2T2Rsixbar = RCB2T2Rsixbar(po_delta_po,q11q12q14q23,l1,l2);
 % [p_current, Eulq11theta_current, ~, q1q2_all, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
-% [q1q2_all(SelectedRow,1:2) q1q2_all(SelectedRow,4) q1q2_all(SelectedRow,8)] - q11q12q14q23_previous
+% [q1q2_all(SelectedRow,2) q1q2_all(SelectedRow,4) q1q2_all(SelectedRow,6) q1q2_all(SelectedRow,8)] - q11q12q14q23_previous
 % delta_p456 = p_current - p_previous;
 % %
 % alpha = p_previous(4);
@@ -411,47 +419,47 @@ Jq2_6_Ob = A2C2_Ob/norm(A2C2_Ob) * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob/nor
 %        1  0          -sin(beta)
 %        ];
 % % J_Ob_2T2Rsixbar(3,4:5) = [0.0019   -0.0004]   
-% (J_Ob_2T2Rsixbar * [ (T_A * delta_p456(4:6)')', 0.01, 0.01, 0.01 ]')'
-% (J_dx2dq_eul * [ 0.01, 0.01, 0.01, delta_p456(4:6) ]')'
+% (J_Ob_2T2Rsixbar * [ (T_A * delta_p456(4:6)')', delta_p456(1:3) ]')'
+% %(J_dx2dq_eul * [ delta_p456(1:3), delta_p456(4:6) ]')'
 
 %% ------ RCB2RserialA2C2 ------
-Jx2_Ob_2RserialA2C2 = [   
-                          Jx2_Ob(2,:)
-                          Jx2_Ob(4,:)
-                       ];
-Jq2_Ob_2RserialA2C2 = [  
-                         Jq2_2_Ob   0       
-                         0          Jq2_4_Ob  
-                      ];
-Ja_Ob_2RserialA2C2 = inv(Jq2_Ob_2RserialA2C2) * Jx2_Ob_2RserialA2C2;  
-J_Ob_2RserialA2C2 = [  Ja_Ob_2RserialA2C2;
-                       Jc_Ob(2,:);
-                       Jc_Ob(6,:);
-                       Jc_Ob(7,:);
-                       Jc_Ob(8,:);
-                    ]; 
-det(J_Ob_2RserialA2C2)                
-% % Verfiy the correctness
-po_delta_po = {po{1}+1,  po{2}+1,  [],  [],  [],  [], 0  };
-obj2RserialA2C2 = RCB2RserialA2C2(po_delta_po,q11q12q22q23,l1,l2);
-[p_previous,  ~, ~, q1q2_all, ~] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
-[ q1q2_all(SelectedRow,2) q1q2_all(SelectedRow,6)] - q11q12q22q23_previous
-delta_p123 = p_current(1:3) - p_previous(1:3);
-delta_p456 = p_current(4:6) - p_previous(4:6);
-%
-alpha = p_previous(4);
-beta = p_previous(5);
-gamma = p_previous(6);
-% Build the relationship between Euler Angle time derivative and Angular Velocity
-% Namely, w = T_A * [ alpha_dot  beta_dot  gamma_dot ]
-% See book: Page 129 (English Version) or Page 95(Chinese Version) <Robotics:Modeling, Planning and Control>
-T_A = [0 -sin(alpha) cos(alpha)*cos(beta) ;
-       0  cos(alpha) sin(alpha)*cos(beta) ;
-       1  0          -sin(beta)
-       ];
-% J_Ob_2T2Rsixbar(3,4:5) = [0.0019   -0.0004]   
-(J_Ob_2RserialA2C2 * [ (T_A * delta_p456')', delta_p123 ]')'
-%(J_dx2dq_eul * [ delta_p123, delta_p456(4:6) ]')'
+% Jx2_Ob_2RserialA2C2 = [   
+%                           Jx2_Ob(2,:)
+%                           Jx2_Ob(4,:)
+%                        ];
+% Jq2_Ob_2RserialA2C2 = [  
+%                          Jq2_2_Ob   0       
+%                          0          Jq2_4_Ob  
+%                       ];
+% Ja_Ob_2RserialA2C2 = inv(Jq2_Ob_2RserialA2C2) * Jx2_Ob_2RserialA2C2;  
+% J_Ob_2RserialA2C2 = [  Ja_Ob_2RserialA2C2;
+%                        Jc_Ob(2,:);
+%                        Jc_Ob(6,:);
+%                        Jc_Ob(7,:);
+%                        Jc_Ob(8,:);
+%                     ]; 
+% det(J_Ob_2RserialA2C2)                
+% % % Verfiy the correctness
+% po_delta_po = {po{1}+1,  po{2}+1,  [],  [],  [],  [], 0  };
+% obj2RserialA2C2 = RCB2RserialA2C2(po_delta_po,q11q12q22q23,l1,l2);
+% [p_previous,  ~, ~, q1q2_all, ~] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
+% [ q1q2_all(SelectedRow,2) q1q2_all(SelectedRow,6)] - q11q12q22q23_previous
+% delta_p123 = p_current(1:3) - p_previous(1:3);
+% delta_p456 = p_current(4:6) - p_previous(4:6);
+% %
+% alpha = p_previous(4);
+% beta = p_previous(5);
+% gamma = p_previous(6);
+% % Build the relationship between Euler Angle time derivative and Angular Velocity
+% % Namely, w = T_A * [ alpha_dot  beta_dot  gamma_dot ]
+% % See book: Page 129 (English Version) or Page 95(Chinese Version) <Robotics:Modeling, Planning and Control>
+% T_A = [0 -sin(alpha) cos(alpha)*cos(beta) ;
+%        0  cos(alpha) sin(alpha)*cos(beta) ;
+%        1  0          -sin(beta)
+%        ];
+% % J_Ob_2T2Rsixbar(3,4:5) = [0.0019   -0.0004]   
+% (J_Ob_2RserialA2C2 * [ (T_A * delta_p456')', delta_p123 ]')'
+% %(J_dx2dq_eul * [ delta_p123, delta_p456(4:6) ]')'
 
 
 % +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 

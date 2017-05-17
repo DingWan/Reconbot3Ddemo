@@ -137,38 +137,13 @@ classdef RCB2T2Rsixbar
                     % Mechanism in a general six-bar linkage:  [1 1 1 0 0 1]
                     % p = [x, y, z, [], [], gamma]
                     % display('Notice: Inputs are:p = [x, y, z, [], [], gamma]');
-                    % display('Mechanism in a general six-bar linkage');                    
-                    beta = [];                    
+                    % display('Mechanism in a general six-bar linkage');               
                     if p(1) == 0 && p(2) == 0 || p(3) < 0
                         WSvalue_2T2R = 0;
                         q11 = q11_SP_A1C1_A2C2_overlap;
                     else
-                        q11 = atan(p(1)/p(2)); % inputs: gamma, q11; always keep the q11 as positive !!!!!
-                        if q11 > 0
-                            q11 = pi - q11;
-                        elseif q11 < 0
-                            q11 = - q11;
-                        end
-                    end                    
-                elseif isequal(p_BinaryCode, [1 1 1 0 1 0]) == 1
-                    % Mechanism in a general six-bar linkage:  [1 1 1 0 1 0]
-                    % p = [x, y, z, [], beta, []]
-                    % display('Notice: Inputs are:p = [x, y, z, [], beta, []]');
-                    % display('Mechanism in a general six-bar linkage');                    
-                    theta = [];                    
-                    if p(1) == 0 && p(2) == 0 || p(3) < 0
-                        WSvalue_2T2R = 0;
-                        q11 = q11_SP_A1C1_A2C2_overlap;
-                    else
-                        q11 = atan(p(1)/p(2)); % inputs: gamma, q11; always keep the q11 as positive !!!!!
-                        if q11 > 0
-                            q11 = pi - q11;
-                        elseif q11 < 0
-                            q11 = - q11;
-                        end
-                    end
-                elseif isequal(p_BinaryCode, [1 1 1 0 1 1]) == 1
-                    q11 = [];                    
+                        q11 = -atan(p(1)/p(2)); % inputs:  q11; atan(p(1)/p(2))>0(or<0), -(or +)q11 !!!!!
+                    end  
                 end
                 
                 [EulerAngle_q11_theta] = EulerAngles_theta_q11_IK(theta, q11);
@@ -348,8 +323,13 @@ classdef RCB2T2Rsixbar
                     q1q2(i,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
                     %q1q2(:,:) * 180 / pi
                     %------------------Judge the workspace and solution existence of A1C1-------------------------
+                    if q11 > -pi/2 && q11 < pi/2
+                        q14_LowerLimit = -120*pi/180;
+                    else
+                        q14_LowerLimit = -105*pi/180;
+                    end
                     %---------------------------Position of A1-C1 ----------------------------
-                    if q11 >= -2*pi && q12 >= 0 && q13 >= -pi && q14 >= -105*pi/180 && q15 >= -2*pi...
+                    if q11 >= -2*pi && q12 >= 0 && q13 >= -pi && q14 >= q14_LowerLimit && q15 >= -2*pi...
                             && q11 <= 2*pi && q12 <= pi && q13 <= pi && q14 <= 105*pi/180 && q15 <= 2*pi...
                             && isreal(q1q2(i,1:5)) ~= 0
                         jA1C1 = jA1C1 + 1;
@@ -371,14 +351,18 @@ classdef RCB2T2Rsixbar
                     %---------------------------Position of A2-C2 ----------------------------
                     if q21 == 0 || q21 == pi || q21 == -pi || q21 == 2*pi || q21 == -2*pi 
                         q22_LowerLimit = -pi/6;
-                        q24_LowerLimit = 135*pi/180;
-                    else
+                        q24_LowerLimit = -135*pi/180;
+                    else                       
                         q22_LowerLimit = 0;
-                        q24_LowerLimit = 105*pi/180;
+                        q24_LowerLimit = -105*pi/180;
                     end
                     
-                    if q21 >= -2*pi && q22 >= q22_LowerLimit && q23 >= -pi && q24 >= -105*pi/180 && q25 >= -2*pi ...
-                            && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= q24_LowerLimit && q25 <= 2*pi...
+                    if q11 > -pi/2 && q11 < pi/2
+                        q24_LowerLimit = -120*pi/180;
+                    end 
+                    
+                    if q21 >= -2*pi && q22 >= q22_LowerLimit && q23 >= -pi && q24 >= q24_LowerLimit && q25 >= -2*pi ...
+                            && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= 105*pi/180 && q25 <= 2*pi...
                             && isreal(q1q2(i,6:10)) ~= 0
                         jA2C2 = jA2C2 + 1;
                         %%-----------------Get the output values of Moving Platform-----------------------

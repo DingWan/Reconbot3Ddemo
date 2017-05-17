@@ -23,8 +23,9 @@ PosOri = {0 0 253.3124 0 [] [], pi/2 -pi/2};
 % [p_previous, ABC, q1q2] = obj3T1R.RCB_3T1R_FK;
 
 % --2T2Rsixbar--
- q11q12q14q23 = [-0.7854    1.6943    -0.7916   1.3574];
+ q11q12q14q23 = [0.0997    1.6930   -0.2004   1.9463];
  % [-0.7854    1.6943    0.9125   -0.7916   -0.7854   -0.7854    0.2354    1.3574   -0.2664   -0.7854]
+ %[ 0.0997    1.6930    0.6018   -0.2004    0.0997    0.0997    0.0598    1.9463   -0.9589     0.0997]
 % obj2T2Rsixbar = RCB2T2Rsixbar(PosOri, q11q12q14q23 , l1, l2);
 % [p, ~, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_FK;
 
@@ -340,7 +341,7 @@ Jq2_Ob_2T2Rsixbar = [  Jq2_1_Ob   0          0           0
       
 % +++++++++++++++++++++++++++ Elegant Line ++++++++++++++++++++++++++++ 
 
-J_dq2dx_eul
+ [U, S, ~] = svd(J_dq2dx_eul')
 %
 alpha = p_previous(4);
 beta = p_previous(5);
@@ -350,7 +351,9 @@ T_A = [0 -sin(alpha) cos(alpha)*cos(beta) ;
        0  cos(alpha) sin(alpha)*cos(beta) ;
        1  0          -sin(beta)
        ];
-J_dx2dq_eul_Geom = T_A * J_dq2dx_eul(4:6,:)
+J_dx2dq_eul_Geom = T_A * J_dq2dx_eul(4:6,:);
+J_Ob_2T2Rsixbar = inv(Jxc2_Ob_2T2Rsixbar) * Jq2_Ob_2T2Rsixbar
+
 
 
 % 3T1R Mode
@@ -370,7 +373,7 @@ J_dx2dq_eul_Geom = T_A * J_dq2dx_eul(4:6,:)
 %                     ];   
 % 
 % Ja_Ob_2T2Rsixbar = inv(Jq2_Ob_2T2Rsixbar) * Jx2_Ob_2T2Rsixbar   
-J_Ob_2T2Rsixbar = inv(Jxc2_Ob_2T2Rsixbar) * Jq2_Ob_2T2Rsixbar
+% J_Ob_2T2Rsixbar = inv(Jxc2_Ob_2T2Rsixbar) * Jq2_Ob_2T2Rsixbar
 
 
 % Jc_Ob(2,1:3) * s11_Ob' + Jc_Ob(2,4:6) * sr11_Ob' 

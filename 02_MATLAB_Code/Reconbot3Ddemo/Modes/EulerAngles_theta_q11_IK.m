@@ -87,7 +87,6 @@
 
 
        %% q11 and theta  as inputs to calculate the output EulerAngle
-       
        u_RotationAxis = [cos(q11), sin(q11), 0];
        r = [u_RotationAxis, theta];
        %-- m=vrrotvec2mat(r):Convert rotation from axis-angle to matrix representation--
