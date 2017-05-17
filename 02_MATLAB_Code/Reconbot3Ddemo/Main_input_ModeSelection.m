@@ -3,7 +3,6 @@
 
 %
 %     This is written by Wan Ding in 15 Nov 2016.
-%     The copyright is belong to Wan Ding.
 
 %       po = {cell}               Position and rotation of the MP, cell
 %       po_cell = {cell}          Position and rotation of the MP, cell
@@ -18,10 +17,7 @@
 clc
 %close all
 clear 
-%clf
 
-% l1 = 0.2300692;
-% l2 = 0.14625;
 l1 = 0.2301390;
 l2 = 0.1477;
 
@@ -33,23 +29,14 @@ deg = pi/180;
 addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
 % InitHome;       
 
+%% Go to HomePosition
+RandomPosition2HomePosition;
+
 %% Select Mode + Posture
 SelectNumberOfTrajectoryPoints;
 
 %------ Single Mode ----------
 % load('q0q1q2_3T2R.mat')
-% load('q0q1q2_3T1R.mat')
-% load('q0q1q2_3T1R-SingularityA1C1.mat')
-% load('q0q1q2_3T1R-SingularityA2C2.mat')
-% load('q0q1q2_3T1R-SingularityA1C1A2C2.mat')
-% load('q0q1q2_2T2R.mat')
-% load('q0q1q2_1T3RRotAroundPoint.mat')1
-% load('q0q1q2_2T2Rfivebar.mat')
-% load('q0q1q2_2T2Rthreebar.mat')
-% load('q0q1q2_2RserialA1C1.mat')
-% load('q0q1q2_2RserialA2C2.mat')
-
-%  load('Modes_3to4.mat')
 
 %% Motion planning
 clc

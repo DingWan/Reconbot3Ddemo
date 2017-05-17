@@ -306,7 +306,7 @@ end
                         Self_adjustment_Enable_Disable = [1 1 1];                      
                     case 12 % Fixed-SerialA1C1A2C2
                         if MPOTP_cell{1}{2}{7} ~= 0 || MPOTP_cell{1}{2}{8} ~= 0 || MPOTP_cell{1}{2}{9} ~= 0 || MPOTP_cell{1}{2}{10} ~= 0
-                           InsertRow_TransiConfig{5,:} = {5, {0 0 0 0 [] [] 0 0}}; 
+                           InsertRow_TransiConfig{1,:} = {5, {0 0 0 0 [] [] 0 0}}; 
                            MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                            Self_adjustment_Enable_Disable = [0 0];
                         else
@@ -515,7 +515,7 @@ end
                         
                     case 5 % 3T1R-SingularityA1C1A2C2
                         if Posture_previous{7} ~= 0 || Posture_previous{8} ~= 0 || Posture_previous{9} ~= 0 || Posture_previous{10} ~= 0
-                           InsertRow_TransiConfig{5,:} = {12, {0 0 0 [] [] [] 0 0 0 0}}; 
+                           InsertRow_TransiConfig{1,:} = {12, {0 0 0 [] [] [] 0 0 0 0}}; 
                            MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                            Self_adjustment_Enable_Disable = [0 0];
                         else

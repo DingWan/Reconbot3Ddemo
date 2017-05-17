@@ -12,6 +12,10 @@ addpath(genpath(pwd)); % Enalbe all folders
 q0q1q2_HomePosition = [0, 0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
 PosOri = [0 0 0.208879343162506 0 0 0, 0 0];
 
+<<<<<<< HEAD
+=======
+PosOri = [0 0 0.208879343162506 0 0 0, 0 0];
+>>>>>>> 0722be20a043abd0a778c65f351f448bfed64abf
 tic
 %% Calculate the IK Jacobian
 
