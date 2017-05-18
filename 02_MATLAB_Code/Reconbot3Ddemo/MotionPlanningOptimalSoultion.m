@@ -1,4 +1,4 @@
-function [ q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep ] = ...
+function [ q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_J ] = ...
     MotionPlanningOptimalSoultion(Mode_previous, PosOri_previous, q0q1q2_previous_trajpoint,...
     Mode_current,PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, Start_Time, Time_inteval, l1, l2)
 % Motion planning and Optimal Solution
@@ -37,7 +37,8 @@ function [ q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_
 %      q0q1q2_P2P_Vel_Intep: Angular velocity intepotation for all steps of all input joints
 %      q0q1q2_P2P_Acc_Intep: Angular acceleration intepotation for all steps of all input joints
 %     q0q1q2_P2P_time_Intep: Intepotation Time for all steps of all input joints 
-
+L1 = l1;
+L2 = l2;
 %% Transition Strategy
 [ MPOTP_cell, Self_adjustment_Enable_Disable_Array ] = TransitionStrategy(Mode_previous,PosOri_previous, q0q1q2_previous_trajpoint, Mode_current,PosOri_current, l1, l2);
 
@@ -376,14 +377,24 @@ for i = 1:length(MPOTP_cell)
         if Mode >= 1 && Mode <= 5
             Enable_JacoMat = 1;
             UnifiedJacobianMatrix_ScrewTheory;
-            det_Jq1_Ob_3T1R(NumIntepoPoints*(i-1)+j,:) = det(Jq1_Ob_3T1R) * 1000; % normized  /norm(Jq1_Ob_3T1R)
-            det_J_Ob_3T1R(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R);
+            % det_Jq1_Ob_3T1R = det(Jq1_Ob_3T1R);
+            det_Jq(NumIntepoPoints*(i-1)+j,:) = det(Jq1_Ob_3T1R) * 1000; % normized  /norm(Jq1_Ob_3T1R)
+            %det_J_Ob_3T1R(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R);
+            det_J(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R);
         elseif Mode == 6 && Mode == 7
             Enable_JacoMat = 2;
             UnifiedJacobianMatrix_ScrewTheory;
-            det_Jq2_Ob_2T2R(NumIntepoPoints*(i-1)+j,:) = det(Jq2_Ob_2T2Rsixbar) * 1000; % /norm(Jq2_Ob_2T2Rsixbar)
-            det_J_Ob_2T2R(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_2T2Rsixbar);
-        end                
+            % det_Jq2_Ob_2T2R = det(Jq2_Ob_2T2Rsixbar);
+            det_Jq(NumIntepoPoints*(i-1)+j,:) = det(Jq2_Ob_2T2Rsixbar) * 1000; % /norm(Jq2_Ob_2T2Rsixbar)
+            %det_J_Ob_2T2R = det(J_Ob_2T2R);
+            det_J(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_2T2Rsixbar);
+        else
+            det_Jq(NumIntepoPoints*(i-1)+j,:) = 1;
+            det_J(NumIntepoPoints*(i-1)+j,:) = 1;
+        end
+        
+        % Output current all modes
+        Mode_All(NumIntepoPoints*(i-1)+j,:) = Mode;
         
         %------ Show debugging -------
         %ReconbotANI(q0q1q2_Optimal_SingleRow);
@@ -487,6 +498,10 @@ for i = 1:length(MPOTP_cell)
     end
     
 end
+
+%% Output current all modes, Jacobian of Jq and J
+Mode_det_Jq_J = [Mode_All,  det_Jq,  det_J];
+
 
 %% Assign the correct order of differernt value of 'Self_adjustment_Enable_Disable = 1/2/3/0'
 q0q1q2_P2P_Pos_Intep = q0q1q2_OptimalRow;

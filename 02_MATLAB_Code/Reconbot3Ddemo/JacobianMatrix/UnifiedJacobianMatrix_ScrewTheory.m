@@ -2,7 +2,7 @@
 
 %% =========== Jacobian Matrix by using screw theory ===========
 %q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-tic 
+%tic 
 %% ----------------Get the output values of Moving Platform---------------
 A1 = [0, -L1/2, 0];
 B1 = [L2 * cos(q12) * sin(q11), -L1/2 - L2 * cos(q12) * cos(q11), L2 * sin(q12)];
@@ -15,14 +15,14 @@ C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22)...
     + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
 
 %% ===========  Euler Angle to homogenous transform =============
-alpha = p_current(4) * 180/pi;
-beta = p_current(5) * 180/pi;
-gamma = p_current(6) * 180/pi;
-RotationMatrix = eul2rotm(p_current(4:6)); 
+alpha = p(4) * 180/pi;
+beta = p(5) * 180/pi;
+gamma = p(6) * 180/pi;
+RotationMatrix = eul2rotm(p(4:6)); 
 
 %%  ============================  Vector ============================ 
 % In base frame Ob-XYZ
-op_Ob = p_current(1:3);
+op_Ob = p(1:3);
 %----- Branch Chain A1C1------
 opA1_Ob = A1 - op_Ob;
 opB1_Ob = B1 - op_Ob;
@@ -170,3 +170,4 @@ elseif Enable_JacoMat == 2
                           Jc_Ob(6,:)/norm(Jc_Ob(6,:));
                       ]; 
 end
+%
