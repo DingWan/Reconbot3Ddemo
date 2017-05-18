@@ -137,84 +137,72 @@ Jq2_6_Ob = A2C2_Ob/norm(A2C2_Ob) * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob/nor
 % In base frame Ob-XYZ
 % 3T1R Mode
 if Enable_Mode_JacoMat == 1
-    Jx1_Ob_3T2R = [    
-                     Jx1_Ob(1,:);
-                     Jx1_Ob(2,:);
-                     Jx1_Ob(3,:);
-                     Jx1_Ob(4,:);
-                     Jx1_Ob(6,:);
-                   ];
-    Jq1_Ob_3T2R = [  
-                     Jq1_1_Ob   0          0           0           0
+    Jx1_Ob_3T2R = [    Jx1_Ob(1,:);
+                       Jx1_Ob(2,:);
+                       Jx1_Ob(3,:);
+                       Jx1_Ob(4,:);
+                       Jx1_Ob(6,:);
+                    ];
+    Jq1_Ob_3T2R = [  Jq1_1_Ob   0          0           0           0
                      0          Jq1_2_Ob   0           0           0 
                      0          0          Jq1_3_Ob    0           0
                      0          0          0           Jq1_4_Ob    0
                      0          0          0           0           Jq1_6_Ob
                   ];
-%     Ja_Ob_3T2R = inv(Jq1_Ob_3T2R) * Jx1_Ob_3T2R;
-%     J_Ob_3T2R = [   
-%                     Ja_Ob_3T2R;
-%                     Jc_Ob(1,:);
-%                  ];
+    Ja_Ob_3T2R = inv(Jq1_Ob_3T2R) * Jx1_Ob_3T2R;
+    J_Ob_3T2R = [   Ja_Ob_3T2R;
+                    Jc_Ob(1,:);
+                 ];
 elseif Enable_Mode_JacoMat == 2
-    Jx1_Ob_3T1R = [    
-                     Jx1_Ob(1,:);
-                     Jx1_Ob(2,:);
-                     Jx1_Ob(4,:);
-                     Jx1_Ob(5,:);
-                  ];
-    Jq1_Ob_3T1R = [  
-                     Jq1_1_Ob   0          0           0
+    Jx1_Ob_3T1R = [    Jx1_Ob(1,:);
+                       Jx1_Ob(2,:);
+                       Jx1_Ob(4,:);
+                       Jx1_Ob(5,:);
+                    ];
+    Jq1_Ob_3T1R = [  Jq1_1_Ob   0          0           0
                      0          Jq1_2_Ob   0           0 
                      0          0          Jq1_4_Ob    0
                      0          0          0           Jq1_5_Ob
                   ];
-    Jc_Ob_3T1R = [   
-                    Jc_Ob(1,1:2);
-                    Jc_Ob(5,1:2);
+    Ja_Ob_3T1R = inv(Jq1_Ob_3T1R) * Jx1_Ob_3T1R;
+    J_Ob_3T1R = [   Ja_Ob_3T1R;
+                    Jc_Ob(1,:);
+                    Jc_Ob(5,:);
                  ];
-%     Ja_Ob_3T1R = inv(Jq1_Ob_3T1R) * Jx1_Ob_3T1R;
-%     J_Ob_3T1R = [   
-%                     Ja_Ob_3T1R;
-%                     Jc_Ob(1,:);
-%                     Jc_Ob(5,:);
-%                  ];
 elseif Enable_Mode_JacoMat == 5
-    Jx1_Ob_HomePosition = [    
-                             Jx1_Ob(2,:);
-                             Jx1_Ob(5,:);
-                          ];
-    Jq1_Ob_HomePosition = [  
-                             Jq1_2_Ob   0       
-                             0          Jq1_5_Ob
-                          ];
-%     Ja_Ob_HomePosition = inv(Jq1_Ob_HomePosition) * Jx1_Ob_HomePosition;
-%     J_Ob_HomePosition = [   
-%                             Ja_Ob_HomePosition;
-%                             Jc_Ob(1,:);
-%                             Jc_Ob(2,:);
-%                             Jc_Ob(5,:);
-%                             Jc_Ob(6,:);
-%                          ];
+    Jx1_Ob_3T1R = [    Jx1_Ob(1,:);
+                       Jx1_Ob(2,:);
+                       Jx1_Ob(4,:);
+                       Jx1_Ob(5,:);
+                    ];
+    Jq1_Ob_3T1R = [  Jq1_1_Ob   0          0           0
+                     0          Jq1_2_Ob   0           0 
+                     0          0          Jq1_4_Ob    0
+                     0          0          0           Jq1_5_Ob
+                  ];
+    Ja_Ob_3T1R = inv(Jq1_Ob_3T1R) * Jx1_Ob_3T1R;
+    J_Ob_3T1R = [   Ja_Ob_3T1R;
+                    Jc_Ob(1,:);
+                    Jc_Ob(2,:);
+                    Jc_Ob(5,:);
+                    Jc_Ob(6,:);
+                 ];
 elseif Enable_Mode_JacoMat == 6
 % ------ 2T2Rsixbar ------
-    Jx2_Ob_2T2Rsixbar = [   
-                            Jx2_Ob(2,:)
+    Jx2_Ob_2T2Rsixbar = [   Jx2_Ob(2,:)
                             Jx2_Ob(3,:)
                             Jx2_Ob(4,:)
                             Jx2_Ob(6,:)
                          ];
-    Jq2_Ob_2T2Rsixbar = [  
-                           Jq2_2_Ob   0          0           0
+    Jq2_Ob_2T2Rsixbar = [  Jq2_2_Ob   0          0           0
                            0          Jq2_3_Ob   0           0 
                            0          0          Jq2_4_Ob    0
                            0          0          0           Jq2_6_Ob
                         ];
-%     Ja_Ob_2T2Rsixbar = inv(Jq2_Ob_2T2Rsixbar) * Jx2_Ob_2T2Rsixbar;  
-%     J_Ob_2T2Rsixbar = [   
-%                           Ja_Ob_2T2Rsixbar;
-%                           Jc_Ob(2,:)/norm(Jc_Ob(2,:));
-%                           Jc_Ob(6,:)/norm(Jc_Ob(6,:));
-%                       ]; 
+    Ja_Ob_2T2Rsixbar = inv(Jq2_Ob_2T2Rsixbar) * Jx2_Ob_2T2Rsixbar;  
+    J_Ob_2T2Rsixbar = [   Ja_Ob_2T2Rsixbar;
+                          Jc_Ob(2,:)/norm(Jc_Ob(2,:));
+                          Jc_Ob(6,:)/norm(Jc_Ob(6,:));
+                      ]; 
 end
 %

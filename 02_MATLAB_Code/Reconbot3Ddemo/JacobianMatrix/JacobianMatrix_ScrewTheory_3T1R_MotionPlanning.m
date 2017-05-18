@@ -63,7 +63,7 @@ for i = 1:n
     %while norm(err)>0.001        
        %% ============================ IK ==============================
         obj3T1R = RCB3T1R(po, q11q12q21q22, l1, l2);
-        [p_current, ~, ~, q1q2_all, ~] = obj3T1R.RCB_3T1R_IK;
+        [p, ~, ~, q1q2_all, ~] = obj3T1R.RCB_3T1R_IK;
         if i == 1
             for j = 1:length(q1q2_all(:,1))
                 q1_matrix_norm(j) = norm(q1q2_all(j,1:5) - q0q1q2_HomePosition(1,2:6));
@@ -86,11 +86,11 @@ for i = 1:n
         q21 = q1q2(i,6); q22 = q1q2(i,7); q23 = q1q2(i,8); q24 = q1q2(i,9); q25 = q1q2(i,10);
         q0q1q2(i,:) = [0, q1q2(i,:)];
         % InitHome;
-        %ReconbotANI(q0q1q2(i,:));
+        ReconbotANI(q0q1q2(i,:));
         % ===============================================================
         
         % Jacobian Matrix
-        Enable_JacoMat = 1;
+        Enable_Mode_JacoMat = 2;
         UnifiedJacobianMatrix_ScrewTheory;
         
         det_Jq1_Ob_3T1R(i) = det(Jq1_Ob_3T1R) * 1000; % normized  /norm(Jq1_Ob_3T1R)
@@ -111,7 +111,8 @@ end
 toc
 %%
 figure(2)
-det_J_Ob_3T1R = det_J_Ob_3T1R/max(det_J_Ob_3T1R);
+[~,col] = find(abs(det_J_Ob_3T1R) == max(abs(det_J_Ob_3T1R)));
+det_J_Ob_3T1R = det_J_Ob_3T1R/abs(det_J_Ob_3T1R(col));
 i = 1:n;
 plot(i,det_Jq1_Ob_3T1R,'r-');hold on % with redundant actuation: det_Jq1_Ob_3T1R<0.2
 plot(i,det_Jc_Ob_3T1R,'g-');hold on

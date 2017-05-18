@@ -9,7 +9,7 @@ deg = pi/180;
 addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
 
 %% Read the value of Motor Encoder
-MotorPosition = [100*pi/180, 10*pi/180, -90*pi/180, 130*pi/180, -5*pi/180, -180*pi/180];
+MotorPosition = [130*pi/180, -5*pi/180, -90*pi/180, 130*pi/180, -5*pi/180, -180*pi/180];
 
 % Intepotation Points and Time
 NumIntepoPoints = 50;
@@ -35,11 +35,6 @@ q0q1q2_P2P_Acc_Intep = [];
 q0q1q2_P2P_time_Intep = [];
 %
 Time_mat = [];
-%
-Mode_det_Jq_J_mat = [];
-Mode_det_Jq_J = [];
-Mode_det_Jq_J_HomePosition_mat = [];
-Mode_det_Jq_J_HomePosition = [];
 
 %% Check the Current Mode
 q0q1q2_FixedMode = [0, 0, 0, pi, -pi/2, 0, 0, 0, -pi/2, 0, 0];
