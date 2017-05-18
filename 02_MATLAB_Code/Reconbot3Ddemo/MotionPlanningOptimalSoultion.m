@@ -359,7 +359,7 @@ for i = 1:length(MPOTP_cell)
             end
         end
 
-%         if j == 20
+%         if j == 48
 %            x = 1; 
 %         end
         % IK solution
@@ -375,7 +375,16 @@ for i = 1:length(MPOTP_cell)
         q11 = q1q2_Optimal(1); q12 = q1q2_Optimal(2); q13 = q1q2_Optimal(3); q14 = q1q2_Optimal(4); q15 = q1q2_Optimal(5);
         q21 = q1q2_Optimal(6); q22 = q1q2_Optimal(7); q23 = q1q2_Optimal(8); q24 = q1q2_Optimal(9); q25 = q1q2_Optimal(10);
         
-        if  Mode == 2
+        if  Mode == 1
+            Enable_Mode_JacoMat = 1;
+            UnifiedJacobianMatrix_ScrewTheory;
+            %-------det_Jq1_Ob_3T1R = det(Jq1_Ob_3T1R)-------
+            det_Jq(NumIntepoPoints*(i-1)+j,:) = det(Jq1_Ob_3T2R) * 10000; % scaled
+            %-------det_J_Ob_3T1R(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R)----
+            %det_J(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R);
+            % ------Jc_Ob_3T1R------
+            det_Jc(NumIntepoPoints*(i-1)+j,:) = 1;
+        elseif  Mode == 2
             Enable_Mode_JacoMat = 2;
             UnifiedJacobianMatrix_ScrewTheory;
             %-------det_Jq1_Ob_3T1R = det(Jq1_Ob_3T1R)-------

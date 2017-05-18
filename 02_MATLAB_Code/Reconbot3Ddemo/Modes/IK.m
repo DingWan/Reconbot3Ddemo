@@ -129,7 +129,7 @@ q0 = inputq0;
             % Judge the start point
             % We assume that the precision is 0.02mm (1) as industry manipulators
             if isempty(po{1}) == 1 && isempty(po{2}) == 1
-                if po{5} == 0 && po{6} == 0
+                if abs(po{5}) < 1e-8 && abs(po{6}) < 1e-8
                     q11 = inputq11;
                     q21 = inputq21;
                     PosOri = {[], [], po{3}, [], po{5}, po{6}, q11, q21};
@@ -139,7 +139,7 @@ q0 = inputq0;
                 obj1T2RRotAroundPoint = RCB1T2RRotAroundPoint(PosOri,q11q12q14q23,l1,l2);
                 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj1T2RRotAroundPoint.RCB_1T2R_RotAroundPoint_IK;                
             else
-                if po{1} == 0 && po{2} == 0
+                if abs(po{1}) < 1e-8 && abs(po{2}) < 1e-8
                     q11 = inputq11;
                     q21 = inputq21;
                     PosOri = {po{1}, po{2}, po{3}, [], [], po{6}, q11, q21};
@@ -159,7 +159,7 @@ q0 = inputq0;
             % Mechanism rotate around point p(1:3):  [0 0 1 0 1 1]
             % p = [[], [], z, [], beta, gamma]; x = y = 0
             q11q12q14q23 = [];
-            if po{5} == 0 && po{6} == 0
+            if abs(po{5}) < 1e-8 && abs(po{6}) < 1e-8
                 q11q12q21q22 = [q0q1q2_Previous(2:3),q0q1q2_Previous(7:8)];
                 q11q12q14q23 = q11q12q21q22;
                 q11 = inputq11;

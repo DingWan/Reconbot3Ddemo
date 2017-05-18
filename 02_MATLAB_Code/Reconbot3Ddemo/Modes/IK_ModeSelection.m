@@ -150,10 +150,10 @@
                     po_cell = inputdlg({'x (-L2,L2)','y (-L2,L2)','z ([0, 2*L2])','Theta =(-90~90)'},'2T2R-6-Bar', [1 20; 1 20; 1 20; 1 20;]);
                     for i=1:3 po_num(i) = str2num(po_cell{i}) / 1000; end
                     po_num(4) = str2num(po_cell{4}) * pi / 180;
-                    if po_num(1) == 0 && po_num(2) == 0 && po_num(4) ~= 0
+                    if po_num(1) == 0 && po_num(2) == 0  
                         if po_num(3) == 0
                             po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
-                        else
+                        elseif po_num(4) ~= 0
                             % Mechanism rotate around point p(1:3):  [0 0 1 0 1 1]
                             % p = [[], [], z, [], beta, gamma]; x = y = 0
                             Mode = 7;
@@ -163,6 +163,13 @@
                             q11q12q14q23 = [];
                             obj1T2RRotAroundPoint = RCB1T2RRotAroundPoint(po,q11q12q14q23,l1,l2);
                             [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj1T2RRotAroundPoint.RCB_1T2R_RotAroundPoint_IK;
+                        elseif po_num(4) == 0
+                            Mode = 8;
+                            %po_num(5) = 90 * pi / 180;
+                            po = {0, 0, po_num(3), [], po_num(4), []};
+                            q11q12q14q22 = [];
+                            obj2T2Rfivebar = RCB2T2Rfivebar(po,q11q12q14q22,l1,l2);
+                            [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rfivebar.RCB_2T2R_FiveBar_IK;
                         end
                     else
                         po = {po_num(1), po_num(2), po_num(3), [], [], po_num(4)};

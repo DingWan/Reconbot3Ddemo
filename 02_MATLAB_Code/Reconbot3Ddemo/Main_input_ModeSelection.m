@@ -212,7 +212,7 @@ if HomePosition == 2
     h = msgbox('Check Completed, Input values are correct!');
     
     %% 3D Animation
-    for i = 1:length(q0q1q2_Pos_mat)-0
+    for i = 101:length(q0q1q2_Pos_mat)-100
         %========================== Animation ============================
         ReconbotANI(q0q1q2_Pos_mat(i,:));
         % ReconbotANI(q0q1q2_Pos_mat(151,:));

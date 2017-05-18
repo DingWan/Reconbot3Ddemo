@@ -133,18 +133,18 @@ classdef RCB2T2Rsixbar
                 % 1. Consider that when p(2)=0 (with two situation p(1)=0 or p(1)~=0), there exists no result of q11. how should we do?
                 % 2. When calculates IK, which method should we use: Euler-angle or axis-angle?
                 % -------Method I: Euler-angle-------- function [EulerAngle, ABC, q1q2] = RCB2T2RIKq11q12q14q23SixBar(p, EulerAngle_Input, l1, l2)
-                if isequal(p_BinaryCode, [1 1 1 0 0 1]) == 1
+                %if isequal(p_BinaryCode, [1 1 1 0 0 1]) == 1
                     % Mechanism in a general six-bar linkage:  [1 1 1 0 0 1]
                     % p = [x, y, z, [], [], gamma]
                     % display('Notice: Inputs are:p = [x, y, z, [], [], gamma]');
                     % display('Mechanism in a general six-bar linkage');               
-                    if p(1) == 0 && p(2) == 0 || p(3) < 0
+                    if abs(p(1)) < 1e-8 && abs(p(2)) < 1e-8 || p(3) < 0
                         WSvalue_2T2R = 0;
                         q11 = q11_SP_A1C1_A2C2_overlap;
                     else
                         q11 = -atan(p(1)/p(2)); % inputs:  q11; atan(p(1)/p(2))>0(or<0), -(or +)q11 !!!!!
                     end  
-                end
+                %end
                 
                 [EulerAngle_q11_theta] = EulerAngles_theta_q11_IK(theta, q11);
                 if isempty(EulerAngle_q11_theta) == 1

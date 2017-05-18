@@ -216,5 +216,25 @@ elseif Enable_Mode_JacoMat == 6
 %                           Jc_Ob(2,:)/norm(Jc_Ob(2,:));
 %                           Jc_Ob(6,:)/norm(Jc_Ob(6,:));
 %                       ]; 
+elseif Enable_Mode_JacoMat == 8
+% ------ 2T2Rfivebar ------
+    Jx2_Ob_2T2Rfivebar = [   
+                            Jx2_Ob(2,:)
+                            Jx2_Ob(3,:)
+                            Jx2_Ob(4,:)
+                            Jx2_Ob(6,:)
+                         ];
+    Jq2_Ob_2T2Rfivebar = [  
+                           Jq2_2_Ob   0          0           0
+                           0          Jq2_3_Ob   0           0 
+                           0          0          Jq2_4_Ob    0
+                           0          0          0           Jq2_6_Ob
+                        ];
+%     Ja_Ob_2T2Rfivebar = inv(Jq2_Ob_2T2Rfivebar) * Jx2_Ob_2T2Rfivebar;  
+%     J_Ob_2T2Rfivebar = [   
+%                           Ja_Ob_2T2Rfivebar;
+%                           Jc_Ob(2,:)/norm(Jc_Ob(2,:));
+%                           Jc_Ob(6,:)/norm(Jc_Ob(6,:));
+%                       ]; 
 end
 %
