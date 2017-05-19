@@ -58,6 +58,7 @@ q0q1q2_P2P_Vel_Intep = [];
 q0q1q2_P2P_Acc_Intep = [];
 q0q1q2_P2P_time_Intep = [];
 %
+det_Jq_Normalized = [];
 det_J_Normalized = [];
 %
 col = []; % Number and position of 'Self_adjustment_Enable_Disable == 1'
@@ -372,6 +373,7 @@ for i = 1:length(MPOTP_cell)
         OptimalJointsSolution;
         q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j,:) = q0q1q2_Optimal_SingleRow;
         
+        
         % ==================  Jacobian Matrix  ====================
         q1q2_Optimal = q0q1q2_Optimal_SingleRow(:,2:11);
         q11 = q1q2_Optimal(1); q12 = q1q2_Optimal(2); q13 = q1q2_Optimal(3); q14 = q1q2_Optimal(4); q15 = q1q2_Optimal(5);
@@ -381,31 +383,58 @@ for i = 1:length(MPOTP_cell)
             Enable_Mode_JacoMat = 1;
             UnifiedJacobianMatrix_ScrewTheory;
             %-------det_Jq1_Ob_3T1R = det(Jq1_Ob_3T1R)-------
-            det_Jq(NumIntepoPoints*(i-1)+j,:) = det(Jq1_Ob_3T2R) * 10000; % scaled
+            det_Jq(j,:) = det(Jq1_Ob_3T2R); % scaled
             %-------det_J_Ob_3T1R(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R)----
-            %det_J(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R);
+            det_J(NumIntepoPoints*(i-1)+j,:) = 0;%det(J_Ob_3T2R);
             % ------Jc_Ob_3T1R------
-            det_Jc(NumIntepoPoints*(i-1)+j,:) = 1;
+            det_Jc(NumIntepoPoints*(i-1)+j,:) = 0;
         elseif  Mode == 2
             Enable_Mode_JacoMat = 2;
             UnifiedJacobianMatrix_ScrewTheory;
             %-------det_Jq1_Ob_3T1R = det(Jq1_Ob_3T1R)-------
-            det_Jq(NumIntepoPoints*(i-1)+j,:) = det(Jq1_Ob_3T1R) * 1000; % scaled
+            det_Jq(j,:) = det(Jq1_Ob_3T1R); % scaled
             %-------det_J_Ob_3T1R(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R)----
             det_J(j,:) = det(J_Ob_3T1R);
             % ------Jc_Ob_3T1R------
             det_Jc(NumIntepoPoints*(i-1)+j,:) = det(Jc_Ob_3T1R);
-        elseif Mode == 6 || Mode == 7
+        elseif  Mode == 5
+            Enable_Mode_JacoMat = 5;
+            UnifiedJacobianMatrix_ScrewTheory;
+            %-------det_Jq1_Ob_3T1R = det(Jq1_Ob_3T1R)-------
+            det_Jq(j,:) = 0; % scaled
+            %-------det_J_Ob_3T1R(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R)----
+            det_J(j,:) = 0;
+            % ------Jc_Ob_3T1R------
+            det_Jc(NumIntepoPoints*(i-1)+j,:) = det(Jc_Ob_HomePosition);
+        elseif Mode == 6 || Mode == 7 || Mode == 8 || Mode == 9
             Enable_Mode_JacoMat = 6;
             UnifiedJacobianMatrix_ScrewTheory;
             %-------det_Jq2_Ob_2T2R = det(Jq2_Ob_2T2Rsixbar)-------
-            det_Jq(NumIntepoPoints*(i-1)+j,:) = det(Jq2_Ob_2T2Rsixbar) * 1000; % scaled
+            det_Jq(j,:) = det(Jq2_Ob_2T2Rsixbar); % scaled
             %-------det_J_Ob_2T2R = det(J_Ob_2T2R)-------
             det_J(j,:) = det(J_Ob_2T2Rsixbar);
             % ------Jc_Ob_2T2R------
             det_Jc(NumIntepoPoints*(i-1)+j,:) = 1;
+        elseif Mode == 10
+            Enable_Mode_JacoMat = 10;
+            UnifiedJacobianMatrix_ScrewTheory;
+            %-------det_Jq2_Ob_2T2R = det(Jq2_Ob_2Rsixbar)-------
+            det_Jq(j,:) = det(Jq2_Ob_2RSerialChainA1C1); % scaled
+            %-------det_J_Ob_2R = det(J_Ob_2T2R)-------
+            det_J(j,:) = det(J_Ob_2RSerialChainA1C1);
+            % ------Jc_Ob_2T2R------
+            det_Jc(NumIntepoPoints*(i-1)+j,:) = 1;
+        elseif Mode == 11
+            Enable_Mode_JacoMat = 11;
+            UnifiedJacobianMatrix_ScrewTheory;
+            %-------det_Jq2_Ob_2T2R = det(Jq2_Ob_2Rsixbar)-------
+            det_Jq(j,:) = det(Jq2_Ob_2RSerialChainA2C2); % scaled
+            %-------det_J_Ob_2R = det(J_Ob_2T2R)-------
+            det_J(j,:) = det(J_Ob_2RSerialChainA2C2);
+            % ------Jc_Ob_2T2R------
+            det_Jc(NumIntepoPoints*(i-1)+j,:) = 1;
         else
-            det_Jq(NumIntepoPoints*(i-1)+j,:) = 1;
+            det_Jq(j,:) = 1;
             det_J(j,:) = 1;
             det_Jc(NumIntepoPoints*(i-1)+j,:) = 1;
         end
@@ -413,14 +442,7 @@ for i = 1:length(MPOTP_cell)
         if abs(det_J(j,:)) < 1e-12
             det_J(j,:) = 0;
         end
-        % Output current acutall modes
-        % We define: 
-        if abs(det_Jq(NumIntepoPoints*(i-1)+j,:)) < 0.2 || abs(det_Jc(NumIntepoPoints*(i-1)+j,:)) < 0.2|| Mode == 1 || Mode == 5
-            Mode_Actual(NumIntepoPoints*(i-1)+j,:) = 1;
-        else
-            Mode_Actual(NumIntepoPoints*(i-1)+j,:) = Mode;
-        end
-        
+                
         Mode_Ideal(NumIntepoPoints*(i-1)+j,:) = Mode;
 
         %------ Show Center point of Moving Platform -------
@@ -429,13 +451,34 @@ for i = 1:length(MPOTP_cell)
         %plot3(p_Base(1),p_Base(2),p_Base(3),'r.');
     end    
     
+    %------------------------------------------------------ 
+    % det_Jq_Normalized =  det_Jq / max(abs(det_Jq))
+    [row,~] = find(abs(det_Jq) == max(abs(det_Jq)));
+    if max(abs(det_Jq)) == 0
+        det_Jq_Normalized = [det_Jq_Normalized; det_Jq];
+    else
+        det_Jq_Normalized = [det_Jq_Normalized; det_Jq/abs(det_Jq(row(1)))];
+    end
     % det_J_Normalized =  det_J / max(abs(det_J))
     [row,~] = find(abs(det_J) == max(abs(det_J)));
     if max(abs(det_J)) == 0
         det_J_Normalized = [det_J_Normalized; det_J];
     else
         det_J_Normalized = [det_J_Normalized; det_J/abs(det_J(row(1)))];
+    end    
+    
+    %------------------------------------------------------ 
+    % Output current acutall modes
+    % We define:
+    for j = 1:NumIntepoPoints
+        if ( Mode ~= 5 && abs(det_Jq_Normalized(NumIntepoPoints*(i-1)+j,:) ) < 0.2) ||...
+                ( Mode ~= 1 && abs(det_Jc(NumIntepoPoints*(i-1)+j,:)) < 0.2 )
+            Mode_Actual(NumIntepoPoints*(i-1)+j,:) = 0;
+        else
+            Mode_Actual(NumIntepoPoints*(i-1)+j,:) = Mode;
+        end
     end
+    % ===========================  End  ============================
     
     %% Self_adjustment mode contain three types:
     for OnlyUsedforFoldingThisPart_Self_adjustment = 1:1
@@ -532,7 +575,8 @@ for i = 1:length(MPOTP_cell)
 end
 
 %% Output current all modes, Jacobian of Jq and J
-Mode_det_Jq_Jc_J = [Mode_Ideal, Mode_Actual, det_Jq, det_Jc, det_J_Normalized];% det_J
+% Mode_det_Jq_Jc_J = Mode_Actual;
+Mode_det_Jq_Jc_J = [Mode_Ideal, Mode_Actual, det_Jq_Normalized, det_Jc, det_J_Normalized];% det_J
 Mode_det_Jq_Jc_J_Intep = Mode_det_Jq_Jc_J;
 
 %% Assign the correct order of differernt value of 'Self_adjustment_Enable_Disable = 1/2/3/0'

@@ -1,4 +1,5 @@
 clc
+clear
 l1 = 0.2301390;
 l2 = 0.1477;
 
@@ -9,7 +10,7 @@ deg = pi/180;
 addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
 
 %% Read the value of Motor Encoder
-MotorPosition = [100*pi/180, 10*pi/180, -90*pi/180, 130*pi/180, -5*pi/180, -180*pi/180];
+MotorPosition = [0*pi/180, 0*pi/180, -90*pi/180, 0*pi/180, 0*pi/180, 180*pi/180];
 
 % Intepotation Points and Time
 NumIntepoPoints = 50;
@@ -95,11 +96,22 @@ for OnlyUsedforFoldingThisPart = 1:1
           MP_Acc_mat = [ MP_Acc_mat; MP_Acc_Intep_HomePosition ];
             Time_mat = [ Time_mat; MP_time_Intep_HomePosition ];
      % Mode, Jacobian of Jq and J
-   Mode_det_Jq_J_mat = [Mode_det_Jq_J_mat; Mode_det_Jq_J_HomePosition];
+   Mode_det_Jq_Jc_J_mat = [Mode_det_Jq_J_mat; Mode_det_Jq_J_HomePosition];
             
 end
 % --------------
 toc
+
+%% Save the value as '.mat' file
+    Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
+    q11q12q14_q21q22q23 = [ q0q1q2_Pos_mat(:,2), q0q1q2_Vel_mat(:,2), q0q1q2_Acc_mat(:,2),...
+                            q0q1q2_Pos_mat(:,3), q0q1q2_Vel_mat(:,3), q0q1q2_Acc_mat(:,3),...
+                            q0q1q2_Pos_mat(:,5), q0q1q2_Vel_mat(:,5), q0q1q2_Acc_mat(:,5),...
+                            q0q1q2_Pos_mat(:,7), q0q1q2_Vel_mat(:,7), q0q1q2_Acc_mat(:,7),...
+                            q0q1q2_Pos_mat(:,8), q0q1q2_Vel_mat(:,8), q0q1q2_Acc_mat(:,8),...
+                            q0q1q2_Pos_mat(:,9), q0q1q2_Vel_mat(:,9), q0q1q2_Acc_mat(:,9),...
+                            Time_mat(:,1), Mode_det_Jq_Jc_J_mat
+                          ];
 
 %% 3D Animation
 for i = 1:length(q0q1q2_Pos_mat)-0  

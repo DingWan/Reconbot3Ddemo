@@ -17,7 +17,7 @@ tic
  
 %%
 po_start = { 0.100, 0.100, 0.180, -30*pi/180};
-po_end = { -0.10, 0.100, 0.200,  0*pi/180};
+po_end = { -0.10, 0.000, 0.200,  -30*pi/180};
 Time = [0 5];
 n = 50;
 %% 5-Grade Polynomial Intepotation
@@ -52,7 +52,7 @@ for i = 1:n
         
        %% ============================ IK ==============================
         obj2T2Rsixbar = RCB2T2Rsixbar(po,q11q12q14q23,l1,l2);
-        [p_current, ~, ~, q1q2_all, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
+        [p, ~, ~, q1q2_all, ~] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
         SelectedRow = find(abs(q1q2_all(:,1)) == min(abs(q1q2_all(:,1))));
         if i == 1
             for j = 1:length(q1q2_all(:,1))
@@ -75,22 +75,21 @@ for i = 1:n
         q21 = q1q2(i,6); q22 = q1q2(i,7); q23 = q1q2(i,8); q24 = q1q2(i,9); q25 = q1q2(i,10);
         q0q1q2(i,:) = [0, q1q2(i,:)];
         % InitHome;
-        %ReconbotANI(q0q1q2(i,:));
+         ReconbotANI(q0q1q2(i,:));
         % ===============================================================
         
         % Jacobian Matrix
-        Enable_JacoMat = 2;
+        Enable_Mode_JacoMat = 6;
         UnifiedJacobianMatrix_ScrewTheory;
         
         det_Jq2_Ob_2T2R(i) = det(Jq2_Ob_2T2Rsixbar) * 1000; % /norm(Jq2_Ob_2T2Rsixbar)
         det_J_Ob_2T2R(i) = det(J_Ob_2T2Rsixbar);
-        [~, S, ~] = svd(J_Ob_2T2Rsixbar(5:6,:)); % normized
-        det_Jc_Ob_2T2R(i,:) = [S(1,1), S(2,2)];
+        det_J_Ob_2T2Rsixbar = det(J_Ob_2T2Rsixbar); % normized
         
 end
 toc
 %%
-figure(2)
+figure(3)
 [~,col] = find(abs(det_J_Ob_2T2R) == max(abs(det_J_Ob_2T2R)));
 det_J_Ob_2T2R = det_J_Ob_2T2R/abs(det_J_Ob_2T2R(col));
 i = 1:n;

@@ -198,10 +198,6 @@ elseif Enable_Mode_JacoMat == 5
                           ];
 elseif Enable_Mode_JacoMat == 6 
 % ------ 2T2Rsixbar & RotateAroundPoint & 2T2Rfivebar & threebar ------
-    if norm(A1C1_Ob) == 0 || norm(A2C2_Ob) == 0
-        Jq2_6_Ob = 0;
-    end
-
     Jx2_Ob_2T2Rsixbar = [   
                             Jx2_Ob(2,:)
                             Jx2_Ob(3,:)
@@ -213,8 +209,8 @@ elseif Enable_Mode_JacoMat == 6
                            0          Jq2_3_Ob   0           0 
                            0          0          Jq2_4_Ob    0
                            0          0          0           Jq2_6_Ob
-                        ];     
-     if abs(det(Jq2_Ob_2T2Rsixbar)) < 1e-12 || norm(A1C1_Ob) == 0 || norm(A2C2_Ob) == 0
+                        ];
+     if abs(det(Jq2_Ob_2T2Rsixbar)) < 1e-12 || 
          J_Ob_2T2Rsixbar = 0;
      else
          inv_Jq2_Ob_2T2Rsixbar = inv(Jq2_Ob_2T2Rsixbar);

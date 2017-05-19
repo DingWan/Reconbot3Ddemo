@@ -16,10 +16,10 @@ PosOri = [0 0 0.208879343162506 0 0 0, 0 0];
 
 
 %%
-po_start = { 0.10 0.100 0.23 -30*pi/180 [] []};
-po_end = { -0.010 0.100 0.15 10*pi/180 [] []};
+po_start = { 0.00 0.000 0.23 -10*pi/180 [] []};
+po_end = { -0.010 0.100 0.15 30*pi/180 [] []};
 Time = [0 5];
-n = 200;
+n = 50;
 %% 5-Grade Polynomial Intepotation
 for i = 1: 4
 PO = [po_start{i}, po_end{i}];
@@ -86,7 +86,7 @@ for i = 1:n
         q21 = q1q2(i,6); q22 = q1q2(i,7); q23 = q1q2(i,8); q24 = q1q2(i,9); q25 = q1q2(i,10);
         q0q1q2(i,:) = [0, q1q2(i,:)];
         % InitHome;
-        % ReconbotANI(q0q1q2(i,:));
+         ReconbotANI(q0q1q2(i,:));
         % ===============================================================
         
         % Jacobian Matrix
