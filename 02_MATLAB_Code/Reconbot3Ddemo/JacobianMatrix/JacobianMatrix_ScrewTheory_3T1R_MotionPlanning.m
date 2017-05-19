@@ -86,7 +86,7 @@ for i = 1:n
         q21 = q1q2(i,6); q22 = q1q2(i,7); q23 = q1q2(i,8); q24 = q1q2(i,9); q25 = q1q2(i,10);
         q0q1q2(i,:) = [0, q1q2(i,:)];
         % InitHome;
-        ReconbotANI(q0q1q2(i,:));
+        % ReconbotANI(q0q1q2(i,:));
         % ===============================================================
         
         % Jacobian Matrix
@@ -110,7 +110,7 @@ for i = 1:n
 end
 toc
 %%
-figure(2)
+figure(3)
 [~,col] = find(abs(det_J_Ob_3T1R) == max(abs(det_J_Ob_3T1R)));
 det_J_Ob_3T1R = det_J_Ob_3T1R/abs(det_J_Ob_3T1R(col));
 i = 1:n;

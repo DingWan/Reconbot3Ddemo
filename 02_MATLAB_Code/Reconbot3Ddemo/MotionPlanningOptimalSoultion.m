@@ -1,4 +1,4 @@
-function [ q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_J_Intep ] = ...
+function [ q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J_Intep ] = ...
     MotionPlanningOptimalSoultion(Mode_previous, PosOri_previous, q0q1q2_previous_trajpoint,...
     Mode_current,PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, Start_Time, Time_inteval, l1, l2)
 % Motion planning and Optimal Solution
@@ -57,6 +57,8 @@ q0q1q2_P2P_Pos_Intep = [];
 q0q1q2_P2P_Vel_Intep = [];
 q0q1q2_P2P_Acc_Intep = [];
 q0q1q2_P2P_time_Intep = [];
+%
+det_J_Normalized = [];
 %
 col = []; % Number and position of 'Self_adjustment_Enable_Disable == 1'
 q0q1q2_P2P_Pos_Intep = [];
@@ -390,7 +392,7 @@ for i = 1:length(MPOTP_cell)
             %-------det_Jq1_Ob_3T1R = det(Jq1_Ob_3T1R)-------
             det_Jq(NumIntepoPoints*(i-1)+j,:) = det(Jq1_Ob_3T1R) * 1000; % scaled
             %-------det_J_Ob_3T1R(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R)----
-            %det_J(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R);
+            det_J(j,:) = det(J_Ob_3T1R);
             % ------Jc_Ob_3T1R------
             det_Jc(NumIntepoPoints*(i-1)+j,:) = det(Jc_Ob_3T1R);
         elseif Mode == 6 || Mode == 7
@@ -399,30 +401,41 @@ for i = 1:length(MPOTP_cell)
             %-------det_Jq2_Ob_2T2R = det(Jq2_Ob_2T2Rsixbar)-------
             det_Jq(NumIntepoPoints*(i-1)+j,:) = det(Jq2_Ob_2T2Rsixbar) * 1000; % scaled
             %-------det_J_Ob_2T2R = det(J_Ob_2T2R)-------
-            %det_J(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_2T2Rsixbar);
+            det_J(j,:) = det(J_Ob_2T2Rsixbar);
             % ------Jc_Ob_2T2R------
             det_Jc(NumIntepoPoints*(i-1)+j,:) = 1;
         else
             det_Jq(NumIntepoPoints*(i-1)+j,:) = 1;
-            %det_J(NumIntepoPoints*(i-1)+j,:) = 1;
+            det_J(j,:) = 1;
             det_Jc(NumIntepoPoints*(i-1)+j,:) = 1;
         end
         
-        % Output current all modes
+        if abs(det_J(j,:)) < 1e-12
+            det_J(j,:) = 0;
+        end
+        % Output current acutall modes
         % We define: 
         if abs(det_Jq(NumIntepoPoints*(i-1)+j,:)) < 0.2 || abs(det_Jc(NumIntepoPoints*(i-1)+j,:)) < 0.2|| Mode == 1 || Mode == 5
-            Mode_All(NumIntepoPoints*(i-1)+j,:) = 1;
+            Mode_Actual(NumIntepoPoints*(i-1)+j,:) = 1;
         else
-            Mode_All(NumIntepoPoints*(i-1)+j,:) = Mode;
+            Mode_Actual(NumIntepoPoints*(i-1)+j,:) = Mode;
         end
         
-        Mode_WithoutChange(NumIntepoPoints*(i-1)+j,:) = Mode;
+        Mode_Ideal(NumIntepoPoints*(i-1)+j,:) = Mode;
 
         %------ Show Center point of Moving Platform -------
         %Displacement = [250,250,165.88];
         %p_Base = p(1:3) + Displacement;
         %plot3(p_Base(1),p_Base(2),p_Base(3),'r.');
     end    
+    
+    % det_J_Normalized =  det_J / max(abs(det_J))
+    [row,~] = find(abs(det_J) == max(abs(det_J)));
+    if max(abs(det_J)) == 0
+        det_J_Normalized = [det_J_Normalized; det_J];
+    else
+        det_J_Normalized = [det_J_Normalized; det_J/abs(det_J(row(1)))];
+    end
     
     %% Self_adjustment mode contain three types:
     for OnlyUsedforFoldingThisPart_Self_adjustment = 1:1
@@ -519,8 +532,8 @@ for i = 1:length(MPOTP_cell)
 end
 
 %% Output current all modes, Jacobian of Jq and J
-Mode_det_Jq_J = [Mode_WithoutChange, Mode_All, det_Jq, det_Jc];% det_J
-Mode_det_Jq_J_Intep = Mode_det_Jq_J;
+Mode_det_Jq_Jc_J = [Mode_Ideal, Mode_Actual, det_Jq, det_Jc, det_J_Normalized];% det_J
+Mode_det_Jq_Jc_J_Intep = Mode_det_Jq_Jc_J;
 
 %% Assign the correct order of differernt value of 'Self_adjustment_Enable_Disable = 1/2/3/0'
 q0q1q2_P2P_Pos_Intep = q0q1q2_OptimalRow;
@@ -530,8 +543,8 @@ if isempty(col) ~= 1
     q0q1q2_P2P_Pos_Intep(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = q0q1q2_OptimalRow((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
     q0q1q2_P2P_Pos_Intep((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = q0q1q2_OptimalRow(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
     % Mode and Jacobian
-    Mode_det_Jq_J_Intep(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = Mode_det_Jq_J((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
-    Mode_det_Jq_J_Intep((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = Mode_det_Jq_J(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
+    Mode_det_Jq_Jc_J_Intep(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = Mode_det_Jq_Jc_J((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
+    Mode_det_Jq_Jc_J_Intep((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = Mode_det_Jq_Jc_J(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
 end
 
 %% Position, Velocity, Acceleration Calcuation of joint angles

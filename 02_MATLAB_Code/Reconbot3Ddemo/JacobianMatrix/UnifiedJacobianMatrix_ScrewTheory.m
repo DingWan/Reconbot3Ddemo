@@ -173,12 +173,17 @@ elseif Enable_Mode_JacoMat == 2
                     Jc_Ob(1,1:2);
                     Jc_Ob(5,1:2);
                  ];
-%     Ja_Ob_3T1R = inv(Jq1_Ob_3T1R) * Jx1_Ob_3T1R;
-%     J_Ob_3T1R = [   
-%                     Ja_Ob_3T1R;
-%                     Jc_Ob(1,:);
-%                     Jc_Ob(5,:);
-%                  ];
+     if abs(det(Jq1_Ob_3T1R)) < 1e-12
+         J_Ob_3T1R = 0;
+     else
+         inv_Jq1_Ob_3T1R = inv(Jq1_Ob_3T1R);
+         Ja_Ob_3T1R = inv_Jq1_Ob_3T1R/norm(inv_Jq1_Ob_3T1R) * Jx1_Ob_3T1R; % Ja = Jq^-1/norm(Jq^-1) * Jx
+         J_Ob_3T1R = [
+                         Ja_Ob_3T1R;
+                         Jc_Ob(1,:);
+                         Jc_Ob(5,:);
+                         ];
+     end
 elseif Enable_Mode_JacoMat == 5
     Jx1_Ob_HomePosition = [    
                              Jx1_Ob(2,:);

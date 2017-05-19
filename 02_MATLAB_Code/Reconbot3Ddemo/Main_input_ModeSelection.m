@@ -82,10 +82,10 @@ if HomePosition == 2
     %
     Time_mat = [];
     %
-    Mode_det_Jq_J_mat = [];
-    Mode_det_Jq_J = [];
-    Mode_det_Jq_J_HomePosition_mat = [];
-    Mode_det_Jq_J_HomePosition = [];
+    Mode_det_Jq_Jc_J_mat = [];
+    Mode_det_Jq_Jc_J = [];
+    Mode_det_Jq_Jc_J_HomePosition_mat = [];
+    Mode_det_Jq_Jc_J_HomePosition = [];
     %
     
     tic
@@ -114,7 +114,7 @@ if HomePosition == 2
         
         % Motion Planning and Optimal Soultion;
         [ q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, ...
-            MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_J ] = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+            MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J ] = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
             Mode_current, PosOri_current, q0q1q2_current, ...
             NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
         % Position, Velocity, Acceleration Calcuation of joint angles
@@ -127,7 +127,7 @@ if HomePosition == 2
         MP_Acc_mat = [ MP_Acc_mat; MP_Acc_Intep ];
         Time_mat = [ Time_mat; MP_time_Intep ];
         % Mode, Jacobian of Jq and J
-        Mode_det_Jq_J_mat = [Mode_det_Jq_J_mat; Mode_det_Jq_J];
+        Mode_det_Jq_Jc_J_mat = [Mode_det_Jq_Jc_J_mat; Mode_det_Jq_Jc_J];
         
         Start_Time = Time_mat(length(Time_mat(:,1)),1);
         
@@ -162,7 +162,7 @@ if HomePosition == 2
         
         % Motion Planning and Optimal Soultion;
         [ q0q1q2_P2P_Pos_Intep_HomePosition, q0q1q2_P2P_Vel_Intep_HomePosition ,q0q1q2_P2P_Acc_Intep_HomePosition, ...
-            MP_Pos_Intep_HomePosition, MP_Vel_Intep_HomePosition, MP_Acc_Intep_HomePosition, MP_time_Intep_HomePosition, Mode_det_Jq_J_HomePosition ] = ...
+            MP_Pos_Intep_HomePosition, MP_Vel_Intep_HomePosition, MP_Acc_Intep_HomePosition, MP_time_Intep_HomePosition, Mode_det_Jq_Jc_J_HomePosition ] = ...
             MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
             Mode_current, PosOri_current, q0q1q2_current, ...
             NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
@@ -177,7 +177,7 @@ if HomePosition == 2
         MP_Acc_mat = [ MP_Acc_mat; MP_Acc_Intep_HomePosition ];
         Time_mat = [ Time_mat; MP_time_Intep_HomePosition ];
         % Mode, Jacobian of Jq and J
-        Mode_det_Jq_J_mat = [Mode_det_Jq_J_mat; Mode_det_Jq_J_HomePosition];
+        Mode_det_Jq_Jc_J_mat = [Mode_det_Jq_Jc_J_mat; Mode_det_Jq_Jc_J_HomePosition];
         
     end
     % --------------
@@ -191,7 +191,7 @@ if HomePosition == 2
         q0q1q2_Pos_mat(:,7), q0q1q2_Vel_mat(:,7), q0q1q2_Acc_mat(:,7),...
         q0q1q2_Pos_mat(:,8), q0q1q2_Vel_mat(:,8), q0q1q2_Acc_mat(:,8),...
         q0q1q2_Pos_mat(:,9), q0q1q2_Vel_mat(:,9), q0q1q2_Acc_mat(:,9),...
-        Time_mat(:,1), Mode_det_Jq_J_mat
+        Time_mat(:,1), Mode_det_Jq_Jc_J_mat
         ];
     
     %% Plot joint Angles
@@ -212,7 +212,7 @@ if HomePosition == 2
     h = msgbox('Check Completed, Input values are correct!');
     
     %% 3D Animation
-    for i = 101:length(q0q1q2_Pos_mat)-100
+    for i = 51:length(q0q1q2_Pos_mat)-50
         %========================== Animation ============================
         ReconbotANI(q0q1q2_Pos_mat(i,:));
         % ReconbotANI(q0q1q2_Pos_mat(151,:));
