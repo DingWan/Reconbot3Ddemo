@@ -3,11 +3,11 @@ classdef RCB1T2RRotAroundPoint
     % RCB1T2RRotAroundPoint is actually not a operational mode due to the
     % motion composed of 3T1R-2T2R-Fivebar-Threebar.
     % Here, we still call it 1T2R with the motion of platfrom 1 Transition motion along z-axis and 2 rotation around xyz-axis        
-    %%------------2-RER 1T3R RotAroundPoint inverse kinematics--------------
+    %%------------2-RER 1T2R RotAroundPoint inverse kinematics--------------
     %--------------------------------------------------------------------
     %     This function is to calculate the inverse kinematics of 4 DoF 2-RER PM
-    %   mechanism with 1T3R, Rotate Around Point [0, 0 , z] case;
-    %     The IK function: [p, EulerAngle_q11_theta, ABC, q1q2] = RCB_1T3R_RotAroundPoint_IK(obj)   
+    %   mechanism with 1T2R, Rotate Around Point [0, 0 , z] case;
+    %     The IK function: [p, EulerAngle_q11_theta, ABC, q1q2] = RCB_1T2R_RotAroundPoint_IK(obj)   
     %     This is written by Wan Ding in 13 Dec 2016.
     %---------------------------------------------------------------------
     
@@ -101,15 +101,17 @@ classdef RCB1T2RRotAroundPoint
                 RotationMatrix = eul2rotm(EulerAngle);
                 
                 WSvalue_2T2R_SinguPosA1C1 = 1;
-                WSvalue_1T3R_SinguPosA2C2 = 1;
+                WSvalue_1T2R_SinguPosA2C2 = 1;
             else
                 
                 % Euler angle IK
                 if isequal(p_BinaryCode, [0 0 1 0 1 1]) == 1
                     % Mechanism rotate around point p(1:3):  [1 1 1 0 1 1]
                     % p = [[], [], z, [], beta, gamma]; x = y = 0
-                    if (abs(p(1)) < 1e-8 && abs(p(2)) < 1e-8) || po{3} < 0
-                        WSvalue_1T3R = 0;
+                    if theta < 1e-8 || po{3} < 0
+                        WSvalue_1T2R = 0;
+                        po{1} = 0;
+                        po{2} = 0;
                         q11 = q11_SP_A1C1_A2C2_overlap;
                         q21 = q21_SP_A1C1_A2C2_overlap;
                     else
@@ -143,7 +145,7 @@ classdef RCB1T2RRotAroundPoint
                 po{4} = alpha;
                 po{5} = beta;
                 po{6} = gamma;
-                name = '2T2R-1T3RRotAroundPoint';
+                name = '2T2R-1T2RRotAroundPoint';
                 fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
                     name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
             end  
@@ -177,14 +179,14 @@ classdef RCB1T2RRotAroundPoint
                 WSvalue_2T2R_SinguPosA1C1 = 1;
                 WSvalue_2T2R_SinguPosA2C2 = 1;
                 IterationNumber = 1;
-                q11q12q21q22 = q11q12q14q23;
+                q11q12q14q23 = q11q12q14q23;
                 q13 = pi;
-                q14 = q11q12q21q22(2);
-                q15 = q11q12q21q22(1);
+                q14 = q11q12q14q23(2);
+                q15 = q11q12q14q23(1);
                 
                 q23 = pi;
-                q24 = q11q12q21q22(4);
-                q25 = q11q12q21q22(3);
+                q24 = q11q12q14q23(4);
+                q25 = q11q12q14q23(3);
                 q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
             else
                 % Here are used to preserve the original value of q11
@@ -333,7 +335,7 @@ classdef RCB1T2RRotAroundPoint
                 % so, I force the number to be the same by compensating the
                 % fewer one with the missing number (jA1C1-jA2C2) of first value q1(1,1:5) and A1B1C1(1,:)
                 if jA1C1 ~= 0 && jA2C2 ~= 0 
-                    WSvalue_1T3R = 1;
+                    WSvalue_1T2R = 1;
                     if jA1C1 > jA2C2
                         for i = 1:1:(jA1C1-jA2C2)
                             q2(jA2C2 + i,1:5) = q2(1,1:5);
@@ -348,14 +350,14 @@ classdef RCB1T2RRotAroundPoint
                         q1q2_FeasibleSolution = [q1(:,1:5), q2(:,1:5)];
                         ABC_FeasibleSolution = [A1B1C1(:,:),A2B2C(:,:)];
                 else
-                    WSvalue_1T3R = 0;
+                    WSvalue_1T2R = 0;
                     q1q2_FeasibleSolution = [];
                     ABC_FeasibleSolution = [];
                 end                
-                WSvalue_1T3R_SinguPosA1C1 = 0;
-                WSvalue_1T3R_SinguPosA2C2 = 0;
+                WSvalue_1T2R_SinguPosA1C1 = 0;
+                WSvalue_1T2R_SinguPosA2C2 = 0;
             end
-            WSvalue = [WSvalue_1T3R, WSvalue_1T3R_SinguPosA1C1, WSvalue_1T3R_SinguPosA2C2];      
+            WSvalue = [WSvalue_1T2R, WSvalue_1T2R_SinguPosA1C1, WSvalue_1T2R_SinguPosA2C2];      
             p = [po{1}, po{2}, po{3}, EulerAngle];     
         end
         
