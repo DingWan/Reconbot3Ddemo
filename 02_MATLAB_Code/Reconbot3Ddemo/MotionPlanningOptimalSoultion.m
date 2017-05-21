@@ -383,7 +383,7 @@ for i = 1:length(MPOTP_cell)
             Enable_Mode_JacoMat = 1;
             UnifiedJacobianMatrix_ScrewTheory;
             %-------det_Jq1_Ob_3T1R = det(Jq1_Ob_3T1R)-------
-            det_Jq(j,:) = det(Jq1_Ob_3T2R); % scaled
+            det_Jq(j,:) = det(Jq1_Ob_3T2R); 
             %-------det_J_Ob_3T1R(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R)----
             det_J(NumIntepoPoints*(i-1)+j,:) = 0;%det(J_Ob_3T2R);
             % ------Jc_Ob_3T1R------
@@ -392,7 +392,7 @@ for i = 1:length(MPOTP_cell)
             Enable_Mode_JacoMat = 2;
             UnifiedJacobianMatrix_ScrewTheory;
             %-------det_Jq1_Ob_3T1R = det(Jq1_Ob_3T1R)-------
-            det_Jq(j,:) = det(Jq1_Ob_3T1R); % scaled
+            det_Jq(j,:) = det(Jq1_Ob_3T1R); 
             %-------det_J_Ob_3T1R(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R)----
             det_J(j,:) = det(J_Ob_3T1R);
             % ------Jc_Ob_3T1R------
@@ -568,6 +568,16 @@ for i = 1:length(MPOTP_cell)
             elseif Mode_previous_initial == 3 && Mode_current_initial == 7 % Mode 3 to Mode 7, length(MPOTP_cell)>1
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
+            elseif Mode_current_initial == 12 % Mode 3 to Mode 10, length(MPOTP_cell)>1
+                PosOri_current{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
+                PosOri_current{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
+%                 if i == length(MPOTP_cell) && (MPOTP_cell{3}{2}{7} == 0 || MPOTP_cell{3}{2}{8} == 0 || MPOTP_cell{3}{2}{9} == 0 || MPOTP_cell{3}{2}{10} == 0)
+%                     break
+%                 end
+            elseif Mode_previous_initial == 3 && (Mode_current_initial == 10 || Mode_current_initial == 11) % Mode 3 to Mode 10, length(MPOTP_cell)>1
+                MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
+                MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
+                PosOri_self_adjustment_1 = {PosOri_previous{1:6},MPOTP_cell{2}{2}{7:8}};
             end
         end
     end
