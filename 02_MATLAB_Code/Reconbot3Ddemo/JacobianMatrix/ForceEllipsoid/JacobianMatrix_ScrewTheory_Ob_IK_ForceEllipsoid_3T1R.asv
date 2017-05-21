@@ -14,7 +14,7 @@ PosOri = {0 0 0.208879343162506 0 [] [], pi/2 -pi/2};
 
 %% Calculate the IK Jacobian
     % --3T1R--
-    po = { 0.10 0.10 0.15 -0*pi/180 [] []};
+    po = { 0 105 150 -0*pi/180 [] []};
     q11q12q21q22 = [];
     deltapo = 0.000001;
     Num_po_variables = 4;
@@ -36,21 +36,21 @@ PosOri = {0 0 0.208879343162506 0 [] [], pi/2 -pi/2};
     dq(:,i) = (q1q2_current - q1q2_previous)';
     J_dx2dq_eul(:,i) = [  dq(1,i) / deltapo; %This whole thing is a single column
                           dq(2,i) / deltapo;
-                          %dq(4,i) / deltapo;
+                          dq(4,i) / deltapo;
                           dq(6,i) / deltapo;
                           dq(7,i) / deltapo;
                           %dq(8,i) / deltapo;
                         ];
     end
     J_dx2dq_eul;    
-    %JT_plus = J_dx2dq_eul * inv(J_dx2dq_eul' * J_dx2dq_eul);
-    JT_inv = inv(J_dx2dq_eul');
+    JT_plus = J_dx2dq_eul * inv(J_dx2dq_eul' * J_dx2dq_eul);
+    %JT_inv = inv(J_dx2dq_eul');
     
     %Torque_UpBoundary
     TorUpBo = 6.0; %N.m 
     
-    %Tor_q1q2 = JT_plus * [ 0.100 0.100 0.100 1 ]';
-    Tor_q1q2 = JT_inv * [ 0.100 0.100 0.100 1 ]';
+    Tor_q1q2 = JT_plus /1000 * [ 100 100 100 1 ]';
+    %Tor_q1q2 = JT_inv /1000 * [ 100 100 100 1 ]'
     
     Tor_q11 = 0;
     Tor_q12 = 0;
@@ -82,8 +82,8 @@ PosOri = {0 0 0.208879343162506 0 [] [], pi/2 -pi/2};
                 Fy = Fn * sin(theta) * sin(phi);
                 Fz = Fn * cos(theta);
                 
-                %Tor_q1q2 = JT_plus * [ Fx Fy Fz 0]';
-                Tor_q1q2 = JT_inv * [ Fx Fy Fz 0]';
+                Tor_q1q2 = JT_plus /1000 * [ Fx Fy Fz 0]';
+                %Tor_q1q2 = JT_inv /1000 * [ Fx Fy Fz 0]';
                 
                 Tor_q11 = Tor_q1q2(1);
                 Tor_q12 = Tor_q1q2(2);
@@ -304,4 +304,10 @@ s_Jx1 = svd(Jx1_Ob_3T1R);
 s_Jq1 = svd(Jq1_Ob_3T1R);
 s_Jc_Ob15 = svd(J_Ob_3T1R_r(5:6,:));
 s_J = svd(J_Ob_3T1R_r);
+
+% determint = det(J_Ob_3T1R_r);
+
+q11q12q21q22_current_J = [ q11q12q21q22_previous 0 0 ] + (J_Ob_3T1R * [ 0, 0, deltapo, deltapo, deltapo, deltapo ]')';
+q11q12q21q22_current - q11q12q21q22_current_J(1:4);
+
 
