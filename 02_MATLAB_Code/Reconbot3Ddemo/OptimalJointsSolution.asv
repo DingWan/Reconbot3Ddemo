@@ -23,10 +23,7 @@ for jj = 1:length(q1q2(:,1))
             q0q1q2_required_endpoint = [q0q1q2_matrix_end(1), q0q1q2_matrix_end(SolutionRow_q1q2,2:11)];
         elseif Mode_current == 4 
             % Only deal with Mode5 to Mode 4
-            % Because first step q11 = +/-pi/2 and the precision of norm
-            % has a 1e-16 difference, so it should be judge the correct
-            % value by using the next step's x position value of Moving
-            % Platform
+            % Because first step q11 = +/-pi/2
             q0q1q2_matrix_end = [];
             if PosOri_current{1} < 0                
                 for k = 1:length(q0q1q2_current_trajpoint(:,1))

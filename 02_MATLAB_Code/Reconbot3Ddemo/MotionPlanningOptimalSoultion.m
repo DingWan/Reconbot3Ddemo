@@ -145,6 +145,12 @@ for i = 1:length(MPOTP_cell)
         
         % Mode 5(HomePosition) to Mode 10/11(2RSerialAiCi)
         if Self_adjustment_Enable_Disable == 1 && (Mode_current_initial == 10 || Mode_current_initial == 11)
+            if Mode_current_initial == 10 
+                q0q1q2_current_trajpoint = [0 MPOTP_cell{2}{2}{7} 0.139358669266875 3.14159265358979 -0.971371068617276 MPOTP_cell{2}{2}{7} 0 0.966880969134940 1.94661464276441 -0.603915357659957 0];
+            elseif Mode_current_initial == 11 
+                q0q1q2_current_trajpoint = [0 0 0.966880969134940 1.94661464276441 -0.603915357659957 0 MPOTP_cell{2}{2}{8} 0.139358669266875 3.14159265358979 -0.971371068617276 MPOTP_cell{2}{2}{8}];
+            end
+            %
             Length_Mode10or11 = length(MPOTP_cell);
             if i == Length_Mode10or11 - 2
                 Mode_previous = MPOTP_cell{i}{1};
@@ -571,10 +577,7 @@ for i = 1:length(MPOTP_cell)
             elseif Mode_current_initial == 12 % Mode 3 to Mode 10, length(MPOTP_cell)>1
                 PosOri_current{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 PosOri_current{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
-%                 if i == length(MPOTP_cell) && (MPOTP_cell{3}{2}{7} == 0 || MPOTP_cell{3}{2}{8} == 0 || MPOTP_cell{3}{2}{9} == 0 || MPOTP_cell{3}{2}{10} == 0)
-%                     break
-%                 end
-            elseif Mode_previous_initial == 3 && (Mode_current_initial == 10 || Mode_current_initial == 11) % Mode 3 to Mode 10, length(MPOTP_cell)>1
+            elseif (Mode_previous_initial == 3 || Mode_previous_initial == 4) && (Mode_current_initial == 10 || Mode_current_initial == 11) % Mode 3 to Mode 10, length(MPOTP_cell)>1
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
                 PosOri_self_adjustment_1 = {PosOri_previous{1:6},MPOTP_cell{2}{2}{7:8}};
