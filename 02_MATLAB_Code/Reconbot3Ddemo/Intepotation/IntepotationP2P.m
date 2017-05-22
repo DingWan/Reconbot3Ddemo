@@ -1,4 +1,4 @@
-function [ Pos_Intep, Vel_Intep, Acc_Intep, time_Intep ] =  IntepotationP2P_debugging(Mode, PosOri_previous,q0q1q2_previous_trajpoint, PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, Time,l1, l2)
+function [ Pos_Intep, Vel_Intep, Acc_Intep, time_Intep ] =  IntepotationP2P(Mode, PosOri_previous,q0q1q2_previous_trajpoint, PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, Time,l1, l2)
 
 %% =================== Catisian Space Trajctory Planning ====================
 PosOri = PosOri_current;

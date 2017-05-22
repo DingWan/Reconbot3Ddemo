@@ -108,7 +108,7 @@ classdef RCB1T2RRotAroundPoint
                 if isequal(p_BinaryCode, [0 0 1 0 1 1]) == 1
                     % Mechanism rotate around point p(1:3):  [1 1 1 0 1 1]
                     % p = [[], [], z, [], beta, gamma]; x = y = 0
-                    if theta < 1e-8 || po{3} < 0
+                    if abs(theta) < 1e-8 || po{3} < 0
                         WSvalue_1T2R = 0;
                         po{1} = 0;
                         po{2} = 0;

@@ -102,15 +102,25 @@ end
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [3 0 0];
                     case 10 % 2R-SerialA1C1
+                        if q0q1q2_previous(2) > 0
+                            q11 = pi;
+                        else
+                            q11 = -pi;
+                        end
                         InsertRow_TransiConfig{1,:} = {1, {0 0 0.208879343162506 0 [] [], 0 0}};
                         InsertRow_TransiConfig{2,:} = {5, {0 0 0.208879343162506 0 [] [], 0 0}};
-                        InsertRow_TransiConfig{3,:} = {6, {0,-0.0300000000000000,0.0774865794831595,[],[],0.738783927444496}};
+                        InsertRow_TransiConfig{3,:} = {6, {0,-0.0300000000000000,0.0774865794831595,[],[],0.738783927444496, q11, 0}};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [3 1 1 1];                       
                     case 11 % 2R-SerialA2C2
+                        if q0q1q2_previous(7) > 0
+                            q21 = pi;
+                        else
+                            q21 = -pi;
+                        end
                         InsertRow_TransiConfig{1,:} = {1, {0 0 0.208879343162506 0 [] [], 0 0}};
                         InsertRow_TransiConfig{2,:} = {5, {0 0 0.208879343162506 0 [] [], 0 0}};
-                        InsertRow_TransiConfig{3,:} = {6, {0,0.0300000000000000,0.0774865794831595,[],[],-0.738783927444496}};
+                        InsertRow_TransiConfig{3,:} = {6, {0,0.0300000000000000,0.0774865794831595,[],[],-0.738783927444496, 0, q21}};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [3 1 1 1];                        
                     case 12 % Fixed-SerialA1C1A2C2
@@ -175,15 +185,25 @@ end
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [3 0 0];                   
                     case 10 % 2R-SerialA1C1
+                        if q0q1q2_previous(2) > 0
+                            q11 = pi;
+                        else
+                            q11 = -pi;
+                        end
                         InsertRow_TransiConfig{1,:} = {1, {0 0 0.208879343162506 0 [] [], 0 0}};
                         InsertRow_TransiConfig{2,:} = {5, {0 0 0.208879343162506 0 [] [], 0 0}};
-                        InsertRow_TransiConfig{3,:} = {6, {0,-0.0300000000000000,0.0774865794831595,[],[],0.738783927444496}};
+                        InsertRow_TransiConfig{3,:} = {6, {0,-0.0300000000000000,0.0774865794831595,[],[],0.738783927444496, q11, 0}};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [3 1 1 1];                         
                     case 11 % 2R-SerialA2C2
+                        if q0q1q2_previous(7) > 0
+                            q21 = pi;
+                        else
+                            q21 = -pi;
+                        end
                         InsertRow_TransiConfig{1,:} = {1, {0 0 0.208879343162506 0 [] [], 0 0}};
                         InsertRow_TransiConfig{2,:} = {5, {0 0 0.208879343162506 0 [] [], 0 0}};
-                        InsertRow_TransiConfig{3,:} = {6, {0,0.0300000000000000,0.0774865794831595,[],[],-0.738783927444496}};
+                        InsertRow_TransiConfig{3,:} = {6, {0,0.0300000000000000,0.0774865794831595,[],[],-0.738783927444496, 0, q19}};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [3 1 1 1];                          
                     case 12 % Fixed-SerialA1C1A2C2
@@ -271,7 +291,7 @@ end
                         end
                         InsertRow_TransiConfig{1,:} = {3, {0, 0, Posture_previous{3}, 0, [], [], q11, 0}}; 
                         InsertRow_TransiConfig{2,:} = {5, {0 0 Posture_previous{3} 0 [] [], q11 0}};
-                        InsertRow_TransiConfig{3,:} = {6, {0,-0.0300000000000000,0.0774865794831595,[],[],0.738783927444496}};
+                        InsertRow_TransiConfig{3,:} = {6, {0,-0.0300000000000000,0.0774865794831595,[],[],0.738783927444496, q11, 0}};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [0 1 1 1];
                     case 11 % 2R-SerialA2C2
@@ -282,7 +302,7 @@ end
                         end
                         InsertRow_TransiConfig{1,:} = {3, {0, 0, Posture_previous{3}, 0, [], [], 0, q21}}; 
                         InsertRow_TransiConfig{2,:} = {5, {0 0 Posture_previous{3} 0 [] [], 0, q21}};
-                        InsertRow_TransiConfig{3,:} = {6, {0,0.0300000000000000,0.0774865794831595,[],[],-0.738783927444496}};
+                        InsertRow_TransiConfig{3,:} = {6, {0,0.0300000000000000,0.0774865794831595,[],[],-0.738783927444496, 0, q21}};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [0 1 1 1];
                     case 12 % Fixed-SerialA1C1A2C2
@@ -442,16 +462,26 @@ end
                         InsertRow_TransiConfig{1,:} = {5, Posture_previous};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);     
                         Self_adjustment_Enable_Disable = [1 1];
-                    case 10 % 2R-SerialA1C1
+                    case 10 % 2R-SerialA1C1                        
+                        if q0q1q2_previous(2) > 0
+                            q11 = pi;
+                        else
+                            q11 = -pi;
+                        end
                         %We need to intepolate on shpere surface
                         InsertRow_TransiConfig{1,:} = {5, Posture_previous};
-                        InsertRow_TransiConfig{2,:} = {6, {0,-0.0300000000000000,0.0774865794831595,[],[],0.738783927444496}};                         
+                        InsertRow_TransiConfig{2,:} = {6, {0,-0.0300000000000000,0.0774865794831595,[],[],0.738783927444496, q11, 0}};                         
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);  
                         Self_adjustment_Enable_Disable = [1 1 1]; 
                     case 11 % 2R-SerialA2C2
+                        if q0q1q2_previous(7) > 0
+                            q21 = pi;
+                        else
+                            q21 = -pi;
+                        end
                         %We need to intepolate on shpere surface
                         InsertRow_TransiConfig{1,:} = {5, Posture_previous};
-                        InsertRow_TransiConfig{2,:} = {6, {0,0.0300000000000000,0.0774865794831595,[],[],-0.738783927444496}};
+                        InsertRow_TransiConfig{2,:} = {6, {0,0.0300000000000000,0.0774865794831595,[],[],-0.738783927444496, 0, q21}};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);  
                         Self_adjustment_Enable_Disable = [1 1 1];                      
                     case 12 % Fixed-SerialA1C1A2C2
@@ -466,17 +496,36 @@ end
                         end                        
                 end   
                 
-            case 6 % 2T2R-6-Bar
-                
+            case 6 % 2T2R-6-Bar                
                 switch Mode_current
                     case 1 % 3T2R
-                        
+                        InsertRow_TransiConfig{1,:} = {6, {Posture_previous{1:3}, [], [], 0}};
+                        MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                        Self_adjustment_Enable_Disable = [0 0];                        
                     case 2 % 3T1R
-                        
+                        InsertRow_TransiConfig{1,:} = {6, {Posture_previous{1:3}, [], [], 0}};
+                        MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                        Self_adjustment_Enable_Disable = [0 0];                          
                     case 3 % 3T1R-SingularityA1C1
-                        
+                        InsertRow_TransiConfig{1,:} = {6, {0, 0, Posture_previous{3}, [], [], 0}};
+                        InsertRow_TransiConfig{2,:} = {5, {0 0 Posture_previous{3} 0 [] [], Posture_current{7} 0}};
+                        if MPOTP_cell{1}{2}{1} > 0
+                            MPOTP_cell{1}{2}{8} = pi/2;
+                        else
+                            MPOTP_cell{1}{2}{8} = -pi/2;
+                        end
+                        MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                        Self_adjustment_Enable_Disable = [0 1 1];                          
                     case 4 % 3T1R-SingularityA2C2
-                        
+                        InsertRow_TransiConfig{1,:} = {6, {0, 0, Posture_previous{3}, [], [], 0}};
+                        InsertRow_TransiConfig{2,:} = {5, {0 0 Posture_previous{3} 0 [] [], 0 Posture_current{8}}};
+                        if MPOTP_cell{1}{2}{1} > 0
+                            MPOTP_cell{1}{2}{7} = pi/2;
+                        else
+                            MPOTP_cell{1}{2}{7} = -pi/2;
+                        end
+                        MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                        Self_adjustment_Enable_Disable = [0 1 1];                         
                     case 5 % 3T1R-SingularityA1C1A2C2 
                         InsertRow_TransiConfig{1,:} = {6, Posture_previous};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);     
@@ -484,23 +533,81 @@ end
                     case 6 % 2T2R-6-Bar
                         Self_adjustment_Enable_Disable = 0;
                     case 7 % 2T2R-6-Bar(xy=0) 
-                        
+                        InsertRow_TransiConfig{1,:} = {6, {0, 0, Posture_previous{3}, [], [], Posture_previous{6}}};
+                        MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                        Self_adjustment_Enable_Disable = [0 0]; 
                     case 8 % 2T2R-5-Bar
-                        
+                        if q0q1q2_previous(2) ~= q0q1q2_previous(7)
+                            InsertRow_TransiConfig{1,:} = {6, {0, 0, Posture_previous{3}, [], [], 0}};
+                            if q0q1q2_previous(7) > 0
+                                InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_previous{3}, 0, [], [], pi/2, pi/2}};
+                            else                                
+                                InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_previous{3}, 0, [], [], -pi/2, -pi/2}};
+                            end
+                            MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                            Self_adjustment_Enable_Disable = [3 0 0];
+                        else
+                            InsertRow_TransiConfig{1,:} = {6, {Posture_current{1}, 0, Posture_current{3}, [], [], Posture_current{6}}};
+                            MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                            Self_adjustment_Enable_Disable = [0 0];
+                        end
                     case 9 % 2T1R-3-BarSerial
-                        
+                        if q0q1q2_previous(2) ~= q0q1q2_previous(7)
+                            InsertRow_TransiConfig{1,:} = {6, {Posture_current{1}, 0, Posture_current{3}, [], [], Posture_current{6}}};
+                            MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                            Self_adjustment_Enable_Disable = [0 0];                            
+                        else                            
+                            InsertRow_TransiConfig{1,:} = {6, {0, 0, Posture_previous{3}, [], [], 0}};
+                            if q0q1q2_previous(7) > 0
+                                InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_previous{3}, 0, [], [], pi/2, pi/2}};
+                            else                                
+                                InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_previous{3}, 0, [], [], -pi/2, -pi/2}};
+                            end
+                            MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                            Self_adjustment_Enable_Disable = [3 0 0];
+                        end                       
                     case 10 % 2R-SerialA1C1
-                        
+                        if q0q1q2_previous(2) > 0
+                            q11 = pi;
+                        else
+                            q11 = -pi;
+                        end
+                        InsertRow_TransiConfig{1,:} = {6, {0, 0, Posture_previous{3}, [], [], 0}};
+                        InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_previous{3}, 0, [], []}};
+                        InsertRow_TransiConfig{3,:} = {6, {0,-0.0300000000000000,0.0774865794831595,[],[],0.738783927444496, q11, 0}};  
+                        MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                        Self_adjustment_Enable_Disable = [0 1 1 1]; 
                     case 11 % 2R-SerialA2C2
-                        
+                        if q0q1q2_previous(7) > 0
+                            q21 = pi;
+                        else
+                            q21 = -pi;
+                        end
+                        InsertRow_TransiConfig{1,:} = {6, {0, 0, Posture_previous{3}, [], [], 0}};
+                        InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_previous{3}, 0, [], []}};
+                        InsertRow_TransiConfig{3,:} = {6, {0,0.0300000000000000,0.0774865794831595,[],[],-0.738783927444496, 0, q21}};  
+                        MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                        Self_adjustment_Enable_Disable = [0 1 1 1];                         
                     case 12 % Fixed-SerialA1C1A2C2
-                        
+                        InsertRow_TransiConfig{1,:} = {6, {0, 0, Posture_previous{3}, [], [], 0}};
+                        InsertRow_TransiConfig{2,:} = {5, {0 0 0 0 [] [], 0 0}};
+                        if MPOTP_cell{1}{2}{7} ~= 0 || MPOTP_cell{1}{2}{8} ~= 0 || MPOTP_cell{1}{2}{9} ~= 0 || MPOTP_cell{1}{2}{10} ~= 0
+                            MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                            Self_adjustment_Enable_Disable = [0 0 0];
+                        else
+                            MPOTP_cell{1,:} = InsertRow_TransiConfig{1,:};
+                            MPOTP_cell{2,:} = InsertRow_TransiConfig{2,:};
+                            Self_adjustment_Enable_Disable = [0 0];
+                        end                          
                 end 
                 
             case 7 % 2T2R-6-Bar(xy=0)
                 switch Mode_current
                     case 1 % 3T2R
-                    
+                        InsertRow_TransiConfig{1,:} = {7, {[], [], Posture_previous{3}, [], 0, 0}};
+                        InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_previous{3} 0 [] [], 0 0}};
+                        MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
+                        Self_adjustment_Enable_Disable = [0 1 1];                     
                     case 2 % 3T1R
                         
                     case 3 % 3T1R-SingularityA1C1
@@ -703,7 +810,7 @@ function b = exchange(b,c)
 
 d = b{1,:};
 for Len_c = 1:length(c)
-b{Len_c,:} = c{Len_c,:};
+    b{Len_c,:} = c{Len_c,:};
 end
 b{Len_c + 1,:} = d;
 

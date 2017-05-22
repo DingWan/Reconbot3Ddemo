@@ -62,6 +62,7 @@ det_Jq_Normalized = [];
 det_J_Normalized = [];
 %
 col = []; % Number and position of 'Self_adjustment_Enable_Disable == 1'
+col_Self_adjustment = [];
 q0q1q2_P2P_Pos_Intep = [];
 Mode_previous_initial = Mode_previous;
 PosOri_previous_initial = PosOri_previous;
@@ -71,12 +72,14 @@ PosOri_current_initial = PosOri_current;
 for i = 1:length(MPOTP_cell)
     %% Assign value to "Self_adjustment_Enable_Disable == 0/1/2/3"
     Self_adjustment_Enable_Disable = Self_adjustment_Enable_Disable_Array(i); 
-    %[~,col] = find(Self_adjustment_Enable_Disable_Array == 1);
-
+    % Here uses to get the first 1 for self-adjustment
+    [~,col_Self_adjustment] = find(Self_adjustment_Enable_Disable_Array == 1);
+    if isempty(col_Self_adjustment)
+        col_Self_adjustment = 0;
+    end
     %% Assgin "Mode_Previous, Mode_Current, PosOri_Current, PosOri_Previous"
     for OnlyUsedforFoldingThisPart_AssignValueofModeAndPosOri = 1:1
-        if i == 1 || (i == length(MPOTP_cell)-2 && (Mode_current_initial == 10 || Mode_current_initial == 11)) || ...
-                (i == 2 && Mode_current_initial == 7 && Mode_previous_initial ~= 5)
+        if i == 1 || i == col_Self_adjustment(1)
             if  Self_adjustment_Enable_Disable == 1
                 Mode_previous = MPOTP_cell{i}{1};
                 PosOri_previous = MPOTP_cell{i}{2};
@@ -146,9 +149,9 @@ for i = 1:length(MPOTP_cell)
         % Mode 5(HomePosition) to Mode 10/11(2RSerialAiCi)
         if Self_adjustment_Enable_Disable == 1 && (Mode_current_initial == 10 || Mode_current_initial == 11)
             if Mode_current_initial == 10 
-                q0q1q2_current_trajpoint = [0 MPOTP_cell{2}{2}{7} 0.139358669266875 3.14159265358979 -0.971371068617276 MPOTP_cell{2}{2}{7} 0 0.966880969134940 1.94661464276441 -0.603915357659957 0];
+                q0q1q2_current_trajpoint = [0 MPOTP_cell{3}{2}{7} 0.139358669266875 3.14159265358979 -0.971371068617276 MPOTP_cell{3}{2}{7} 0 0.966880969134940 1.94661464276441 -0.603915357659957 0];
             elseif Mode_current_initial == 11 
-                q0q1q2_current_trajpoint = [0 0 0.966880969134940 1.94661464276441 -0.603915357659957 0 MPOTP_cell{2}{2}{8} 0.139358669266875 3.14159265358979 -0.971371068617276 MPOTP_cell{2}{2}{8}];
+                q0q1q2_current_trajpoint = [0 0 0.966880969134940 1.94661464276441 -0.603915357659957 0 MPOTP_cell{3}{2}{8} 0.139358669266875 3.14159265358979 -0.971371068617276 MPOTP_cell{3}{2}{8}];
             end
             %
             Length_Mode10or11 = length(MPOTP_cell);
@@ -391,7 +394,7 @@ for i = 1:length(MPOTP_cell)
             %-------det_Jq1_Ob_3T1R = det(Jq1_Ob_3T1R)-------
             det_Jq(j,:) = det(Jq1_Ob_3T2R); 
             %-------det_J_Ob_3T1R(NumIntepoPoints*(i-1)+j,:) = det(J_Ob_3T1R)----
-            det_J(NumIntepoPoints*(i-1)+j,:) = 0;%det(J_Ob_3T2R);
+            det_J(j,:) = 0;%det(J_Ob_3T2R);
             % ------Jc_Ob_3T1R------
             det_Jc(NumIntepoPoints*(i-1)+j,:) = 0;
         elseif  Mode == 2
@@ -494,21 +497,27 @@ for i = 1:length(MPOTP_cell)
         % 4. 'Self_adjustment_Enable_Disable == 0': No self-adjustment
         if  Self_adjustment_Enable_Disable == 1             
             % Here is used for executing 'Self_adjustment' only once, length(MPOTP_cell) > 3 means Modes10/11;
-            if Mode == 3
-                PosOri_current{7} = PosOri_previous{7};
-                PosOri_current{8} = q0q1q2_OptimalRow(2,7);
-            elseif Mode == 4
-                PosOri_current{7} = q0q1q2_OptimalRow(2,2);
-                PosOri_current{8} = PosOri_previous{8};
-            elseif (Mode_current_initial == 10 || Mode_current_initial == 11) && i == length(MPOTP_cell) - 2
-                PosOri_current{7} = q0q1q2_OptimalRow((i-1)*NumIntepoPoints + 2,2);
-                PosOri_current{8} = q0q1q2_OptimalRow((i-1)*NumIntepoPoints + 2,7);
-            elseif Mode_current_initial == 7 && Mode_previous_initial == 3
-                PosOri_current{7} = q0q1q2_OptimalRow((i-1)*NumIntepoPoints + 2,2);
-                PosOri_current{8} = q0q1q2_OptimalRow((i-1)*NumIntepoPoints + 2,7);
-            else                
-                PosOri_current{7} = q0q1q2_OptimalRow(2,2);
-                PosOri_current{8} = q0q1q2_OptimalRow(2,7);
+            if i == 1
+                if Mode == 3
+                    PosOri_current{7} = PosOri_previous{7};
+                    PosOri_current{8} = q0q1q2_OptimalRow(2,7);
+                elseif Mode == 4
+                    PosOri_current{7} = q0q1q2_OptimalRow(2,2);
+                    PosOri_current{8} = PosOri_previous{8};
+                else
+                    PosOri_current{7} = q0q1q2_OptimalRow(2,2);
+                    PosOri_current{8} = q0q1q2_OptimalRow(2,7);
+                end
+            elseif i == col_Self_adjustment(1)
+                if Mode_current_initial == 10 || Mode_current_initial == 11
+                    PosOri_current{7} = q0q1q2_OptimalRow((i-1)*NumIntepoPoints + 2,2);
+                    PosOri_current{8} = q0q1q2_OptimalRow((i-1)*NumIntepoPoints + 2,7);
+                    PosOri_previous{7} = q0q1q2_OptimalRow((i-1)*NumIntepoPoints,2);
+                    PosOri_previous{8} = q0q1q2_OptimalRow((i-1)*NumIntepoPoints,7);
+                else
+                    PosOri_current{7} = q0q1q2_OptimalRow((i-1)*NumIntepoPoints + 2,2);
+                    PosOri_current{8} = q0q1q2_OptimalRow((i-1)*NumIntepoPoints + 2,7);
+                end
             end
             PosOri_self_adjustment_1 = {PosOri_previous{1:6},PosOri_current{7:8}};
             if i > 1 % Here we deal with the situation of this Self_adjustment_Enable_Disable = 1 (Should be [1 1] first), next Self_adjustment_Enable_Disable = 2/3/0 
@@ -519,9 +528,8 @@ for i = 1:length(MPOTP_cell)
                     PosOri_current = {PosOri_current{1:6},q0q1q2_OptimalRow(NumIntepoPoints*(i-1),2), q0q1q2_OptimalRow(NumIntepoPoints*(i-1),7)};
                 end
             end
-            if i == 1 || ...
-                    ( length(MPOTP_cell) > 3 && i == length(MPOTP_cell) - 2) || ... % Modes 1/2 to Modes 10/11
-                    (i == 2 && Mode_current_initial == 7 && Mode_previous_initial == 3) % Mode 3 to Mode 7
+            if i == col_Self_adjustment(1) % Modes 1/2 to Modes 10/11
+                                           % Mode 3 to Mode 7
                 q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+1,:) = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+2,:);
             end
         elseif Self_adjustment_Enable_Disable == 2        
@@ -574,13 +582,19 @@ for i = 1:length(MPOTP_cell)
             elseif Mode_previous_initial == 3 && Mode_current_initial == 7 % Mode 3 to Mode 7, length(MPOTP_cell)>1
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
+            elseif Mode_previous_initial == 6 && Mode_current_initial == 7 % Mode 6 to Mode 7, length(MPOTP_cell)>1
+                MPOTP_cell{1}{2}{5} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
+                PosOri_current{5} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
             elseif Mode_current_initial == 12 % Mode 3 to Mode 10, length(MPOTP_cell)>1
                 PosOri_current{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 PosOri_current{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
-            elseif (Mode_previous_initial == 3 || Mode_previous_initial == 4) && (Mode_current_initial == 10 || Mode_current_initial == 11) % Mode 3 to Mode 10, length(MPOTP_cell)>1
+            elseif (Mode_previous_initial == 3 || Mode_previous_initial == 4) && (Mode_current_initial == 10 || Mode_current_initial == 11) % Mode 3/4 to Mode 10/11, length(MPOTP_cell)>1
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
                 PosOri_self_adjustment_1 = {PosOri_previous{1:6},MPOTP_cell{2}{2}{7:8}};
+            elseif (Mode_previous_initial == 6 || Mode_previous_initial == 7) && (Mode_current_initial == 3 || Mode_current_initial == 4) % Mode 6/7 to Mode 10/11, length(MPOTP_cell)>1
+                MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
+                MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
             end
         end
     end

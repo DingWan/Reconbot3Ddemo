@@ -6,8 +6,7 @@ q1q2A1C1A2C2_norm = [];
 q1q2 = q0q1q2_CurrentStep(:,2:11);
 for jj = 1:length(q1q2(:,1))
     % Here, for the first step, modes 1-9 execute once (length(MPOTP_cell) = 2); 
-    if  j == 1 && (Self_adjustment_Enable_Disable == 1) && ...
-            ( i == 1 || ( length(MPOTP_cell) > 3 && i == length(MPOTP_cell) - 2) )% || Self_adjustment_Enable_Disable == 2
+    if  j == 1 && i == col_Self_adjustment(1) && Self_adjustment_Enable_Disable == 1 % || Self_adjustment_Enable_Disable == 2
         % we first confirm the one value of the end point (q0q1q2_required_endpoint) by comparing it with Homeconfiguration
         q0q1q2_matrix_start = q0q1q2_previous_trajpoint;
         q0q1q2_matrix_end = q0q1q2_current_trajpoint;
@@ -21,23 +20,39 @@ for jj = 1:length(q1q2(:,1))
             [rowsq1q2,colsq1q2] = find(q1q2_matrix_norm == min(min(q1q2_matrix_norm)));
             SolutionRow_q1q2 = colsq1q2(1);
             q0q1q2_required_endpoint = [q0q1q2_matrix_end(1), q0q1q2_matrix_end(SolutionRow_q1q2,2:11)];
-        elseif Mode_current == 4 
+        elseif Mode_current == 3 || Mode_current == 4
             % Only deal with Mode5 to Mode 4
             % Because first step q11 = +/-pi/2 and the precision of norm
             % has a 1e-16 difference, so it should be judge the correct
             % value by using the next step's x position value of Moving
             % Platform
             q0q1q2_matrix_end = [];
-            if PosOri_current{1} < 0                
-                for k = 1:length(q0q1q2_current_trajpoint(:,1))
-                    if q0q1q2_current_trajpoint(k,2) > 0
-                        q0q1q2_matrix_end = [q0q1q2_matrix_end; q0q1q2_current_trajpoint(k,:)];
+            if Mode_current == 3 
+                if PosOri_current{1} < 0
+                    for k = 1:length(q0q1q2_current_trajpoint(:,1))
+                        if q0q1q2_current_trajpoint(k,7) < 0
+                            q0q1q2_matrix_end = [q0q1q2_matrix_end; q0q1q2_current_trajpoint(k,:)];
+                        end
+                    end
+                elseif PosOri_current{1} > 0
+                    for k = 1:length(q0q1q2_current_trajpoint(:,1))
+                        if q0q1q2_current_trajpoint(k,7) > 0
+                            q0q1q2_matrix_end = [q0q1q2_matrix_end; q0q1q2_current_trajpoint(k,:)];
+                        end
                     end
                 end
-            elseif PosOri_current{1} > 0 
-                for k = 1:length(q0q1q2_current_trajpoint(:,1))
-                    if q0q1q2_current_trajpoint(k,2) < 0
-                        q0q1q2_matrix_end = [q0q1q2_matrix_end; q0q1q2_current_trajpoint(k,:)];
+            elseif Mode_current == 4
+                if PosOri_current{1} < 0
+                    for k = 1:length(q0q1q2_current_trajpoint(:,1))
+                        if q0q1q2_current_trajpoint(k,2) > 0
+                            q0q1q2_matrix_end = [q0q1q2_matrix_end; q0q1q2_current_trajpoint(k,:)];
+                        end
+                    end
+                elseif PosOri_current{1} > 0
+                    for k = 1:length(q0q1q2_current_trajpoint(:,1))
+                        if q0q1q2_current_trajpoint(k,2) < 0
+                            q0q1q2_matrix_end = [q0q1q2_matrix_end; q0q1q2_current_trajpoint(k,:)];
+                        end
                     end
                 end
             end
@@ -63,8 +78,7 @@ for jj = 1:length(q1q2(:,1))
         end
         %==================================================================
         q0q1q2_Optimal_SingleRow = q0q1q2_previous_trajpoint;
-    elseif j == 2 && (Self_adjustment_Enable_Disable == 1) && ...
-            ( i == 1 || ( length(MPOTP_cell) > 3 && i == length(MPOTP_cell) - 2) )% || Self_adjustment_Enable_Disable == 2
+    elseif j == 2 && i == col_Self_adjustment(1) && Self_adjustment_Enable_Disable == 1% || Self_adjustment_Enable_Disable == 2
         % Secondly, confirm the second value that has minimum norm value with the end point (q0q1q2_required_endpoint)
         %========= Here we must judge five-bar or three-bar sparately;=====
         if Mode_current == 8 || Mode_current == 9
@@ -91,12 +105,12 @@ for jj = 1:length(q1q2(:,1))
                         q0q1q2_Optimal_SingleRow = q0q1q2_previous_trajpoint;
                         continue
                     else
-                        if i < length(MPOTP_cell)
+                        if i == length(MPOTP_cell)
+                            q1q2A1C1_norm(jj) = norm(q1q2(jj,1:5) - q0q1q2_OptimalRow(NumIntepoPoints*(i-2), 2:6));
+                            q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_OptimalRow(NumIntepoPoints*(i-2), 7:11));
+                        else
                             q1q2A1C1_norm(jj) = norm(q1q2(jj,1:5) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 2:6));
                             q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1, 7:11));
-                        else
-                            q1q2A1C1_norm(jj) = norm(q1q2(jj,1:5) - q0q1q2_OptimalRow(NumIntepoPoints*(i-2)+j-1, 2:6));
-                            q1q2A2C2_norm(jj) = norm(q1q2(jj,6:10) - q0q1q2_OptimalRow(NumIntepoPoints*(i-2)+j-1, 7:11));
                         end
                     end
                 else%if length(MPOTP_cell) == 2
