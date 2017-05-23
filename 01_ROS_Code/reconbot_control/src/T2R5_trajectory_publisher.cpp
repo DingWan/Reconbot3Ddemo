@@ -65,22 +65,22 @@ using namespace std;
 
 
 int main(int argc,char **argv){
-  ros::init(argc, argv, "2RA2C2_Trajectory_Publisher");
+  ros::init(argc, argv, "T2R_Trajectory_Publisher");
   ros::NodeHandle nh;
   control_msgs::FollowJointTrajectoryGoal goal;
   //ros::Rate loop_rate(5);
   //ros::AsyncSpinner spinner(1);/**<Two spinner are instantiated for managing 2 threats*/
   //spinner.start();
   ReConBotPub Publisher;
-  Publisher.topicName = "/2RA2C2_reconbot_trajectory";
-  int arg[] = {5,1,2,6};
+  Publisher.topicName = "/T2R_reconbot_trajectory";
+  int arg[] = {4,5,3,2};
 
   passwd* pw = getpwuid(getuid());
   std::string path(pw->pw_dir);
 
   Publisher.motorsState(arg,4);
   Publisher.trajectoryPublisherStart(nh, 1000);
-  Publisher.nameSpace = "T3R_reconbot_controller";
+  Publisher.nameSpace = "T2R_reconbot_controller";
   Publisher.sourceFile = path += "/catkin_ws/src/reconbot/01_ROS_Code/trajectory/T3R_trajectory.txt";
   goal = Publisher.buildTrajectory();
   Publisher.publisher(goal);

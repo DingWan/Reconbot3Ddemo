@@ -50,14 +50,14 @@
 int main(int argc, char** argv)
 {
   // Init the ROS node
-  ros::init(argc, argv, "3T1R_ReConBot_Driver");
+  ros::init(argc, argv, "T1R_ReConBot_Driver");
   ros::NodeHandle nh_;
   ros::Subscriber sub_path;
   ReConBotLx Robot;
-  Robot.nameSpace = "3T1R_reconbot_controller";
+  Robot.nameSpace = "T1R_reconbot_controller";
   Robot.trajClient();
 
-  sub_path = nh_.subscribe("/3T1R_reconbot_trajectory", 100, &ReConBotLx::reconbotCallback, &Robot);
+  sub_path = nh_.subscribe("/T1R_reconbot_trajectory", 100, &ReConBotLx::reconbotCallback, &Robot);
   // Start the trajectory
   // Wait for trajectory completion
   //while(!robot.getState().isDone() && ros::ok())

@@ -35,4 +35,30 @@ target_link_libraries(T3R_move_group_interface ${catkin_LIBRARIES} ${Boost_LIBRA
 install(TARGETS T3R_move_group_interface DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 
+
+add_executable(RA2C2_trajectory_publisher RA2C2_trajectory_publisher.cpp)
+target_link_libraries(RA2C2_trajectory_publisher ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS RA2C2_trajectory_publisher DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+add_executable(RA2C2_move_group_interface RA2C2_move_group_interface.cpp)
+target_link_libraries(RA2C2_move_group_interface ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS RA2C2_move_group_interface DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+add_executable(T2R5_trajectory_publisher T2R5_trajectory_publisher.cpp)
+target_link_libraries(T2R5_trajectory_publisher ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS T2R5_trajectory_publisher DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+add_executable(T2R5_move_group_interface T2R5_move_group_interface.cpp)
+target_link_libraries(T2R5_move_group_interface ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS T2R5_move_group_interface DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+add_executable(T1R_trajectory_publisher T1R_trajectory_publisher.cpp)
+target_link_libraries(T1R_trajectory_publisher ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS T1R_trajectory_publisher DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+add_executable(T1R_move_group_interface T1R_move_group_interface.cpp)
+target_link_libraries(T1R_move_group_interface ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS T1R_move_group_interface DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
+
 install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})

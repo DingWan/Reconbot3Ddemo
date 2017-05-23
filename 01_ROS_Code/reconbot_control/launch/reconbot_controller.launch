@@ -16,7 +16,7 @@
 
   <!-- Start joints trajectory controller -->
     <rosparam file="$(find reconbot_control)/config/joints_trajectory_controller.yaml" command="load"/>
-    <node name="controller_spawner_meta" pkg="dynamixel_controllers" type="controller_spawner.py"
+    <node name="controller_spawner_meta_1" pkg="dynamixel_controllers" type="controller_spawner.py"
           args="--manager=dxl_manager
                 --type=meta
                 reconbot_controller
@@ -29,4 +29,68 @@
                 "
 
                           output="screen"/>
+
+    <rosparam file="$(find reconbot_control)/config/RA2C2_trajectory_controller.yaml" command="load"/>
+    <node name="controller_spawner_meta_2" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --type=meta
+                RA2C2_reconbot_controller
+                joint5_controller
+                joint1_controller
+                joint2_controller
+                joint6_controller
+                "
+                         output="screen"/>
+
+
+    <rosparam file="$(find reconbot_control)/config/T1R_trajectory_controller.yaml" command="load"/>
+    <node name="controller_spawner_meta_3" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --type=meta
+                T1R_reconbot_controller
+                joint4_controller
+                joint5_controller
+                joint1_controller
+                joint2_controller
+                "
+                        output="screen"/>
+
+    <rosparam file="$(find reconbot_control)/config/T2R_trajectory_controller.yaml" command="load"/>
+    <node name="controller_spawner_meta_4" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+              --type=meta
+              T2R_reconbot_controller
+              joint4_controller
+              joint5_controller
+              joint3_controller
+              joint1_controller
+              joint6_controller
+              "
+                      output="screen"/>
+
+
+    <rosparam file="$(find reconbot_control)/config/T2R5_trajectory_controller.yaml" command="load"/>
+    <node name="controller_spawner_meta_5" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --type=meta
+                T2R5_reconbot_controller
+                joint4_controller
+                joint5_controller
+                joint3_controller
+                joint2_controller
+                "
+                        output="screen"/>
+
+    <rosparam file="$(find reconbot_control)/config/T3R_trajectory_controller.yaml" command="load"/>
+    <node name="controller_spawner_meta_6" pkg="dynamixel_controllers" type="controller_spawner.py"
+          args="--manager=dxl_manager
+                --type=meta
+                T3R_reconbot_controller
+                joint4_controller
+                joint5_controller
+                joint3_controller
+                joint6_controller
+                "
+                        output="screen"/>
+
 </launch>

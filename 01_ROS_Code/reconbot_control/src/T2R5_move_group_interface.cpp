@@ -50,14 +50,14 @@
 int main(int argc, char** argv)
 {
   // Init the ROS node
-  ros::init(argc, argv, "2RA2C2_ReConBot_Driver");
+  ros::init(argc, argv, "T2R_ReConBot_Driver");
   ros::NodeHandle nh_;
   ros::Subscriber sub_path;
   ReConBotLx Robot;
-  Robot.nameSpace = "2RA2C2_reconbot_controller";
+  Robot.nameSpace = "T2R_reconbot_controller";
   Robot.trajClient();
 
-  sub_path = nh_.subscribe("/2RA2C2_reconbot_trajectory", 100, &ReConBotLx::reconbotCallback, &Robot);
+  sub_path = nh_.subscribe("/T2R_reconbot_trajectory", 100, &ReConBotLx::reconbotCallback, &Robot);
   // Start the trajectory
   // Wait for trajectory completion
   //while(!robot.getState().isDone() && ros::ok())

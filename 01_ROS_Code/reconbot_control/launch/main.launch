@@ -4,10 +4,10 @@
   <arg name="r_arm_mode" default="false"/>
   <arg name="l_arm_mode" default="false"/>
   <arg name="T3R_mode" default="false"/>
-  <arg name="2T2R5_mode" default="false"/>
-  <arg name="2RA2C2_mode" default="false"/>
-  <arg name="3T1R_mode" default="false"/>
-  <arg name="3T2R_mode" default="false"/>
+  <arg name="T2R5_mode" default="false"/>
+  <arg name="RA2C2_mode" default="false"/>
+  <arg name="T1R_mode" default="false"/>
+  <arg name="T2R_mode" default="false"/>
 
 
 
@@ -41,15 +41,15 @@
 
   <node if="$(arg T3R_mode)" name="T3R_ReConBot_Driver" pkg="reconbot_control" type="T3R_move_group_interface" respawn="true"/>
 
-  <node if="$(arg 2RA2C2_mode)" name="2RA2C2_ReConBot_Driver" pkg="reconbot_control" type="2RA2C2_move_group_interface" respawn="true"/>
+  <node if="$(arg RA2C2_mode)" name="RA2C2_ReConBot_Driver" pkg="reconbot_control" type="RA2C2_move_group_interface" respawn="true"/>
 
-  <node if="$(arg 2T2R5_mode)" name="2T2R5_ReConBot_Driver" pkg="reconbot_control" type="2T2R5_move_group_interface" respawn="true"/>
+  <node if="$(arg T2R5_mode)" name="T2R5_ReConBot_Driver" pkg="reconbot_control" type="T2R5_move_group_interface" respawn="true"/>
 
-  <node if="$(arg 3T1R_mode)" name="3T1R_ReConBot_Driver" pkg="reconbot_control" type="3T1R_move_group_interface" respawn="true"/>
+  <node if="$(arg T1R_mode)" name="T1R_ReConBot_Driver" pkg="reconbot_control" type="T1R_move_group_interface" respawn="true"/>
 
-  <node if="$(arg 3T2R_mode)" name="3T2R_ReConBot_Driver" pkg="reconbot_control" type="3T2R_move_group_interface" respawn="true"/>
+  <node if="$(arg T2R_mode)" name="T2R_ReConBot_Driver" pkg="reconbot_control" type="T2R_move_group_interface" respawn="true"/>
 
-
+ <node name="Enable_Torque_Server" pkg="reconbot_control" type="enable_torque_service.py" respawn="true"/>
 
 
 </launch>
