@@ -27,7 +27,7 @@ p_0 = [0 0 0.208879343162506 0 0 0, 0 0]; %  p = 2 * l2 * sin(pi/4)
 deg = pi/180;
 
 addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
-% InitHome   
+% 1     
 
 %% Go to HomePosition
 % Construct a questdlg with three options
@@ -115,8 +115,8 @@ if HomePosition == 2
         % Motion Planning and Optimal Soultion;
         [ q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, ...
             MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J ] = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
-                                                                                                                        Mode_current, PosOri_current, q0q1q2_current, ...
-                                                                                                                        NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
+            Mode_current, PosOri_current, q0q1q2_current, ...
+            NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
         % Position, Velocity, Acceleration Calcuation of joint angles
         q0q1q2_Pos_mat = [ q0q1q2_Pos_mat; q0q1q2_P2P_Pos_Intep ];
         q0q1q2_Vel_mat = [ q0q1q2_Vel_mat; q0q1q2_P2P_Vel_Intep ];
@@ -163,9 +163,9 @@ if HomePosition == 2
         % Motion Planning and Optimal Soultion;
         [ q0q1q2_P2P_Pos_Intep_HomePosition, q0q1q2_P2P_Vel_Intep_HomePosition ,q0q1q2_P2P_Acc_Intep_HomePosition, ...
             MP_Pos_Intep_HomePosition, MP_Vel_Intep_HomePosition, MP_Acc_Intep_HomePosition, MP_time_Intep_HomePosition, Mode_det_Jq_Jc_J_HomePosition ] = ...
-                                                                            MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
-                                                                            Mode_current, PosOri_current, q0q1q2_current, ...
-                                                                            NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
+            MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+            Mode_current, PosOri_current, q0q1q2_current, ...
+            NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
         
         % Position, Velocity, Acceleration Calcuation of joint angles                                                                                                       NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
         q0q1q2_Pos_mat = [ q0q1q2_Pos_mat; q0q1q2_P2P_Pos_Intep_HomePosition ];
@@ -212,7 +212,7 @@ if HomePosition == 2
     h = msgbox('Check Completed, Input values are correct!');
     
     %% 3D Animation
-    for i = 151:length(q0q1q2_Pos_mat)-50
+    for i = 41:length(q0q1q2_Pos_mat)-0
         %========================== Animation ============================
         ReconbotANI(q0q1q2_Pos_mat(i,:));
         % ReconbotANI(q0q1q2_Pos_mat(51,:));

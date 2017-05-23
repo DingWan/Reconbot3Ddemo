@@ -91,7 +91,7 @@ classdef RCB2T2Rthreebar
                 % Euler angle IK
                 % Mechanism transfers into Three-bar Linkage:  [1 1 1 0 1 1]
                 % p = [x, 0, z, 0, beta, 0]
-                
+                po{2} =0;
                 q11 = pi/2; % inputs: beta, q11; 
                 [EulerAngle_q11_theta] = EulerAngles_theta_q11_IK(theta, q11);
             end

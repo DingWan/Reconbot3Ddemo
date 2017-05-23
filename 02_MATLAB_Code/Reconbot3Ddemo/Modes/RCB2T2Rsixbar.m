@@ -210,8 +210,8 @@ classdef RCB2T2Rsixbar
             
             %% ----------------------- Calculate one solutions for one input  -----------------------
             if p(1) == 0 && p(2) == 0 && p(3) == 0
-                WSvalue_2T2R_SinguPosA1C1 = 1;
-                WSvalue_2T2R_SinguPosA2C2 = 1;
+                WSvalue_2T2R_SinguPosA1C1 = 0;
+                WSvalue_2T2R_SinguPosA2C2 = 0;
                 IterationNumber = 1;
                 q13 = pi;
                 q14 = q12;
