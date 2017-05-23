@@ -46,7 +46,7 @@ classdef RCB2RserialA2C2
                 case 7 % Serial A1C1 & A2C2
                     if p(2) < 0
                         q12 = po{7};
-                    elseif p(2) > 0
+                    elseif p(2) >= 0
                         q22 = po{7};
                     end
                 case 10
@@ -75,10 +75,10 @@ classdef RCB2RserialA2C2
             %% ----------------------- Calculate rotation matrix according to inputs -----------------------
             if isequal(p_BinaryCode, [1 1 0 0 0 0]) == 1
                 %% ----------------------- Calculate rotation matrix of two 2R modes -----------------------
-                if p(2) <= 0
+                if p(2) < 0
                     WSvalue = [0, 0, 0];
                     return;
-                elseif p(2) > 0
+                elseif p(2) > 1e-12
                     % Four-bar linkage with Serial Chain A2C2: [1 1 0 0 0 0]
                     % p = [x, y, [], [], [], []]; y > 0
                     name = '2R-SerialA2C2';
@@ -127,6 +127,16 @@ classdef RCB2RserialA2C2
                     %-------------------q11-q15, q21-q25------------------------------
                     q11 = q21;
                     angleA2B2C2 = 0;
+                elseif abs(p(2)) < 1e-12
+                    p(1) = 0;
+                    p(2) = 0;
+                    p(3) = 0;
+                    q11 = 0;
+                    q21 = -pi;
+                    theta = 0;
+                    angleA1B1C1 = 0;
+                    angleA2B2C2 = 0;
+                    angle_A1C1_k1 = pi/2;
                 end
                 % ----------------------Calculate the Euler angle--------------------------
                 u_RotationAxis = [cos(q11), sin(q11), 0];
@@ -145,19 +155,23 @@ classdef RCB2RserialA2C2
             C2_in_Ob = (RotationMatrix * C2_in_op')' + p(1:3);
             
             %% ----------------------- Calculate one solutions for one input  -----------------------
-            if p(1) == 0 && p(2) == 0 && p(3) == 0
-                WSvalue_2R_SinguPosA2C2 = 1;
-                WSvalue_2R_SinguPosA2C2 = 1;                
+            if p(1) < 1e-12 && p(2) < 1e-12 && p(3) < 1e-8
+                WSvalue_2R = 0;
+                WSvalue_2R_SinguPosA1C1 = 0;
+                WSvalue_2R_SinguPosA2C2 = 0;
                 IterationNumber = 1;
+                q12 = 0;
+                
                 q13 = pi;
-                q14 = - q12;
-                q15 = - q11;
+                q14 = -pi/2;
+                q15 = q11;
                 
                 q23 = pi;
-                q24 = - q22;
+                q24 = -pi/2;
                 q25 = q21;
                 q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-            else
+            end
+                %else
                 % Here are used to preserve the original value of q11
                 % and q21, which are used for i>5 due to the change of q11 and q21
                 q11_original = q11;
@@ -324,7 +338,7 @@ classdef RCB2RserialA2C2
                 end                
                 WSvalue_2R_SinguPosA2C2 = 0;
                 WSvalue_2R_SinguPosA2C2 = 0;
-            end
+            %end
             WSvalue = [WSvalue_2R, WSvalue_2R_SinguPosA2C2, WSvalue_2R_SinguPosA2C2];      
             p = [p(1), p(2), p(3), EulerAngle];
         end
