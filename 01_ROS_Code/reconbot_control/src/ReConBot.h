@@ -53,7 +53,7 @@
 * Moveit.
 */
 
-typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> TrajClient;
+//typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> TrajClient;
 
 /**
  * Number of motors to take in account in the planning group. For instance, nMotors = 3 when planning
@@ -85,18 +85,11 @@ protected:
   //TrajClient* traj_client_mode1_;
   //TrajClient* traj_client_mode2_;
   //TrajClient* traj_client_mode3_;
-  TrajClient* traj_client_;
   //TrajClient* traj_client_mode5_;
   //TrajClient* traj_client_mode6_;
 
   control_msgs::FollowJointTrajectoryGoal goal;
-  control_msgs::FollowJointTrajectoryGoal goalNow;
-  control_msgs::FollowJointTrajectoryGoal goalMode1;
-  control_msgs::FollowJointTrajectoryGoal goalMode2;
-  control_msgs::FollowJointTrajectoryGoal goalMode3;
-  control_msgs::FollowJointTrajectoryGoal goalMode4;
-  control_msgs::FollowJointTrajectoryGoal goalMode5;
-  control_msgs::FollowJointTrajectoryGoal goalMode6;
+  control_msgs::FollowJointTrajectoryGoal goalMode;
 
 
 
@@ -108,6 +101,7 @@ protected:
 
 public:
   std::string sourceFile; /**< File directory with pose data */
+  typedef actionlib::SimpleActionClient<control_msgs::FollowJointTrajectoryAction> TrajClient;
   std::string nameSpace;
   std::vector<std::string> nameSpaces;
   std::vector<int> modes_sequence;
@@ -116,11 +110,8 @@ public:
   std::string topicName; /**< Name given to the topic where is publishing.  */
   ReConBot(){
   }
-  void trajClient();
-  void sendTrajectory(control_msgs::FollowJointTrajectoryGoal goal);
   control_msgs::FollowJointTrajectoryGoal armTrajectory();
   bool run();
-  actionlib::SimpleClientGoalState getState();
   //! Clean up the action client
   //control_msgs::JointTrajectoryControllerState getCurrentState(int nAm, std::string modeTopic);
 
@@ -133,8 +124,14 @@ public:
 class ReConBotLx : public ReConBot{
 public:
   std::vector<double> modesLx;
+  TrajClient* traj_client_;
+  float pointsSize;
+  ros::Duration new_time_rel;
   ReConBotLx(){
   }
+  void trajClient();
+  actionlib::SimpleClientGoalState getState();
+  void sendTrajectory(control_msgs::FollowJointTrajectoryGoal goal);
   void motorsState(int arg[], int length);
   bool saveModesServer(reconbot_control::ModeState::Request& req, reconbot_control::ModeState::Response& res);
   control_msgs::FollowJointTrajectoryGoal getGoalMode(control_msgs::FollowJointTrajectoryGoal goal, ros::Duration time_rel, float mode, int init_index, int current_index);
@@ -160,7 +157,6 @@ public:
   control_msgs::FollowJointTrajectoryGoal buildTrajectory();
   void trajectoryPublisherStart(ros::NodeHandle &nh, int topicQuery);
   void publisher(control_msgs::FollowJointTrajectoryGoal goal);
-  void modesClientServer(float mod);
   //void mode();
 };
 
@@ -170,7 +166,7 @@ public:
  ** seccion.
  *************************************************************************/
 
-void ReConBot::trajClient(){
+void ReConBotLx::trajClient(){
   /**
    * tell the action client that we want to spin a thread by default
    */
@@ -192,7 +188,7 @@ bool ReConBot::run(){
 /**\fn void ReConBot::startTrajectory(control_msgs::FollowJointTrajectoryGoal goal)
   * Sends the command to start a given trajectory
   */
-void ReConBot::sendTrajectory(control_msgs::FollowJointTrajectoryGoal goal){
+void ReConBotLx::sendTrajectory(control_msgs::FollowJointTrajectoryGoal goal){
   ROS_INFO("=========== Welcome to IGM - ReConBot Move Group Interface ==============");
   ROS_INFO("=========== Group of Robotic and Mechatronic               ==============");
 
@@ -260,6 +256,9 @@ control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::Fo
       goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[i].accelerations[4];
       goalMode.trajectory.points[i].accelerations[5] = goal.trajectory.points[i].accelerations[5];
       goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[i].time_from_start - time_rel;
+      if (i==pointsSize-1) {
+        new_time_rel = goalMode.trajectory.points[i].time_from_start;
+      }
 
     }
 
@@ -329,17 +328,17 @@ control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::Fo
       goalMode.trajectory.joint_names.push_back("joint_1");
       goalMode.trajectory.joint_names.push_back("joint_2");
       goalMode.trajectory.points.resize(pointsSize);
-      goalMode.trajectory.points[i].positions.resize(6);
+      goalMode.trajectory.points[i].positions.resize(4);
       goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[i].positions[0];
       goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[i].positions[1];
       goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[i].positions[3];
       goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[i].positions[4];
-      goalMode.trajectory.points[i].velocities.resize(6);
+      goalMode.trajectory.points[i].velocities.resize(4);
       goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[i].velocities[0];
       goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[i].velocities[1];
       goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[i].velocities[3];
       goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[i].velocities[4];
-      goalMode.trajectory.points[i].accelerations.resize(6);
+      goalMode.trajectory.points[i].accelerations.resize(4);
       goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[i].accelerations[0];
       goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[i].accelerations[1];
       goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[i].accelerations[3];
@@ -416,7 +415,7 @@ control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::Fo
 
 
 //! Returns the current state of the action
-actionlib::SimpleClientGoalState ReConBot::getState(){
+actionlib::SimpleClientGoalState ReConBotLx::getState(){
   return traj_client_->getState();
 }
 
@@ -429,33 +428,6 @@ bool ReConBotLx::saveModesServer(reconbot_control::ModeState::Request& req, reco
   modesLx = req.mode_state;
   res.status = 1;
   return true;
-}
-
-void ReConBotPub::modesClientServer(float mod) {
-  ros::ServiceClient client = nhPub.serviceClient<reconbot_control::ModeState>("mode_state");
-  reconbot_control::ModeState srv;
-  if (mod == 4) {
-    modes.resize(6);
-    modes[0]=1;
-    modes[1]=1;
-    modes[2]=0;
-    modes[3]=1;
-    modes[4]=1;
-    modes[5]=0;
-
-  }
-  srv.request.mode_state = modes;
-
-  if (client.call(srv))
-  {
-    flag5 = true;
-    ROS_INFO("Service successfully called");
-  }
-  else
-  {
-    ROS_ERROR("Failed to call service add_two_ints");
-    flag5 = false;
-  }
 }
 
 void ReConBotPub::publisher(control_msgs::FollowJointTrajectoryGoal goal){
@@ -488,7 +460,7 @@ control_msgs::FollowJointTrajectoryGoal ReConBotPub::buildTrajectory(){
     ss << motorsActive[i];
     goal.trajectory.joint_names.push_back("joint_"+ ss.str());
   }
-  goal.trajectory.joint_names.push_back("mode";
+  goal.trajectory.joint_names.push_back("mode");
   //goal.trajectory.joint_names.push_back("joint_1");
   //goal.trajectory.joint_names.push_back("joint_2");
   //goal.trajectory.joint_names.push_back("joint_3");

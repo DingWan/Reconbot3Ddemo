@@ -25,31 +25,22 @@
 
   <include if="$(arg l_arm_mode)" file="$(find reconbot_control)/launch/l_arm_reconbot_controller.launch">  </include>
 
-  <include if="$(arg 2RA2C2_mode)" file="$(find reconbot_control)/launch/2RA2C2_reconbot_controller.launch">  </include>
+  <include if="$(arg RA2C2_mode)" file="$(find reconbot_control)/launch/RA2C2_reconbot_controller.launch">  </include>
 
-  <include if="$(arg 2T2R5_mode)" file="$(find reconbot_control)/launch/2T2R5_reconbot_controller.launch">  </include>
+  <include if="$(arg T2R5_mode)" file="$(find reconbot_control)/launch/T2R5_reconbot_controller.launch">  </include>
 
-  <include if="$(arg 3T1R_mode)" file="$(find reconbot_control)/launch/3T1R_reconbot_controller.launch">  </include>
+  <include if="$(arg T1R_mode)" file="$(find reconbot_control)/launch/T1R_reconbot_controller.launch">  </include>
 
-  <include if="$(arg 3T2R_mode)" file="$(find reconbot_control)/launch/3T2R_reconbot_controller.launch">  </include>
+  <include if="$(arg T2R_mode)" file="$(find reconbot_control)/launch/T2R_reconbot_controller.launch">  </include>
 
+  <node name="Enable_Torque_Server" pkg="reconbot_control" type="enable_torque_service.py" respawn="true"/>
+<!--
   <node if="$(arg full_mode)" name="ReConBot_Driver" pkg="reconbot_control" type="move_group_interface" respawn="true"/>
+-->
 
   <node if="$(arg r_arm_mode)" name="r_arm_ReConBot_Driver" pkg="reconbot_control" type="r_arm_move_group_interface" respawn="true"/>
 
   <node if="$(arg l_arm_mode)" name="l_arm_ReConBot_Driver" pkg="reconbot_control" type="l_arm_move_group_interface" respawn="true"/>
-
-  <node if="$(arg T3R_mode)" name="T3R_ReConBot_Driver" pkg="reconbot_control" type="T3R_move_group_interface" respawn="true"/>
-
-  <node if="$(arg RA2C2_mode)" name="RA2C2_ReConBot_Driver" pkg="reconbot_control" type="RA2C2_move_group_interface" respawn="true"/>
-
-  <node if="$(arg T2R5_mode)" name="T2R5_ReConBot_Driver" pkg="reconbot_control" type="T2R5_move_group_interface" respawn="true"/>
-
-  <node if="$(arg T1R_mode)" name="T1R_ReConBot_Driver" pkg="reconbot_control" type="T1R_move_group_interface" respawn="true"/>
-
-  <node if="$(arg T2R_mode)" name="T2R_ReConBot_Driver" pkg="reconbot_control" type="T2R_move_group_interface" respawn="true"/>
-
- <node name="Enable_Torque_Server" pkg="reconbot_control" type="enable_torque_service.py" respawn="true"/>
 
 
 </launch>

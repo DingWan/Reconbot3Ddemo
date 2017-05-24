@@ -57,7 +57,7 @@ int main(int argc, char** argv)
   Robot.nameSpace = "T3R_reconbot_controller";
   Robot.trajClient();
 
-  sub_path = nh_.subscribe("/T3R_reconbot_trajectory", 100, &ReConBotLx::reconbotCallback, &Robot);
+  //sub_path = nh_.subscribe("/T3R_reconbot_trajectory", 100, &ReConBotLx::reconbotCallback, &Robot);
   // Start the trajectory
   // Wait for trajectory completion
   //while(!robot.getState().isDone() && ros::ok())
