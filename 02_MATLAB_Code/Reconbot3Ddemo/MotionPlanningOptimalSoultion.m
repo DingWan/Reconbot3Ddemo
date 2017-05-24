@@ -245,7 +245,7 @@ for i = 1:length(MPOTP_cell)
                 end
             elseif Mode_previous_initial == 11 && Mode_current_initial ~= 5
                 q0q1q2_2RserialA1C1_x_0_y_Positive30 = [0 0 0.966880969134940 1.94661464276441 -0.603915357659957 0 MPOTP_cell{length(MPOTP_cell)-1}{2}{8} 0.139358669266875 3.14159265358979 -0.971371068617276 MPOTP_cell{length(MPOTP_cell)-1}{2}{8}];
-                if MPOTP_cell{length(MPOTP_cell)-1}{1} == 5
+                if MPOTP_cell{length(MPOTP_cell)-1}{1} == 5 || Mode_current_initial == 7
                     q0q1q2_previous_trajpoint = [q0q1q2_2RserialA1C1_x_0_y_Positive30; q0q1q2_previous_trajpoint];
                 end
             end
@@ -391,8 +391,7 @@ for i = 1:length(MPOTP_cell)
 
         % Optimal Joints Solution
         OptimalJointsSolution;
-        q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j,:) = q0q1q2_Optimal_SingleRow;
-        
+        q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j,:) = q0q1q2_Optimal_SingleRow;        
         
         % ==================  Jacobian Matrix  ====================
         q1q2_Optimal = q0q1q2_Optimal_SingleRow(:,2:11);
@@ -545,16 +544,25 @@ for i = 1:length(MPOTP_cell)
             end
         elseif Self_adjustment_Enable_Disable == 2        
             if Mode == 3
-                    q0q1q2_OptimalRow(NumIntepoPoints,7) = q0q1q2_OptimalRow(NumIntepoPoints - 1,7);
-                    q0q1q2_OptimalRow(NumIntepoPoints,11) = q0q1q2_OptimalRow(NumIntepoPoints - 1,7);
+                q0q1q2_OptimalRow(NumIntepoPoints,7) = q0q1q2_OptimalRow(NumIntepoPoints - 1,7);
+                q0q1q2_OptimalRow(NumIntepoPoints,11) = q0q1q2_OptimalRow(NumIntepoPoints - 1,7);
             elseif Mode == 4
-                    q0q1q2_OptimalRow(NumIntepoPoints,2) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
-                    q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);           
+                q0q1q2_OptimalRow(NumIntepoPoints,2) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
+                q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
             elseif Mode == 7
                 q0q1q2_OptimalRow(NumIntepoPoints,2) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
                 q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints - 1,2);
                 q0q1q2_OptimalRow(NumIntepoPoints,7) = q0q1q2_OptimalRow(NumIntepoPoints - 1,7);
                 q0q1q2_OptimalRow(NumIntepoPoints,11) = q0q1q2_OptimalRow(NumIntepoPoints - 1,7);
+            elseif Mode_previous_initial == 11 && Mode_current_initial == 7  % Mode 11 to Mode 7                 
+                if i == 1
+                    MPOTP_cell_Target = MPOTP_cell{3};
+                    MPOTP_cell{3}{1} = 5;
+                    MPOTP_cell{3}{2} = {0, 0, 0.208879343162506 0 [] 0, 0, -pi};
+                elseif i == 2
+                    MPOTP_cell{3}{1} = 7;
+                    MPOTP_cell{3}{2} = MPOTP_cell_Target{2};
+                end
             end
             PosOri_current{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
             PosOri_current{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
@@ -596,14 +604,14 @@ for i = 1:length(MPOTP_cell)
             elseif Mode_previous_initial == 6 && Mode_current_initial == 7 % Mode 6 to Mode 7, length(MPOTP_cell)>1
                 MPOTP_cell{1}{2}{5} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 PosOri_current{5} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
-            elseif Mode_current_initial == 12 % Mode 3 to Mode 10, length(MPOTP_cell)>1
-                if MPOTP_cell{length(MPOTP_cell)}{1} ~= 12 || (i == 1 && Mode_previous_initial ~= 10)
+            elseif (Mode_previous_initial ~= 12 && Mode_previous_initial ~= 5) && Mode_current_initial == 12 % Mode 3 to Mode 10, length(MPOTP_cell)>1
+                if MPOTP_cell{length(MPOTP_cell)}{1} ~= 12 || (i == 1 && Mode_previous_initial ~= 10 && Mode_previous_initial ~= 11)
                     PosOri_current{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                     PosOri_current{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
                     MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                     MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
                 else
-                    if Mode_previous_initial == 10 && i == 1
+                    if (Mode_previous_initial == 10 || Mode_previous_initial == 11) && i == 1
                         q0q1q2_OptimalRow(NumIntepoPoints,2) = q0q1q2_OptimalRow(NumIntepoPoints-1,2);
                         q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints-1,2);
                         q0q1q2_OptimalRow(NumIntepoPoints,7) = q0q1q2_OptimalRow(NumIntepoPoints-1,7);
@@ -618,7 +626,7 @@ for i = 1:length(MPOTP_cell)
                     PosOri_current{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,3);
                     PosOri_current{9} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
                     PosOri_current{10} = q0q1q2_OptimalRow(NumIntepoPoints*i,8);
-                end
+                end                
             elseif (Mode_previous_initial == 3 || Mode_previous_initial == 4) && (Mode_current_initial == 10 || Mode_current_initial == 11) % Mode 3/4 to Mode 10/11, length(MPOTP_cell)>1
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
@@ -632,7 +640,8 @@ for i = 1:length(MPOTP_cell)
                     (Mode_current_initial == 3 || Mode_current_initial == 4 || Mode_current_initial == 7 || Mode_current_initial == 9)
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
-            elseif Mode_previous_initial == 10 && Mode_current_initial == 11
+            elseif (Mode_previous_initial == 10 && Mode_current_initial == 11) || ...
+                    (Mode_previous_initial == 11 && Mode_current_initial == 10)                
                 if i == 1
                     q0q1q2_OptimalRow(NumIntepoPoints,2) = q0q1q2_OptimalRow(NumIntepoPoints-1,2);
                     q0q1q2_OptimalRow(NumIntepoPoints,6) = q0q1q2_OptimalRow(NumIntepoPoints-1,2);
@@ -643,6 +652,25 @@ for i = 1:length(MPOTP_cell)
                 PosOri_current{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,3);
                 PosOri_current{9} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
                 PosOri_current{10} = q0q1q2_OptimalRow(NumIntepoPoints*i,8);
+                %----- Mode 11 to Mode 10
+                if Mode_previous_initial == 11
+                    if i == 2 || i == 3
+                        PosOri_current{7} = 0;
+                    end
+                end
+                %-----
+            elseif Mode_previous_initial == 12
+                if Mode_current_initial == 1 || Mode_current_initial == 2
+                    MPOTP_cell{length(MPOTP_cell)}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
+                    MPOTP_cell{length(MPOTP_cell)}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
+                elseif Mode_current_initial == 3
+                    MPOTP_cell{length(MPOTP_cell)}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
+                elseif Mode_current_initial == 4
+                    MPOTP_cell{length(MPOTP_cell)}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
+                elseif Mode_current_initial == 10
+                    PosOri_current{7} = 0;
+                    MPOTP_cell{1}{2}{7} = 0;
+                end
             end
         end
     end

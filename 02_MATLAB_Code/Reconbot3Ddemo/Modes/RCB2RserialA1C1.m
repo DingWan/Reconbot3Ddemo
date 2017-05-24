@@ -46,7 +46,7 @@ classdef RCB2RserialA1C1
                     %============== Method I ===============
                     if p(2) < 1e-12
                         q12 = po{7};
-                    elseif p(2) > 0
+                    elseif p(2) > 1e-12
                         q22 = po{7};
                     end
                     %============== Method II ===============
@@ -83,8 +83,18 @@ classdef RCB2RserialA1C1
                     EulerAngle_q11_theta = [];
                     q1q2_FeasibleSolution = [];
                     ABC_FeasibleSolution = [];
-                    return;
-                elseif p(2) <= 1e-12
+                    return;                            
+                elseif abs(p(2)) < 1e-12
+                    p(1) = 0;
+                    p(2) = 0;
+                    p(3) = 0;
+                    q11 = -pi;
+                    q21 = 0;
+                    theta = 0;
+                    angleA1B1C1 = 0;
+                    angleA2B2C2 = 0;
+                    angle_A2C2_k2 = pi/2;
+                elseif p(2) < 0
                     % Four-bar linkage with Serial Chain A1C1: ----- isempty(p) = [1 1 0 0 0 0]
                     % p = [x, y, [], [], [], []]; y < 0
                     name = '2R-SerialA1C1';
@@ -180,7 +190,7 @@ classdef RCB2RserialA1C1
             
             
             %% ----------------------- Calculate one solutions for one input  -----------------------
-            if p(1) < 1e-12 && p(2) < 1e-12 && p(3) < 1e-8
+            if abs(p(1)) < 1e-12 && abs(p(2)) < 1e-12 && abs(p(3)) < 1e-8
                 WSvalue_2R = 0;
                 WSvalue_2R_SinguPosA1C1 = 0;
                 WSvalue_2R_SinguPosA2C2 = 0;

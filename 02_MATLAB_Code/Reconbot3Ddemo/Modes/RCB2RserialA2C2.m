@@ -44,9 +44,9 @@ classdef RCB2RserialA2C2
             
             switch length(po)
                 case 7 % Serial A1C1 & A2C2
-                    if p(2) < 0
+                    if p(2) < -1e-12
                         q12 = po{7};
-                    elseif p(2) >= 0
+                    elseif p(2) > -1e-12
                         q22 = po{7};
                     end
                 case 10
@@ -75,10 +75,20 @@ classdef RCB2RserialA2C2
             %% ----------------------- Calculate rotation matrix according to inputs -----------------------
             if isequal(p_BinaryCode, [1 1 0 0 0 0]) == 1
                 %% ----------------------- Calculate rotation matrix of two 2R modes -----------------------
-                if p(2) < 0
+                if p(2) < -1e-12
                     WSvalue = [0, 0, 0];
-                    return;
-                elseif p(2) > 1e-12
+                    return;                    
+                elseif abs(p(2)) < 1e-12
+                    p(1) = 0;
+                    p(2) = 0;
+                    p(3) = 0;
+                    q11 = 0;
+                    q21 = -pi;
+                    theta = 0;
+                    angleA1B1C1 = 0;
+                    angleA2B2C2 = 0;
+                    angle_A1C1_k1 = pi/2;
+                elseif p(2) > 0
                     % Four-bar linkage with Serial Chain A2C2: [1 1 0 0 0 0]
                     % p = [x, y, [], [], [], []]; y > 0
                     name = '2R-SerialA2C2';
@@ -127,16 +137,6 @@ classdef RCB2RserialA2C2
                     %-------------------q11-q15, q21-q25------------------------------
                     q11 = q21;
                     angleA2B2C2 = 0;
-                elseif abs(p(2)) < 1e-12
-                    p(1) = 0;
-                    p(2) = 0;
-                    p(3) = 0;
-                    q11 = 0;
-                    q21 = -pi;
-                    theta = 0;
-                    angleA1B1C1 = 0;
-                    angleA2B2C2 = 0;
-                    angle_A1C1_k1 = pi/2;
                 end
                 % ----------------------Calculate the Euler angle--------------------------
                 u_RotationAxis = [cos(q11), sin(q11), 0];
@@ -155,7 +155,7 @@ classdef RCB2RserialA2C2
             C2_in_Ob = (RotationMatrix * C2_in_op')' + p(1:3);
             
             %% ----------------------- Calculate one solutions for one input  -----------------------
-            if p(1) < 1e-12 && p(2) < 1e-12 && p(3) < 1e-8
+            if abs(p(1)) < 1e-12 && abs(p(2)) < 1e-12 && abs(p(3)) < 1e-8
                 WSvalue_2R = 0;
                 WSvalue_2R_SinguPosA1C1 = 0;
                 WSvalue_2R_SinguPosA2C2 = 0;

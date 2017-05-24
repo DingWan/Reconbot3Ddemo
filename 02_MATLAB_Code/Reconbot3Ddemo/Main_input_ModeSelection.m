@@ -108,7 +108,15 @@ if HomePosition == 2
         if IntepPointNum == 1
             q0q1q2_previous = q0q1q2_HomePosition;
         else
-            q0q1q2_previous = q0q1q2_Pos_mat(length(q0q1q2_Pos_mat),:);
+            if Mode_previous == 10 && Mode_current  == 5
+                q0q1q2_2RserialA1C1_x_0_y_Positive30 = [0 -3.14159265358979 0.139358669266875 3.14159265358979 -0.971371068617276 -3.14159265358979 0 0.966880969134940 1.94661464276441 -0.603915357659957 0];
+                q0q1q2_previous = [q0q1q2_2RserialA1C1_x_0_y_Positive30; q0q1q2_Pos_mat(length(q0q1q2_Pos_mat(:,1)),:)];
+            elseif Mode_previous == 11 && Mode_current  == 5
+                q0q1q2_2RserialA2C2_x_0_y_Negative30 = [0 0 0.966880969134940 1.94661464276441 -0.603915357659957 0 -3.14159265358979 0.139358669266875 3.14159265358979 -0.971371068617276 -3.14159265358979];
+                q0q1q2_previous = [q0q1q2_2RserialA2C2_x_0_y_Negative30; q0q1q2_Pos_mat(length(q0q1q2_Pos_mat(:,1)),:)];
+            else
+                q0q1q2_previous = q0q1q2_Pos_mat(length(q0q1q2_Pos_mat(:,1)),:);
+            end
         end
         q0q1q2_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum + 1,1}{3};
         
@@ -212,7 +220,7 @@ if HomePosition == 2
     h = msgbox('Check Completed, Input values are correct!');
     
     %% 3D Animation
-    for i = 151:length(q0q1q2_Pos_mat)-0
+    for i = 41:length(q0q1q2_Pos_mat)-40
         %========================== Animation ============================
         ReconbotANI(q0q1q2_Pos_mat(i,:));
         % ReconbotANI(q0q1q2_Pos_mat(51,:));
@@ -220,6 +228,7 @@ if HomePosition == 2
         %     set(CPsA2C2,'xdata',xCPsA2C2data(:,i+1),'ydata',yCPsA2C2data(:,i+1),'zdata',zCPsA2C2data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
         %============================ End ================================
     end
+    
     
     %% Moving Platform Trajectory
     % Displacement = [250,250,167.4400] / 1000;
