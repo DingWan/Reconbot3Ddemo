@@ -12,7 +12,7 @@ function ReconbotANI(q0q1q2)
             %-------------------------------------------------------
             %q0q1q2(i,:)*180/pi;
 %             BaseLow_data = getappdata(0,'Link_BaseLow_data');
-%             BaseUP_data = getappdata(0,'Link_BaseUP_data');
+            BaseUP_data = getappdata(0,'Link_BaseUP_data');
             BaseJointA1C1_data = getappdata(0,'Link_BaseJointA1C1_data');
             LowLinkA1C1_data = getappdata(0,'Link_LowLinkA1C1_data');
             UpLinkA1C1_data = getappdata(0,'Link_UpLinkA1C1_data');
@@ -26,7 +26,7 @@ function ReconbotANI(q0q1q2)
             
             % Actual vertex data of robot links
 %             Link_BaseLow        =           BaseLow_data.V1;
-%             Link_BaseUP         = (T_01   * BaseUP_data.V2')';
+            Link_BaseUP         = (T_01   * BaseUP_data.V2')';
             Link_BaseJointA1C1  = (T_1_02 * BaseJointA1C1_data.V3')';
             Link_LowLinkA1C1    = (T_1_03 * LowLinkA1C1_data.V4')';
             Link_UpLinkA1C1     = (T_1_04 * UpLinkA1C1_data.V5')';

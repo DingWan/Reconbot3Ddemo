@@ -54,6 +54,7 @@ MovingPlatform_data = getappdata(0,'Link_MovingPlatform_data');
 %The 'home' position, for init.
 q0 = 0;        q11 = 0;        q12 = 45;        q13 = 90;        q14 = -45;        q15 = 0;
 q21 = 0;        q22 = 45;       q23 = 90;        q24 = -45;        q25 = 0;
+%q0q1q2_HomePosition = [0, -pi, pi/4, pi/2, -pi/4, -pi, 0, pi/4, pi/2, -pi/4, 0];
 
 q0q1q2 = [q0, q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
 [T_01,T_1_02,T_1_03,T_1_04,T_1_05,T_1_06,T_2_02,T_2_03,T_2_04,T_2_05] = RCB_3Ddemo_ForwardKinematics(q0q1q2);
