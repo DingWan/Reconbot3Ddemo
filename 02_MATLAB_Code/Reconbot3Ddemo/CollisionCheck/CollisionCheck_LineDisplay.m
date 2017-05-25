@@ -59,7 +59,7 @@
     %================== Center Point of Moving Platform ===================
 %     ReconbotANI(q0q1q2_mat(n*(IntepPointNum-1)+i,:));
     Displacement = [250,250,167.4400];
-    p = p(1:3) + Displacement;
+    p_MP = p(1:3) + Displacement;
     handles = getappdata(0,'patch_h');
     Tr = handles(12);
     trail = 'y';
@@ -68,9 +68,9 @@
         y_trail = getappdata(0,'ytrail');
         z_trail = getappdata(0,'ztrail');
         %
-        xTrdata = [x_trail p(1)];
-        yTrdata = [y_trail p(2)];
-        zTrdata = [z_trail p(3)];
+        xTrdata = [x_trail p_MP(1)];
+        yTrdata = [y_trail p_MP(2)];
+        zTrdata = [z_trail p_MP(3)];
         %
         setappdata(0,'xtrail',xTrdata); % used for trail tracking.
         setappdata(0,'ytrail',yTrdata); % used for trail tracking.

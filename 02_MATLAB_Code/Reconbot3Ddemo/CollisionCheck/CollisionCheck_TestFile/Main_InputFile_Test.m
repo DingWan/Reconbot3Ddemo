@@ -1,8 +1,11 @@
 % clear all
 % clf
 
-q0q1q2 = [0, 0, pi/3, pi/3, pi/6, 0, 0, pi/3, pi/3, pi/6, 0] * 180/pi;
+%InitHome
+
+q0q1q2 = [0, 0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0] * 180/pi;
 [LinkA1C1_ColChe, LinkA2C2_ColChe, BaseUpPlatform_ColChe] = CollisionPointsFK(q0q1q2);
+
 
 % LinkA1C1_ColChe with BaseUpPlatform_ColChe
 tic
@@ -54,10 +57,10 @@ if cols(1) < 13
     P3 = BaseUpPlatform_ColChe(cols(1),1:3);     P4 = BaseUpPlatform_ColChe(cols(1),4:6);
 elseif cols(1) > 12 && cols(1) < 25
     P1 = LinkA2C2_ColChe(rows(1),1:3);           P2 = LinkA2C2_ColChe(rows(1),4:6);
-    P3 = BaseUpPlatform_ColChe(cols(1),1:3);     P4 = BaseUpPlatform_ColChe(cols(1),4:6);    
+    P3 = BaseUpPlatform_ColChe(cols(1)-12,1:3);     P4 = BaseUpPlatform_ColChe(cols(1)-12,4:6);    
 elseif cols(1) > 24    
     P1 = LinkA1C1_ColChe(rows(1),1:3);           P2 = LinkA1C1_ColChe(rows(1),4:6);
-    P3 = LinkA2C2_ColChe(cols(1),1:3);           P4 = LinkA2C2_ColChe(cols(1),4:6);   
+    P3 = LinkA2C2_ColChe(cols(1)-24,1:3);           P4 = LinkA2C2_ColChe(cols(1)-24,4:6);   
 end
 
 [distance, ClosePoint] = DistBetween2Segment(P1, P2, P3, P4);
@@ -68,3 +71,4 @@ plot3(P12(:,1),P12(:,2),P12(:,3),'r-');hold on
 plot3(P34(:,1),P34(:,2),P34(:,3),'r-');hold on
 plot3(CP(:,1),CP(:,2),CP(:,3),'r-o');hold on
 axis equal
+grid on

@@ -11,8 +11,8 @@ function ReconbotANI(q0q1q2)
             [T_01,T_1_02,T_1_03,T_1_04,T_1_05,T_1_06,T_2_02,T_2_03,T_2_04,T_2_05] = RCB_3Ddemo_ForwardKinematics(q0q1q2(i,:)*180/pi);
             %-------------------------------------------------------
             %q0q1q2(i,:)*180/pi;
-            BaseLow_data = getappdata(0,'Link_BaseLow_data');
-            BaseUP_data = getappdata(0,'Link_BaseUP_data');
+%             BaseLow_data = getappdata(0,'Link_BaseLow_data');
+%             BaseUP_data = getappdata(0,'Link_BaseUP_data');
             BaseJointA1C1_data = getappdata(0,'Link_BaseJointA1C1_data');
             LowLinkA1C1_data = getappdata(0,'Link_LowLinkA1C1_data');
             UpLinkA1C1_data = getappdata(0,'Link_UpLinkA1C1_data');
@@ -25,8 +25,8 @@ function ReconbotANI(q0q1q2)
             % 
             
             % Actual vertex data of robot links
-            Link_BaseLow        =           BaseLow_data.V1;
-            Link_BaseUP         = (T_01   * BaseUP_data.V2')';
+%             Link_BaseLow        =           BaseLow_data.V1;
+%             Link_BaseUP         = (T_01   * BaseUP_data.V2')';
             Link_BaseJointA1C1  = (T_1_02 * BaseJointA1C1_data.V3')';
             Link_LowLinkA1C1    = (T_1_03 * LowLinkA1C1_data.V4')';
             Link_UpLinkA1C1     = (T_1_04 * UpLinkA1C1_data.V5')';
@@ -58,6 +58,7 @@ function ReconbotANI(q0q1q2)
             %            
 %             set(L1,'vertices',Link_BaseLow(:,1:3), 'facec', [105 105 105]/255);%105 105 105
 %             set(L1, 'EdgeColor','none');
+
 %             set(L2, 'vertices' ,Link_BaseUP(:,1:3), 'facec', [250 235 215]/255);
 %             set(L2, 'EdgeColor','none');
             set(L3, 'vertices' ,Link_BaseJointA1C1(:,1:3), 'facec', [105 105 105]/255);

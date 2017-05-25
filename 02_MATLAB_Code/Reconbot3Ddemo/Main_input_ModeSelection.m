@@ -58,7 +58,7 @@ if HomePosition == 2
     %% Motion planning
     clc
     % Intepotation Points and Time
-    NumIntepoPoints = 50;
+    NumIntepoPoints = 20;
     Start_Time = 0;
     Time_inteval = 5;
     %
@@ -220,15 +220,17 @@ if HomePosition == 2
     h = msgbox('Check Completed, Input values are correct!');
     
     %% 3D Animation
-    for i = 41:length(q0q1q2_Pos_mat)-40
+%     q0q1q2_Pos_mat(:,1) = q0q1q2_Pos_mat(:,2);
+    for i = 1:length(q0q1q2_Pos_mat)-0
         %========================== Animation ============================
         ReconbotANI(q0q1q2_Pos_mat(i,:));
-        % ReconbotANI(q0q1q2_Pos_mat(51,:));
-        %     set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
-        %     set(CPsA2C2,'xdata',xCPsA2C2data(:,i+1),'ydata',yCPsA2C2data(:,i+1),'zdata',zCPsA2C2data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
+%         set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
+%         set(CPsA2C2,'xdata',xCPsA2C2data(:,i+1),'ydata',yCPsA2C2data(:,i+1),'zdata',zCPsA2C2data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
         %============================ End ================================
     end
     
+    %%
+    %clr_trail_CollisionPoints_button_press;
     
     %% Moving Platform Trajectory
     % Displacement = [250,250,167.4400] / 1000;
@@ -259,5 +261,5 @@ if HomePosition == 2
     %------------------------------------------------------------
     
     %%
-    % clr_trail_CollisionPoints_button_press;
+    
 end
