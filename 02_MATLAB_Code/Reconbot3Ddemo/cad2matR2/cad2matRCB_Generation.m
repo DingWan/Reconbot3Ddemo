@@ -1,4 +1,4 @@
-function cad2matCollisionCheck(filename)
+function cad2matRCB(filename)
 % CAD2MATDEMO, a demonstration of importing 3D CAD data into Matlab.
 % To get CAD data into Matlab, the process is:
 %
@@ -16,7 +16,8 @@ function cad2matCollisionCheck(filename)
 % Note: This routine has both the import function and some basic
 % manipulation for testing.  The actual reading mechanism is located
 % at the end of this file.
-  
+
+%% 
 if nargin == 0    
    filename = {   'RCB_BaseLow.stl';
                   'RCB_BaseUP.stl'; 
@@ -36,57 +37,62 @@ end
     % To use homogenous transforms, the n by 3 Vertices will be turned to 
     % n by 4 vertices, then back to 3 for the set command.
     % Note: n by 4 needed for translations, not used here, but could, using tl(x,y,z)
-% [F1, V1, C1] = rndread(filename{1});
-% V1 = [V1(:,1:3), ones(length(V1),1)];
-% BaseLow = struct('F1',F1, 'V1',V1, 'C1',C1);
-% 
-% [F2, V2, C2] = rndread(filename{2});
-% V2 = [V2(:,1:3), ones(length(V2),1)];
-% BaseUP = struct('F2',F2, 'V2',V2, 'C2',C2);
-% 
-% [F3, V3, C3] = rndread(filename{3});
-% V3 = [V3(:,1:3), ones(length(V3),1)];
-% BaseJoint_A1C1 = struct('F3',F3, 'V3',V3, 'C3',C3);
+[F1, V1, C1] = rndread(filename{1});
+V1 = [V1(:,1:3), ones(length(V1),1)];
+BaseLow = struct('F1',F1, 'V1',V1, 'C1',C1);
 
-% [F4, V4, C4] = rndread(filename{4});
-% V4 = [V4(:,1:3), ones(length(V4),1)];
-% LowLink_A1C1 = struct('F4',F4, 'V4',V4, 'C4',C4);
+[F2, V2, C2] = rndread(filename{2});
+V2 = [V2(:,1:3), ones(length(V2),1)];
+BaseUP = struct('F2',F2, 'V2',V2, 'C2',C2);
 
-% [F5, V5, C5] = rndread(filename{5});
-% V5 = [V5(:,1:3), ones(length(V5),1)];
-% UpLink_A1C1 = struct('F5',F5, 'V5',V5, 'C5',C5);
-% 
-% [F6, V6, C6] = rndread(filename{6});
-% V6 = [V6(:,1:3), ones(length(V6),1)];
-% UPjoint_A1C1 = struct('F6',F6, 'V6',V6, 'C6',C6);
-% 
-% [F7, V7, C7] = rndread(filename{7});
-% V7 = [V7(:,1:3), ones(length(V7),1)];
-% BaseJoint_A2C2 = struct('F7',F7, 'V7',V7, 'C7',C7);
-% 
-% [F8, V8, C8] = rndread(filename{8});
-% V8 = [V8(:,1:3), ones(length(V8),1)];
-% LowLink_A2C2 = struct('F8',F8, 'V8',V8, 'C8',C8);
-% 
-% [F9, V9, C9] = rndread(filename{9});
-% V9 = [V9(:,1:3), ones(length(V9),1)];
-% UpLink_A2C2 = struct('F9',F9, 'V9',V9, 'C9',C9);
-% 
-% [F10, V10, C10] = rndread(filename{10});
-% V10 = [V10(:,1:3), ones(length(V10),1)];
-% UPjoint_A2C2 = struct('F10',F10, 'V10',V10, 'C10',C10);
-% 
+[F3, V3, C3] = rndread(filename{3});
+V3 = [V3(:,1:3), ones(length(V3),1)];
+BaseJointA1C1 = struct('F3',F3, 'V3',V3, 'C3',C3);
+
+[F4, V4, C4] = rndread(filename{4});
+V4 = [V4(:,1:3), ones(length(V4),1)];
+LowLinkA1C1 = struct('F4',F4, 'V4',V4, 'C4',C4);
+
+[F5, V5, C5] = rndread(filename{5});
+V5 = [V5(:,1:3), ones(length(V5),1)];
+UpLinkA1C1 = struct('F5',F5, 'V5',V5, 'C5',C5);
+
+[F6, V6, C6] = rndread(filename{6});
+V6 = [V6(:,1:3), ones(length(V6),1)];
+UPjointA1C1 = struct('F6',F6, 'V6',V6, 'C6',C6);
+
+[F7, V7, C7] = rndread(filename{7});
+V7 = [V7(:,1:3), ones(length(V7),1)];
+BaseJointA2C2 = struct('F7',F7, 'V7',V7, 'C7',C7);
+
+[F8, V8, C8] = rndread(filename{8});
+V8 = [V8(:,1:3), ones(length(V8),1)];
+LowLinkA2C2 = struct('F8',F8, 'V8',V8, 'C8',C8);
+
+[F9, V9, C9] = rndread(filename{9});
+V9 = [V9(:,1:3), ones(length(V9),1)];
+UpLinkA2C2 = struct('F9',F9, 'V9',V9, 'C9',C9);
+
+[F10, V10, C10] = rndread(filename{10});
+V10 = [V10(:,1:3), ones(length(V10),1)];
+UPjointA2C2 = struct('F10',F10, 'V10',V10, 'C10',C10);
+
 [F11, V11, C11] = rndread(filename{11});
 V11 = [V11(:,1:3), ones(length(V11),1)];
-MP = struct('F11',F11, 'V11',V11, 'C11',C11);
+MovingPlatform = struct('F11',F11, 'V11',V11, 'C11',C11);
 %-------------------------------------------- 
- 
-% Set File '??' as a example: 
+
+save('RCBLinkdata.mat', 'BaseLow','BaseUP','BaseJointA1C1','BaseJointA2C2','LowLinkA1C1','LowLinkA2C2',...
+    'UpLinkA1C1','UpLinkA2C2','UPjointA1C1','UPjointA2C2','MovingPlatform')
+
+%%
+%-------------------------------------------- 
+% Set File 3 as a example: 
 F = F7(:,1:3);
 V = V7(:,1:3);
 C = C7;
 
-clf;
+% clf;
   p = patch('faces', F, 'vertices' ,V);
     %set(p, 'facec', 'b');              % Set the face color (force it)
     set(p, 'facec', 'flat');            % Set the face color flat
@@ -100,15 +106,9 @@ clf;
     xlabel('X'),ylabel('Y'),zlabel('Z')
     title(['Imported CAD data from ' filename{3}])
     drawnow                             %, axis manual
-    %
-    disp(['CAD file ' filename{3} ' data is read, will now show object rotating'])
     
-    hold on
     
-    CollisionLines;
 
-  
-%% Move it around
 function [fout, vout, cout] = rndread(filename)
 % Reads CAD STL ASCII files, which most CAD programs can export.
 % Used to create Matlab patches of CAD 3D data.
