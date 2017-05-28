@@ -149,7 +149,11 @@ for i = 1:length(MPOTP_cell)
         % Mode 5(HomePosition) to Mode 10/11(2RSerialAiCi)
         if (Self_adjustment_Enable_Disable == 1 || Mode_previous_initial == 5) && (Mode_current_initial == 10 || Mode_current_initial == 11)
             if Mode_current_initial == 10 
-                q0q1q2_current_trajpoint = [0 MPOTP_cell{length(MPOTP_cell)-1}{2}{7} 0.139358669266875 3.14159265358979 -0.971371068617276 MPOTP_cell{length(MPOTP_cell)-1}{2}{7} -pi 0.966880969134940 1.94661464276441 -0.603915357659957 -pi];
+                if i > 1 && q0q1q2_OptimalRow(NumIntepoPoints*(i-1),7) < 0
+                    q0q1q2_current_trajpoint = [0 MPOTP_cell{length(MPOTP_cell)-1}{2}{7} 0.139358669266875 3.14159265358979 -0.971371068617276 MPOTP_cell{length(MPOTP_cell)-1}{2}{7} -pi 0.966880969134940 1.94661464276441 -0.603915357659957 -pi];
+                else
+                    q0q1q2_current_trajpoint = [0 MPOTP_cell{length(MPOTP_cell)-1}{2}{7} 0.139358669266875 3.14159265358979 -0.971371068617276 MPOTP_cell{length(MPOTP_cell)-1}{2}{7} pi 0.966880969134940 1.94661464276441 -0.603915357659957 pi];
+                end
             elseif Mode_current_initial == 11 
                 q0q1q2_current_trajpoint = [0 0 0.966880969134940 1.94661464276441 -0.603915357659957 0 0 0.139359146095574 3.14159265358979 -0.971371545445974 0];
             end
@@ -604,7 +608,7 @@ for i = 1:length(MPOTP_cell)
                 % Mode 1/2 to Mode 7/8, length(MPOTP_cell)>1
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
-            elseif Mode_previous_initial == 3 && Mode_current_initial == 7 % Mode 3 to Mode 7, length(MPOTP_cell)>1
+            elseif (Mode_previous_initial == 3 || Mode_previous_initial == 4) && Mode_current_initial == 7 % Mode 3/4 to Mode 7, length(MPOTP_cell)>1
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
             elseif Mode_previous_initial == 6 && Mode_current_initial == 7 % Mode 6 to Mode 7, length(MPOTP_cell)>1

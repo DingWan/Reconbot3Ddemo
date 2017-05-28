@@ -64,13 +64,13 @@ for jj = 1:length(q1q2(:,1))
             elseif Mode_current == 4
                 if PosOri_current{1} < 0
                     for k = 1:length(q0q1q2_current_trajpoint(:,1))
-                        if q0q1q2_current_trajpoint(k,2) < 0
+                        if q0q1q2_current_trajpoint(k,2) > 0
                             q0q1q2_matrix_end = [q0q1q2_matrix_end; q0q1q2_current_trajpoint(k,:)];
                         end
                     end
                 elseif PosOri_current{1} > 0
                     for k = 1:length(q0q1q2_current_trajpoint(:,1))
-                        if q0q1q2_current_trajpoint(k,2) > 0
+                        if q0q1q2_current_trajpoint(k,2) < 0
                             q0q1q2_matrix_end = [q0q1q2_matrix_end; q0q1q2_current_trajpoint(k,:)];
                         end
                     end
