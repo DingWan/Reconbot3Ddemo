@@ -27,7 +27,11 @@ p_0 = [0 0 0.208879343162506 0 0 0, 0 0]; %  p = 2 * l2 * sin(pi/4)
 deg = pi/180;
 
 addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
+<<<<<<< HEAD
 % InitHome   
+=======
+%InitHome   
+>>>>>>> e48d422fa8dabd6573c29070a03073dd558e415d
 
 %% Go to HomePosition
 % Construct a questdlg with three options
