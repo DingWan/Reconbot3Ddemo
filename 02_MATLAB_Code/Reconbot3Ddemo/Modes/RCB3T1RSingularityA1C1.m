@@ -318,10 +318,10 @@ classdef RCB3T1RSingularityA1C1
                 end
                 if q21 == q21_original || i > 3
                     q22 = pi - angle_A2C2_k2 - angleB2A2C2;
-                    q24 = pi/2 + theta - (q22 + q23);
+                    q24 = pi/2 - (q22 + q23 + theta);
                 else
                     q22 = angle_A2C2_k2 - angleB2A2C2;
-                    q24 = pi/2 - (q22 + q23 + theta);
+                    q24 = pi/2 + theta - (q22 + q23);
                 end
                 %--------- q15 and q25 -----------%
                 q15 = q11 - alpha;   q25 = q21 + alpha ;

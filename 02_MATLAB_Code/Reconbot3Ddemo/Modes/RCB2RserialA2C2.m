@@ -261,16 +261,18 @@ classdef RCB2RserialA2C2
                     end
                     if q21 == q21_original || i > 3
                         % q22 is a input;
-                        q24 = theta + pi/2 - (q22 + q23);
+                        q24 = pi/2 - (q22 + q23 + theta);
                     else
                         % q22 is a input;
-                        q24 = pi/2 - (q22 + q23 + theta);
+                        q24 = theta + pi/2 - (q22 + q23);
                     end
                     %--------- q15 and q25 -----------%
                     q15 = q11;           q25 = q21;
                     
                     q1q2(i,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
                     
+%                     q0q1q2 = [0 q1q2(i,:)];
+%                     ReconbotANI(q0q1q2);
                     %------------------Judge the workspace and solution existence of A1C1-------------------------
                     %---------------------------Position of A1-C1 ----------------------------
                     if q11 >= -2*pi && q12 >= -1e-6 && q13 >= -pi && q14 >= -105*pi/180 && q15 >= -2*pi...
@@ -300,8 +302,8 @@ classdef RCB2RserialA2C2
                         %%-----------------Get the output values of Moving Platform-----------------------
                         %%--------------------Calculate the position of Ai Bi Ci------------------
                         A2(jA2C2,:) = [0, L1/2, 0];
-                        B2(jA2C2,:) = [- L2 * cos(q1q2(i,7)) * sin(q1q2(i,6)), L1/2 + L2 * cos(q1q2(i,7)) * cos(q1q2(i,6)), L2 * sin(q1q2(i,7))];
-                        C2(jA2C2,:) = [- L2 * (cos(q1q2(i,7)) + cos(q1q2(i,7) + q1q2(i,8))) * sin(q1q2(i,6)), L1/2 + L2 * (cos(q1q2(i,7))...
+                        B2(jA2C2,:) = [L2 * cos(q1q2(i,7)) * sin(q1q2(i,6)), L1/2 - L2 * cos(q1q2(i,7)) * cos(q1q2(i,6)), L2 * sin(q1q2(i,7))];
+                        C2(jA2C2,:) = [L2 * (cos(q1q2(i,7)) + cos(q1q2(i,7) + q1q2(i,8))) * sin(q1q2(i,6)), L1/2 - L2 * (cos(q1q2(i,7))...
                             + cos(q1q2(i,7) + q1q2(i,8))) * cos(q1q2(i,6)), L2 * (sin(q1q2(i,7)) + sin(q1q2(i,7) + q1q2(i,8)))];
                         %%------------------------------------------------------------------------
                         

@@ -130,7 +130,7 @@ classdef RCB2T2Rthreebar
             %Calculate k1(parallel to plane A1B1C1),k2(parallel to plane A2B2C2),
             % angles <A1C1,k1> and <A2C2,k2> ,lengths ||A1C1|| and ||A2C2||
             k1 = [-sin(q11), cos(q11), 0];
-            k2 = [ sin(q21), -cos(q21), 0];
+            k2 = [-sin(q21), cos(q21), 0];
             A1C1 = C1_in_Ob - A1;
             A2C2 = C2_in_Ob - A2;
             if norm(A1C1) == 0
@@ -253,10 +253,10 @@ classdef RCB2T2Rthreebar
                     end
                     if q21 == q21_original || i > 3
                         q22 = pi - angle_A2C2_k2 - angleB2A2C2;
-                        q24 = pi/2 + theta - (q22 + q23);
+                        q24 = pi/2 - (q22 + q23 + theta);
                     else
                         q22 = angle_A2C2_k2 - angleB2A2C2;
-                        q24 = pi/2 - (q22 + q23 + theta);
+                        q24 = pi/2 + theta - (q22 + q23);
                     end
                     %--------- q15 and q25 -----------%
                     q15 = q11;           q25 = q21;
@@ -291,8 +291,8 @@ classdef RCB2T2Rthreebar
                         %%-----------------Get the output values of Moving Platform-----------------------
                         %%--------------------Calculate the position of Ai Bi Ci------------------
                         A2(jA2C2,:) = [0, L1/2, 0];
-                        B2(jA2C2,:) = [- L2 * cos(q1q2(i,7)) * sin(q1q2(i,6)), L1/2 + L2 * cos(q1q2(i,7)) * cos(q1q2(i,6)), L2 * sin(q1q2(i,7))];
-                        C2(jA2C2,:) = [- L2 * (cos(q1q2(i,7)) + cos(q1q2(i,7) + q1q2(i,8))) * sin(q1q2(i,6)), L1/2 + L2 * (cos(q1q2(i,7))...
+                        B2(jA2C2,:) = [L2 * cos(q1q2(i,7)) * sin(q1q2(i,6)), L1/2 - L2 * cos(q1q2(i,7)) * cos(q1q2(i,6)), L2 * sin(q1q2(i,7))];
+                        C2(jA2C2,:) = [L2 * (cos(q1q2(i,7)) + cos(q1q2(i,7) + q1q2(i,8))) * sin(q1q2(i,6)), L1/2 - L2 * (cos(q1q2(i,7))...
                             + cos(q1q2(i,7) + q1q2(i,8))) * cos(q1q2(i,6)), L2 * (sin(q1q2(i,7)) + sin(q1q2(i,7) + q1q2(i,8)))];
                         %%------------------------------------------------------------------------
                         if C2(jA2C2,:) - C2_in_Ob <= 1e-6
@@ -313,7 +313,7 @@ classdef RCB2T2Rthreebar
                             % Here you must calculate the x values of B1 and B2,
                             % compare it again, so as to make sure its three-bar not five-bar state
                             B1x = L2 * cos(q1(ii,2)) * sin(q1(ii,1));
-                            B2x = - L2 * cos(q2(jj,2)) * sin(q2(jj,1));
+                            B2x = L2 * cos(q2(jj,2)) * sin(q2(jj,1));
                             if abs(B1x - B2x) > 1e-6
                                 WSvalue_ThreeBar = 0;
                             else

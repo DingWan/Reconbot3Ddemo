@@ -231,7 +231,7 @@ for i = 1:length(MPOTP_cell)
                 % Assign the correct value for the last self-adjustment to
                 % right position
                 Mode = Mode_current;
-                if Mode == 10 || (Mode == 11 && Length_Mode10or11 == 4)
+                if Mode == 10 || 
                     q0q1q2_previous_trajpoint = q0q1q2_OptimalRow(NumIntepoPoints*(length(MPOTP_cell)-2),:);
                 end
                 %
@@ -600,7 +600,7 @@ for i = 1:length(MPOTP_cell)
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);                
             elseif (Mode_previous_initial == 1 || Mode_previous_initial == 2) &&...
-                    (Mode_current_initial == 7 || Mode_current_initial == 8 || Mode_current_initial == 9 || Mode_current_initial == 10 || Mode_current_initial == 11) 
+                    (Mode_current_initial == 7 || Mode_current_initial == 8 || Mode_current_initial == 9 || Mode_current_initial == 11) 
                 % Mode 1/2 to Mode 7/8, length(MPOTP_cell)>1
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
