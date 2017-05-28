@@ -21,14 +21,13 @@ clear
 l1 = 0.2301390;
 l2 = 0.1477;
 
-% q0q1q2_HomePosition = [0, 0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
 q0q1q2_HomePosition = [0, 0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
 p_0 = [0 0 0.208879343162506 0 0 0, 0 0]; %  p = 2 * l2 * sin(pi/4)
 
 deg = pi/180;
 
 addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
- InitHome   
+% InitHome   
 
 %% Go to HomePosition
 % Construct a questdlg with three options
