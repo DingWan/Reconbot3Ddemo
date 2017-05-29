@@ -557,7 +557,19 @@ classdef RCB3T1R
                 % sin(q12) + sin(q12+q13SingleValue) - sin(q22) - sin(q22+q23all) == 0
                 %  For real elements of x in the interval [-1,1], asin(x) returns values in the interval [-pi/2,pi/2]
                 % iterative method to get the optimal value
-                % 
+                %
+                j = 0;
+                delta_q13 = 0.1;
+                while(abs(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) >= 1 && j <= 500)
+                    j = j + 1;
+                    if q12 + q13SingleValue > pi/2 || (q12 + q13SingleValue > -pi/2 && q12 + q13SingleValue <= 0)
+                        q13SingleValue = q13SingleValue + delta_q13;
+                    elseif q12 + q13SingleValue < -pi/2 || (q12 + q13SingleValue > 0 && q12 + q13SingleValue < pi/2)
+                        q13SingleValue = q13SingleValue - delta_q13;
+                    end
+                end
+                %
+                
                 q23all(1) = asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
                 if sin(q12) + sin(q12 + q13SingleValue) - sin(q22) <= 0
                     q23all(2) =  - pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
@@ -566,7 +578,7 @@ classdef RCB3T1R
                 end
                 
                 for Numq23 = 1:length(q23all)
-                    q23SingleValue = q23all(Numq23);
+                    q23SingleValue = q23all(Numq23); %1.200958270516672 % q13SingleValue = 1.2373
                     %%-----------------------Get the output values of Moving Platform-----------------------
                     %%--------------------Calculate the position of Ai Bi Ci------------------
                     A1 = [0, -L1/2, 0];
@@ -581,7 +593,7 @@ classdef RCB3T1R
                     %%------------------------------------------------------------------------
                     JudgeLength_C1C2(Numq23) = abs(norm(C1 - C2) - L1);
                     if abs(norm(C1 - C2) - L1) < 1e-12
-                        break
+                        %break
                     end
                     % Plot;
                 end
@@ -598,10 +610,10 @@ classdef RCB3T1R
                 if  abs(C1(3) - C2(3)) > 1e-8 || abs(abs( q13all(Numq13) ) - pi) > 1e-8 || abs(JudgeLength_C1C2(col(1))) > 1e-8
                     
                     %--------------------------------------------------------------------
-%                     if abs(C1(3) - C2(3)) < 1e-8 && abs(abs( q13all(Numq13) ) - pi) > 1e-8 && ...
-%                             abs(abs( q23all(col(1)) ) - pi) > 1e-8 && abs(JudgeLength_C1C2(col(1))) < 1e-8
-%                         JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
-%                     else
+                    if abs(C1(3) - C2(3)) < 1e-8 && abs(abs( q13all(Numq13) ) - pi) > 1e-8 && ...
+                            abs(abs( q23all(col(1)) ) - pi) > 1e-8 && abs(JudgeLength_C1C2(col(1))) < 1e-8
+                        JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
+                    else
                         %---------- Method I ----------
                         for OnlyUsedForFolding_CircleOptimalPick = 1:1
                             % We simple the one cycle points
@@ -639,13 +651,15 @@ classdef RCB3T1R
                                         C12_mat(ii,:) = C1;
                                         C22_mat(ii,:) = C2;
                                     end
+                                    
                                 end
-                                
                             end
                             plot3(C11_mat(:,1), C11_mat(:,2), C11_mat(:,3),'k-','linewidth',1); hold on;
                             plot3(C21_mat(:,1), C21_mat(:,2), C21_mat(:,3),'k-','linewidth',1); hold on;
                             plot3(C12_mat(:,1), C12_mat(:,2), C12_mat(:,3),'k-.','linewidth',1); hold on;
-                            plot3(C22_mat(:,1), C22_mat(:,2), C22_mat(:,3),'k-.','linewidth',1); hold on;
+                            plot3(C22_mat(:,1), C22_mat(:,2), C22_mat(:,3),'k-.','linewidth',1); hold on; 
+                            axis equal;
+                            grid on;
                             
                             JudgeLength_C1C2_min = [];
                             for i_q23all = 1:2
@@ -756,7 +770,7 @@ classdef RCB3T1R
                                 
                                 %---------------------- Iterative end --------------------
                         end
-%                     end
+                    end
                     %--------------------------------------------------------------------
                     
                     % assign the values to q13q23

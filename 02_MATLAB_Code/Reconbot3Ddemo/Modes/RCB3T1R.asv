@@ -490,8 +490,7 @@ classdef RCB3T1R
             
             % get the value of real number (+/-)
             x = x(imag(x) == 0);
-            NumRealq13 = length (x);
-            
+            NumRealq13 = length (x);           
             
             %%--------------------------------------- Method II ----------------------------------------------
             %%----------------------SymbolicSolutiion3T1R_q11q12q21q22_Modify_C2x_C2y-------------------------
@@ -535,6 +534,7 @@ classdef RCB3T1R
             for i = 1:length (x)
                 if  abs( abs(2 * atan(x(i)) - q12) - pi ) > 1e-8
                     j = j + 1;
+                    % x = tan[(q12+ q13)/2]
                     q13all(j) =  2 * atan(x(i))  - q12;
                 else
                     continue;
@@ -549,14 +549,27 @@ classdef RCB3T1R
             for Numq13 = 1:length(q13all)
                 
                 q13SingleValue = q13all(Numq13);
-                
-                
+%                 if q13SingleValue < 0
+%                     continue
+%                 end
               %% -------------- Calculate the value of q23 (theta23) ----------------
                 % (q22+q23all)*180/pi
                 % sin(q12) + sin(q12+q13SingleValue) - sin(q22) - sin(q22+q23all) == 0
                 %  For real elements of x in the interval [-1,1], asin(x) returns values in the interval [-pi/2,pi/2]
                 % iterative method to get the optimal value
-                % 
+                %
+                j = 0;
+                delta_q13 = 0.1;
+                while(abs(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) >= 1 && j <= 500)
+                    j = j + 1;
+                    if q12 + q13SingleValue > pi/2 || (q12 + q13SingleValue > -pi/2 && q12 + q13SingleValue <= 0)
+                        q13SingleValue = q13SingleValue + delta_q13;
+                    elseif q12 + q13SingleValue < -pi/2 || (q12 + q13SingleValue > 0 && q12 + q13SingleValue < pi/2)
+                        q13SingleValue = q13SingleValue - delta_q13;
+                    end
+                end
+                %
+                
                 q23all(1) = asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
                 if sin(q12) + sin(q12 + q13SingleValue) - sin(q22) <= 0
                     q23all(2) =  - pi - asin(sin(q12) + sin(q12 + q13SingleValue) - sin(q22)) - q22;
@@ -565,7 +578,7 @@ classdef RCB3T1R
                 end
                 
                 for Numq23 = 1:length(q23all)
-                    q23SingleValue = q23all(Numq23);
+                    q23SingleValue = q23all(Numq23); %1.200958270516672 % q13SingleValue = 1.2373
                     %%-----------------------Get the output values of Moving Platform-----------------------
                     %%--------------------Calculate the position of Ai Bi Ci------------------
                     A1 = [0, -L1/2, 0];
@@ -578,9 +591,9 @@ classdef RCB3T1R
                     C2 = [L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 - L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
                         L2 * (sin(q22) + sin(q22 + q23SingleValue))];
                     %%------------------------------------------------------------------------
-                    JudgeLength_C1C2(Numq23) = norm(C1 - C2) - L1;
-                    if norm(C1 - C2) - L1 < 1e-12
-                        break
+                    JudgeLength_C1C2(Numq23) = abs(norm(C1 - C2) - L1);
+                    if abs(norm(C1 - C2) - L1) < 1e-12
+                        %break
                     end
                     % Plot;
                 end
@@ -638,13 +651,15 @@ classdef RCB3T1R
                                         C12_mat(ii,:) = C1;
                                         C22_mat(ii,:) = C2;
                                     end
+                                    
                                 end
-                                
                             end
                             plot3(C11_mat(:,1), C11_mat(:,2), C11_mat(:,3),'k-','linewidth',1); hold on;
                             plot3(C21_mat(:,1), C21_mat(:,2), C21_mat(:,3),'k-','linewidth',1); hold on;
                             plot3(C12_mat(:,1), C12_mat(:,2), C12_mat(:,3),'k-.','linewidth',1); hold on;
-                            plot3(C22_mat(:,1), C22_mat(:,2), C22_mat(:,3),'k-.','linewidth',1); hold on;
+                            plot3(C22_mat(:,1), C22_mat(:,2), C22_mat(:,3),'k-.','linewidth',1); hold on; 
+                            axis equal;
+                            grid on;
                             
                             JudgeLength_C1C2_min = [];
                             for i_q23all = 1:2
