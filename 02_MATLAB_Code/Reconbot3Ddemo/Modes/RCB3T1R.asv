@@ -546,8 +546,8 @@ classdef RCB3T1R
                         L2 * (sin(q12) + sin(q12 + q13SingleValue))];
                     
                     A2 = [0, L1/2, 0];
-                    B2 = [L2 * cos(q22) * sin(q21), L1/2 - L2 * cos(q22) * cos(q21), L2 * sin(q22)];
-                    C2 = [L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 - L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
+                    B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)];
+                    C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
                         L2 * (sin(q22) + sin(q22 + q23SingleValue))];
                     %%------------------------------------------------------------------------
                     JudgeLength_C1C2(Numq23) = norm(C1 - C2) - L1;
@@ -661,7 +661,7 @@ classdef RCB3T1R
                                 q23SingleValue = q23SingleValue_mat(i_q23all_selected,Changepoint_positive_min);
                                 C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
                                     L2 * (sin(q12) + sin(q12 + q13SingleValue))];
-                                C2 = [L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 - L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
+                                C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
                                     L2 * (sin(q22) + sin(q22 + q23SingleValue))];
                                 
                                 plot3(C12_mat(Changepoint_positive_min,1), C12_mat(Changepoint_positive_min,2), C12_mat(Changepoint_positive_min,3),'r.','markersize',10); hold on;
@@ -690,7 +690,7 @@ classdef RCB3T1R
                                     q23SingleValue = q23all(i_q23all_selected);
                                     C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), ...
                                         L2 * (sin(q12) + sin(q12 + q13SingleValue))];
-                                    C2 = [L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 - L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
+                                    C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
                                         L2 * (sin(q22) + sin(q22 + q23SingleValue))];
                                     
                                     JudgeLength_C1C2_min = norm(C1 - C2) - L1;
@@ -765,7 +765,7 @@ classdef RCB3T1R
                     display('Zero Position, Calculation process needs to check!');
                     p = [];
                     ABC = [];
-                    q1q2 = [0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
+                    q1q2 = [0, pi/3, pi/3, -pi/6, 0, 0, pi/3, pi/3, -pi/6, 0];
                 else
                     display('No solution for this input, Calculation process is stopped');
                     p = [];
