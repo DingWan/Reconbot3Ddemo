@@ -159,7 +159,7 @@ for i = 1:length(MPOTP_cell)
             end
             %
             Length_Mode10or11 = length(MPOTP_cell);
-            if i == Length_Mode10or11 - 2
+            if i == Length_Mode10or11 - 2 && Mode_previous_initial ~= 5
                 Mode_previous = MPOTP_cell{i}{1};
                 PosOri_previous = MPOTP_cell{i}{2};
                 Mode_current = MPOTP_cell{i+1}{1};
@@ -212,6 +212,8 @@ for i = 1:length(MPOTP_cell)
                         % Here we get the new "q0q1q2_OptimalRow(LastRowValue,7:11)" value by Extrapolation due to the mode switch (Singularity)
                         if Length_Mode10or11 == 2
                             Lenth = NumIntepoPoints;
+                        elseif Length_Mode10or11 == 3
+                            Lenth = NumIntepoPoints* (Length_Mode10or11-1);
                         else
                             Lenth = NumIntepoPoints* (Length_Mode10or11-2);
                         end
@@ -563,9 +565,18 @@ for i = 1:length(MPOTP_cell)
                 if i == 1
                     MPOTP_cell_Target = MPOTP_cell{3};
                     MPOTP_cell{3}{1} = 5;
-                    MPOTP_cell{3}{2} = {0, 0, 0.208879343162506 0 [] 0, 0, -pi};
+                    MPOTP_cell{3}{2} = {0, 0, 0.208879343162506 0 [] 0, 0, 0};
                 elseif i == 2
                     MPOTP_cell{3}{1} = 7;
+                    MPOTP_cell{3}{2} = MPOTP_cell_Target{2};
+                end
+            elseif Mode_previous_initial == 11 && Mode_current_initial == 5  % Mode 11 to Mode 5                 
+                if i == 1
+                    MPOTP_cell_Target = MPOTP_cell{3};
+                    MPOTP_cell{3}{1} = 5;
+                    MPOTP_cell{3}{2} = {0, 0, 0.208879343162506 0 [] 0, 0, 0};
+                elseif i == 2
+                    MPOTP_cell{3}{1} = 5;
                     MPOTP_cell{3}{2} = MPOTP_cell_Target{2};
                 end
             end
@@ -608,7 +619,8 @@ for i = 1:length(MPOTP_cell)
                 % Mode 1/2 to Mode 7/8, length(MPOTP_cell)>1
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
-            elseif (Mode_previous_initial == 3 || Mode_previous_initial == 4) && Mode_current_initial == 7 % Mode 3/4 to Mode 7, length(MPOTP_cell)>1
+            elseif ((Mode_previous_initial == 3 || Mode_previous_initial == 4) && Mode_current_initial == 7) %|| (Mode_previous_initial == 5 && Mode_current_initial == 11)
+                     % Mode 3/4 to Mode 7; Mode5 to Mode 11, length(MPOTP_cell)>1
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
             elseif Mode_previous_initial == 6 && Mode_current_initial == 7 % Mode 6 to Mode 7, length(MPOTP_cell)>1
@@ -643,7 +655,8 @@ for i = 1:length(MPOTP_cell)
             elseif (Mode_previous_initial == 6 || Mode_previous_initial == 7) && (Mode_current_initial == 3 || Mode_current_initial == 4) % Mode 6/7 to Mode 10/11, length(MPOTP_cell)>1
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
-            elseif Mode_previous_initial == 7 && Mode_current_initial == 2
+            elseif (Mode_previous_initial == 7 && Mode_current_initial == 2) || ...
+                    (Mode_previous_initial == 6 && (Mode_current_initial == 8 || Mode_current_initial == 11)) %Mode 7 to 2; Mode 6 to Modes 8/11
                 MPOTP_cell{2}{2}{7} = q0q1q2_OptimalRow(NumIntepoPoints*i,2);
                 MPOTP_cell{2}{2}{8} = q0q1q2_OptimalRow(NumIntepoPoints*i,7);
             elseif (Mode_previous_initial == 8 || Mode_previous_initial == 9) && ... 

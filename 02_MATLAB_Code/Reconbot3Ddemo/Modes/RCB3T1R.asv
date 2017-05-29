@@ -490,7 +490,8 @@ classdef RCB3T1R
             
             % get the value of real number (+/-)
             x = x(imag(x) == 0);
-            NumRealq13 = length (x);           
+            NumRealq13 = length (x);
+            
             
             %%--------------------------------------- Method II ----------------------------------------------
             %%----------------------SymbolicSolutiion3T1R_q11q12q21q22_Modify_C2x_C2y-------------------------
@@ -534,7 +535,6 @@ classdef RCB3T1R
             for i = 1:length (x)
                 if  abs( abs(2 * atan(x(i)) - q12) - pi ) > 1e-8
                     j = j + 1;
-                    % x = tan[(q12+ q13)/2]
                     q13all(j) =  2 * atan(x(i))  - q12;
                 else
                     continue;
@@ -549,9 +549,8 @@ classdef RCB3T1R
             for Numq13 = 1:length(q13all)
                 
                 q13SingleValue = q13all(Numq13);
-%                 if q13SingleValue < 0
-%                     continue
-%                 end
+                
+                
               %% -------------- Calculate the value of q23 (theta23) ----------------
                 % (q22+q23all)*180/pi
                 % sin(q12) + sin(q12+q13SingleValue) - sin(q22) - sin(q22+q23all) == 0
@@ -579,8 +578,8 @@ classdef RCB3T1R
                     C2 = [L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 - L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21),...
                         L2 * (sin(q22) + sin(q22 + q23SingleValue))];
                     %%------------------------------------------------------------------------
-                    JudgeLength_C1C2(Numq23) = abs(norm(C1 - C2) - L1);
-                    if abs(norm(C1 - C2) - L1) < 1e-12
+                    JudgeLength_C1C2(Numq23) = norm(C1 - C2) - L1;
+                    if norm(C1 - C2) - L1 < 1e-12
                         break
                     end
                     % Plot;
@@ -598,10 +597,10 @@ classdef RCB3T1R
                 if  abs(C1(3) - C2(3)) > 1e-8 || abs(abs( q13all(Numq13) ) - pi) > 1e-8 || abs(JudgeLength_C1C2(col(1))) > 1e-8
                     
                     %--------------------------------------------------------------------
-%                     if abs(C1(3) - C2(3)) < 1e-8 && abs(abs( q13all(Numq13) ) - pi) > 1e-8 && ...
-%                             abs(abs( q23all(col(1)) ) - pi) > 1e-8 && abs(JudgeLength_C1C2(col(1))) < 1e-8
-%                         JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
-%                     else
+                    if abs(C1(3) - C2(3)) < 1e-8 && abs(abs( q13all(Numq13) ) - pi) > 1e-8 && ...
+                            abs(abs( q23all(col(1)) ) - pi) > 1e-8 && abs(JudgeLength_C1C2(col(1))) < 1e-8
+                        JudgeLength_C1C2_min = JudgeLength_C1C2(col(1));
+                    else
                         %---------- Method I ----------
                         for OnlyUsedForFolding_CircleOptimalPick = 1:1
                             % We simple the one cycle points
@@ -756,7 +755,7 @@ classdef RCB3T1R
                                 
                                 %---------------------- Iterative end --------------------
                         end
-%                     end
+                    end
                     %--------------------------------------------------------------------
                     
                     % assign the values to q13q23
