@@ -73,41 +73,81 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
   client = nh_Client.serviceClient<reconbot_control::EnableTorque>("enable_torque");
   control_msgs::FollowJointTrajectoryGoal goalMode;
 
+  ReConBotLx RobotMode0;
   ReConBotLx RobotMode1;
   ReConBotLx RobotMode2;
   ReConBotLx RobotMode3;
   ReConBotLx RobotMode4;
   ReConBotLx RobotMode5;
   ReConBotLx RobotMode6;
+  ReConBotLx RobotMode7;
+  ReConBotLx RobotMode8;
+  ReConBotLx RobotMode9;
+  ReConBotLx RobotMode10;
+  ReConBotLx RobotMode11;
+  ReConBotLx RobotMode12;
 
-  RobotMode1.nameSpace = "reconbot_controller";
-  RobotMode2.nameSpace = "RA2C2_reconbot_controller";
-  RobotMode3.nameSpace = "T2R5_reconbot_controller";
-  RobotMode4.nameSpace = "T1R_reconbot_controller";
-  RobotMode5.nameSpace = "T2R_reconbot_controller";
-  RobotMode6.nameSpace = "T3R_reconbot_controller";
 
+  RobotMode0.nameSpace = "RCB_full_mode_controller";
+  RobotMode1.nameSpace = "RCB_3T2R_controller";
+  RobotMode2.nameSpace = "RCB_3T1R_controller";
+  RobotMode3.nameSpace = "RCB_1T1RA1C1_controller";
+  RobotMode4.nameSpace = "RCB_1T1RA2C2_controller";
+  RobotMode5.nameSpace = "RCB_1T1RA1C1A2C2_controller";
+  RobotMode6.nameSpace = "RCB_2T2R6B_controller";
+  RobotMode7.nameSpace = "RCB_2T2R6BX0Y0_controller";
+  RobotMode8.nameSpace = "RCB_2T2R5B_controller";
+  RobotMode9.nameSpace = "RCB_2T2R3B_controller";
+  RobotMode10.nameSpace = "RCB_2RA1C1_controller";
+  RobotMode11.nameSpace = "RCB_2RA2C2_controller";
+  RobotMode12.nameSpace = "RCB_FIXED2U_controller";
+
+
+  std::string actMsg0;
   std::string actMsg1;
   std::string actMsg2;
   std::string actMsg3;
   std::string actMsg4;
   std::string actMsg5;
   std::string actMsg6;
+  std::string actMsg7;
+  std::string actMsg8;
+  std::string actMsg9;
+  std::string actMsg10;
+  std::string actMsg11;
+  std::string actMsg12;
 
-  actMsg1 = "Mode 1 activated";
-  actMsg2 = "Mode 2 activated";
+
+  actMsg0 = "Mode 0-9-12 activated";
+  actMsg1 = "Mode 1-6-7 activated";
+  actMsg2 = "Mode 2-3-4-5 activated";
   actMsg3 = "Mode 3 activated";
   actMsg4 = "Mode 4 activated";
   actMsg5 = "Mode 5 activated";
   actMsg6 = "Mode 6 activated";
+  actMsg7 = "Mode 7 activated";
+  actMsg8 = "Mode 8 activated";
+  actMsg9 = "Mode 9 activated";
+  actMsg10 = "Mode 10 activated";
+  actMsg11 = "Mode 11 activated";
+  actMsg12 = "Mode 12 activated";
 
 
+
+
+  RobotMode0.trajClient();
   RobotMode1.trajClient();
   RobotMode2.trajClient();
-  RobotMode3.trajClient();
-  RobotMode4.trajClient();
-  RobotMode5.trajClient();
-  RobotMode6.trajClient();
+  //RobotMode3.trajClient();
+  //RobotMode4.trajClient();
+  //RobotMode5.trajClient();
+  //RobotMode6.trajClient();
+  //RobotMode7.trajClient();
+  RobotMode8.trajClient();
+  //RobotMode9.trajClient();
+  RobotMode10.trajClient();
+  RobotMode11.trajClient();
+  //RobotMode12.trajClient();
 
   reconbot_control::EnableTorque srv;
 
@@ -122,7 +162,22 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
 
       if (mode_0!=mode_1) {
         current_index = i;
-        if (mode_0 == 1) {
+        if (mode_0 == 0 || mode_0 == 9 || mode_0 == 12) {
+          goalMode = RobotMode0.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
+          time_rel = RobotMode0.new_time_rel;
+          init_index = i;
+          srv.request.motor_state = mode_0;
+          if (client.call(srv)) {
+            ROS_INFO("%s\n", actMsg0.c_str());
+            RobotMode0.sendTrajectory(goalMode);
+          }
+          else{
+            ROS_INFO("The motors were not switched");
+          }
+
+        }
+
+        if (mode_0 == 1 || mode_0 == 6 || mode_0 == 7) {
           goalMode = RobotMode1.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
           time_rel = RobotMode1.new_time_rel;
           init_index = i;
@@ -134,10 +189,9 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
           else{
             ROS_INFO("The motors were not switched");
           }
-
         }
 
-        if (mode_0 == 2) {
+        if (mode_0 == 2 || mode_0 == 3 || mode_0 == 4 || mode_0 == 5) {
           goalMode = RobotMode2.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
           time_rel = RobotMode2.new_time_rel;
           init_index = i;
@@ -151,56 +205,42 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
           }
         }
 
-        if (mode_0 == 3) {
-          goalMode = RobotMode3.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
-          time_rel = RobotMode3.new_time_rel;
+        if (mode_0 == 8) {
+          goalMode = RobotMode8.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
+          time_rel = RobotMode8.new_time_rel;
           init_index = i;
           srv.request.motor_state = mode_0;
           if (client.call(srv)) {
-            ROS_INFO("%s\n", actMsg3.c_str());
-            RobotMode3.sendTrajectory(goalMode);
+            ROS_INFO("%s\n", actMsg8.c_str());
+            RobotMode8.sendTrajectory(goalMode);
           }
           else{
             ROS_INFO("The motors were not switched");
           }
         }
 
-        if (mode_0 == 4) {
-          goalMode = RobotMode4.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
-          time_rel = RobotMode4.new_time_rel;
+        if (mode_0 == 10) {
+          goalMode = RobotMode10.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
+          time_rel = RobotMode10.new_time_rel;
           init_index = i;
           srv.request.motor_state = mode_0;
           if (client.call(srv)) {
-            ROS_INFO("%s\n", actMsg4.c_str());
-            RobotMode4.sendTrajectory(goalMode);
+            ROS_INFO("%s\n", actMsg10.c_str());
+            RobotMode10.sendTrajectory(goalMode);
           }
           else{
             ROS_INFO("The motors were not switched");
           }
         }
 
-        if (mode_0 == 5) {
-          goalMode = RobotMode5.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
-          time_rel = RobotMode5.new_time_rel;
+        if (mode_0 == 11) {
+          goalMode = RobotMode11.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
+          time_rel = RobotMode11.new_time_rel;
           init_index = i;
           srv.request.motor_state = mode_0;
           if (client.call(srv)) {
-            ROS_INFO("%s\n", actMsg5.c_str());
-            RobotMode5.sendTrajectory(goalMode);
-          }
-          else{
-            ROS_INFO("The motors were not switched");
-          }
-        }
-
-        if (mode_0 == 6) {
-          goalMode = RobotMode6.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
-          time_rel = RobotMode6.new_time_rel;
-          init_index = i;
-          srv.request.motor_state = mode_0;
-          if (client.call(srv)) {
-            ROS_INFO("%s\n", actMsg6.c_str());
-            RobotMode6.sendTrajectory(goalMode);
+            ROS_INFO("%s\n", actMsg11.c_str());
+            RobotMode11.sendTrajectory(goalMode);
           }
           else{
             ROS_INFO("The motors were not switched");
@@ -209,9 +249,27 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
       }
     }
   }
+
+
+
   if(goalSize==1){
     mode_0 = goal.trajectory.points[0].positions[6];
-    if (mode_0 == 1) {
+    if (mode_0 == 0 || mode_0 == 9 || mode_0 == 12) {
+      init_index = 0;
+      current_index = 0;
+      time_rel = ros::Duration(0);
+      goalMode = RobotMode0.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
+      srv.request.motor_state = mode_0;
+      if (client.call(srv)) {
+        ROS_INFO("%s\n", actMsg0.c_str());
+        RobotMode0.sendTrajectory(goalMode);
+      }
+      else{
+        ROS_INFO("The motors were not switched");
+      }
+    }
+
+    if (mode_0 == 1 || mode_0 == 6 || mode_0 == 7) {
       init_index = 0;
       current_index = 0;
       time_rel = ros::Duration(0);
@@ -226,7 +284,7 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
       }
     }
 
-    if (mode_0 == 2) {
+    if (mode_0 == 2 || mode_0 == 3 || mode_0 == 4 || mode_0 == 5) {
       init_index = 0;
       current_index = 0;
       time_rel = ros::Duration(0);
@@ -241,60 +299,45 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
       }
     }
 
-    if (mode_0 == 3) {
+    if (mode_0 == 8) {
       init_index = 0;
       current_index = 0;
       time_rel = ros::Duration(0);
-      goalMode = RobotMode3.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
+      goalMode = RobotMode8.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
       srv.request.motor_state = mode_0;
       if (client.call(srv)) {
-        ROS_INFO("%s\n", actMsg3.c_str());
-        RobotMode3.sendTrajectory(goalMode);
+        ROS_INFO("%s\n", actMsg8.c_str());
+        RobotMode8.sendTrajectory(goalMode);
       }
       else{
         ROS_INFO("The motors were not switched");
       }
     }
 
-    if (mode_0 == 4) {
+    if (mode_0 == 10) {
       init_index = 0;
       current_index = 0;
       time_rel = ros::Duration(0);
-      goalMode = RobotMode4.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
+      goalMode = RobotMode10.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
       srv.request.motor_state = mode_0;
       if (client.call(srv)) {
-        ROS_INFO("%s\n", actMsg4.c_str());
-        RobotMode4.sendTrajectory(goalMode);
+        ROS_INFO("%s\n", actMsg10.c_str());
+        RobotMode10.sendTrajectory(goalMode);
       }
       else{
         ROS_INFO("The motors were not switched");
       }
     }
 
-    if (mode_0 == 5) {
+    if (mode_0 == 11) {
       init_index = 0;
       current_index = 0;
       time_rel = ros::Duration(0);
-      goalMode = RobotMode5.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
+      goalMode = RobotMode11.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
       srv.request.motor_state = mode_0;
       if (client.call(srv)) {
-        ROS_INFO("%s\n", actMsg5.c_str());
-        RobotMode5.sendTrajectory(goalMode);
-      }
-      else{
-        ROS_INFO("The motors were not switched");
-      }
-    }
-
-    if (mode_0 == 6) {
-      init_index = 0;
-      current_index = 0;
-      time_rel = ros::Duration(0);
-      goalMode = RobotMode6.getGoalMode(goal, time_rel, mode_0, init_index, current_index);
-      srv.request.motor_state = mode_0;
-      if (client.call(srv)) {
-        ROS_INFO("%s\n", actMsg6.c_str());
-        RobotMode6.sendTrajectory(goalMode);
+        ROS_INFO("%s\n", actMsg11.c_str());
+        RobotMode11.sendTrajectory(goalMode);
       }
       else{
         ROS_INFO("The motors were not switched");

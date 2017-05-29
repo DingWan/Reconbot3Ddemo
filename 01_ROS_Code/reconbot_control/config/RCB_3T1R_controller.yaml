@@ -1,4 +1,4 @@
-T2R5_reconbot_controller:
+RCB_3T1R_controller:
     controller:
         package: dynamixel_controllers
         module: joint_trajectory_action_controller

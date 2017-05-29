@@ -224,7 +224,7 @@ void ReConBotLx::motorsState(int * arg, int length) {
 
 
 control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::FollowJointTrajectoryGoal goal, ros::Duration time_rel, float mode, int init_index, int current_index){
-  if (mode == 1) {
+  if (mode == 0 || mode == 9 || mode == 12) {
     pointsSize = current_index-init_index+1;
     for (size_t i = 0; i < pointsSize; i++) {
       goalMode.trajectory.joint_names.push_back("joint_4");
@@ -264,63 +264,39 @@ control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::Fo
 
   }
 
-  if (mode == 2) {
-    pointsSize = current_index-init_index+1;
-    for (size_t i = 0; i < pointsSize; i++) {
-      goalMode.trajectory.joint_names.push_back("joint_5");
-      goalMode.trajectory.joint_names.push_back("joint_1");
-      goalMode.trajectory.joint_names.push_back("joint_2");
-      goalMode.trajectory.joint_names.push_back("joint_6");
-      goalMode.trajectory.points.resize(pointsSize);
-      goalMode.trajectory.points[i].positions.resize(4);
-      goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[i].positions[1];
-      goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[i].positions[3];
-      goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[i].positions[4];
-      goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[i].positions[5];
-      goalMode.trajectory.points[i].velocities.resize(4);
-      goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[i].velocities[1];
-      goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[i].velocities[3];
-      goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[i].velocities[4];
-      goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[i].velocities[5];
-      goalMode.trajectory.points[i].accelerations.resize(4);
-      goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[i].accelerations[1];
-      goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[i].accelerations[3];
-      goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[i].accelerations[4];
-      goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[i].accelerations[5];;
-      goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[i].time_from_start - time_rel;
-    }
-  }
-
-  if (mode == 3) {
+  if (mode == 1 || mode == 6 || mode == 7) {
     pointsSize = current_index-init_index+1;
     for (size_t i = 0; i < pointsSize; i++) {
       goalMode.trajectory.joint_names.push_back("joint_4");
       goalMode.trajectory.joint_names.push_back("joint_5");
       goalMode.trajectory.joint_names.push_back("joint_3");
-      goalMode.trajectory.joint_names.push_back("joint_2");
+      goalMode.trajectory.joint_names.push_back("joint_1");
+      goalMode.trajectory.joint_names.push_back("joint_6");
       goalMode.trajectory.points.resize(pointsSize);
-      goalMode.trajectory.points[i].positions.resize(4);
+      goalMode.trajectory.points[i].positions.resize(5);
       goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[i].positions[0];
       goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[i].positions[1];
       goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[i].positions[2];
-      goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[i].positions[4];
-      goalMode.trajectory.points[i].velocities.resize(4);
+      goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[i].positions[3];
+      goalMode.trajectory.points[i].positions[4] = goal.trajectory.points[i].positions[5];
+
+      goalMode.trajectory.points[i].velocities.resize(5);
       goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[i].velocities[0];
       goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[i].velocities[1];
       goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[i].velocities[2];
-      goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[i].velocities[4];
-      goalMode.trajectory.points[i].accelerations.resize(4);
+      goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[i].velocities[3];
+      goalMode.trajectory.points[i].velocities[4] = goal.trajectory.points[i].velocities[5];
+      goalMode.trajectory.points[i].accelerations.resize(5);
       goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[i].accelerations[0];
       goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[i].accelerations[1];
       goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[i].accelerations[2];
-      goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[i].accelerations[4];
+      goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[i].accelerations[3];;
+      goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[i].accelerations[5];;
       goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[i].time_from_start - time_rel;
-
     }
-
   }
 
-  if (mode == 4) {
+  if (mode == 2 || mode == 3 || mode == 4 || mode == 5) {
     pointsSize = current_index-init_index+1;
     for (size_t i = 0; i < pointsSize; i++) {
       goalMode.trajectory.joint_names.push_back("joint_4");
@@ -349,62 +325,99 @@ control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::Fo
 
   }
 
-  if (mode == 5) {
+  if (mode == 8) {
     pointsSize = current_index-init_index+1;
     for (size_t i = 0; i < pointsSize; i++) {
       goalMode.trajectory.joint_names.push_back("joint_4");
       goalMode.trajectory.joint_names.push_back("joint_5");
       goalMode.trajectory.joint_names.push_back("joint_3");
       goalMode.trajectory.joint_names.push_back("joint_1");
-      goalMode.trajectory.joint_names.push_back("joint_6");
+      goalMode.trajectory.joint_names.push_back("joint_2");
       goalMode.trajectory.points.resize(pointsSize);
       goalMode.trajectory.points[i].positions.resize(5);
       goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[i].positions[0];
       goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[i].positions[1];
       goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[i].positions[2];
       goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[i].positions[3];
-      goalMode.trajectory.points[i].positions[4] = goal.trajectory.points[i].positions[5];
+      goalMode.trajectory.points[i].positions[4] = goal.trajectory.points[i].positions[4];
       goalMode.trajectory.points[i].velocities.resize(5);
       goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[i].velocities[0];
       goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[i].velocities[1];
       goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[i].velocities[2];
       goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[i].velocities[3];
-      goalMode.trajectory.points[i].velocities[4] = goal.trajectory.points[i].velocities[5];
+      goalMode.trajectory.points[i].velocities[4] = goal.trajectory.points[i].velocities[4];
       goalMode.trajectory.points[i].accelerations.resize(5);
       goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[i].accelerations[0];
       goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[i].accelerations[1];
       goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[i].accelerations[2];
       goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[i].accelerations[3];
-      goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[i].accelerations[5];
+      goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[i].accelerations[4];
       goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[i].time_from_start - time_rel;
 
     }
 
   }
 
-  if (mode == 6) {
+  if (mode == 10) {
     pointsSize = current_index-init_index+1;
     for (size_t i = 0; i < pointsSize; i++) {
       goalMode.trajectory.joint_names.push_back("joint_4");
       goalMode.trajectory.joint_names.push_back("joint_5");
       goalMode.trajectory.joint_names.push_back("joint_3");
-      goalMode.trajectory.joint_names.push_back("joint_6");
+      goalMode.trajectory.joint_names.push_back("joint_1");
+      goalMode.trajectory.joint_names.push_back("joint_2");
       goalMode.trajectory.points.resize(pointsSize);
-      goalMode.trajectory.points[i].positions.resize(4);
+      goalMode.trajectory.points[i].positions.resize(5);
       goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[i].positions[0];
       goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[i].positions[1];
       goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[i].positions[2];
-      goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[i].positions[5];
-      goalMode.trajectory.points[i].velocities.resize(4);
+      goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[i].positions[3];
+      goalMode.trajectory.points[i].positions[4] = goal.trajectory.points[i].positions[4];
+      goalMode.trajectory.points[i].velocities.resize(5);
       goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[i].velocities[0];
       goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[i].velocities[1];
       goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[i].velocities[2];
-      goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[i].velocities[5];
-      goalMode.trajectory.points[i].accelerations.resize(4);
+      goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[i].velocities[3];
+      goalMode.trajectory.points[i].velocities[4] = goal.trajectory.points[i].velocities[4];
+      goalMode.trajectory.points[i].accelerations.resize(5);
       goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[i].accelerations[0];
       goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[i].accelerations[1];
       goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[i].accelerations[2];
-      goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[i].accelerations[5];
+      goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[i].accelerations[3];
+      goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[i].accelerations[4];
+      goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[i].time_from_start - time_rel;
+
+    }
+
+  }
+
+  if (mode == 11) {
+    pointsSize = current_index-init_index+1;
+    for (size_t i = 0; i < pointsSize; i++) {
+      goalMode.trajectory.joint_names.push_back("joint_4");
+      goalMode.trajectory.joint_names.push_back("joint_5");
+      goalMode.trajectory.joint_names.push_back("joint_1");
+      goalMode.trajectory.joint_names.push_back("joint_2");
+      goalMode.trajectory.joint_names.push_back("joint_6");
+      goalMode.trajectory.points.resize(pointsSize);
+      goalMode.trajectory.points[i].positions.resize(5);
+      goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[i].positions[0];
+      goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[i].positions[1];
+      goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[i].positions[3];
+      goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[i].positions[4];
+      goalMode.trajectory.points[i].positions[4] = goal.trajectory.points[i].positions[5];
+      goalMode.trajectory.points[i].velocities.resize(5);
+      goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[i].velocities[0];
+      goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[i].velocities[1];
+      goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[i].velocities[3];
+      goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[i].velocities[4];
+      goalMode.trajectory.points[i].velocities[4] = goal.trajectory.points[i].velocities[5];
+      goalMode.trajectory.points[i].accelerations.resize(5);
+      goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[i].accelerations[0];
+      goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[i].accelerations[1];
+      goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[i].accelerations[3];
+      goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[i].accelerations[4];
+      goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[i].accelerations[5];
       goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[i].time_from_start - time_rel;
 
     }
