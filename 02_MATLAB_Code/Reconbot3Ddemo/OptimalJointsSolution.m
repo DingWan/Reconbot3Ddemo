@@ -13,8 +13,8 @@ for jj = 1:length(q1q2(:,1))
         
         %========= Here we must judge five-bar or three-bar sparately;=====
         % Because Five/Three-bar should be judge as whole, and other mode should judge sparate
-        if Mode_current == 8 || Mode_current == 9
-            if length(q0q1q2_matrix_end(:,1)) > 4
+        if Mode_current == 8 || Mode_current == 9      
+            if length(q0q1q2_matrix_end(:,1)) > 4 && Mode_current == 9
                 q0q1q2_matrix_end = [];
                 if PosOri_current{1} < 0
                     kk = 0;
@@ -33,7 +33,7 @@ for jj = 1:length(q1q2(:,1))
                         end
                     end
                 end
-            end
+            end    
             for k = 1:length(q0q1q2_matrix_end(:,1))
                 q1q2_matrix_norm(k) = norm(q0q1q2_matrix_end(k,2:11) - q0q1q2_matrix_start(1,2:11));
             end
