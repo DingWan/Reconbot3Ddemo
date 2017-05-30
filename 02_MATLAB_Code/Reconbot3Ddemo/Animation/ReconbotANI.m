@@ -59,8 +59,8 @@ function ReconbotANI(q0q1q2)
 %             set(L1,'vertices',Link_BaseLow(:,1:3), 'facec', [105 105 105]/255);%105 105 105
 %             set(L1, 'EdgeColor','none');
 
-%             set(L2, 'vertices' ,Link_BaseUP(:,1:3), 'facec', [250 235 215]/255);
-%             set(L2, 'EdgeColor','none');
+            set(L2, 'vertices' ,Link_BaseUP(:,1:3), 'facec', [250 235 215]/255);
+            set(L2, 'EdgeColor','none');
             set(L3, 'vertices' ,Link_BaseJointA1C1(:,1:3), 'facec', [105 105 105]/255);
             set(L3, 'EdgeColor','none');
             set(L4, 'vertices' ,Link_LowLinkA1C1(:,1:3), 'facec', [255 182 193]/255);
