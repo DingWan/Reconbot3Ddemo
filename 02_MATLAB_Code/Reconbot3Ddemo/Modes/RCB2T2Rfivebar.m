@@ -352,12 +352,11 @@ classdef RCB2T2Rfivebar
             L2 = obj.l2;
             
             %% ----------------Basic calculaion of planar parallelgram five-bar linkage---------------
-            q21 = q11;
+            q21 = - q11;
             %The output angle q13, q23, q24 can be calculated as follows:
             q13 = pi - q12 - q22;
             q23 = pi - q12 - q22;
-            q24 = -(q13 + q14) + pi/2;
-            q14 =  q14 + pi/2;
+            q24 = pi - (q12 + q13 + q14 + q22 + q23);%q22 - (q12 + q14);
             %--------------------- Parallelogram five-bar linkage ------------------
             
             %% -----------------------Get the output values of Moving Platform-----------------------
@@ -367,14 +366,13 @@ classdef RCB2T2Rfivebar
             C1 = [L2 * (cos(q12) + cos(q12 + q13)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13)) * cos(q11), L2 * (sin(q12) + sin(q12 + q13))];
             
             A2 = [0, L1/2, 0];
-            B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)];
-            C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
+            B2 = [L2 * cos(q22) * sin(q21), L1/2 - L2 * cos(q22) * cos(q21), L2 * sin(q22)];
+            C2 = [L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 - L2 * (cos(q22) + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
             %%------------------------------------------------------------------------
             
-            norm(C1-C2);
             %-------------------------q15 = q25------------------------------
             % Calculate the angles of q15
-            q15 = - q11;
+            q15 = q11;
             q25 = q21;
             %-------------------Transform into angle-------------------
             %q15_Angle = q15 * 180 / pi;
@@ -400,58 +398,56 @@ classdef RCB2T2Rfivebar
             eul_alpha_beta_gamma = tform2eul(Tform_from_axis_angle);
             
             p(4:6) = eul_alpha_beta_gamma;
+            
             %% --------------------Plot the mechanism Ai Bi Ci------------------
-            PA1B1C1x = [A1(1), B1(1), C1(1)];
-            PA1B1C1y = [A1(2), B1(2), C1(2)];
-            PA1B1C1z = [A1(3), B1(3), C1(3)];
-            plot3(PA1B1C1x, PA1B1C1y, PA1B1C1z,'b-'); hold on;
-            
-            PA2B2C2x = [A2(1), B2(1), C2(1)];
-            PA2B2C2y = [A2(2), B2(2), C2(2)];
-            PA2B2C2z = [A2(3), B2(3), C2(3)];
-            plot3(PA2B2C2x, PA2B2C2y, PA2B2C2z,'r-'); hold on;
-            
-            PC1C2x = [C1(1), C2(1)];
-            PC1C2y = [C1(2), C2(2)];
-            PC1C2z = [C1(3), C2(3)];
-            plot3(PC1C2x, PC1C2y, PC1C2z,'g-','linewidth',3); hold on;
-            
-            PA1A2x = [A1(1), A2(1)];
-            PA1A2y = [A1(2), A2(2)];
-            PA1A2z = [A1(3), A2(3)];
-            plot3(PA1A2x, PA1A2y, PA1A2z,'k-','linewidth',3); hold on;
-            
-            %----------------- plot xyz axes of base point --------------
-            x_axis = [0.5 0 0];
-            y_axis = [0 0.5 0];
-            z_axis = [0 0 0.5];
-            OP= [0 0 0];
-            xyz = [OP;x_axis;OP;y_axis;OP;z_axis];
-            i = 1:2;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-r');
-            i = 3:4;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-g');
-            i = 5:6;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-b');
-            %-----------------------------------------------------------
-            %------------------plot xyz axes of Moving Platform----------------
-            xyz = [p(1:3);p(1:3);p(1:3);p(1:3);p(1:3);p(1:3)] + transpose(Matrix_from_axis_angle * transpose(xyz));
-            i = 1:2;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-r');
-            hold on;
-            axis equal;
-            i = 3:4;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-g');
-            i = 5:6;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-b');
-            %----------------------------------------------
-            
-            %grid on;
-            %axis equal;
-            xlabel('x');
-            ylabel('y');
-            zlabel('z');
-            axis equal;
+            % PA1B1C1x = [A1(1), B1(1), C1(1)];
+            % PA1B1C1y = [A1(2), B1(2), C1(2)];
+            % PA1B1C1z = [A1(3), B1(3), C1(3)];
+            % plot3(PA1B1C1x, PA1B1C1y, PA1B1C1z,'b-'); hold on;
+            % 
+            % PA2B2C2x = [A2(1), B2(1), C2(1)];
+            % PA2B2C2y = [A2(2), B2(2), C2(2)];
+            % PA2B2C2z = [A2(3), B2(3), C2(3)];
+            % plot3(PA2B2C2x, PA2B2C2y, PA2B2C2z,'r-'); hold on;
+            % 
+            % PC1C2x = [C1(1), C2(1)];
+            % PC1C2y = [C1(2), C2(2)];
+            % PC1C2z = [C1(3), C2(3)];
+            % plot3(PC1C2x, PC1C2y, PC1C2z,'g-','linewidth',3); hold on;
+            % 
+            % PA1A2x = [A1(1), A2(1)];
+            % PA1A2y = [A1(2), A2(2)];
+            % PA1A2z = [A1(3), A2(3)];
+            % plot3(PA1A2x, PA1A2y, PA1A2z,'k-','linewidth',3); hold on;
+            % 
+            % %----------------- plot xyz axes of base point --------------
+            % x_axis = [0.5 0 0];
+            % y_axis = [0 0.5 0];
+            % z_axis = [0 0 0.5];
+            % OP= [0 0 0];
+            % xyz = [OP;x_axis;OP;y_axis;OP;z_axis];
+            % i = 1:2;
+            % plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-r');hold on;
+            % i = 3:4;
+            % plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-g');hold on;
+            % i = 5:6;
+            % plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-b');hold on;
+            % %-----------------------------------------------------------
+            % %------------------plot xyz axes of Moving Platform----------------
+            % xyz = [p(1:3);p(1:3);p(1:3);p(1:3);p(1:3);p(1:3)] + transpose(Matrix_from_axis_angle * transpose(xyz));
+            % i = 1:2;
+            % plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-r');hold on;
+            % i = 3:4;
+            % plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-g');hold on;
+            % i = 5:6;
+            % plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-b');hold on;
+            % %----------------------------------------------
+            % 
+            % grid on;
+            % xlabel('x');
+            % ylabel('y');
+            % zlabel('z');
+            % axis equal;
             %%------------------------------------------------------------------------
         end
         

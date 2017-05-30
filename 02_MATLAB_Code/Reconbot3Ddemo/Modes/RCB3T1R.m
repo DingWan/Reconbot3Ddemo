@@ -19,10 +19,6 @@ classdef RCB3T1R
         q11q12q21q23;
     end
     
-%      properties (Dependent)
-%         RCB_3T1R_IK
-%         RCB_3T1R_FK
-%     end
         
     methods
         

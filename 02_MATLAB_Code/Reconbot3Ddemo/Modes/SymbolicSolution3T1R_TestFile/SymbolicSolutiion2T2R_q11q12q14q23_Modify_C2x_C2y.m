@@ -9,23 +9,17 @@ cos(q22+q23) = cos(q22)*cos(q23) - sin(q22)*sin(q23);
 % y11 = cos(q11);
 % x12 = sin(q12);
 % y12 = cos(q12);
-% x21 = sin(q21);
-% y21 = cos(q21);
+% x14 = sin(q14);
+% y14 = cos(q14);
 % x23 = sin(q23);
 % y23 = cos(q23);
 % x1213 =  sin(q12 + q13);
 % y1213 =  cos(q12 + q13);
-% x22 = sin(q22);
-% y22 = cos(q22);
 
-% A1 = l2 * x11;
-% A2 = - l2 * x21 * (1 + y23);
-% A3 = l2 * x21 * x23;
-% A4 = l2 * x11 * y12;
-% A5 = l2 * y11;
-% A6 = - l2 * y21 * (1 + y23);
-% A7 = l2 * y21 * x23;
-% A8 = l2 * y11 * y12 + l1;
+% A1 = l2;
+% A2 = - l2 * (1 + y23);
+% A3 = l2 * x23;
+% A4 = l2 * y12 + 2 * l1 * y11;
 
 % y1213^2 = 1 - (x22 * (1 + y23) + y22 * x23 - x12)^2
 
@@ -33,9 +27,9 @@ cos(q22+q23) = cos(q22)*cos(q23) - sin(q22)*sin(q23);
 % x22 = sin(q22) = 2 * x / (1 + x^2);
 % x = tan(q22/2)
 
-syms l1 l2 x11 y11 x12 y12 x21 y21 x22 y22 x23 y23 x1213 y1213  
-syms A1 A2 A3 A4 A5 A6 A7 A8
-[solx1213, soly1213] = solve([ (A1 * y1213 + A2 * y22 + A3 * x22 + A4)^2 + (A5 * y1213 + A6 * y22 + A7 * x22 + A8)^2 - l1^2 == 0,...
+syms l1 l2 x11 y11 x12 y12 x14 y14 x22 y22 x23 y23 x1213 y1213  
+syms A1 A2 A3 A4 
+[solx1213, soly1213] = solve([ A1 * y1213 + A2 * y22 + A3 * x22 + A4 == 0,...
                                x12 + x1213 - x23 - x2223 == 0], [x1213, y1213]);
 % [solq12, solq22] = solve([ (l2 * sin(q11) * (cos(q12) + cos(q12+q13)) - l2 * sin(q21) * (cos(q22) + cos(q22+q23)))^2 + ...
 %                               (l2 * cos(q11) * (cos(q12) + cos(q12+q13)) - l2 * cos(q21) * (cos(q22) + cos(q22+q23)) + l1)^2 + ...
@@ -43,7 +37,7 @@ syms A1 A2 A3 A4 A5 A6 A7 A8
 %                             sin(q12) + sin(q12+q13) - sin(q22) - sin(q22+q23) == 0], [q12, q22]);
  
 % Step 1: 
-collect(expand((A1 * y1213 + A2 * y22 + A3 * x22 + A4)^2 + (A5 * y1213 + A6 * y22 + A7 * x22 + A8)^2 - l1^2 == 0), y1213)
+collect(expand(A1 * y1213 + A2 * y22 + A3 * x22 + A4 == 0), y1213)
  
 % Step 2: 
 (A1^2 + A5^2)*y1213^2 + (2*A1*A4 + 2*A5*A8 + 2*A1*A3*x22 + 2*A5*A7*x22 + 2*A1*A2*y22 + 2*A5*A6*y22)*y1213 + A2^2*y22^2 + 2*A2*A3*x22*y22 + 2*A2*A4*y22 + A3^2*x22^2 + 2*A3*A4*x22 + A4^2 + A6^2*y22^2 + 2*A6*A7*x22*y22 + 2*A6*A8*y22 + A7^2*x22^2 + 2*A7*A8*x22 + A8^2 - l1^2 == 0
