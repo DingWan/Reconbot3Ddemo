@@ -9,25 +9,29 @@ Time = [0,5];
 %InitHome;
 
 %% Input values [q0, q1, q2, q3, q4]
-%3T1R
+%3T1R; q11q12q21q23 = []
 % q1q2_Start = [ 0*pi/180,  0*pi/180, 45*pi/180,   0*pi/180,  90*pi/180];
 %   q1q2_End = [ 0*pi/180,  0*pi/180, 45*pi/180,  60*pi/180,  90*pi/180];
 
-%2T2R
+%2T2R; q11q12q14q23 = []
 % q1q2_Start = [  0*pi/180,   0*pi/180,   45*pi/180,  -45*pi/180,   90*pi/180];
 %   q1q2_End = [ 30*pi/180,  90*pi/180,   45*pi/180,  -45*pi/180,   90*pi/180];
   
-%2T2Rthreebar
+%2T2Rthreebar;  q11q12q14q23 = []
 % q1q2_Start = [  0*pi/180,  90*pi/180,   45*pi/180,  -45*pi/180,   90*pi/180];
 %   q1q2_End = [ 30*pi/180,  90*pi/180,   60*pi/180,  -30*pi/180,   120*pi/180]; 
 
-%2T2Rthreebar
+%2T2Rthreebar;  q11q12q14q23 = []
 % q1q2_Start = [  0*pi/180,  90*pi/180,   45*pi/180,  -45*pi/180,   45*pi/180];
 %   q1q2_End = [ 60*pi/180,  90*pi/180,   60*pi/180,  -90*pi/180,    0*pi/180]; 
 
-%RCB2RserialA1C1
-q1q2_Start = [  0*pi/180,  180*pi/180,   0*pi/180,  45*pi/180,   180*pi/180];
-  q1q2_End = [  0*pi/180,  180*pi/180,   0*pi/180,  90*pi/180,   180*pi/180];   
+%RCB2RserialA1C1;  q11q12q22q13 = []
+% q1q2_Start = [  0*pi/180,  180*pi/180,    0*pi/180,   45*pi/180,   180*pi/180];
+%   q1q2_End = [  0*pi/180,  150*pi/180,   30*pi/180,  120*pi/180,   180*pi/180];   
+  
+%RCB2RserialA2C2; q12q21q22q23 = []
+q1q2_Start = [  0*pi/180,  45*pi/180,    0*pi/180,   0*pi/180,   180*pi/180];
+  q1q2_End = [  0*pi/180,  90*pi/180,   30*pi/180,  30*pi/180,   180*pi/180]; 
   
 %% 5-Grade Polynomial Intepotation
 for i = 1:5
@@ -88,10 +92,19 @@ end
 % end
 
 %% --RCB2RserialA1C1--
+% for i = 1:n
+%     q11q12q22q13 = [Ang_Intep(2,i), Ang_Intep(3,i), Ang_Intep(4,i), Ang_Intep(5,i)];
+%     obj2RserialA1C1 = RCB2RserialA1C1(PosOri, q11q12q22q13 , l1, l2);
+%     [p, ABC, q1q2] = obj2RserialA1C1.RCB_2R_serialA1C1_FK;
+%     q0q1q2 = [Ang_Intep(1,i), q1q2];
+%     ReconbotANI(q0q1q2);
+% end
+
+%% --RCB2RserialA2C2--
 for i = 1:n
-    q11q12q22q13 = [Ang_Intep(2,i), Ang_Intep(3,i), Ang_Intep(4,i), Ang_Intep(5,i)];
-    obj2RserialA1C1 = RCB2RserialA1C1(PosOri, q11q12q22q13 , l1, l2);
-    [p, ABC, q1q2] = obj2RserialA1C1.RCB_2R_serialA1C1_FK;
+    q12q21q22q23 = [Ang_Intep(2,i), Ang_Intep(3,i), Ang_Intep(4,i), Ang_Intep(5,i)];
+    obj2RserialA2C2 = RCB2RserialA2C2(PosOri, q12q21q22q23 , l1, l2);
+    [p, ABC, q1q2] = obj2RserialA2C2.RCB_2R_serialA2C2_FK;
     q0q1q2 = [Ang_Intep(1,i), q1q2];
     ReconbotANI(q0q1q2);
 end

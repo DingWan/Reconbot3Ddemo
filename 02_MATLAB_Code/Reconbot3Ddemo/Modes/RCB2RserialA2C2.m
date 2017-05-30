@@ -14,16 +14,16 @@ classdef RCB2RserialA2C2
         l1;
         l2;
         pos;
-        q11q12q22q23;
+        q12q21q22q23;
     end
     
     methods
-        function obj = RCB2RserialA2C2(pos,q11q12q22q23,L1,L2)
+        function obj = RCB2RserialA2C2(pos,q12q21q22q23,L1,L2)
             if nargin > 0
                 obj.l1 = L1;
                 obj.l2 = L2;
                 obj.pos = pos;
-                obj.q11q12q22q23 = q11q12q22q23;
+                obj.q12q21q22q23 = q12q21q22q23;
             end
         end
         
@@ -348,16 +348,16 @@ classdef RCB2RserialA2C2
         function [p, ABC, q1q2] = RCB_2R_serialA2C2_FK(obj)
             %%------------Inputs-------------
             % Variable value assignment
-            q11 = obj.q11q12q22q23(1);
-            q12 = obj.q11q12q22q23(2);
-            q22 = obj.q11q12q22q23(3);
-            q23 = obj.q11q12q22q23(4);
+            q12 = obj.q12q21q22q23(1);
+            q21 = obj.q12q21q22q23(2);
+            q22 = obj.q12q21q22q23(3);
+            q23 = obj.q12q21q22q23(4);
             L1 = obj.l1;
             L2 = obj.l2;
             
             %% -----------------------Basic calculaion of Planar Four-bar linkage-----------------------
-            q21 = q11;
-            l1pie = L1 * cos(q11);
+            q11 = q21;
+            l1pie = L1 * cos(q21);
             
             %--------------------- Parallelogram ------------------
             lA2B1pie = sqrt(l1pie^2 + L2^2 + 2 * l1pie * L2 * cos(q12));
@@ -367,9 +367,9 @@ classdef RCB2RserialA2C2
             angleC1B1A1pie = 2 * q12 - angleC1A2A1pie;
             
             %According to the geometry relation, that lA1A2pie = lA1C2pie, lA2B2pie = lB2C2pie;
-            q14 = q12;
+            q14 = q12 - pi/2;
             q13 = pi - angleC1B1A1pie;
-            q24 = - (angleC1A2A1pie + q22);
+            q24 = angleC1A2A1pie - q22 - pi/2;
             
             %% -----------------------Get the output values of Moving Platform-----------------------
             %%--------------------Calculate the position of Ai Bi Ci------------------
@@ -378,14 +378,13 @@ classdef RCB2RserialA2C2
             C1 = [L2 * (cos(q12) + cos(q12 + q13)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13)) * cos(q11), L2 * (sin(q12) + sin(q12 + q13))];
             
             A2 = [0, L1/2, 0];
-            B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)];
-            C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
+            B2 = [L2 * cos(q22) * sin(q21), L1/2 - L2 * cos(q22) * cos(q21), L2 * sin(q22)];
+            C2 = [L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 - L2 * (cos(q22) + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
             %%------------------------------------------------------------------------
             
-            norm(C1-C2)
             %-------------------------q15 = q25------------------------------
             % Calculate the angles of q15
-            q15 = - q11;
+            q15 = q11;
             q25 = q15;
             %-------------------Transform into angle-------------------
             %q15_Angle = q15 * 180 / pi;
@@ -396,7 +395,6 @@ classdef RCB2RserialA2C2
             q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
             %-------------Calculate the center point of moving platform----------------
             p = (C1 + C2) / 2;
-            vectorC1C2 = C2 - C1;
             %%------------------------------------------------------------------------
             
             %% ----------------------Calculate the RPY angle--------------------------
