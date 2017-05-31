@@ -59,7 +59,7 @@ if HomePosition == 2
     %% Motion planning
     clc
     % Intepotation Points and Time
-    NumIntepoPoints = 20;
+    NumIntepoPoints = 50;
     Start_Time = 0;
     Time_inteval = 5;
     %
@@ -222,7 +222,8 @@ if HomePosition == 2
     
     %% 3D Animation
     %q0q1q2_Pos_mat(:,1) = q0q1q2_Pos_mat(:,2);
-    for i = 10:length(q0q1q2_Pos_mat)- 10
+    for i = 1:length(q0q1q2_Pos_mat)- 0 
+        
         %========================== Animation ============================
         ReconbotANI(q0q1q2_Pos_mat(i,:));
 %         set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off

@@ -14,7 +14,7 @@ PosOri = {0 0 0.208879343162506 0 [] [], pi/2 -pi/2};
 
 %% Calculate the IK Jacobian
     % --3T1R--
-    po = { 0.10 0.10 0.15 -0*pi/180 [] []};
+    po = { 0.10 0.200 0.15 15*pi/180 [] []};
     q11q12q21q22 = [];
     deltapo = 0.000001;
     Num_po_variables = 4;
@@ -24,35 +24,42 @@ PosOri = {0 0 0.208879343162506 0 [] [], pi/2 -pi/2};
     % Previous
     obj3T1R = RCB3T1R(po, q11q12q21q22, l1, l2);
     [p_previous, ~, ~, q1q2_all, ~] = obj3T1R.RCB_3T1R_IK;
-    q1q2_previous = q1q2_all(1,:);
+    row_A1C1 = 1;
+    row_A2C2 = 1;
+    q1q2_previous = [ q1q2_all(row_A1C1,1:5) q1q2_all(row_A2C2,6:10)];
     q1q2 = q1q2_previous;
+    %
+    q0q1q2 = [0, q1q2];
+    % InitHome;
+    ReconbotANI(q0q1q2);
+    
     for i = 1:Num_po_variables
     % Current
     po_delta_po = po;
     po_delta_po{i} = po{i} + deltapo;
     obj3T1R = RCB3T1R(po_delta_po, q11q12q21q22, l1, l2);
     [p_current, EulerAngle_q11_theta, ~, q1q2_all, ~] = obj3T1R.RCB_3T1R_IK;
-    q1q2_current = q1q2_all(1,:);
+    q1q2_current = [ q1q2_all(row_A1C1,1:5) q1q2_all(row_A2C2,6:10)];
     dq(:,i) = (q1q2_current - q1q2_previous)';
     J_dx2dq_eul(:,i) = [  dq(1,i) / deltapo; %This whole thing is a single column
                           dq(2,i) / deltapo;
-                          %dq(4,i) / deltapo;
+                          dq(4,i) / deltapo;
                           dq(6,i) / deltapo;
                           dq(7,i) / deltapo;
-                          %dq(8,i) / deltapo;
+                          dq(8,i) / deltapo;
                         ];
     end
     J_dx2dq_eul;    
-    %JT_plus = J_dx2dq_eul * inv(J_dx2dq_eul' * J_dx2dq_eul);
-    JT_inv = inv(J_dx2dq_eul');
+    JT_plus = J_dx2dq_eul * inv(J_dx2dq_eul' * J_dx2dq_eul);
+    %JT_inv = inv(J_dx2dq_eul');
     
     %Torque_UpBoundary
     TorUpBo = 6.0; %N.m 
     
-    %Tor_q1q2 = JT_plus * [ 0.100 0.100 0.100 1 ]';
-    Tor_q1q2 = JT_inv * [ 0.100 0.100 0.100 1 ]';
+    Tor_q1q2 = JT_plus * [ 0.000 0.000 50.00 0 ]'
+    %Tor_q1q2 = JT_inv * [ 0.000 0.000 30.00 0 ]';
     
-    Tor_q11 = 0;
+     Tor_q11 = 0;
     Tor_q12 = 0;
     Tor_q14 = 0;
     Tor_q21 = 0;
@@ -82,8 +89,8 @@ PosOri = {0 0 0.208879343162506 0 [] [], pi/2 -pi/2};
                 Fy = Fn * sin(theta) * sin(phi);
                 Fz = Fn * cos(theta);
                 
-                %Tor_q1q2 = JT_plus * [ Fx Fy Fz 0]';
-                Tor_q1q2 = JT_inv * [ Fx Fy Fz 0]';
+                Tor_q1q2 = JT_plus * [ Fx Fy Fz 0]';
+                %Tor_q1q2 = JT_inv * [ Fx Fy Fz 0]';
                 
                 Tor_q11 = Tor_q1q2(1);
                 Tor_q12 = Tor_q1q2(2);
@@ -114,32 +121,25 @@ ReconbotANI(q0q1q2);
 
 %% =========== Jacobian Matrix by using screw theory ===========
 %q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-
-L1 = 0.2300692;
-L2 = 0.14625;
+%tic 
 %% ----------------Get the output values of Moving Platform---------------
-%%--------------------Calculate the position of Ai Bi Ci------------------
 A1 = [0, -L1/2, 0];
 B1 = [L2 * cos(q12) * sin(q11), -L1/2 - L2 * cos(q12) * cos(q11), L2 * sin(q12)];
 C1 = [L2 * (cos(q12) + cos(q12 + q13)) * sin(q11), -L1/2 - L2 * (cos(q12)...
     + cos(q12 + q13)) * cos(q11), L2 * (sin(q12) + sin(q12 + q13))];
 
 A2 = [0, L1/2, 0];
-B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)];
-C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22)...
+B2 = [L2 * cos(q22) * sin(q21), L1/2 - L2 * cos(q22) * cos(q21), L2 * sin(q22)];
+C2 = [L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 - L2 * (cos(q22)...
     + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
-%%------------------------------------------------------------------------
-ABC = [ A1; B1; C1; A2; B2; C2 ];
-%     
 
 %% ===========  Euler Angle to homogenous transform =============
-
 alpha = p_previous(4) * 180/pi;
 beta = p_previous(5) * 180/pi;
 gamma = p_previous(6) * 180/pi;
-RotationMatrix = eul2rotm(p_previous(4:6));  
-%%  ============================  Vector ============================ 
+RotationMatrix = eul2rotm(p_previous(4:6)); 
 
+%%  ============================  Vector ============================ 
 % In base frame Ob-XYZ
 op_Ob = p_previous(1:3);
 %----- Branch Chain A1C1------
@@ -166,7 +166,7 @@ opC2_Ob = C2 - op_Ob;
 A2B2_Ob = B2 - A2;
 B2C2_Ob = C2 - B2;
 A2C2_Ob = C2 - A2;
-sr21c_Ob = [sin(q21), -cos(q21), 0];
+sr21c_Ob = [-sin(q21), cos(q21), 0];
 Angle_A2C2_to_sr21c = acos ( (A2C2_Ob * sr21c_Ob')/(norm(A2C2_Ob)*norm(sr21c_Ob)) ) * 180/pi;
 if Angle_A2C2_to_sr21c >= 90
     z_A2D2_Ob = C2(3) - sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q22 + q23 + q24);
@@ -177,7 +177,6 @@ D2A2_Ob = [0, 0, - z_A2D2_Ob];
 opD2_Ob = opA2_Ob - D2A2_Ob;
 
 %% ========================= screw unit =========================
-
 % In base frame Ob-XYZ
 %----- Branch Chain A1C1------
 s11_Ob = [0, 0, 1];
@@ -194,9 +193,9 @@ sr15_Ob = cross(opC1_Ob, s15_Ob);
 
 %------ Branch Chain A2C2------
 s21_Ob = [0, 0, 1];
-s22_Ob = [cos(q21), sin(q21), 0];
-s23_Ob = [cos(q21), sin(q21), 0];
-s24_Ob = [cos(q21), sin(q21), 0];
+s22_Ob = [-cos(q21), -sin(q21), 0];
+s23_Ob = [-cos(q21), -sin(q21), 0];
+s24_Ob = [-cos(q21), -sin(q21), 0];
 s25_Ob = (RotationMatrix * [0 0 1]')';
 %[sin(q21)*cos(q22 + q23 + q24), cos(q21)*cos(q22 + q23 + q24), sin(q22 + q23 + q24)]
 sr21_Ob = cross(opA2_Ob, s21_Ob);
@@ -206,12 +205,11 @@ sr24_Ob = cross(opC2_Ob, s24_Ob);
 sr25_Ob = cross(opC2_Ob, s25_Ob);
 
 %% ========================= Reciprocal Screws =========================
-
 % In base frame Ob-XYZ
 % Jc Common reciprocal screw 
 sr11c_Ob = [-sin(q11), cos(q11), 0];
 sr12c_Ob = [cos(q11), sin(q11), 0];
-sr21c_Ob = [sin(q21), -cos(q21), 0];
+sr21c_Ob = [-sin(q21), cos(q21), 0];
 sr22c_Ob = [cos(q21), sin(q21), 0];
 Jc_Ob = [  sr11c_Ob, 0 0 0;
            cross(opD1_Ob,s12_Ob), s12_Ob;
@@ -261,12 +259,12 @@ Jq2_6_Ob = A2C2_Ob/norm(A2C2_Ob) * sr23_Ob' + s23_Ob * cross(opC2_Ob,A2C2_Ob/nor
 Jx1_Ob_3T1R = [   Jx1_Ob(1,:);
                    Jx1_Ob(2,:);
                    Jx1_Ob(4,:);
-                   Jx1_Ob(5,:);
+                   Jx1_Ob(6,:);
                 ];
 Jq1_Ob_3T1R = [  Jq1_1_Ob   0          0           0
                  0          Jq1_2_Ob   0           0 
                  0          0          Jq1_4_Ob    0
-                 0          0          0           Jq1_5_Ob
+                 0          0          0           Jq1_6_Ob
               ];
 Ja_Ob_3T1R = inv(Jq1_Ob_3T1R) * Jx1_Ob_3T1R;
 J_Ob_3T1R = [   Ja_Ob_3T1R;

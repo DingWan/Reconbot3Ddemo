@@ -10,8 +10,8 @@ C1 = [L2 * (cos(q12) + cos(q12 + q13)) * sin(q11), -L1/2 - L2 * (cos(q12)...
     + cos(q12 + q13)) * cos(q11), L2 * (sin(q12) + sin(q12 + q13))];
 
 A2 = [0, L1/2, 0];
-B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)];
-C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22)...
+B2 = [L2 * cos(q22) * sin(q21), L1/2 - L2 * cos(q22) * cos(q21), L2 * sin(q22)];
+C2 = [L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 - L2 * (cos(q22)...
     + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
 
 %% ===========  Euler Angle to homogenous transform =============
@@ -47,7 +47,7 @@ opC2_Ob = C2 - op_Ob;
 A2B2_Ob = B2 - A2;
 B2C2_Ob = C2 - B2;
 A2C2_Ob = C2 - A2;
-sr21c_Ob = [sin(q21), -cos(q21), 0];
+sr21c_Ob = [-sin(q21), cos(q21), 0];
 Angle_A2C2_to_sr21c = acos ( (A2C2_Ob * sr21c_Ob')/(norm(A2C2_Ob)*norm(sr21c_Ob)) ) * 180/pi;
 if Angle_A2C2_to_sr21c >= 90
     z_A2D2_Ob = C2(3) - sqrt((C2(1) - A2(1))^2 + (C2(2) - A2(2))^2) * tan(q22 + q23 + q24);
@@ -74,9 +74,9 @@ sr15_Ob = cross(opC1_Ob, s15_Ob);
 
 %------ Branch Chain A2C2------
 s21_Ob = [0, 0, 1];
-s22_Ob = [cos(q21), sin(q21), 0];
-s23_Ob = [cos(q21), sin(q21), 0];
-s24_Ob = [cos(q21), sin(q21), 0];
+s22_Ob = [-cos(q21), -sin(q21), 0];
+s23_Ob = [-cos(q21), -sin(q21), 0];
+s24_Ob = [-cos(q21), -sin(q21), 0];
 s25_Ob = (RotationMatrix * [0 0 1]')';
 %[sin(q21)*cos(q22 + q23 + q24), cos(q21)*cos(q22 + q23 + q24), sin(q22 + q23 + q24)]
 sr21_Ob = cross(opA2_Ob, s21_Ob);
@@ -90,7 +90,7 @@ sr25_Ob = cross(opC2_Ob, s25_Ob);
 % Jc Common reciprocal screw 
 sr11c_Ob = [-sin(q11), cos(q11), 0];
 sr12c_Ob = [cos(q11), sin(q11), 0];
-sr21c_Ob = [sin(q21), -cos(q21), 0];
+sr21c_Ob = [-sin(q21), cos(q21), 0];
 sr22c_Ob = [cos(q21), sin(q21), 0];
 Jc_Ob = [  sr11c_Ob, 0 0 0;
            cross(opD1_Ob,s12_Ob), s12_Ob;
@@ -160,13 +160,13 @@ elseif Enable_Mode_JacoMat == 2
                      Jx1_Ob(1,:);
                      Jx1_Ob(2,:);
                      Jx1_Ob(4,:);
-                     Jx1_Ob(5,:);
+                     Jx1_Ob(6,:);
                   ];
     Jq1_Ob_3T1R = [  
                      Jq1_1_Ob   0          0           0
                      0          Jq1_2_Ob   0           0 
                      0          0          Jq1_4_Ob    0
-                     0          0          0           Jq1_5_Ob
+                     0          0          0           Jq1_6_Ob
                   ];
     Jc_Ob_3T1R = [   
                     Jc_Ob(1,1:2);
