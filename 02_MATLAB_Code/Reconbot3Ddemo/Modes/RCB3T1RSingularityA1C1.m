@@ -532,11 +532,11 @@ classdef RCB3T1RSingularityA1C1
                 %
                 
                 q13all(1) = asin(sin(q22SingleValue) + sin(q22SingleValue + q23) - sin(q12)) - q12;
-                if sin(q22SingleValue) + sin(q22SingleValue + q23) - sin(q12) <= 0
-                    q13all(2) =  - pi - asin(sin(q22SingleValue) + sin(q22SingleValue + q23) - sin(q12)) - q12;
-                else
+%                 if sin(q22SingleValue) + sin(q22SingleValue + q23) - sin(q12) <= 0
+%                     q13all(2) =  - pi - asin(sin(q22SingleValue) + sin(q22SingleValue + q23) - sin(q12)) - q12;
+%                 else
                     q13all(2) =    pi - asin(sin(q22SingleValue) + sin(q22SingleValue + q23) - sin(q12)) - q12;
-                end
+%                 end
                 
                 for Numq13 = 1:length(q13all)
                     q13SingleValue = q13all(Numq13); %1.200958270516672 % q13SingleValue = 1.2373
