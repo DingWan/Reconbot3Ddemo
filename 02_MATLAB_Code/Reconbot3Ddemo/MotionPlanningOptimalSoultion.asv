@@ -1,4 +1,4 @@
-function [ PosOri_Output, q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J_Intep ] = ...
+function [ q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J_Intep ] = ...
     MotionPlanningOptimalSoultion(Mode_previous, PosOri_previous, q0q1q2_previous_trajpoint,...
     Mode_current,PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, Start_Time, Time_inteval, l1, l2)
 % Motion planning and Optimal Solution
@@ -399,7 +399,7 @@ for i = 1:length(MPOTP_cell)
         % Optimal Joints Solution
         OptimalJointsSolution;
         q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j,:) = q0q1q2_Optimal_SingleRow;   
-        PosOri_Output{NumIntepoPoints*(i-1)+j,1} = PosOri;
+        PosOri_Output{NumIntepoPoints*(i-1)+j} = PosOri;
         
         % ==================  Jacobian Matrix  ====================
         q1q2_Optimal = q0q1q2_Optimal_SingleRow(:,2:11);

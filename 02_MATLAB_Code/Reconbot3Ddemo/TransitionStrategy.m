@@ -107,16 +107,16 @@ end
                             if q0q1q2_previous(7) >= 0 && Posture_current{1} >= 0
                                 q11 = -pi/2;
                                 q21 = -pi/2;
-                                q12_Adjust = -pi/2;
+                                q21_Adjust = -pi/2;
                             elseif q0q1q2_previous(7) <= 0 && Posture_current{1} <= 0
                                 q11 = pi/2;
                                 q21 = pi/2;
-                                q12_Adjust = pi/2;
+                                q21_Adjust = pi/2;
                             end                            
                             InsertRow_TransiConfig{1,:} = {1, {0, 0, Posture_current{3}, 0, [], [], q11, q21}};
-                            InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_current{3}, 0, [], [], q11, q12_Adjust}};
+                            InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_current{3}, 0, [], [], q11, q21_Adjust}};
                             MPOTP_cell{1}{2}{7} = q11;
-                            MPOTP_cell{1}{2}{8} = q12_Adjust;
+                            MPOTP_cell{1}{2}{8} = q21_Adjust;
                             MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                             Self_adjustment_Enable_Disable = [0 1 1];
                         end
@@ -200,16 +200,16 @@ end
                             if q0q1q2_previous(7) >= 0 && Posture_current{1} >= 0
                                 q11 = -pi/2;
                                 q21 = -pi/2;
-                                q12_Adjust = -pi/2;
+                                q21_Adjust = -pi/2;
                             elseif q0q1q2_previous(7) <= 0 && Posture_current{1} <= 0
                                 q11 = pi/2;
                                 q21 = pi/2;
-                                q12_Adjust = pi/2;
+                                q21_Adjust = pi/2;
                             end                            
                             InsertRow_TransiConfig{1,:} = {2, {0, 0, Posture_current{3}, 0, [], [], q11, q21}};
-                            InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_current{3}, 0, [], [], q11, q12_Adjust}};
+                            InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_current{3}, 0, [], [], q11, q21_Adjust}};
                             MPOTP_cell{1}{2}{7} = q11;
-                            MPOTP_cell{1}{2}{8} = q12_Adjust;
+                            MPOTP_cell{1}{2}{8} = q21_Adjust;
                             MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                             Self_adjustment_Enable_Disable = [0 1 1];
                         end                   
@@ -295,21 +295,21 @@ end
                             q11 = -pi/2;
                             q21 = pi/2; 
                             if Posture_current{1} < 0
-                                q12_Adjust = pi/2;
+                                q21_Adjust = pi/2;
                             else
-                                q12_Adjust = -pi/2;
+                                q21_Adjust = -pi/2;
                             end
                         else
                             q11 = pi/2;
                             q21 = -pi/2; 
                             if Posture_current{1} < 0
-                                q12_Adjust = pi/2;
+                                q21_Adjust = pi/2;
                             else
-                                q12_Adjust = -pi/2;
+                                q21_Adjust = -pi/2;
                             end
                         end
                         InsertRow_TransiConfig{1,:} = {3, {0, 0, Posture_current{3}, 0, [], [], q11, q21}};                        
-                        InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_current{3}, 0, [], [], q11, q12_Adjust}};
+                        InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_current{3}, 0, [], [], q11, q21_Adjust}};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [0 0 0];
                     case 10 % 2R-SerialA1C1

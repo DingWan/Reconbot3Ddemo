@@ -200,8 +200,8 @@ if HomePosition == 2
         
     
     %% Detect Mode switch and replan according the 'Start and End velocities are Zero: V_start = V_end = 0'
-    Mode_Actual = Mode_det_Jq_Jc_J_mat(:,2);
-    for i = 1:IntepPointNum
+    Mode_Actual = Mode_det_Jq_Jc_J_mat(
+    for 
         
     end
     
