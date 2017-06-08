@@ -1,4 +1,4 @@
-function [ q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J_Intep ] = ...
+function [ PosOri_Output_Intep, q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J_Intep ] = ...
     MotionPlanningSingleMode(Mode_previous, PosOri_previous, q0q1q2_previous_trajpoint,...
     Mode_current,PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, Start_Time, Time_inteval, l1, l2)
 % Motion planning and Optimal Solution
@@ -167,12 +167,31 @@ for i = 1:length(MPOTP_cell)
         end
         
         % IK solution
+        
         [ p, ~, ~, q1q2, ~ ] = IK(Mode, PosOri, q0, q11, q21, q0q1q2_OptimalRow(length(q0q1q2_OptimalRow(:,1)),:), l1, l2);
         q0q1q2_CurrentStep = [zeros(length(q1q2(:,1)),1),q1q2];
-
+           
+        % Only used for judge the transtion needs Mode= 6 and PosOri = {0, +/-0.030, [], [], [], [], q12/q22}
+        if Start_Time == 40   
+            STOP = 1;
+        end
+        
+            if Mode == 6 && PosOri{1} == 0
+                if abs(PosOri{2} - 0.030) < 1e-12 || abs(PosOri{2} + 0.030) < 1e-12
+                    if j == 1
+                        q0q1q2_CurrentStep = q0q1q2_previous_trajpoint;
+                    else
+                        q0q1q2_CurrentStep = q0q1q2_current_trajpoint;
+                    end
+                end 
+                
+            end
+            
         % Optimal Joints Solution
         OptimalJointsSolution;
-        q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j,:) = q0q1q2_Optimal_SingleRow;        
+        q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j,:) = q0q1q2_Optimal_SingleRow;  
+        %
+        PosOri_Output{NumIntepoPoints*(i-1)+j,1} = PosOri;      
         
         % ==================  Jacobian Matrix  ====================
         q1q2_Optimal = q0q1q2_Optimal_SingleRow(:,2:11);
@@ -289,7 +308,8 @@ Mode_det_Jq_Jc_J_Intep = Mode_det_Jq_Jc_J;
 
 %% Assign the correct order of differernt value of 'Self_adjustment_Enable_Disable = 1/2/3/0'
 q0q1q2_P2P_Pos_Intep = q0q1q2_OptimalRow;
-
+PosOri_Output_Intep = PosOri_Output;    
+    
 %% Position, Velocity, Acceleration Calcuation of joint angles
 % Velocity Calcuation
 for i = 1:length(MPOTP_cell)

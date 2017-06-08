@@ -1,6 +1,6 @@
 figure(2)
 clf
-q11q12q14_q21q22q23_Angle = q11q12q14_q21q22q23 * 180/pi;
+q11q12q14_q21q22q23_Angle = q11q12q14_q21q22q23_NewAdjust * 180/pi;
 %------ Show Center point of Moving Platform -------
 BaseLow_CenterPointBearing = [250, 250, 83.5];
 BaseUP_CenterPointBearing = [160, 110, 60.44];
@@ -8,12 +8,12 @@ BaseJointA1C1A2C2_CenterPointMotor = [34.5, 48.1, 45.5];
 BaseJointA1C1A2C2_CenterPointSidePlate = [58.5, 48.1, 22];
 % in World frame
 Displacement = [250,250,83.5+60.44+(45.5-22)] / 1000;
-MP_Pos = MP_Pos_mat(1:3) / 1000 + Displacement;
+MP_Pos = MP_Pos_mat_NewAdjust(1:3) / 1000 + Displacement;
 
 %% Moving Platform
 subplot(3,2,[1 3 5]);
 % in local frame
-plot3(MP_Pos_mat(:,1),MP_Pos_mat(:,2),MP_Pos_mat(:,3),'b-', 'Linewidth', 2); hold on
+plot3(MP_Pos_mat_NewAdjust(:,1),MP_Pos_mat_NewAdjust(:,2),MP_Pos_mat_NewAdjust(:,3),'b-', 'Linewidth', 2); hold on
 %----------------- plot xyz axes of base point --------------
 x_axis = [20 0 0] / 1000;
 y_axis = [0 20 0] / 1000;
@@ -32,31 +32,31 @@ axis equal
 
 %% Joint Motion
 subplot(3,2,2);
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,1),'r'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,4),'g'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,7),'b'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,10),'m'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,13),'k'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,16),'c'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,1),'r'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,4),'g'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,7),'b'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,10),'m'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,13),'k'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,16),'c'); hold on
 title('Angle: q11(R),q12(G),q14(B),q21(M),q22(B),q23(C)')
 grid on
 
 subplot(3,2,4);
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,2),'r'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,5),'g'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,8),'b'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,11),'m'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,14),'k'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,17),'c'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,2),'r'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,5),'g'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,8),'b'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,11),'m'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,14),'k'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,17),'c'); hold on
 title('AngularVelocity: q11(R),q12(G),q14(B),q21(M),q22(B),q23(C)')
 grid on
 
 subplot(3,2,6);
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,3),'r'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,6),'g'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,9),'b'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,12),'m'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,15),'k'); hold on
-plot(Time_mat(:,1),q11q12q14_q21q22q23_Angle(:,18),'c'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,3),'r'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,6),'g'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,9),'b'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,12),'m'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,15),'k'); hold on
+plot(Time_mat_NewAdjust(:,1),q11q12q14_q21q22q23_Angle(:,18),'c'); hold on
 title('AngularAcceleration: q11(R),q12(G),q14(B),q21(M),q22(B),q23(C)')
 grid on

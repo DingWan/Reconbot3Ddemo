@@ -1,4 +1,4 @@
-function [ PosOri_Output, q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J_Intep ] = ...
+function [ PosOri_Output_Intep, q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J_Intep ] = ...
     MotionPlanningOptimalSoultion(Mode_previous, PosOri_previous, q0q1q2_previous_trajpoint,...
     Mode_current,PosOri_current, q0q1q2_current_trajpoint, NumIntepoPoints, Start_Time, Time_inteval, l1, l2)
 % Motion planning and Optimal Solution
@@ -399,6 +399,7 @@ for i = 1:length(MPOTP_cell)
         % Optimal Joints Solution
         OptimalJointsSolution;
         q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j,:) = q0q1q2_Optimal_SingleRow;   
+        %
         PosOri_Output{NumIntepoPoints*(i-1)+j,1} = PosOri;
         
         % ==================  Jacobian Matrix  ====================
@@ -498,8 +499,8 @@ for i = 1:length(MPOTP_cell)
     % Output current acutall modes
     % We define:
     for j = 1:NumIntepoPoints
-        if ( Mode ~= 5 && abs(det_Jq_Normalized(NumIntepoPoints*(i-1)+j,:) ) < 0.2) ||...
-                ( Mode ~= 1 && abs(det_Jc(NumIntepoPoints*(i-1)+j,:)) < 0.2 )
+        if ( Mode ~= 5 && abs(det_Jq_Normalized(NumIntepoPoints*(i-1)+j,:) ) < 0.3) ||...
+                ( Mode ~= 1 && abs(det_Jc(NumIntepoPoints*(i-1)+j,:)) < 0.3 )
             Mode_Actual(NumIntepoPoints*(i-1)+j,:) = 0;
         else
             Mode_Actual(NumIntepoPoints*(i-1)+j,:) = Mode;
@@ -708,11 +709,15 @@ Mode_det_Jq_Jc_J_Intep = Mode_det_Jq_Jc_J;
 
 %% Assign the correct order of differernt value of 'Self_adjustment_Enable_Disable = 1/2/3/0'
 q0q1q2_P2P_Pos_Intep = q0q1q2_OptimalRow;
+PosOri_Output_Intep = PosOri_Output;
 [~,col] = find(Self_adjustment_Enable_Disable_Array == 1);
 if isempty(col) ~= 1 
     % Position
     q0q1q2_P2P_Pos_Intep(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = q0q1q2_OptimalRow((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
     q0q1q2_P2P_Pos_Intep((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = q0q1q2_OptimalRow(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
+    % Position
+    PosOri_Output_Intep(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = PosOri_Output((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
+    PosOri_Output_Intep((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = PosOri_Output(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
     % Mode and Jacobian
     Mode_det_Jq_Jc_J_Intep(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = Mode_det_Jq_Jc_J((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
     Mode_det_Jq_Jc_J_Intep((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = Mode_det_Jq_Jc_J(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
