@@ -27,7 +27,8 @@ p_0 = [0 0 0.208879343162506 0 0 0, 0 0]; %  p = 2 * l2 * sin(pi/4)
 deg = pi/180;
 
 addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
-% InitHome   
+ 
+%InitHome   
 
 %% Go to HomePosition
 % Construct a questdlg with three options
@@ -55,8 +56,10 @@ if HomePosition == 2
     %------ Single Mode ----------
     % load('q0q1q2_3T2R.mat')
     
+    %% ================================== First-Planning for Singurlarity Judging============================================== 
     %% Motion planning
     clc
+    %=======================================
     % Intepotation Points and Time
     NumIntepoPoints = 20;
     Start_Time = 0;
@@ -87,6 +90,7 @@ if HomePosition == 2
     Mode_det_Jq_Jc_J_HomePosition_mat = [];
     Mode_det_Jq_Jc_J_HomePosition = [];
     %
+    PosOri_Output_mat = {};
     
     tic
     for IntepPointNum = 1 : NumTP
@@ -121,10 +125,13 @@ if HomePosition == 2
         q0q1q2_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum + 1,1}{3};
         
         % Motion Planning and Optimal Soultion;
-        [ q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, ...
+        [ PosOri_Output, q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, ...
             MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J ] = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
                                                                                                                         Mode_current, PosOri_current, q0q1q2_current, ...
                                                                                                                         NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
+        % Moving Platform Position
+        PosOri_Output_mat = [PosOri_Output_mat; PosOri_Output];
+        
         % Position, Velocity, Acceleration Calcuation of joint angles
         q0q1q2_Pos_mat = [ q0q1q2_Pos_mat; q0q1q2_P2P_Pos_Intep ];
         q0q1q2_Vel_mat = [ q0q1q2_Vel_mat; q0q1q2_P2P_Vel_Intep ];
@@ -142,8 +149,9 @@ if HomePosition == 2
     end
     toc
     
+    %=======================================
     IntepPointNum = IntepPointNum + 2;
-    %% Last step for returnning to HomePosition
+    % Last step for returnning to HomePosition
     tic
     %---------------
     for OnlyUsedforFoldingThisPart = 1:1
@@ -169,12 +177,14 @@ if HomePosition == 2
         q0q1q2_current = Mode_Pos_Ori_TrajPoints_cell{IntepPointNum}{3};
         
         % Motion Planning and Optimal Soultion;
-        [ q0q1q2_P2P_Pos_Intep_HomePosition, q0q1q2_P2P_Vel_Intep_HomePosition ,q0q1q2_P2P_Acc_Intep_HomePosition, ...
+        [ PosOri_Output_HomePosition, q0q1q2_P2P_Pos_Intep_HomePosition, q0q1q2_P2P_Vel_Intep_HomePosition ,q0q1q2_P2P_Acc_Intep_HomePosition, ...
             MP_Pos_Intep_HomePosition, MP_Vel_Intep_HomePosition, MP_Acc_Intep_HomePosition, MP_time_Intep_HomePosition, Mode_det_Jq_Jc_J_HomePosition ] = ...
                                                                             MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
                                                                             Mode_current, PosOri_current, q0q1q2_current, ...
                                                                             NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
         
+        % Moving Platform Position
+        PosOri_Output_mat = [PosOri_Output_mat; PosOri_Output_HomePosition];
         % Position, Velocity, Acceleration Calcuation of joint angles                                                                                                       NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
         q0q1q2_Pos_mat = [ q0q1q2_Pos_mat; q0q1q2_P2P_Pos_Intep_HomePosition ];
         q0q1q2_Vel_mat = [ q0q1q2_Vel_mat; q0q1q2_P2P_Vel_Intep_HomePosition ];
@@ -191,7 +201,8 @@ if HomePosition == 2
     % --------------
     toc
     
-    %% Save the value as '.mat' file
+    %=======================================    
+    % Save the value as '.mat' file
     Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
     q11q12q14_q21q22q23 = [ q0q1q2_Pos_mat(:,2), q0q1q2_Vel_mat(:,2), q0q1q2_Acc_mat(:,2),...
                             q0q1q2_Pos_mat(:,3), q0q1q2_Vel_mat(:,3), q0q1q2_Acc_mat(:,3),...
@@ -202,28 +213,142 @@ if HomePosition == 2
                             Time_mat(:,1), Mode_det_Jq_Jc_J_mat
                           ];
     
+    
+    %% ================================== Re-Planning According to Singurlarity============================================== 
+    %Detect Mode switch and replan according the 'Start and End velocities are Zero: V_start = V_end = 0'
+ 
+    NumIntepoPoints_DetailedPlanning = 20;
+    
+    Mode_Ideal = Mode_det_Jq_Jc_J_mat(:,1);
+    Mode_Actual = Mode_det_Jq_Jc_J_mat(:,2);
+    %
+    q0q1q2_Pos_mat_NewAdjust = [];
+    q0q1q2_Vel_mat_NewAdjust = [];
+    q0q1q2_Acc_mat_NewAdjust = [];
+    %
+    MP_Pos_mat_NewAdjust = [];
+    MP_Vel_mat_NewAdjust = [];
+    MP_Acc_mat_NewAdjust = [];
+    Time_mat_NewAdjust = [];
+    %
+    Mode_det_Jq_Jc_J_mat_NewAdjust = [];
+    %
+    Start_Time_NewAdjust = 0;
+    
+    tic
+    for i = 1:length(q0q1q2_Pos_mat)/NumIntepoPoints
+        
+        % Here below is to judge the boundary of mode change;
+        % 1. Both ends are also the first and last row of 'Row_ModeBoundary';
+        % 2. The switch of equal and inequal is a boundary sign
+        % 3. So, this judge can cover the case like: [0 1 1 1 0 0 1 1 1 0 0 0 1 0 0 1 1 1 0]
+        %    The boundary vector should be: Row_ModeBoundary = [2 4 7 9 13 16 18]
+        Num_BoundaryPoints = 0;
+        Row_ModeBoundary = [];
+        Temp_Row_ModeBoundary = [];
+        for j =  1 : NumIntepoPoints 
+            if j < NumIntepoPoints
+                ideal_pre =  Mode_Ideal(NumIntepoPoints*(i-1)+j);
+                Actual_pre =  Mode_Actual(NumIntepoPoints*(i-1)+j);
+                ideal_Next =  Mode_Ideal(NumIntepoPoints*(i-1)+j+1);
+                Actual_Next =  Mode_Actual(NumIntepoPoints*(i-1)+j+1);
+                if ideal_pre == Actual_pre && ideal_Next ~= Actual_Next
+                    Num_BoundaryPoints = Num_BoundaryPoints + 1;
+                    Row_ModeBoundary(Num_BoundaryPoints) = NumIntepoPoints*(i-1) + j;
+                elseif ideal_pre ~= Actual_pre && ideal_Next == Actual_Next
+                    Num_BoundaryPoints = Num_BoundaryPoints + 1;
+                    Row_ModeBoundary(Num_BoundaryPoints) = NumIntepoPoints*(i-1) + j + 1;
+                end
+            else
+                Temp_Row_ModeBoundary = Row_ModeBoundary;
+                
+                Row_ModeBoundary(1) = NumIntepoPoints*(i-1)+1;
+                if isempty(Temp_Row_ModeBoundary) ~= 1
+                    Row_ModeBoundary(2:length(Temp_Row_ModeBoundary) + 1) = Temp_Row_ModeBoundary;                    
+                    if Temp_Row_ModeBoundary(length(Temp_Row_ModeBoundary)) ~= NumIntepoPoints*i
+                        Row_ModeBoundary(length(Temp_Row_ModeBoundary) + 2) = NumIntepoPoints*i;
+                    end
+                else
+                    Row_ModeBoundary(2) = NumIntepoPoints*i;
+                end
+            end
+        end
+        
+        % Here blow is to recalculate the changed steps and Adjust time;
+        for NumRecalcTrajPoints = 1 : length(Row_ModeBoundary) - 1
+                
+            % Assgin Input value
+            % Previous
+            Mode_previous = Mode_Ideal( Row_ModeBoundary(NumRecalcTrajPoints) );%Mode_Pos_Ori_TrajPoints_cell
+            PosOri_previous = PosOri_Output_mat{ Row_ModeBoundary(NumRecalcTrajPoints) };
+            q0q1q2_previous = q0q1q2_Pos_mat(Row_ModeBoundary(NumRecalcTrajPoints),:);
+            % Current
+            Mode_current  = Mode_Ideal( Row_ModeBoundary(NumRecalcTrajPoints + 1) );
+            PosOri_current = PosOri_Output_mat{ Row_ModeBoundary(NumRecalcTrajPoints + 1) };
+            q0q1q2_current = q0q1q2_Pos_mat(Row_ModeBoundary(NumRecalcTrajPoints + 1),:);
+
+            % Motion Planning and Optimal Soultion;
+            [ PosOri_Output, q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, ...
+                MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J ] = MotionPlanningSingleMode(Mode_previous,PosOri_previous,q0q1q2_previous,...
+                                                                                                                            Mode_current, PosOri_current, q0q1q2_current, ...
+                                                                                                                            NumIntepoPoints_DetailedPlanning, Start_Time_NewAdjust, Time_inteval, l1, l2);
+
+            % Position, Velocity, Acceleration Calcuation of joint angles
+            q0q1q2_Pos_mat_NewAdjust = [q0q1q2_Pos_mat_NewAdjust; q0q1q2_P2P_Pos_Intep];
+            q0q1q2_Vel_mat_NewAdjust = [q0q1q2_Vel_mat_NewAdjust; q0q1q2_P2P_Vel_Intep];
+            q0q1q2_Acc_mat_NewAdjust = [q0q1q2_Acc_mat_NewAdjust; q0q1q2_P2P_Acc_Intep];            
+            % Position, Velocity, Acceleration Calcuation of Moving Platform
+            MP_Pos_mat_NewAdjust = [ MP_Pos_mat_NewAdjust; MP_Pos_Intep ];
+            MP_Vel_mat_NewAdjust = [ MP_Vel_mat_NewAdjust; MP_Vel_Intep ];
+            MP_Acc_mat_NewAdjust = [ MP_Acc_mat_NewAdjust; MP_Acc_Intep ];
+            Time_mat_NewAdjust = [ Time_mat_NewAdjust; MP_time_Intep ];
+            % Mode, Jacobian of Jq and J
+            Mode_det_Jq_Jc_J(:,2) = Mode_Actual( Row_ModeBoundary(NumRecalcTrajPoints) ) * ones(NumIntepoPoints_DetailedPlanning, 1);
+            Mode_det_Jq_Jc_J_mat_NewAdjust = [Mode_det_Jq_Jc_J_mat_NewAdjust; Mode_det_Jq_Jc_J];
+            %
+            Start_Time_NewAdjust = Time_mat_NewAdjust(length(Time_mat_NewAdjust(:,1)),1);
+                
+        end
+    end
+    toc
+        
+    % Save the value as '.mat' file
+    Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
+    q11q12q14_q21q22q23_NewAdjust = [ q0q1q2_Pos_mat_NewAdjust(:,2), q0q1q2_Vel_mat_NewAdjust(:,2), q0q1q2_Acc_mat_NewAdjust(:,2),...
+                                        q0q1q2_Pos_mat_NewAdjust(:,3), q0q1q2_Vel_mat_NewAdjust(:,3), q0q1q2_Acc_mat_NewAdjust(:,3),...
+                                        q0q1q2_Pos_mat_NewAdjust(:,5), q0q1q2_Vel_mat_NewAdjust(:,5), q0q1q2_Acc_mat_NewAdjust(:,5),...
+                                        q0q1q2_Pos_mat_NewAdjust(:,7), q0q1q2_Vel_mat_NewAdjust(:,7), q0q1q2_Acc_mat_NewAdjust(:,7),...
+                                        q0q1q2_Pos_mat_NewAdjust(:,8), q0q1q2_Vel_mat_NewAdjust(:,8), q0q1q2_Acc_mat_NewAdjust(:,8),...
+                                        q0q1q2_Pos_mat_NewAdjust(:,9), q0q1q2_Vel_mat_NewAdjust(:,9), q0q1q2_Acc_mat_NewAdjust(:,9),...
+                                        Time_mat_NewAdjust(:,1), Mode_det_Jq_Jc_J_mat_NewAdjust
+                                      ];
+    
+                                  
     %% Plot joint Angles
     PlotAngleValue;
     
     %% Check the correctness of the result by comparing the related adjunct values
-    LimitCheck_Redius = (360/NumIntepoPoints)*pi/180;
-    LimitCheck_Angle = 360/NumIntepoPoints;
+    VelocityLimitCheck_Redius = 3.0; % Maximum Speed without Load: 6.282 rad/s;
+    VelocitLimitCheck_Angle = 180; % degree/s;
     for i_CC_row = 1: length(q0q1q2_Pos_mat) - 1% CorrectnessCheck
-        delta_q0q1q2_mat = abs(q0q1q2_Pos_mat(i_CC_row + 1,:) - q0q1q2_Pos_mat(i_CC_row,:));
-        for i_CC_colum = 1: length(delta_q0q1q2_mat)
-            if delta_q0q1q2_mat(i_CC_colum) > LimitCheck_Redius
-                errordlg('Input values are incorrect!, Please Check!','Check Value Error');
-                error('Error. \n Output increment is large than %g degree, in row: %g, colum: %g.', LimitCheck_Angle, i_CC_row + 1, i_CC_colum)
+        
+        for i_CC_colum = 1: 6
+            i_colum = (i_CC_colum - 1) * 3 + 1;
+            if q11q12q14_q21q22q23_NewAdjust(i_colum) > VelocityLimitCheck_Redius
+                errordlg('Velocity Exceed Limits!, Please Check!','Check Value Error');
+                error('Error. \n Output Velocity is large than %g degree/s, in row: %g, colum: %g.', LimitCheck_Angle, i_CC_row + 1, i_colum)
             end
         end
+        
     end
-    h = msgbox('Check Completed, Input values are correct!');
+    h = msgbox('Check Completed, Velocity of Motors are in Limit!');
     
     %% 3D Animation
-%     q0q1q2_Pos_mat(:,1) = q0q1q2_Pos_mat(:,2);
-    for i = 1:length(q0q1q2_Pos_mat)-0
-        %========================== Animation ============================
-        ReconbotANI(q0q1q2_Pos_mat(i,:));
+    %q0q1q2_Pos_mat(:,1) = q0q1q2_Pos_mat(:,2);
+    for i = 101:length(q0q1q2_Pos_mat_NewAdjust)- 0
+        
+        %========================== Animation ========= ===================
+        ReconbotANI(q0q1q2_Pos_mat_NewAdjust(i,:));
 %         set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
 %         set(CPsA2C2,'xdata',xCPsA2C2data(:,i+1),'ydata',yCPsA2C2data(:,i+1),'zdata',zCPsA2C2data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
         %============================ End ================================
