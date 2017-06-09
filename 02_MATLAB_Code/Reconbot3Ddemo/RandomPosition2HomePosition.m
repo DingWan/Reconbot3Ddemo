@@ -10,7 +10,8 @@ deg = pi/180;
 addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
 
 %% Read the value of Motor Encoder
-MotorPosition = [0*pi/180, 0*pi/180, -90*pi/180, 0*pi/180, 0*pi/180, 180*pi/180];
+% MotorPosition = [q11, q12, q14, q21, q22, q23]
+MotorPosition = [90*pi/180, 10*pi/180, -90*pi/180, 90*pi/180, 10*pi/180, 180*pi/180];
 
 % Intepotation Points and Time
 NumIntepoPoints = 50;
@@ -80,9 +81,9 @@ for OnlyUsedforFoldingThisPart = 1:1
     q0q1q2_current = Mode_Pos_Ori_TrajPoints_cell{2}{3};
     
     % Motion Planning and Optimal Soultion;
-        [ q0q1q2_P2P_Pos_Intep_HomePosition, q0q1q2_P2P_Vel_Intep_HomePosition ,q0q1q2_P2P_Acc_Intep_HomePosition, ...
+        [ PosOri_Output, q0q1q2_P2P_Pos_Intep_HomePosition, q0q1q2_P2P_Vel_Intep_HomePosition ,q0q1q2_P2P_Acc_Intep_HomePosition, ...
           MP_Pos_Intep_HomePosition, MP_Vel_Intep_HomePosition, MP_Acc_Intep_HomePosition, MP_time_Intep_HomePosition, Mode_det_Jq_J_HomePosition ] = ...
-                                          MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+                                          MotionPlanningTransitionModes(Mode_previous,PosOri_previous,q0q1q2_previous,...
                                                                                   Mode_current, PosOri_current, q0q1q2_current, ...
                                                                                   NumIntepoPoints, Start_Time, Time_inteval, l1, l2);  
                                                                               

@@ -126,7 +126,7 @@ if HomePosition == 2
         
         % Motion Planning and Optimal Soultion;
         [ PosOri_Output, q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, ...
-            MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J ] = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+            MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J ] = MotionPlanningTransitionModes(Mode_previous,PosOri_previous,q0q1q2_previous,...
                                                                                                                         Mode_current, PosOri_current, q0q1q2_current, ...
                                                                                                                         NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
         % Moving Platform Position
@@ -179,7 +179,7 @@ if HomePosition == 2
         % Motion Planning and Optimal Soultion;
         [ PosOri_Output_HomePosition, q0q1q2_P2P_Pos_Intep_HomePosition, q0q1q2_P2P_Vel_Intep_HomePosition ,q0q1q2_P2P_Acc_Intep_HomePosition, ...
             MP_Pos_Intep_HomePosition, MP_Vel_Intep_HomePosition, MP_Acc_Intep_HomePosition, MP_time_Intep_HomePosition, Mode_det_Jq_Jc_J_HomePosition ] = ...
-                                                                            MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+                                                                            MotionPlanningTransitionModes(Mode_previous,PosOri_previous,q0q1q2_previous,...
                                                                             Mode_current, PosOri_current, q0q1q2_current, ...
                                                                             NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
         
@@ -214,6 +214,42 @@ if HomePosition == 2
                           ];
     
     
+      %% ================================== Co-Simulation ==================================
+      
+      h = msgbox('Co_Simulation Calculation Completed, 1. Set Co_Simulation as Current Folder, 2. Run RCB_CoSim_FullMode_Output.slx');
+      
+      Co_Simulation_Enable = 1;
+      
+      if Co_Simulation_Enable == 1
+          
+          q0_CoSim = q0q1q2_Pos_mat(:,1);
+          q11_CoSim = q0q1q2_Pos_mat(:,2);
+          q12_CoSim = q0q1q2_Pos_mat(:,3)-pi/4;
+          q14_CoSim = q0q1q2_Pos_mat(:,5)+pi/4;
+          q21_CoSim = q0q1q2_Pos_mat(:,7);
+          q22_CoSim = q0q1q2_Pos_mat(:,8)-pi/4;
+          q23_CoSim = q0q1q2_Pos_mat(:,9)-pi/2;
+          
+          n = length(q0q1q2_Pos_mat);
+          Slide = 0 * ones(n,1);
+          for i = 1:n
+              LeftArmAngle(i,1) = pi/6 * sin(i*pi/n);
+              RightArmAngle(i,1) = pi/6 * sin(i*pi/n);
+          end
+          
+          q0q1q2SlideLeftRightArm = [q0_CoSim, q11_CoSim, q12_CoSim, q14_CoSim, q21_CoSim, q22_CoSim, q23_CoSim, LeftArmAngle, RightArmAngle, Slide];% * 180/pi;
+          q0q1q2SlideLeftRightArm_time = [Time_mat, q0q1q2SlideLeftRightArm];
+          
+          % 3D Animation
+          for i = 1:length(q0q1q2_Pos_mat)- 0
+              ReconbotANI(q0q1q2_Pos_mat(i,:));
+          end
+          
+          % Co-Simulation launch
+          RCB_CoSim;
+          
+      end
+                      
     %% ================================== Re-Planning According to Singurlarity============================================== 
     %Detect Mode switch and replan according the 'Start and End velocities are Zero: V_start = V_end = 0'
  
