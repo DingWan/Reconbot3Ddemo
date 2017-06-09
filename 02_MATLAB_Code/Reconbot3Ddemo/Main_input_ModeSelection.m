@@ -59,7 +59,14 @@ if HomePosition == 2
     %% ================================== First-Planning for Singurlarity Judging============================================== 
     %% Motion planning
     clc
+    
     %=======================================
+    disp('===================================================================')
+    disp('==================== Reconbot plans trajectory ====================')
+    disp('===================================================================')
+    disp('Reconbot is calculating, Please wait ...')
+    pause(1);
+    
     % Intepotation Points and Time
     NumIntepoPoints = 20;
     Start_Time = 0;
@@ -126,7 +133,7 @@ if HomePosition == 2
         
         % Motion Planning and Optimal Soultion;
         [ PosOri_Output, q0q1q2_P2P_Pos_Intep, q0q1q2_P2P_Vel_Intep ,q0q1q2_P2P_Acc_Intep, ...
-            MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J ] = MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+            MP_Pos_Intep, MP_Vel_Intep, MP_Acc_Intep, MP_time_Intep, Mode_det_Jq_Jc_J ] = MotionPlanningTransitionModes(Mode_previous,PosOri_previous,q0q1q2_previous,...
                                                                                                                         Mode_current, PosOri_current, q0q1q2_current, ...
                                                                                                                         NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
         % Moving Platform Position
@@ -179,7 +186,7 @@ if HomePosition == 2
         % Motion Planning and Optimal Soultion;
         [ PosOri_Output_HomePosition, q0q1q2_P2P_Pos_Intep_HomePosition, q0q1q2_P2P_Vel_Intep_HomePosition ,q0q1q2_P2P_Acc_Intep_HomePosition, ...
             MP_Pos_Intep_HomePosition, MP_Vel_Intep_HomePosition, MP_Acc_Intep_HomePosition, MP_time_Intep_HomePosition, Mode_det_Jq_Jc_J_HomePosition ] = ...
-                                                                            MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+                                                                            MotionPlanningTransitionModes(Mode_previous,PosOri_previous,q0q1q2_previous,...
                                                                             Mode_current, PosOri_current, q0q1q2_current, ...
                                                                             NumIntepoPoints, Start_Time, Time_inteval, l1, l2);
         
@@ -216,7 +223,16 @@ if HomePosition == 2
     
     %% ================================== Re-Planning According to Singurlarity============================================== 
     %Detect Mode switch and replan according the 'Start and End velocities are Zero: V_start = V_end = 0'
- 
+    disp(' ')
+    disp(' ')
+    disp('==========================================================================')
+    disp('================== Reconbot will re-planning trajectory ==================')
+    disp('==========================================================================')
+    disp(' ')
+    disp('System is rununing, Please wait ...')
+    disp(' ')
+    pause(1);
+     
     NumIntepoPoints_DetailedPlanning = 20;
     
     Mode_Ideal = Mode_det_Jq_Jc_J_mat(:,1);
