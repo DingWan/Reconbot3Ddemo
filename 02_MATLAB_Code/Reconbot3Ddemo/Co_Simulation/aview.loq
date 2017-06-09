@@ -1,49 +1,15 @@
 ! Adams/View Adams 2014 (built Aug 26 2014)
 ! Graphics:  OpenGL
-! Using software OpenGL overlay plane emulation
 ! Enter a command, '?', or 'help'.
 model display model=.RCB_DualArm_BaseMotor view=all
 ! >> model display model=.RCB_DualArm_BaseMotor view=all
-view manage modify render=wireframe
-view manage modify render=solid
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!  SELECT OBJECT
-undo begin
-default coordinate_system default_coordinate_system=.RCB_DualArm_BaseMotor
-undo end
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! MODIFY View Rotate
-undo begin
-view rotate view=.gui.main.front screen=-1.0471733446, -3.711859414E-002, 2.0371825304E-002
-undo end
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 view manage modify render=sshaded
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! MODIFY View Zoom
-undo begin
-view zoom view=.gui.main.front zoom=0.4683257919
-undo end
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! MODIFY View Translate
-undo begin
-view center view=.gui.main.front object=-0.4130522462, -6.0757577056E-002, 0.1358649995
-undo end
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! MODIFY View Rotate
 undo begin
-view rotate view=.gui.main.front screen=-1.5265533065E-002, -0.2317746897, -0.1960132794
+default coordinate_system default_coordinate_system=.RCB_DualArm_BaseMotor
+view rotate view=.gui.main.front screen=-0.9753217643, -0.3599834448, -0.2255543745
 undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -51,7 +17,7 @@ undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! MODIFY View Zoom
 undo begin
-view zoom view=.gui.main.front zoom=1.4830917874
+view zoom view=.gui.main.front zoom=0.6330275229
 undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -59,14 +25,7 @@ undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! MODIFY View Translate
 undo begin
-view center view=.gui.main.front object=-0.276844724, -5.0613953075E-002, 7.6585274617E-002
-undo end
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-!  SELECT OBJECT
-undo begin
+view center view=.gui.main.front object=-0.2964863222, -0.1918445734, 0.1308669152
 undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -74,10 +33,7 @@ undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! MODIFY View Rotate
 undo begin
-view rotate view=.gui.main.front screen=3.5752177205E-002, 0.2253311861, 8.4096562394E-002
+view rotate view=.gui.main.front screen=-0.1896032436, 7.0470810681E-003, -3.0808150262E-003
 undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-measure_display delete mea_display = .RCB_DualArm_BaseMotor.MOTION_7_Torque_display
-measure_display delete mea_display = .RCB_DualArm_BaseMotor.MOTION_6_Torque_display
-measure_display delete mea_display = .RCB_DualArm_BaseMotor.MOTION_5_Torque_display

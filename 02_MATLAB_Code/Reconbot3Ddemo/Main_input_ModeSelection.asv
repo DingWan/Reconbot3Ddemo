@@ -59,9 +59,11 @@ if HomePosition == 2
     %% ================================== First-Planning for Singurlarity Judging============================================== 
     %% Motion planning
     clc
+    
+    for OnlyUsedforFolding = 1:1
     %=======================================
     % Intepotation Points and Time
-    NumIntepoPoints = 20;
+    NumIntepoPoints = 50;
     Start_Time = 0;
     Time_inteval = 5;
     %
@@ -212,40 +214,48 @@ if HomePosition == 2
                             q0q1q2_Pos_mat(:,9), q0q1q2_Vel_mat(:,9), q0q1q2_Acc_mat(:,9),...
                             Time_mat(:,1), Mode_det_Jq_Jc_J_mat
                           ];
+    end
     
-    
-      %% ================================== Co-Simulation ==================================
-      q0_CoSim = q0q1q2_Pos_mat(:,1);
-      q11_CoSim = q0q1q2_Pos_mat(:,2);
-      q12_CoSim = q0q1q2_Pos_mat(:,3)-pi/4;
-      q14_CoSim = q0q1q2_Pos_mat(:,5)+pi/4;
-      q21_CoSim = q0q1q2_Pos_mat(:,7);
-      q22_CoSim = q0q1q2_Pos_mat(:,8)-pi/4;
-      q23_CoSim = q0q1q2_Pos_mat(:,9)-pi/2;
+    %% ================================== Co-Simulation ==================================
+    for OnlyUsedforFolding = 1:1
+        h = msgbox('Co_Simulation Calculation Completed, 1. Set Co_Simulation as Current Folder, 2. Run RCB_CoSim_FullMode_Output.slx');
+        
+        Co_Simulation_Enable = 1;
+        
+        if Co_Simulation_Enable == 1
             
-      n = length(q0q1q2_Pos_mat);
-      Slide = 0 * ones(n,1);
-      for i = 1:n
-          LeftArmAngle = pi/6 * sin(i*pi/n);
-          RightArmAngle = pi/6 * sin(i*pi/n);
-      end
-      
-      q0q1q2SlideLeftRightArm = [q0_CoSim, q11_CoSim, q12_CoSim, q14_CoSim, q21_CoSim, q22_CoSim, q23_CoSim, LeftArmAngle, RightArmAngle, Slide];% * 180/pi;
-      q0q1q2SlideLeftRightArm_time = [Time_mat, q0q1q2SlideLeftRightArm];
-      
-      % 3D Animation
-      for i = 1:length(q0q1q2_Pos_mat)- 0
-          ReconbotANI(q0q1q2_Pos_mat(i,:));
-      end
-      
-      % Co-Simulation launch                
-      RCB_CoSim;               
-      
-      
-                      
-    %% ================================== Re-Planning According to Singurlarity============================================== 
+            q0_CoSim = q0q1q2_Pos_mat(:,1);
+            q11_CoSim = q0q1q2_Pos_mat(:,2);
+            q12_CoSim = q0q1q2_Pos_mat(:,3)-pi/4;
+            q14_CoSim = q0q1q2_Pos_mat(:,5)+pi/4;
+            q21_CoSim = q0q1q2_Pos_mat(:,7);
+            q22_CoSim = q0q1q2_Pos_mat(:,8)-pi/4;
+            q23_CoSim = q0q1q2_Pos_mat(:,9)-pi/2;
+            
+            n = length(q0q1q2_Pos_mat);
+            Slide = 0 * ones(n,1);
+            for i = 1:n
+                LeftArmAngle(i,1) = pi/6 * sin(i*pi/n);
+                RightArmAngle(i,1) = pi/6 * sin(i*pi/n);
+            end
+            
+            q0q1q2SlideLeftRightArm = [q0_CoSim, q11_CoSim, q12_CoSim, q14_CoSim, q21_CoSim, q22_CoSim, q23_CoSim, LeftArmAngle, RightArmAngle, Slide];% * 180/pi;
+            q0q1q2SlideLeftRightArm_time = [Time_mat, q0q1q2SlideLeftRightArm];
+            
+            % 3D Animation
+            for i = 1:length(q0q1q2_Pos_mat)- 0
+                %ReconbotANI(q0q1q2_Pos_mat(i,:));
+            end
+            
+            % Co-Simulation launch
+            RCB_CoSim;
+            
+        end
+    end    
+    
+    %% ================================== Re-Planning According to Singurlarity==============================================
     %Detect Mode switch and replan according the 'Start and End velocities are Zero: V_start = V_end = 0'
- 
+    for OnlyUsedforFolding = 1:1
     NumIntepoPoints_DetailedPlanning = 20;
     
     Mode_Ideal = Mode_det_Jq_Jc_J_mat(:,1);
@@ -352,8 +362,12 @@ if HomePosition == 2
                                         Time_mat_NewAdjust(:,1), Mode_det_Jq_Jc_J_mat_NewAdjust
                                       ];
     
-                                  
-    %% Plot joint Angles
+    end
+    
+    
+    
+    %% ===================== Plot joint Angles and Check the correntness of Joint Velocity Limitation =====================
+    for OnlyUsedforFolding = 1:1    
     PlotAngleValue;
     
     %% Check the correctness of the result by comparing the related adjunct values
@@ -372,6 +386,7 @@ if HomePosition == 2
     end
     h = msgbox('Check Completed, Velocity of Motors are in Limit!');
     
+    end
     %% 3D Animation
     %q0q1q2_Pos_mat(:,1) = q0q1q2_Pos_mat(:,2);
     for i = 1:length(q0q1q2_Pos_mat_NewAdjust)- 0

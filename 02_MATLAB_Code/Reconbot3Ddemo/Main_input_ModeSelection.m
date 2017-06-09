@@ -56,12 +56,13 @@ if HomePosition == 2
     %------ Single Mode ----------
     % load('q0q1q2_3T2R.mat')
     
-    %% ================================== First-Planning for Singurlarity Judging============================================== 
+    %% ========================= First-Planning for Singurlarity Judging================================ 
     %% Motion planning
-    clc
+    clc    
+    for OnlyUsedforFolding = 1:1
     %=======================================
     % Intepotation Points and Time
-    NumIntepoPoints = 20;
+    NumIntepoPoints = 50;
     Start_Time = 0;
     Time_inteval = 5;
     %
@@ -212,47 +213,48 @@ if HomePosition == 2
                             q0q1q2_Pos_mat(:,9), q0q1q2_Vel_mat(:,9), q0q1q2_Acc_mat(:,9),...
                             Time_mat(:,1), Mode_det_Jq_Jc_J_mat
                           ];
+    end
     
+    %% ================================== Co-Simulation ==================================
+    for OnlyUsedforFolding = 1:1
+        h = msgbox('Co_Simulation Calculation Completed, 1. Set Co_Simulation as Current Folder, 2. Run RCB_CoSim_FullMode_Output.slx');
+        
+        Co_Simulation_Enable = 1;
+        
+        if Co_Simulation_Enable == 1
+            
+            q0_CoSim = q0q1q2_Pos_mat(:,1);
+            q11_CoSim = q0q1q2_Pos_mat(:,2);
+            q12_CoSim = q0q1q2_Pos_mat(:,3)-pi/4;
+            q14_CoSim = q0q1q2_Pos_mat(:,5)+pi/4;
+            q21_CoSim = q0q1q2_Pos_mat(:,7);
+            q22_CoSim = q0q1q2_Pos_mat(:,8)-pi/4;
+            q23_CoSim = q0q1q2_Pos_mat(:,9)-pi/2;
+            
+            n = length(q0q1q2_Pos_mat);
+            Slide = 0 * ones(n,1);
+            for i = 1:n
+                LeftArmAngle(i,1) = pi/6 * sin(i*pi/n);
+                RightArmAngle(i,1) = pi/6 * sin(i*pi/n);
+            end
+            
+            q0q1q2SlideLeftRightArm = [q0_CoSim, q11_CoSim, q12_CoSim, q14_CoSim, q21_CoSim, q22_CoSim, q23_CoSim, LeftArmAngle, RightArmAngle, Slide];% * 180/pi;
+            q0q1q2SlideLeftRightArm_time = [Time_mat, q0q1q2SlideLeftRightArm];
+            
+            % 3D Animation
+            for i = 1:length(q0q1q2_Pos_mat)- 0
+                %ReconbotANI(q0q1q2_Pos_mat(i,:));
+            end
+            
+            % Co-Simulation launch
+            RCB_CoSim;
+            
+        end
+    end    
     
-      %% ================================== Co-Simulation ==================================
-      
-      h = msgbox('Co_Simulation Calculation Completed, 1. Set Co_Simulation as Current Folder, 2. Run RCB_CoSim_FullMode_Output.slx');
-      
-      Co_Simulation_Enable = 1;
-      
-      if Co_Simulation_Enable == 1
-          
-          q0_CoSim = q0q1q2_Pos_mat(:,1);
-          q11_CoSim = q0q1q2_Pos_mat(:,2);
-          q12_CoSim = q0q1q2_Pos_mat(:,3)-pi/4;
-          q14_CoSim = q0q1q2_Pos_mat(:,5)+pi/4;
-          q21_CoSim = q0q1q2_Pos_mat(:,7);
-          q22_CoSim = q0q1q2_Pos_mat(:,8)-pi/4;
-          q23_CoSim = q0q1q2_Pos_mat(:,9)-pi/2;
-          
-          n = length(q0q1q2_Pos_mat);
-          Slide = 0 * ones(n,1);
-          for i = 1:n
-              LeftArmAngle(i,1) = pi/6 * sin(i*pi/n);
-              RightArmAngle(i,1) = pi/6 * sin(i*pi/n);
-          end
-          
-          q0q1q2SlideLeftRightArm = [q0_CoSim, q11_CoSim, q12_CoSim, q14_CoSim, q21_CoSim, q22_CoSim, q23_CoSim, LeftArmAngle, RightArmAngle, Slide];% * 180/pi;
-          q0q1q2SlideLeftRightArm_time = [Time_mat, q0q1q2SlideLeftRightArm];
-          
-          % 3D Animation
-          for i = 1:length(q0q1q2_Pos_mat)- 0
-              ReconbotANI(q0q1q2_Pos_mat(i,:));
-          end
-          
-          % Co-Simulation launch
-          RCB_CoSim;
-          
-      end
-                      
-    %% ================================== Re-Planning According to Singurlarity============================================== 
+    %% ======================== Re-Planning According to Singurlarity=========================================
     %Detect Mode switch and replan according the 'Start and End velocities are Zero: V_start = V_end = 0'
- 
+    for OnlyUsedforFolding = 1:1
     NumIntepoPoints_DetailedPlanning = 20;
     
     Mode_Ideal = Mode_det_Jq_Jc_J_mat(:,1);
@@ -359,29 +361,33 @@ if HomePosition == 2
                                         Time_mat_NewAdjust(:,1), Mode_det_Jq_Jc_J_mat_NewAdjust
                                       ];
     
-                                  
-    %% Plot joint Angles
-    PlotAngleValue;
-    
-    %% Check the correctness of the result by comparing the related adjunct values
-    VelocityLimitCheck_Redius = 3.0; % Maximum Speed without Load: 6.282 rad/s;
-    VelocitLimitCheck_Angle = 180; % degree/s;
-    for i_CC_row = 1: length(q0q1q2_Pos_mat) - 1% CorrectnessCheck
+    end
+     
+    %% =============== Plot joint Angles and Check the correntness of Joint Velocity Limitation ==================
+    for OnlyUsedforFolding = 1:1
+        PlotAngleValue;
         
-        for i_CC_colum = 1: 6
-            i_colum = (i_CC_colum - 1) * 3 + 1;
-            if q11q12q14_q21q22q23_NewAdjust(i_colum) > VelocityLimitCheck_Redius
-                errordlg('Velocity Exceed Limits!, Please Check!','Check Value Error');
-                error('Error. \n Output Velocity is large than %g degree/s, in row: %g, colum: %g.', LimitCheck_Angle, i_CC_row + 1, i_colum)
+        %% Check the correctness of the result by comparing the related adjunct values
+        VelocityLimitCheck_Redius = 3.0; % Maximum Speed without Load: 6.282 rad/s;
+        VelocitLimitCheck_Angle = 180; % degree/s;
+        for i_CC_row = 1: length(q0q1q2_Pos_mat) - 1% CorrectnessCheck
+            
+            for i_CC_colum = 1: 6
+                i_colum = (i_CC_colum - 1) * 3 + 1;
+                if q11q12q14_q21q22q23_NewAdjust(i_colum) > VelocityLimitCheck_Redius
+                    errordlg('Velocity Exceed Limits!, Please Check!','Check Value Error');
+                    error('Error. \n Output Velocity is large than %g degree/s, in row: %g, colum: %g.', LimitCheck_Angle, i_CC_row + 1, i_colum)
+                end
             end
+            
         end
+        h = msgbox('Check Completed, Velocity of Motors are in Limit!');
         
     end
-    h = msgbox('Check Completed, Velocity of Motors are in Limit!');
-    
-    %% 3D Animation
+        
+    %%  =============================== 3D Animation =================================
     %q0q1q2_Pos_mat(:,1) = q0q1q2_Pos_mat(:,2);
-    for i = 1:length(q0q1q2_Pos_mat_NewAdjust)- 0
+    for i = 21:length(q0q1q2_Pos_mat_NewAdjust)- 20
         
         %========================== Animation ========= ===================
         ReconbotANI(q0q1q2_Pos_mat_NewAdjust(i,:));

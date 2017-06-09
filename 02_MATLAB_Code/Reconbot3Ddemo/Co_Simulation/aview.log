@@ -3,13 +3,20 @@
 ! Enter a command, '?', or 'help'.
 model display model=.RCB_DualArm_BaseMotor view=all
 ! >> model display model=.RCB_DualArm_BaseMotor view=all
+measure_display delete mea_display = .RCB_DualArm_BaseMotor.MOTION_7_Torque_display
+measure_display delete mea_display = .RCB_DualArm_BaseMotor.MOTION_6_Torque_display
+measure_display delete mea_display = .RCB_DualArm_BaseMotor.MOTION_5_Torque_display
+measure_display delete mea_display = .RCB_DualArm_BaseMotor.MOTION_4_Torque_display
+measure_display delete mea_display = .RCB_DualArm_BaseMotor.MOTION_3_Torque_display
+measure_display delete mea_display = .RCB_DualArm_BaseMotor.MOTION_2_Torque_display
+measure_display delete mea_display = .RCB_DualArm_BaseMotor.MOTION_1_Torque_display
 view manage modify render=sshaded
 
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! MODIFY View Rotate
 undo begin
 default coordinate_system default_coordinate_system=.RCB_DualArm_BaseMotor
-view rotate view=.gui.main.front screen=-0.9753217643, -0.3599834448, -0.2255543745
+view rotate view=.gui.main.front screen=-1.1908086042, -1.7837909037E-002, 3.5362696647E-003
 undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -17,15 +24,7 @@ undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! MODIFY View Zoom
 undo begin
-view zoom view=.gui.main.front zoom=0.6330275229
-undo end
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
-!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-! MODIFY View Translate
-undo begin
-view center view=.gui.main.front object=-0.2964863222, -0.1918445734, 0.1308669152
+view zoom view=.gui.main.front zoom=0.5024271845
 undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
@@ -33,7 +32,39 @@ undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 ! MODIFY View Rotate
 undo begin
-view rotate view=.gui.main.front screen=-0.1896032436, 7.0470810681E-003, -3.0808150262E-003
+view rotate view=.gui.main.front screen=0.2254086996, -0.5041175016, -0.2394469291
+undo end
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! MODIFY View Translate
+undo begin
+view center view=.gui.main.front object=0.6059662807, 0.2799034749, 1.0192685115E-002
+undo end
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! MODIFY View Rotate
+undo begin
+view rotate view=.gui.main.front screen=-9.8044322581E-002, 0.2071508032, 7.0774282768E-003
+undo end
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! MODIFY View Zoom
+undo begin
+view zoom view=.gui.main.front zoom=1.1207729469
+undo end
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+! MODIFY View Translate
+undo begin
+view center view=.gui.main.front object=0.5171012083, 0.267463707, 5.6077173985E-002
 undo end
 !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
