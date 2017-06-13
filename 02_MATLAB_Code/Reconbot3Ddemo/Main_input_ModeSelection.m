@@ -387,7 +387,7 @@ if HomePosition == 2
         
     %%  =============================== 3D Animation =================================
     %q0q1q2_Pos_mat(:,1) = q0q1q2_Pos_mat(:,2);
-    for i = 21:length(q0q1q2_Pos_mat_NewAdjust)- 20
+    for i = 1:length(q0q1q2_Pos_mat_NewAdjust)- 20
         
         %========================== Animation ========= ===================
         ReconbotANI(q0q1q2_Pos_mat_NewAdjust(i,:));

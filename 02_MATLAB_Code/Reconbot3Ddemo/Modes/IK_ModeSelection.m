@@ -16,6 +16,8 @@
                         % Ci_in_Ob: Ci in frame Ob-xyz
                         C1_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0,-l1/2,0]')' + [po{1}, po{2}, po{3}];
                         C2_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0, l1/2,0]')' + [po{1}, po{2}, po{3}];
+                        C1_in_Ob = (rotz(q0)*C1_in_Ob')';
+                        C2_in_Ob = (rotz(q0)*C2_in_Ob')';
                         A1 = (rotz(q0)*[0, -l1/2, 0]')'; A2 = (rotz(q0)*[0, l1/2, 0]')';
                         % %-----------------------------------------------%
                         if abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && abs((C2_in_Ob(1) - A2(1)) > 1e-2 || abs(C2_in_Ob(2) - A2(2)) > 1e-2)
@@ -69,6 +71,8 @@
                         % Ci_in_Ob: Ci in frame Ob-xyz
                         C1_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0,-l1/2,0]')' + [po{1}, po{2}, po{3}];
                         C2_in_Ob = (eul2rotm([po{4}, 0, 0]) * [0, l1/2,0]')' + [po{1}, po{2}, po{3}];
+                        C1_in_Ob = (rotz(q0)*C1_in_Ob')';
+                        C2_in_Ob = (rotz(q0)*C2_in_Ob')';
                         A1 = (rotz(q0)*[0, -l1/2, 0]')'; A2 = (rotz(q0)*[0, l1/2, 0]')';
                         % %-----------------------------------------------%
                         if abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && abs((C2_in_Ob(1) - A2(1)) > 1e-2 || abs(C2_in_Ob(2) - A2(2)) > 1e-2)
