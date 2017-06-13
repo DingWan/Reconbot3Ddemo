@@ -9,20 +9,24 @@ p_0 = [0 0 0.208879343162506 0 0 0, 0 0]; %  p = 2 * l2 * sin(pi/4)
 deg = pi/180;
 addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
 
-%% Read the value of Motor Encoder
+%% Initialization
+%rosinit
 Reconbot = ReConBot;
 Reconbot.topic = '/RCB_full_mode_controller/state';
 
+%% Read the value of Motor Encoder
+%for i = 1:50
 tic
 DyInfo = Reconbot.getTraj();
-pause(0.001)
+pause(0.025)
 DyEnPos = DyInfo.LatestMessage.Actual.Positions;
 MotorPosition = DyEnPos';
 toc
+%end
 
 %MotorPosition = [0*pi/180, 0*pi/180, -90*pi/180, 0*pi/180, 0*pi/180, 180*pi/180];
 
-% Intepotation Points and Time
+%% Intepotation Points and Time
 NumIntepoPoints = 20;
 Start_Time = 0;
 Time_inteval = 5;

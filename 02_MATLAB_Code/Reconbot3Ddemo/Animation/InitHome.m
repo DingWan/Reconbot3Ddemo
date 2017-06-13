@@ -143,6 +143,6 @@ function del_app(varargin)
 
 clf
 close
-% delete;
+delete;
 end
  
