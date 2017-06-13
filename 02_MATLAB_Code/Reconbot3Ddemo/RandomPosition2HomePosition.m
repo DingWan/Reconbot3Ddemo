@@ -10,10 +10,20 @@ deg = pi/180;
 addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
 
 %% Read the value of Motor Encoder
-MotorPosition = [0*pi/180, 0*pi/180, -90*pi/180, 0*pi/180, 0*pi/180, 180*pi/180];
+Reconbot = ReConBot;
+Reconbot.topic = '/RCB_full_mode_controller/state';
+
+tic
+DyInfo = Reconbot.getTraj();
+pause(0.001)
+DyEnPos = DyInfo.LatestMessage.Actual.Positions;
+MotorPosition = DyEnPos';
+toc
+
+%MotorPosition = [0*pi/180, 0*pi/180, -90*pi/180, 0*pi/180, 0*pi/180, 180*pi/180];
 
 % Intepotation Points and Time
-NumIntepoPoints = 50;
+NumIntepoPoints = 20;
 Start_Time = 0;
 Time_inteval = 5;
 %
@@ -24,7 +34,7 @@ q0q1q2_Acc_mat = [];
 MP_Pos_mat = [];
 MP_Vel_mat = [];
 MP_Acc_mat = [];
-%
+% 
 MP_Pos_Intep = [];
 MP_Vel_Intep = [];
 MP_Acc_Intep = [];
@@ -41,6 +51,8 @@ Mode_det_Jq_J_mat = [];
 Mode_det_Jq_J = [];
 Mode_det_Jq_J_HomePosition_mat = [];
 Mode_det_Jq_J_HomePosition = [];
+%
+PosOri_Output_mat = [];
 
 %% Check the Current Mode
 q0q1q2_FixedMode = [0, 0, 0, pi, -pi/2, 0, 0, 0, -pi/2, 0, 0];
@@ -80,12 +92,15 @@ for OnlyUsedforFoldingThisPart = 1:1
     q0q1q2_current = Mode_Pos_Ori_TrajPoints_cell{2}{3};
     
     % Motion Planning and Optimal Soultion;
-        [ q0q1q2_P2P_Pos_Intep_HomePosition, q0q1q2_P2P_Vel_Intep_HomePosition ,q0q1q2_P2P_Acc_Intep_HomePosition, ...
+        [ PosOri_Output, q0q1q2_P2P_Pos_Intep_HomePosition, q0q1q2_P2P_Vel_Intep_HomePosition ,q0q1q2_P2P_Acc_Intep_HomePosition, ...
           MP_Pos_Intep_HomePosition, MP_Vel_Intep_HomePosition, MP_Acc_Intep_HomePosition, MP_time_Intep_HomePosition, Mode_det_Jq_J_HomePosition ] = ...
-                                          MotionPlanningOptimalSoultion(Mode_previous,PosOri_previous,q0q1q2_previous,...
+                                          MotionPlanningTransitionModes(Mode_previous,PosOri_previous,q0q1q2_previous,...
                                                                                   Mode_current, PosOri_current, q0q1q2_current, ...
                                                                                   NumIntepoPoints, Start_Time, Time_inteval, l1, l2);  
                                                                               
+    % Moving Platform Position
+       PosOri_Output_mat = [PosOri_Output_mat; PosOri_Output];
+            
     % Position, Velocity, Acceleration Calcuation of joint angles                                                                                                       NumIntepoPoints, Start_Time, Time_inteval, l1, l2);                                      
       q0q1q2_Pos_mat = [ q0q1q2_Pos_mat; q0q1q2_P2P_Pos_Intep_HomePosition ];
       q0q1q2_Vel_mat = [ q0q1q2_Vel_mat; q0q1q2_P2P_Vel_Intep_HomePosition ];

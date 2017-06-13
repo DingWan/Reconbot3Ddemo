@@ -2,7 +2,7 @@
 % This class allows to create objects or instances which have the property to stablish
 % comunication with the ReConBot Control package that runs in background in
 % a Linux based machine.
-% Author: Jorge De La Cruz and Wang Ding
+% Author: Jorge De La Cruz and Wan Ding
 % date: 13 March 2017
 % version: 0.1
 %% Definition Class
