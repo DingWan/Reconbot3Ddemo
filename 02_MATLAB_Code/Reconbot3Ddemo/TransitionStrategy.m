@@ -1072,13 +1072,10 @@ end
                     case 5 % 3T1R-SingularityA1C1A2C2
                         if q0q1q2_previous(2) ~= 0 || q0q1q2_previous(3) ~= 0 || q0q1q2_previous(7) ~= 0 || q0q1q2_previous(8) ~= 0
                             InsertRow_TransiConfig{1,:} = {12, {0, 0, 0 [] [] [], 0, 0, 0, 0}};
-                            InsertRow_TransiConfig{2,:} = {5, {0, 0, Posture_current{3}, 0, [], [], 0, 0}};
-                            MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
-                            Self_adjustment_Enable_Disable = [0 0 0];
-                        else                            
-                            InsertRow_TransiConfig{1,:} = {5, {0, 0, Posture_current{3}, 0, [], [], 0, 0}};
                             MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                             Self_adjustment_Enable_Disable = [0 0];
+                        else                            
+                            Self_adjustment_Enable_Disable = 0;
                         end
                     case 6 % 2T2R-6-Bar
                         if q0q1q2_previous(2) ~= 0 || q0q1q2_previous(3) ~= 0 || q0q1q2_previous(7) ~= 0 || q0q1q2_previous(8) ~= 0
