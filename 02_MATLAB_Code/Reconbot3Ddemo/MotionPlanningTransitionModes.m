@@ -386,6 +386,12 @@ for i = 1:length(MPOTP_cell)
                     q11 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,2);
                     q21 = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j-1,7);
                 else
+                    if isempty(PosOri{7}) == 1
+                       PosOri{7} = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+1,2);
+                    end
+                    if isempty(PosOri{8}) == 1
+                       PosOri{8} = q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+1,7);
+                    end
                     q11 = PosOri{7};
                     q21 = PosOri{8};
                 end
