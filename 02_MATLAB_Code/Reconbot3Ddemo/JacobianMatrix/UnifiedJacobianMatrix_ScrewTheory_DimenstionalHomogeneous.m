@@ -154,7 +154,16 @@ if Enable_Mode_JacoMat == 1
      Jc_Ob_3T2R = [   
                     Jc_Ob(1,1:2);
                     Jc_Ob(5,1:2);
-                  ];    
+                  ];  
+      inv_Jq1_Ob_3T2R = inv(Jq1_Ob_3T2R);
+      Ja_Ob_3T2R = inv_Jq1_Ob_3T2R/norm(inv_Jq1_Ob_3T2R) * Jx1_Ob_3T2R; % Ja = Jq^-1/norm(Jq^-1) * Jx
+      J_Ob_3T2R = [
+                      Ja_Ob_3T2R;
+                      Jc_Ob(1,:);
+                  ];
+      %
+       [U,S,V] = svd(J_Ob_3T2R);
+              
 elseif Enable_Mode_JacoMat == 2
     Jx1_Ob_3T1R = [    
                      Jx1_Ob(1,:);
@@ -183,94 +192,7 @@ elseif Enable_Mode_JacoMat == 2
                          Jc_Ob(5,:);
                          ];
      end
-elseif Enable_Mode_JacoMat == 5
-    Jx1_Ob_HomePosition = [    
-                             Jx1_Ob(2,:);
-                             Jx1_Ob(5,:);
-                          ];
-    Jq1_Ob_HomePosition = [  
-                             Jq1_2_Ob   0       
-                             0          Jq1_5_Ob
-                          ];
-    Jc_Ob_HomePosition = [   
-                             Jc_Ob(1,1:2);
-                             Jc_Ob(5,1:2);
-                          ];
-elseif Enable_Mode_JacoMat == 6 
-% ------ 2T2Rsixbar & RotateAroundPoint & 2T2Rfivebar & threebar ------
-    if norm(A1C1_Ob) == 0 || norm(A2C2_Ob) == 0
-        Jq2_6_Ob = 0;
-    end
-
-    Jx2_Ob_2T2Rsixbar = [   
-                            Jx2_Ob(2,:)
-                            Jx2_Ob(3,:)
-                            Jx2_Ob(4,:)
-                            Jx2_Ob(6,:)
-                         ];
-    Jq2_Ob_2T2Rsixbar = [  
-                           Jq2_2_Ob   0          0           0
-                           0          Jq2_3_Ob   0           0 
-                           0          0          Jq2_4_Ob    0
-                           0          0          0           Jq2_6_Ob
-                        ];     
-     if abs(det(Jq2_Ob_2T2Rsixbar)) < 1e-12 || norm(A1C1_Ob) == 0 || norm(A2C2_Ob) == 0
-         J_Ob_2T2Rsixbar = 0;
-     else
-         inv_Jq2_Ob_2T2Rsixbar = inv(Jq2_Ob_2T2Rsixbar);
-         Ja_Ob_2T2Rsixbar = inv_Jq2_Ob_2T2Rsixbar/norm(inv_Jq2_Ob_2T2Rsixbar) * Jx2_Ob_2T2Rsixbar;
-         J_Ob_2T2Rsixbar = [
-                             Ja_Ob_2T2Rsixbar;
-                             Jc_Ob(2,:)/norm(Jc_Ob(2,:));
-                             Jc_Ob(6,:)/norm(Jc_Ob(6,:));
-                             ];
-     end
-elseif Enable_Mode_JacoMat == 10
-% ------ 2RSerialChainA1A2 ------
-    Jx2_Ob_2RSerialChainA1C1 = [   
-                                    Jx2_Ob(1,:)
-                                    Jx2_Ob(5,:)
-                                 ];
-    Jq2_Ob_2RSerialChainA1C1 = [  
-                                   Jq2_1_Ob   0       
-                                   0          Jq2_5_Ob
-                                ];
-    if abs(det(Jq2_Ob_2RSerialChainA1C1)) < 1e-12
-        J_Ob_2RSerialChainA1C1 = 0;
-    else
-        inv_Jq2_Ob_2T2Rfivebar = inv(Jq2_Ob_2RSerialChainA1C1);
-        Ja_Ob_2RSerialChainA1C1 = inv_Jq2_Ob_2T2Rfivebar/norm(inv_Jq2_Ob_2T2Rfivebar) * Jx2_Ob_2RSerialChainA1C1;
-        J_Ob_2RSerialChainA1C1 = [
-                                    Ja_Ob_2RSerialChainA1C1;
-                                    Jc_Ob(2,:)/norm(Jc_Ob(2,:));
-                                    Jc_Ob(3,:)/norm(Jc_Ob(3,:));
-                                    Jc_Ob(4,:)/norm(Jc_Ob(4,:));
-                                    Jc_Ob(6,:)/norm(Jc_Ob(6,:));
-                                   ];
-    end
-elseif Enable_Mode_JacoMat == 11
-% ------ 2RSerialChainA1A2 ------
-    Jx2_Ob_2RSerialChainA2C2 = [   
-                                    Jx2_Ob(2,:)
-                                    Jx2_Ob(4,:)
-                                 ];
-    Jq2_Ob_2RSerialChainA2C2 = [  
-                                   Jq2_2_Ob   0       
-                                   0          Jq2_4_Ob
-                                ];
-    if abs(det(Jq2_Ob_2RSerialChainA2C2)) < 1e-12
-        J_Ob_2RSerialChainA2C2 = 0;
-    else
-        inv_Jq2_Ob_2T2Rfivebar = inv(Jq2_Ob_2RSerialChainA2C2);
-        Ja_Ob_2RSerialChainA2C2 = inv_Jq2_Ob_2T2Rfivebar/norm(inv_Jq2_Ob_2T2Rfivebar) * Jx2_Ob_2RSerialChainA2C2;
-        J_Ob_2RSerialChainA2C2 = [
-                                    Ja_Ob_2RSerialChainA2C2;
-                                    Jc_Ob(2,:)/norm(Jc_Ob(2,:));
-                                    Jc_Ob(3,:)/norm(Jc_Ob(3,:));
-                                    Jc_Ob(4,:)/norm(Jc_Ob(4,:));
-                                    Jc_Ob(6,:)/norm(Jc_Ob(6,:));
-                                   ];
-    end
+     [U,S,V] = svd(J_Ob_3T1R);
 end
 %
 
