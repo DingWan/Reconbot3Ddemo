@@ -201,6 +201,8 @@ classdef RCB1T2RRotAroundPoint
                 % There exist 4/5 situations:
                 jA1C1 = 0; % NumberofFeasibleSolutionA1C1 = 0;
                 jA2C2 = 0; % NumberofFeasibleSolutionA2C2 = 0;
+                q1 = [];
+                q2 = [];
                 for i = 1:IterationNumber
                     %--------- Situation I -----------%
                     q13 = pi - angleA1B1C1;
@@ -334,7 +336,7 @@ classdef RCB1T2RRotAroundPoint
                 % The number of correct value of q1 and q2 might be different,
                 % so, I force the number to be the same by compensating the
                 % fewer one with the missing number (jA1C1-jA2C2) of first value q1(1,1:5) and A1B1C1(1,:)
-                if jA1C1 ~= 0 && jA2C2 ~= 0 
+                if jA1C1 ~= 0 && jA2C2 ~= 0 && isempty(q1) ~= 1 && isempty(q2) ~= 1 
                     WSvalue_1T2R = 1;
                     if jA1C1 > jA2C2
                         for i = 1:1:(jA1C1-jA2C2)

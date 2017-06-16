@@ -36,7 +36,7 @@ str = {'3T1R';'2T2R-6-Bar';'2T2R-5-Bar';'2T1R-3-BarSerial';'2R-SerialA1C1';...
 [s,v] = listdlg('PromptString','Select a Operation Mode:','SelectionMode','single',...
     'ListString',str);
 if v == 0
-    break;
+    %break;
 end
 
 %% Workspace geneation of Selected Modes
@@ -180,10 +180,11 @@ for k = 1:1:xyzStepLength(3)
                 case 1
                      % 3T1R mode:  [1 1 1 1 0 0]
                      % p = [x, y, z, alpha, [], []];
-                    po = {CuboidPath(step,3), CuboidPath(step,4), CuboidPath(step,5), 0, [], []};
+                    po = {CuboidPath(step,3), CuboidPath(step,4), CuboidPath(step,5), 0, [], [], 0, 0};
                     q11q12q21q22 = [];
                     obj3T1R = RCB3T1R(po, q11q12q21q22, l1, l2);
-                    WSvalue(i,j,k) = obj3T1R.RCB_3T1R_IK;                    
+                    [~, ~, ~, ~, WSvalue_3T1R] = obj3T1R.RCB_3T1R_IK;    
+                    WSvalue(i,j,k) = WSvalue_3T1R(1);
                 case 2
                     % Mechanism in a general six-bar linkage:  [1 1 1 0 0 1]
                     % p = [x, y, z, [], [], gamma]

@@ -236,7 +236,9 @@ classdef RCB3T1RSingularityA1C1
             end
             % There exist 4/5 situations for each branch chain under the condition of single value for q13 and q23:
             jA1C1 = 0; % NumberofFeasibleSolutionA1C1 = 0;    
-            jA2C2 = 0; % NumberofFeasibleSolutionA2C2 = 0;   
+            jA2C2 = 0; % NumberofFeasibleSolutionA2C2 = 0;  
+            q1 = [];
+            q2 = [];
             for i = 1:IterationNumber
                 
                 %--------- Situation I -----------%
@@ -373,7 +375,7 @@ classdef RCB3T1RSingularityA1C1
             % The number of correct value of q1 and q2 might be different,
             % so, I force the number to be the same by compensating the
             % fewer one with the missing number (jA1C1-jA2C2) of first value q1(1,1:5) and A1B1C1(1,:)
-            if jA1C1 ~= 0 && jA2C2 ~= 0 
+            if jA1C1 ~= 0 && jA2C2 ~= 0 && isempty(q1) ~= 1 && isempty(q2) ~= 1
                 WSvalue_3T1R = 1;
                 %for i = 1:1:max(jA1C1,jA2C2)
                 if jA1C1 > jA2C2                    
