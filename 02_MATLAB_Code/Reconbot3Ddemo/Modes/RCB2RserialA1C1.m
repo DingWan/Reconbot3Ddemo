@@ -467,9 +467,9 @@ classdef RCB2RserialA1C1
             plot3(PA1A2x, PA1A2y, PA1A2z,'k-','linewidth',3); hold on;
             
             %----------------- plot xyz axes of base point --------------
-            x_axis = [0.5 0 0];
-            y_axis = [0 0.5 0];
-            z_axis = [0 0 0.5];
+            x_axis = [50 0 0];
+            y_axis = [0 50 0];
+            z_axis = [0 0 50];
             OP= [0 0 0];
             xyz = [OP;x_axis;OP;y_axis;OP;z_axis];
             i = 1:2;

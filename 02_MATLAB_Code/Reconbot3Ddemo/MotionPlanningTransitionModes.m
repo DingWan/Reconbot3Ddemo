@@ -569,7 +569,7 @@ for i = 1:length(MPOTP_cell)
                 if i == 1
                     MPOTP_cell_Target = MPOTP_cell{3};
                     MPOTP_cell{3}{1} = 5;
-                    MPOTP_cell{3}{2} = {0, 0, 0.208879343162506 0 [] 0, 0, 0};
+                    MPOTP_cell{3}{2} = {0, 0, 208.879343162506 0 [] 0, 0, 0};
                 elseif i == 2
                     MPOTP_cell{3}{1} = 7;
                     MPOTP_cell{3}{2} = MPOTP_cell_Target{2};
@@ -578,7 +578,7 @@ for i = 1:length(MPOTP_cell)
                 if i == 1
                     MPOTP_cell_Target = MPOTP_cell{3};
                     MPOTP_cell{3}{1} = 5;
-                    MPOTP_cell{3}{2} = {0, 0, 0.208879343162506 0 [] 0, 0, 0};
+                    MPOTP_cell{3}{2} = {0, 0, 208.879343162506 0 [] 0, 0, 0};
                 elseif i == 2
                     MPOTP_cell{3}{1} = 5;
                     MPOTP_cell{3}{2} = MPOTP_cell_Target{2};

@@ -18,11 +18,11 @@ clc
 %close all
 clear 
 
-l1 = 0.2301390;
-l2 = 0.1477;
+l1 = 230.1390;
+l2 = 147.7;
 
 q0q1q2_HomePosition = [0, 0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
-p_0 = [0 0 0.208879343162506 0 0 0, 0 0]; %  p = 2 * l2 * sin(pi/4)
+p_0 = [0 0 208.879343162506 0 0 0, 0 0]; %  p = 2 * l2 * sin(pi/4)
 
 deg = pi/180;
 
@@ -98,7 +98,7 @@ if HomePosition == 2
         
         if IntepPointNum == 1
             Mode = 5;
-            Posture = [0 0 0.208879343162506 0 0 0, 0 0];
+            Posture = [0 0 208.879343162506 0 0 0, 0 0];
         else
         end
         
@@ -425,7 +425,7 @@ if HomePosition == 2
         LastStep_q0q1q2 = HomePos2SelectedEndPos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(len_q0q1q2_Pos_mat,:);
         %
         Mode_Pos_Ori_TrajPoints_cell{1} = [LastStep_Mode, LastStep_PosOri, LastStep_q0q1q2];
-        Mode_Pos_Ori_TrajPoints_cell{2} = { 5, {0 0 0.208879343162506 0 [] [], 0 ,0},q0q1q2_HomePosition};
+        Mode_Pos_Ori_TrajPoints_cell{2} = { 5, {0 0 208.879343162506 0 [] [], 0 ,0},q0q1q2_HomePosition};
         % First step: Calculate the next step and get the second row values of q11 and q21 after
         % interpotation, and assign to the previous step.0
         % Assgin Input value

@@ -5,7 +5,7 @@
                     % 3T1R mode:  [1 1 1 1 0 0]
                     % p = [x, y, z, alpha, [], []];
                     po_cell = inputdlg({'x ([-L1/2,L1/2])','y ([-L1/2,L1/2])','z(z>0)',},'3T2R', [1 20; 1 20; 1 20]);
-                    for i=1:3 po_num(i) = str2num(po_cell{i}) / 1000; end
+                    for i=1:3 po_num(i) = str2num(po_cell{i}); end
                     if po_num(1) == 0 && po_num(2) == 0 && po_num(3) == 0
                         po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
                     else
@@ -54,7 +54,7 @@
                     % 3T1R mode:  [1 1 1 1 0 0]
                     % p = [x, y, z, alpha, [], []];
                     po_cell = inputdlg({'x ([-L1/2,L1/2])','y ([-L1/2,L1/2])','z(z>0)','Theta =(-90~90)'},'3T1R', [1 20; 1 20; 1 20; 1 20]);
-                    for i=1:3 po_num(i) = str2num(po_cell{i}) / 1000; end
+                    for i=1:3 po_num(i) = str2num(po_cell{i}); end
                     po_num(4) = str2num(po_cell{4}) * pi / 180;
                     %po_num = [77.781745930520227684092879831533, -32.2183, 150, -pi/4]; SingularityA1C1
                     %po_num = [77.781745930520227684092879831533, 32.2183,  150, pi/4]; SingularityA2C2
@@ -106,7 +106,7 @@
                     %po_num = [77.781745930520227684092879831533, -32.2183, 150, -pi/4]; SingularityA1C1
                     display( 'Mode switch to: "3T1R-SingularityA1C1"');
                     po_cell = inputdlg({'z(z>0)','Theta =(-90~90)', 'q11:SingularityA1C1'},'3T1R-SingularityA1C1', [1 20; 1 20; 1 20;]);
-                    po_num(3) = str2num(po_cell{1}) / 1000; 
+                    po_num(3) = str2num(po_cell{1}); 
                     po_num(4) = str2num(po_cell{2}) * pi / 180;
                     po_num(1) = -l1/2 * sin(po_num(4));
                     po_num(2) = l1/2 * (cos(po_num(4)) - 1);
@@ -120,7 +120,7 @@
                     %po_num = [77.781745930520227684092879831533, 32.2183,  150, pi/4]; SingularityA2C2
                     display( 'Mode switch to: "3T1R-SingularityA2C2"');
                     po_cell = inputdlg({'z(z>0)','Theta =(-90~90)', 'q21:SingularityA2C2'},'3T1R-SingularityA2C2', [1 20; 1 20; 1 20;]);
-                    po_num(3) = str2num(po_cell{1}) / 1000; 
+                    po_num(3) = str2num(po_cell{1}); 
                     po_num(4) = str2num(po_cell{2}) * pi / 180;
                     po_num(1) = l1/2 * sin(po_num(4));
                     po_num(2) = l1/2 * (- cos(po_num(4)) + 1);
@@ -133,7 +133,7 @@
                 case 5 % 3T1R-SingularityA1C1A2C2
                     display( 'Mode switch to: "3T1R-SingularityA1C1A2C2"');
                     po_cell_z78 = inputdlg({'z(z>0)','q11','q21'},'3T1R-SingularityA1C1A2C2', [1 20; 1 20; 1 20]);
-                    po{3} = str2num(po_cell_z78{1}) / 1000;
+                    po{3} = str2num(po_cell_z78{1});
                     po{7} = str2num(po_cell_z78{2}) * pi / 180;
                     po{8} = str2num(po_cell_z78{3}) * pi / 180;
                     q11 = po{7};
@@ -148,7 +148,7 @@
                     % Mechanism in a general six-bar linkage:  [1 1 1 0 0 1]
                     % p = [x, y, z, [], [], gamma]
                     po_cell = inputdlg({'x (-L2,L2)','y (-L2,L2)','z ([0, 2*L2])','Theta =(-90~90)'},'2T2R-6-Bar', [1 20; 1 20; 1 20; 1 20;]);
-                    for i=1:3 po_num(i) = str2num(po_cell{i}) / 1000; end
+                    for i=1:3 po_num(i) = str2num(po_cell{i}); end
                     po_num(4) = str2num(po_cell{4}) * pi / 180;
                     if po_num(1) == 0 && po_num(2) == 0  
                         if po_num(3) == 0
@@ -183,7 +183,7 @@
                     % p = [[], [], z, [], beta, gamma]; x = y = 0
                     po_cell = inputdlg({'z ([0, 2*L2])','q11 =(-360,360)','Theta =(-90~90)'},'2T2R-6-Bar', [1 20; 1 20; 1 20;]);
                     for i=2:3 po_num(i) = str2num(po_cell{i}) * pi / 180; end
-                    po_num(1) = str2num(po_cell{1}) / 1000;
+                    po_num(1) = str2num(po_cell{1});
                     po = {[], [], po_num(1), [], po_num(2), po_num(3)};
                     q11q12q14q23 = [];
                     obj1T2RRotAroundPoint = RCB1T2RRotAroundPoint(po,q11q12q14q23,l1,l2);
@@ -193,7 +193,7 @@
                     % Mechanism transfers into Planar five-bar Linkage:  [1 1 1 1 1 1]
                     % p = [x, 0, z, [], beta, 0]
                     po_cell = inputdlg({'x (-L2,L2)','z ([0, 2*L2])','Theta =(-90~90)'},'2T2R-5-Bar', [1 20; 1 20; 1 20;]);
-                    for i=1:2 po_num(i) = str2num(po_cell{i}) / 1000; end
+                    for i=1:2 po_num(i) = str2num(po_cell{i}); end
                     po_num(3) = str2num(po_cell{3}) * pi / 180;
                     po = {po_num(1), 0, po_num(2), [], po_num(3), []};
                     q11q12q14q22 = [];
@@ -204,7 +204,7 @@
                     % Mechanism transfers into Planar three-bar Linkage:  [1 1 1 1 1 1]
                     % p = [x, 0, z, 0, beta, []]
                     po_cell = inputdlg({'x (-L2,L2)','z ([0, 2*L2])','Theta =(-90~90)'},'2T1R-3-BarSerial', [1 20; 1 20; 1 20;]);
-                    for i=1:2 po_num(i) = str2num(po_cell{i}) / 1000; end
+                    for i=1:2 po_num(i) = str2num(po_cell{i}); end
                     po_num(3) = str2num(po_cell{3}) * pi / 180;
                     po = {po_num(1), 0, po_num(2), 0, po_num(3), []};
                     q11q12q14q23 = [];
@@ -216,7 +216,7 @@
                     % p = {x, y, [], [], [], []}; y < 0
                     q11q12q22q13 = [];
                     po_cell = inputdlg({'x ([-L1/2,L1/2])','y ([-L1/2,0])', 'theta12'},'2R-SerialA1C1', [1 20; 1 20; 1 20]);
-                    for i=1:2 po_num(i) = str2num(po_cell{i}) / 1000; end
+                    for i=1:2 po_num(i) = str2num(po_cell{i}); end
                     po_num(3) = str2num(po_cell{3}) * pi / 180;
                     if po_num(1) == 0 && po_num(2) == 0
                         po_cell = inputdlg({'theta11 =(-360~360)','theta12 =(0~45))','theta21 =(-360~360)','theta22 =(0~45))'},'Fixed-SerialA1C1A2C2', [1 20; 1 20; 1 20; 1 20]);
@@ -233,7 +233,7 @@
                     % p = {x, y, [], [], [], []}; y > 0
                     q11q12q22q23 = [];
                     po_cell = inputdlg({'x ([-L1/2,L1/2])','y ([0,L1/2])','theta22'},'2R-SerialA1C1', [1 20; 1 20; 1 20]);
-                    for i=1:2 po_num(i) = str2num(po_cell{i}) / 1000; end
+                    for i=1:2 po_num(i) = str2num(po_cell{i}); end
                     po_num(3) = str2num(po_cell{3}) * pi / 180;
                     if po_num(1) == 0 && po_num(2) == 0
                         po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
@@ -253,12 +253,5 @@
                     objRCBFixedSerialChain = RCBFixedSerialChain(po,q11q12q21q22,l1,l2);
                     [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = objRCBFixedSerialChain.RCB_FixedSerialChain_IK;
             end
-            %
-            % Judge if mechanism recovery to fixed mode
-%             if length(po) == 10 && Mode ~= 8
-%                 po_cell = inputdlg({'theta11 =(-360~360)','theta12 =(0~45))','theta21 =(-360~360)','theta22 =(0~45))'},'Fixed-SerialA1C1A2C2', [1 20; 1 20; 1 20; 1 20]);
-%                 for i=1:4 po_num(i) = str2num(po_cell{i}) * pi / 180; end
-%                 po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
-%                 [EulerAngle_q11_theta, ABC, q1q2] = RCB_FixedSerialChain_IK(po, l1, l2);
-%             end
+
             %%------------------------------ Method I: End ----------------------------------------
