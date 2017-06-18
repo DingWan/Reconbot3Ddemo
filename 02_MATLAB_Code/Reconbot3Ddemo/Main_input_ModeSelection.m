@@ -386,10 +386,10 @@ if HomePosition == 2
     % %============================ End ==============================
     
     %----------------- plot xyz axes of base point --------------
-    Displacement = [250,250,83.5+60.44+(45.5-22)] / 1000 ;
-    x_axis = [40 0 0] / 1000 + Displacement;
-    y_axis = [0 40 0] / 1000 + Displacement;
-    z_axis = [0 0 40] / 1000 + Displacement;
+    Displacement = [250,250,83.5+60.44+(45.5-22)];
+    x_axis = [40 0 0] + Displacement;
+    y_axis = [0 40 0] + Displacement;
+    z_axis = [0 0 40] + Displacement;
     OP= [0 0 0] + Displacement;
     xyz = (rotz(-90) * [OP;x_axis;OP;y_axis;OP;z_axis]')';
     j = 1:2;

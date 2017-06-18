@@ -83,17 +83,10 @@ switch s
 end
 
 %% ----------------- Original Point Calculation  --------------
-BaseLow_CenterPointBearing = [250, 250, 88.97];
-BaseUP_CenterPointBearing = [170, 160, 5.47];
-BaseUP_CenterPointA1C1 = [170, 50, 58.88];
-BaseJointA1C1A2C2_CenterPointSidePlate = [0, 48.10, 28];
-
-OriginalPoint(1) = BaseLow_CenterPointBearing(1);
-OriginalPoint(2) = BaseLow_CenterPointBearing(2);
-OriginalPoint(3) = BaseLow_CenterPointBearing(3) + BaseUP_CenterPointA1C1(3) + BaseJointA1C1A2C2_CenterPointSidePlate(3) - BaseUP_CenterPointBearing(3);
+OriginalPoint_Displacement = [250,250,83.5+60.44+(45.5-22)];
 
 % plot3(OriginalPoint(1), OriginalPoint(2), OriginalPoint(3),'r.','MarkerSize',10); 
-TransCuboidPath2OriginalPoint = [[eye(3,3);0,0,0], [OriginalPoint, 1]'];
+TransCuboidPath2OriginalPoint = [[eye(3,3);0,0,0], [OriginalPoint_Displacement, 1]'];
 
 
 %% ----------------- Calculation Path Geneation  --------------
@@ -182,7 +175,7 @@ for k = 1:1:xyzStepLength(3)
                      % p = [x, y, z, alpha, [], []];
                     po = {CuboidPath(step,3), CuboidPath(step,4), CuboidPath(step,5), 0, [], [], 0, 0};
                     q11q12q21q22 = [];
-                    obj3T1R = RCB3T1R(po, q11q12q21q22, l1, l2);
+                    obj3T1R = RCB3T1R_WS(po, q11q12q21q22, l1, l2);
                     [~, ~, ~, ~, WSvalue_3T1R] = obj3T1R.RCB_3T1R_IK;    
                     WSvalue(i,j,k) = WSvalue_3T1R(1);
                 case 2
@@ -190,21 +183,21 @@ for k = 1:1:xyzStepLength(3)
                     % p = [x, y, z, [], [], gamma]
                     po = {CuboidPath(step,3), CuboidPath(step,4), CuboidPath(step,5), [], [], 0};
                     q11q12q14q23 = [];
-                    obj2T2Rsixbar = RCB2T2Rsixbar(po,q11q12q14q23,l1,l2);
+                    obj2T2Rsixbar = RCB2T2Rsixbar_WS(po,q11q12q14q23,l1,l2);
                     WSvalue(i,j,k) = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
                 case 3 
                     % Mechanism transfers into Planar five-bar Linkage:  [1 1 1 0 1 1]
                     % p = [x, 0, z, [], beta, 0]                    
                     po = {CuboidPath(step,3), 0, CuboidPath(step,5), [], 0, 0}; % Angle should be rad: 'pi/3;
                     q11q12q14q22 = [];
-                    obj2T2Rfivebar = RCB2T2Rfivebar(po,q11q12q14q22,l1,l2);
+                    obj2T2Rfivebar = RCB2T2Rfivebar_WS(po,q11q12q14q22,l1,l2);
                     WSvalue(i,j,k) = obj2T2Rfivebar.RCB_2T2R_FiveBar_IK; 
                 case 4
                     % Mechanism transfers into Planar three-bar Linkage:  [1 1 1 1 1 0]
                     % p = [x, 0, z, 0, beta, []]
                     po = {CuboidPath(step,3), 0, CuboidPath(step,5), 0, 0, []}; % Angle should be rad: 'pi/3;
                     q11q12q14q23 = [];
-                    obj2T2Rthreebar = RCB2T2Rthreebar(po,q11q12q14q23,l1,l2);
+                    obj2T2Rthreebar = RCB2T2Rthreebar_WS(po,q11q12q14q23,l1,l2);
                     WSvalue(i,j,k) = obj2T2Rthreebar.RCB_ThreeBar_IK; 
                 case 5
                     % Four-bar linkage with Serial Chain A1C1: ----- isempty(p) = [1 1 1 0 0 0]
@@ -213,7 +206,7 @@ for k = 1:1:xyzStepLength(3)
                     % calculated zop = z, otherwise, it will be wrong value
                     po = {SpherePath(step,1), SpherePath(step,2), SpherePath(step,3), [], [], [], pi};
                     q11q12q22q13 = [];
-                    obj2RserialA1C1 = RCB2RserialA1C1(po,q11q12q22q13,l1,l2);
+                    obj2RserialA1C1 = RCB2RserialA1C1_WS(po,q11q12q22q13,l1,l2);
                     WSvalue(i,j,k) = obj2RserialA1C1.RCB_2R_SerialA1C1_IK;
                 case 6
                     % Four-bar linkage with Serial Chain A1C1: ----- isempty(p) = [1 1 1 0 0 0]
@@ -222,7 +215,7 @@ for k = 1:1:xyzStepLength(3)
                     % calculated zop = z, otherwise, it will be wrong value
                     po = {SpherePath(step,1), SpherePath(step,2), SpherePath(step,3), [], [], [], pi};
                     q11q12q22q23 = [];
-                    obj2RserialA2C2 = RCB2RserialA2C2(po,q11q12q22q23,l1,l2);
+                    obj2RserialA2C2 = RCB2RserialA2C2_WS(po,q11q12q22q23,l1,l2);
                     WSvalue(i,j,k) = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
                  case 8
                      % 3T1R mode-SingularityPositionA1C1:  [1 1 1 1 0 0]

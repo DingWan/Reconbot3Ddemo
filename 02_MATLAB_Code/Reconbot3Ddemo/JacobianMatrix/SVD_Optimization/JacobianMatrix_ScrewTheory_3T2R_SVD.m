@@ -86,14 +86,13 @@ for i = 1:n
         q21 = q1q2(i,6); q22 = q1q2(i,7); q23 = q1q2(i,8); q24 = q1q2(i,9); q25 = q1q2(i,10);
         q0q1q2(i,:) = [0, q1q2(i,:)];
         % InitHome;
-         ReconbotANI(q0q1q2(i,:));
+        % ReconbotANI(q0q1q2(i,:));
         % ===============================================================
         
         % Jacobian Matrix
         Enable_Mode_JacoMat = 1;
         UnifiedJacobianMatrix_ScrewTheory_DimenstionalHomogeneous;
-        ConditionNumber(i) = max(max(S))/min(max(S));
-        
+        ConditionNumber(i) = max(max(S))/min(max(S));        
         
         det_Jq1_Ob_3T2R(i) = det(Jq1_Ob_3T2R) * 1000; % normized  /norm(Jq1_Ob_3T1R)
         det_J_Ob_3T2R(i) = det(J_Ob_3T2R);
