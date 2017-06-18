@@ -26,7 +26,7 @@ classdef RCB3T1RSingularityA2C2_WS
         
     methods
         
-        function obj = RCB3T1RSingularityA2C2(pos,q11q12q21q22,L1,L2)% constructor
+        function obj = RCB3T1RSingularityA2C2_WS(pos,q11q12q21q22,L1,L2)% constructor
             if nargin > 0
                 obj.l1 = L1;
                 obj.l2 = L2;
@@ -136,9 +136,9 @@ classdef RCB3T1RSingularityA2C2_WS
                 if abs(C1_in_Ob(1) - A1(1)) <= 1e-8 && abs(C1_in_Ob(2) - A1(2)) <= 1e-8 && (abs((C2_in_Ob(1) - A2(1))) > 1e-8 || abs(C2_in_Ob(2) - A2(2)) > 1e-8)
                     %display('Notice:The 1st+5th axes of kinematic chain A1C1 overlapped')
                     % Display the output value, we use angle to show it properly
-                    name = '3T1R-A1C1 Singularity';
-                    fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{7}*180/pi);
+%                     name = '3T1R-A1C1 Singularity';
+%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{7}*180/pi);
                     %display('The solution can be decided by stratgies like (eg.2): ')
                     %display('1.Follow the angle of previous or next steps;')
                     %display('2.Transit into 2T2R, namely, q11 = -q21')
@@ -150,9 +150,9 @@ classdef RCB3T1RSingularityA2C2_WS
                     q11 = q11_SP_A1C1overlap;
                 elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-8 && abs(C2_in_Ob(2) - A2(2)) <= 1e-8 && (abs(C1_in_Ob(1) - A1(1)) > 1e-8 || abs(C1_in_Ob(2) - A1(2)) > 1e-8)
                     %display('Notice:The 1st+5th axes of kinematic chain A2C2 overlapped')
-                    name = '3T1R-A2C2 Singularity';
-                    fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{8}*180/pi);
+%                     name = '3T1R-A2C2 Singularity';
+%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{8}*180/pi);
                     %display('The solution can be decided by stratgies like(eg.2): ')
                     %display('1.Follow the angle of previous or next steps;')
                     %display('2.Transit into 2T2R, namely, q21 = -q11 ')
@@ -167,9 +167,9 @@ classdef RCB3T1RSingularityA2C2_WS
                 elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-8 && abs(C1_in_Ob(2) - A1(2)) <= 1e-8 && abs(C2_in_Ob(1) - A2(1)) <= 1e-8 && abs(C2_in_Ob(2) - A2(2)) <= 1e-8
                     %display('Notice:The 1st+5th axes of kinematic chains A1C1 and A2C2 overlapped')
                     % Display the output value, we use angle to show it properly
-                    name = '3T1R-A1C1+A2C2 Singularity';
-                    fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{7}*180/pi, po{8}*180/pi);
+%                     name = '3T1R-A1C1+A2C2 Singularity';
+%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{7}*180/pi, po{8}*180/pi);
                     %display('The solution can be decided by stratgies like(eg.2): ')
                     %display('1.Follow the angle of previous or next steps;')
                     %display('2.Transit into 2T2R, namely, q11 = -q21 = 0 ')
@@ -181,9 +181,9 @@ classdef RCB3T1RSingularityA2C2_WS
                     q21 = q21_SP_A1C1_A2C2_overlap;
                 else
                     % Display the output value, we use angle to show it properly
-                    name = '3T1R';
-                    fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
+%                     name = '3T1R';
+%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
                     %----------------- Singularity Judgement --------------------
                     WSvalue_3T1R_SinguPosA1C1 = 0;
                     WSvalue_3T1R_SinguPosA2C2 = 0;

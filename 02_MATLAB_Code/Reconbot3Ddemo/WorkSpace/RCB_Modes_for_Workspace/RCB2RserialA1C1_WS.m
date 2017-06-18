@@ -18,7 +18,7 @@ classdef RCB2RserialA1C1_WS
     end
     
     methods
-        function obj = RCB2RserialA1C1(pos,q11q12q22q13,L1,L2)
+        function obj = RCB2RserialA1C1_WS(pos,q11q12q22q13,L1,L2)
             if nargin > 0
                 obj.l1 = L1;
                 obj.l2 = L2;
@@ -97,9 +97,9 @@ classdef RCB2RserialA1C1_WS
                 elseif p(2) < 0
                     % Four-bar linkage with Serial Chain A1C1: ----- isempty(p) = [1 1 0 0 0 0]
                     % p = [x, y, [], [], [], []]; y < 0
-                    name = '2R-SerialA1C1';
-                    fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                        name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);                    
+%                     name = '2R-SerialA1C1';
+%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);                    
                     % 1.
                     q11 = - atan(p(1)/p(2));
                     Oboppie = sqrt(p(1)^2 + p(2)^2);
@@ -111,7 +111,7 @@ classdef RCB2RserialA1C1_WS
                     zop = sqrt(A1op^2 - A1oppie^2);
                     % Judge the exisitence of soultion
                     if isreal(zop) == 0 || A1oppie > A1op
-                        display('There exist no solution')
+%                         display('There exist no solution')
                         WSvalue = [0, 0, 0];
                         EulerAngle_q11_theta = [];
                         q1q2_FeasibleSolution = [];

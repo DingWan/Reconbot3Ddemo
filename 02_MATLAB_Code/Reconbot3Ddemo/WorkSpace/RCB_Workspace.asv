@@ -41,14 +41,10 @@ end
 %% Workspace geneation of Selected Modes
 switch Mode
     % input: length, width, height and step of the Study Points
-    case 1
-        % ---- 3T1R ------
-        x_bound = [-320, 320];y_bound = [-320, 320];z_bound = [-10, 320];
-        StepLength = 20;
     case 2
         % ---- 3T1R ------
         x_bound = [-320, 320];y_bound = [-320, 320];z_bound = [-10, 320];
-        StepLength = 20;
+        StepLength = 10;
     case 3
         % ---- 3T1R SingularityPositionA1C1 ------
         alpha = [-2*pi/3, 2*pi/3];z_bound = [0, 320];        
@@ -168,9 +164,9 @@ WSvalue = [];
 step = 0;
 NumExistedPoint = 0;
 tic
-for k = 1:1:xyzStepLength(3)
-    for j = 1:1:xyzStepLength(2)
-        for i = 1:1:xyzStepLength(1)            
+for k = 1:5:xyzStepLength(3)
+    for j = 1:5:xyzStepLength(2)
+        for i = 1:5:xyzStepLength(1)            
             step = step + 1;
             switch Mode
                 case 1
@@ -180,7 +176,7 @@ for k = 1:1:xyzStepLength(3)
                     q11q12q21q22 = [];
                     obj3T1R = RCB3T1R_WS(po, q11q12q21q22, l1, l2);
                     [~, ~, ~, ~, WSvalue_3T2R] = obj3T1R.RCB_3T1R_IK;    
-                    WSvalue(i,j,k) = WSvalue_3T2R(1);
+                    WSvalue(i,j,k) = WSvalue_3T1R(1);
                 case 2
                      % 3T1R mode:  [1 1 1 1 0 0]
                      % p = [x, y, z, alpha, [], []];
@@ -203,32 +199,28 @@ for k = 1:1:xyzStepLength(3)
                     po = {CylinderPath(step,1), CylinderPath(step,2), CylinderPath(step,3), alphaIntepetation(j), [], []};
                     q11q12q21q22 = [];
                     obj3T1R_SinguPosAiCi = RCB3T1RSingularityA2C2_WS(po, q11q12q21q22, l1, l2);
-                    [~, ~, ~, ~, WSvalue_3T1RSingularityA2C2] = obj3T1R_SinguPosAiCi.RCB_3T1R_SinguPosAiCi_IK;  
-                    WSvalue(i,j,k) = WSvalue_3T1RSingularityA2C2(1);    
+                    [~, WSvalue(i,j,k)] = obj3T1R_SinguPosAiCi.RCB_3T1R_SinguPosAiCi_IK;  
                 case 6
                     % Mechanism in a general six-bar linkage:  [1 1 1 0 0 1]
                     % p = [x, y, z, [], [], gamma]
                     po = {CuboidPath(step,3), CuboidPath(step,4), CuboidPath(step,5), [], [], 0};
                     q11q12q14q23 = [];
                     obj2T2Rsixbar = RCB2T2Rsixbar_WS(po,q11q12q14q23,l1,l2);
-                    [~, ~, ~, ~, WSvalue_2T2R] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
-                    WSvalue(i,j,k) = WSvalue_2T2R(1);
+                    WSvalue(i,j,k) = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
                 case 8 
                     % Mechanism transfers into Planar five-bar Linkage:  [1 1 1 0 1 1]
                     % p = [x, 0, z, [], beta, 0]                    
                     po = {CuboidPath(step,3), 0, CuboidPath(step,5), [], 0, 0}; % Angle should be rad: 'pi/3;
                     q11q12q14q22 = [];
                     obj2T2Rfivebar = RCB2T2Rfivebar_WS(po,q11q12q14q22,l1,l2);
-                    [~, ~, ~, ~, WSvalue_2T2Rfivebar] = obj2T2Rfivebar.RCB_2T2R_FiveBar_IK; 
-                    WSvalue(i,j,k) = WSvalue_2T2Rfivebar(1);
+                    WSvalue(i,j,k) = obj2T2Rfivebar.RCB_2T2R_FiveBar_IK; 
                 case 9
                     % Mechanism transfers into Planar three-bar Linkage:  [1 1 1 1 1 0]
                     % p = [x, 0, z, 0, beta, []]
                     po = {CuboidPath(step,3), 0, CuboidPath(step,5), 0, 0, []}; % Angle should be rad: 'pi/3;
                     q11q12q14q23 = [];
                     obj2T2Rthreebar = RCB2T2Rthreebar_WS(po,q11q12q14q23,l1,l2);
-                    [~, ~, ~, ~, WSvalue_2T2Rthreebar] = obj2T2Rthreebar.RCB_ThreeBar_IK; 
-                    WSvalue(i,j,k) = WSvalue_2T2Rthreebar(1);
+                    WSvalue(i,j,k) = obj2T2Rthreebar.RCB_ThreeBar_IK; 
                 case 10
                     % Four-bar linkage with Serial Chain A1C1: ----- isempty(p) = [1 1 1 0 0 0]
                     % p = [x, y, z, [], [], []]; y < 0 
@@ -237,8 +229,7 @@ for k = 1:1:xyzStepLength(3)
                     po = {SpherePath(step,1), SpherePath(step,2), SpherePath(step,3), [], [], [], pi};
                     q11q12q22q13 = [];
                     obj2RserialA1C1 = RCB2RserialA1C1_WS(po,q11q12q22q13,l1,l2);
-                    [~, ~, ~, ~, WSvalue_2RserialA1C1] = obj2RserialA1C1.RCB_2R_SerialA1C1_IK;
-                    WSvalue(i,j,k) = WSvalue_2RserialA1C1(1);
+                    WSvalue(i,j,k) = obj2RserialA1C1.RCB_2R_SerialA1C1_IK;
                 case 11
                     % Four-bar linkage with Serial Chain A1C1: ----- isempty(p) = [1 1 1 0 0 0]
                     % p = [x, y, z, [], [], []]; y > 0 
@@ -247,8 +238,7 @@ for k = 1:1:xyzStepLength(3)
                     po = {SpherePath(step,1), SpherePath(step,2), SpherePath(step,3), [], [], [], pi};
                     q11q12q22q23 = [];
                     obj2RserialA2C2 = RCB2RserialA2C2_WS(po,q11q12q22q23,l1,l2);
-                    [~, ~, ~, ~, WSvalue_2RserialA2C2] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
-                    WSvalue(i,j,k) = WSvalue_2RserialA2C2(1);
+                    WSvalue(i,j,k) = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
             end
             if WSvalue(i,j,k) == 1
                 NumExistedPoint = NumExistedPoint + 1;
@@ -263,7 +253,7 @@ toc
 save('WS_po_value.mat','WS_po_value');
 
 %% Get the boundary of the Workspace
-[k, volume] = boundary(WS_po_value,1);
+k = boundary(WS_po_value,1);
 
 if Mode == 3 || Mode == 4 || Mode == 8 || Mode == 9 || Mode == 10 || Mode == 11
     plot3(WS_po_value(:,1), WS_po_value(:,2), WS_po_value(:,3),'b.','MarkerSize',5);

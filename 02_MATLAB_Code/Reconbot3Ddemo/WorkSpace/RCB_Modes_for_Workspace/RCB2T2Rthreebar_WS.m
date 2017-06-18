@@ -18,7 +18,7 @@ classdef RCB2T2Rthreebar_WS
     
     methods
         
-        function obj = RCB2T2Rthreebar(pos,q11q12q14q23,L1,L2)
+        function obj = RCB2T2Rthreebar_WS(pos,q11q12q14q23,L1,L2)
             if nargin > 0
                 obj.l1 = L1;
                 obj.l2 = L2;
@@ -75,8 +75,8 @@ classdef RCB2T2Rthreebar_WS
             if isequal(p_BinaryCode, [1 1 1 0 0 0]) == 1
                 % Mechanism transit into two serial chain mechanism:  [1 1 1 0 0 0]
                 % p = [0, 0, 0, [], [], []]
-                display('Notice: Inputs are:p = [0, 0, 0, [], [], []]');
-                display('Moving platform is fixed! p = [0, 0, 0, 0, 0, 0]');
+%                 display('Notice: Inputs are:p = [0, 0, 0, [], [], []]');
+%                 display('Moving platform is fixed! p = [0, 0, 0, 0, 0, 0]');
                 alpha = 0;
                 beta = 0;
                 gamma = 0;
@@ -121,9 +121,9 @@ classdef RCB2T2Rthreebar_WS
             po{4} = alpha;
             po{5} = beta;
             po{6} = gamma;
-            name = '2T2R-ThreeBar';
-            fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                    name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
+%             name = '2T2R-ThreeBar';
+%             fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+%                     name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
             
             %% ------Calculate eight possbile outputs for ABC(1:8), q1q2(1:8)-----
             %--------------------- First step --------------------

@@ -10,7 +10,7 @@ classdef RCBFixedSerialChain_WS
     end
     
     methods
-        function obj = RCBFixedSerialChain(pos,q11q12q21q22 ,L1,L2)
+        function obj = RCBFixedSerialChain_WS(pos,q11q12q21q22 ,L1,L2)
             if nargin > 0
                 obj.l1 = L1;
                 obj.l2 = L2;
@@ -50,9 +50,9 @@ classdef RCBFixedSerialChain_WS
             if isequal(p_BinaryCode, [1 1 1 0 0 0]) == 1
                 % Mechanism transit into two serial chain mechanism:  [1 1 1 0 0 0]
                 % p = [0, 0, 0, [], [], []]
-                name = 'FixedSerialChain';
-                fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-                    name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi,     po{7}*180/pi, po{8}*180/pi, po{9}*180/pi,po{10}*180/pi);
+%                 name = 'FixedSerialChain';
+%                 fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
+%                     name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi,     po{7}*180/pi, po{8}*180/pi, po{9}*180/pi,po{10}*180/pi);
                 alpha = 0;
                 beta = 0;
                 gamma = 0;
