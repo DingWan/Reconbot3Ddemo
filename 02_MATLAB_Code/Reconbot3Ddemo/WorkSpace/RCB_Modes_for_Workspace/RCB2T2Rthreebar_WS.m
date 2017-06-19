@@ -150,19 +150,7 @@ classdef RCB2T2Rthreebar_WS
             % calculate: angleA1B1C1, q13, angleB1A1C1;  angleA2B2C2, q23, angleB2A2C2
             
             %% ----------------------- Calculate one solutions for one input  -----------------------
-            if p(1) == 0 && p(2) == 0 && p(3) == 0
-                WSvalue_2T2R_SinguPosA1C1 = 1;
-                WSvalue_2T2R_SinguPosA2C2 = 1;
-                IterationNumber = 1;
-                q13 = pi;
-                q14 = q12;
-                q15 = q11;
-                
-                q23 = pi;
-                q24 = q22;
-                q25 = q21;
-                q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-            else
+            
                 % Here are used to preserve the original value of q11
                 % and q21, which are used for i>5 due to the change of q11 and q21
                 q11_original = q11;
@@ -339,7 +327,7 @@ classdef RCB2T2Rthreebar_WS
                 end
                 WSvalue_2T2R_SinguPosA1C1 = 0;
                 WSvalue_2T2R_SinguPosA2C2 = 0;
-            end
+            
             WSvalue = [WSvalue_ThreeBar, WSvalue_2T2R_SinguPosA1C1, WSvalue_2T2R_SinguPosA2C2];
             p = [po{1}, po{2}, po{3}, EulerAngle];
         end

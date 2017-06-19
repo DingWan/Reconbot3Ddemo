@@ -73,7 +73,7 @@ classdef RCB2RserialA2C2_WS
             end
             
             %% ----------------------- Calculate rotation matrix according to inputs -----------------------
-            if isequal(p_BinaryCode, [1 1 0 0 0 0]) == 1
+            if isequal(p_BinaryCode, [1 1 1 0 0 0]) == 1
                 %% ----------------------- Calculate rotation matrix of two 2R modes -----------------------
                 if p(2) < -1e-12
                     WSvalue = [0, 0, 0];
@@ -296,7 +296,7 @@ classdef RCB2RserialA2C2_WS
                     %%------------------------------------------------------------------------
                     %---------------------------Position of A2-C2 ----------------------------
                     if q21 >= -2*pi && q22 >= -1e-6 && q23 >= -pi && q24 >= -105*pi/180 && q25 >= -2*pi ...
-                            && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= 105*pi/180 && q25 <= 2*pi...
+                            && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= 0*pi/180 && q25 <= 2*pi...
                             && isreal(q1q2(i,6:10)) ~= 0
                         jA2C2 = jA2C2 + 1;
                         %%-----------------Get the output values of Moving Platform-----------------------

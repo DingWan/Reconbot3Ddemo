@@ -138,37 +138,35 @@ classdef RCB2T2Rsixbar_WS
                     % p = [x, y, z, [], [], gamma]
                     % display('Notice: Inputs are:p = [x, y, z, [], [], gamma]');
                     % display('Mechanism in a general six-bar linkage');               
-                    if abs(p(1)) < 1e-8 && abs(p(2)) < 1e-8 || p(3) < 0
-                        WSvalue_2T2R = 0;
-                        q11 = q11_SP_A1C1_A2C2_overlap;
+                    if abs(theta) < 1e-8 || p(3) < 0
+                        WSvalue = [0 0 0];
+                        q1q2_FeasibleSolution = [];
+                        ABC_FeasibleSolution = [];
+                        EulerAngle_q11_theta = [];
+                        return;
                     else
                         q11 = -atan(p(1)/p(2)); % inputs:  q11; atan(p(1)/p(2))>0(or<0), -(or +)q11 !!!!!
                     end  
-                %end
                 
                 [EulerAngle_q11_theta] = EulerAngles_theta_q11_IK(theta, q11);
                 if isempty(EulerAngle_q11_theta) == 1
-                    WSvalue = 0;
+                    WSvalue = [0 0 0];
+                    q1q2_FeasibleSolution = [];
+                    ABC_FeasibleSolution = [];
+                    EulerAngle_q11_theta = [];
                     return;
-                else                    
-                    for i = 1:length(EulerAngle_q11_theta(:,1))
-                        RotationMatrix = eul2rotm(EulerAngle_q11_theta(i,1:3));
-                        alpha = EulerAngle_q11_theta(i,1);
-                        beta  = EulerAngle_q11_theta(i,2);
-                        gamma = EulerAngle_q11_theta(i,3);
-                        EulerAngle = EulerAngle_q11_theta(i,1:3);
-                        % Ci_in_Ob: Ci in frame Ob-xyz
-                        C1_in_Ob = (RotationMatrix * C1_in_op')' + p(1:3);
-                        C2_in_Ob = (RotationMatrix * C2_in_op')' + p(1:3);
-                        q11 = EulerAngle_q11_theta(i,4);
-                        theta = EulerAngle_q11_theta(i,5);
-                        q21 = q11;
-                        if (C2_in_Ob(3) -  C1_in_Ob(3)) * theta >= 0
-                            break;
-                        else
-                            continue;
-                        end
-                    end
+                else           
+                    RotationMatrix = eul2rotm(EulerAngle_q11_theta(i,1:3));
+                    alpha = EulerAngle_q11_theta(i,1);
+                    beta  = EulerAngle_q11_theta(i,2);
+                    gamma = EulerAngle_q11_theta(i,3);
+                    EulerAngle = EulerAngle_q11_theta(i,1:3);
+                    % Ci_in_Ob: Ci in frame Ob-xyz
+                    C1_in_Ob = (RotationMatrix * C1_in_op')' + p(1:3);
+                    C2_in_Ob = (RotationMatrix * C2_in_op')' + p(1:3);
+                    q11 = EulerAngle_q11_theta(i,4);
+                    theta = EulerAngle_q11_theta(i,5);
+                    q21 = q11;
                 end
                 po{4} = alpha;
                 po{5} = beta;
@@ -209,19 +207,7 @@ classdef RCB2T2Rsixbar_WS
             % calculate: angleA1B1C1, q13, angleB1A1C1;  angleA2B2C2, q23, angleB2A2C2
             
             %% ----------------------- Calculate one solutions for one input  -----------------------
-            if p(1) == 0 && p(2) == 0 && p(3) == 0
-                WSvalue_2T2R_SinguPosA1C1 = 0;
-                WSvalue_2T2R_SinguPosA2C2 = 0;
-                IterationNumber = 1;
-                q13 = pi;
-                q14 = q12;
-                q15 = q11;
-                
-                q23 = pi;
-                q24 = q22;
-                q25 = q21;
-                q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-            else
+            
                 % Here are used to preserve the original value of q11
                 % and q21, which are used for i>5 due to the change of q11 and q21
                 q11_original = q11;
@@ -233,7 +219,7 @@ classdef RCB2T2Rsixbar_WS
                 end
                 % There exist 4/5 situations:
                 jA1C1 = 0; % NumberofFeasibleSolutionA1C1 = 0;
-                jA2C2 = 0; % NumberofFeasibleSolutionA2C2 = 0;
+                jA2C2 = 0; % NumberofFeasibleSolutionA2C2 = 0; 
                 q1 = [];
                 q2 = [];
                 for i = 1:IterationNumber
@@ -409,7 +395,7 @@ classdef RCB2T2Rsixbar_WS
                 end                
                 WSvalue_2T2R_SinguPosA1C1 = 0;
                 WSvalue_2T2R_SinguPosA2C2 = 0;
-            end
+            
             WSvalue = [WSvalue_2T2R, WSvalue_2T2R_SinguPosA1C1, WSvalue_2T2R_SinguPosA2C2];      
             p = [po{1}, po{2}, po{3}, EulerAngle];           
         end

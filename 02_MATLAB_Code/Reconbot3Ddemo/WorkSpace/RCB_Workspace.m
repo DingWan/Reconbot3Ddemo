@@ -42,9 +42,9 @@ end
 switch Mode
     % input: length, width, height and step of the Study Points
     case 1
-        % ---- 3T1R ------
+        % ---- 3T2R ------
         x_bound = [-320, 320];y_bound = [-320, 320];z_bound = [-10, 320];
-        StepLength = 20;
+        StepLength = 10;
     case 2
         % ---- 3T1R ------
         x_bound = [-320, 320];y_bound = [-320, 320];z_bound = [-10, 320];
@@ -57,8 +57,8 @@ switch Mode
     case 4
         % ---- 3T1R SingularityPositionA2C2 ------
         alpha = [-2*pi/3, 2*pi/3];z_bound = [0, 320];        
-        stepAlpha = 30;
-        stepZ = 10;         
+        stepAlpha = 200;
+        stepZ = 100;         
     case 6
         % ---- 2T2R ------
         x_bound = [-320, 320];y_bound = [-320, 320];z_bound = [-10, 320];
@@ -76,20 +76,20 @@ switch Mode
         % angle1 is an angle project on plane xoy
         % angle2 is an angle with plane xoy
         angle1 = [-2*pi/3, 2*pi/3]; angle2 = [0, pi/2];
-        stepAngle = 200;
+        stepAngle = 100;
     case 11
         % ---- 2RserialA2C2 ------
         % angle1 is an angle project on plane xoy
         % angle2 is an angle with plane xoy
         angle1 = [-2*pi/3, 2*pi/3]; angle2 = [0, pi/2];
-        stepAngle = 200;
+        stepAngle = 100;
 end
 
 %% ----------------- Original Point Calculation  --------------
 OriginalPoint_Displacement = [250,250,83.5+60.44+(45.5-22)];
 
 % plot3(OriginalPoint(1), OriginalPoint(2), OriginalPoint(3),'r.','MarkerSize',10); 
-TransCuboidPath2OriginalPoint = [[eye(3,3);0,0,0], [OriginalPoint_Displacement, 1]'];
+TransCuboidPath2OriginalPoint = [[rotz(90);0,0,0], [OriginalPoint_Displacement, 1]'];
 
 
 %% ----------------- Calculation Path Geneation  --------------
@@ -104,22 +104,22 @@ if Mode == 1 || Mode == 2 || Mode == 6 || Mode == 8 || Mode == 9
     % ----------------- plot Path output in 3Ddemo original point  --------------
     pathOP = [CuboidPath(:,3:5),ones(length(CuboidPath(:,1)),1)] * TransCuboidPath2OriginalPoint'; % pathOP: path output
     sizepathOP = size(pathOP);
-    i = 1:sizepathOP;
+    %i = 1:sizepathOP;
     % plot3(pathOP(i,1), pathOP(i,2), pathOP(i,3),'r.','MarkerSize',1);
     % hold on;
     axis equal;
 elseif  Mode == 10 ||  Mode == 11 
-    % angle1 is an angle project on plane xoy
-    % angle2 is an angle with plane xoy
+    % angle1 is an angle project on plane xoy between CiCjpie and y-axis
+    % angle2 is an angle between C1C2 and plane xoy
     for i_angle2 = 1:1:stepAngle
         angle2Intepetation(i_angle2) = angle2(1) + i_angle2 * (angle2(2) - angle2(1)) / stepAngle;
         zIntepetation(i_angle2) = l1 * sin(angle2Intepetation(i_angle2)) / 2;
         for i_angle1 = 1:1:stepAngle            
             angle1Intepetation(i_angle1) = angle1(1) + i_angle1 * (angle1(2) - angle1(1)) / stepAngle;
-            if s == 5 % --- A1C1 ---
+            if Mode == 10 % --- A1C1 ---
                 xIntepetation(i_angle1) = - l1 * cos(angle2Intepetation(i_angle2)) * sin(angle1Intepetation(i_angle1)) / 2;
                 yIntepetation(i_angle1) = l1 * (cos(angle2Intepetation(i_angle2)) * cos(angle1Intepetation(i_angle1)) - 1) / 2;                
-            elseif s == 6 % --- A2C2 ---
+            elseif Mode == 11 % --- A2C2 ---
                 xIntepetation(i_angle1) = l1 * cos(angle2Intepetation(i_angle2)) * sin(angle1Intepetation(i_angle1)) / 2;
                 yIntepetation(i_angle1) = l1 * (1 - cos(angle2Intepetation(i_angle2)) * cos(angle1Intepetation(i_angle1))) / 2;
             end
@@ -130,16 +130,16 @@ elseif  Mode == 10 ||  Mode == 11
     pathOP = [SpherePath(:,1:3),ones(length(SpherePath(:,1)),1)] * TransCuboidPath2OriginalPoint'; % pathOP: path output
     sizepathOP = size(pathOP);
     xyzStepLength = [1, stepAngle, stepAngle];
-    %plot3(pathOP(:,1), pathOP(:,2), pathOP(:,3),'r.','MarkerSize',1);
-    %axis equal    
+    plot3(pathOP(:,1), pathOP(:,2), pathOP(:,3),'r.','MarkerSize',1);
+    axis equal    
 else
     % ---- Cycle Path Generation for Singularity Positions AiCi ----
     for i_alpha = 1:1:stepAlpha
         alphaIntepetation(i_alpha) = alpha(1) + i_alpha * (alpha(2) - alpha(1)) / stepAlpha;        
-        if s == 8
+        if Mode == 3
             xIntepetation(i_alpha) = - l1 * sin(alphaIntepetation(i_alpha)) / 2;
             yIntepetation(i_alpha) = l1 * (cos(alphaIntepetation(i_alpha)) - 1) / 2;
-        elseif s == 9
+        elseif Mode == 4
             xIntepetation(i_alpha) = l1 * sin(alphaIntepetation(i_alpha)) / 2;
             yIntepetation(i_alpha) = l1 * (1 - cos(alphaIntepetation(i_alpha)) ) / 2;
         end
@@ -156,8 +156,8 @@ else
     pathOP = [CylinderPath(:,1:3),ones(length(CylinderPath(:,1)),1)] * TransCuboidPath2OriginalPoint'; % pathOP: path output
     sizepathOP = size(pathOP);
     xyzStepLength = [1, stepAlpha, stepZ];
-    %plot3(pathOP(:,1), pathOP(:,2), pathOP(:,3),'r.','MarkerSize',1);
-    %axis equal
+    plot3(pathOP(:,1), pathOP(:,2), pathOP(:,3),'r.','MarkerSize',1);
+    axis equal
 end
 
 %Workspace_xyzbound = [x_bound;y_bound;z_bound];
@@ -192,23 +192,23 @@ for k = 1:1:xyzStepLength(3)
                 case 3
                      % 3T1R mode-SingularityPositionA1C1:  [1 1 1 1 0 0]
                      % p = [x, y, z, alpha, [], []];                     
-                    po = {CylinderPath(step,1), CylinderPath(step,2), CylinderPath(step,3), alphaIntepetation(j), [], []};
+                    po = {CylinderPath(step,1), CylinderPath(step,2), CylinderPath(step,3), alphaIntepetation(j), [], [], 0};
                     q11q12q21q22 = [];
                     obj3T1R_SinguPosAiCi = RCB3T1RSingularityA1C1_WS(po, q11q12q21q22, l1, l2);
-                    [~, ~, ~, ~, WSvalue_3T1RSingularityA1C1] = obj3T1R_SinguPosAiCi.RCB_3T1R_SinguPosAiCi_IK; 
+                    [~, ~, ~, ~, WSvalue_3T1RSingularityA1C1] = obj3T1R_SinguPosAiCi.RCB_3T1R_SingularityA1C1_IK; 
                     WSvalue(i,j,k) = WSvalue_3T1RSingularityA1C1(1);
                 case 4
                      % 3T1R mode-SingularityPositionA2C2:  [1 1 1 1 0 0]
                      % p = [x, y, z, alpha, [], []];
-                    po = {CylinderPath(step,1), CylinderPath(step,2), CylinderPath(step,3), alphaIntepetation(j), [], []};
+                    po = {CylinderPath(step,1), CylinderPath(step,2), CylinderPath(step,3), alphaIntepetation(j), [], [], 0};
                     q11q12q21q22 = [];
                     obj3T1R_SinguPosAiCi = RCB3T1RSingularityA2C2_WS(po, q11q12q21q22, l1, l2);
-                    [~, ~, ~, ~, WSvalue_3T1RSingularityA2C2] = obj3T1R_SinguPosAiCi.RCB_3T1R_SinguPosAiCi_IK;  
+                    [~, ~, ~, ~, WSvalue_3T1RSingularityA2C2] = obj3T1R_SinguPosAiCi.RCB_3T1R_SingularityA2C2_IK;  
                     WSvalue(i,j,k) = WSvalue_3T1RSingularityA2C2(1);    
                 case 6
                     % Mechanism in a general six-bar linkage:  [1 1 1 0 0 1]
                     % p = [x, y, z, [], [], gamma]
-                    po = {CuboidPath(step,3), CuboidPath(step,4), CuboidPath(step,5), [], [], 0};
+                    po = {CuboidPath(step,3), CuboidPath(step,4), CuboidPath(step,5), [], [], 1*pi/180, 0};
                     q11q12q14q23 = [];
                     obj2T2Rsixbar = RCB2T2Rsixbar_WS(po,q11q12q14q23,l1,l2);
                     [~, ~, ~, ~, WSvalue_2T2R] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
@@ -227,14 +227,14 @@ for k = 1:1:xyzStepLength(3)
                     po = {CuboidPath(step,3), 0, CuboidPath(step,5), 0, 0, []}; % Angle should be rad: 'pi/3;
                     q11q12q14q23 = [];
                     obj2T2Rthreebar = RCB2T2Rthreebar_WS(po,q11q12q14q23,l1,l2);
-                    [~, ~, ~, ~, WSvalue_2T2Rthreebar] = obj2T2Rthreebar.RCB_ThreeBar_IK; 
+                    [~, ~, ~, ~, WSvalue_2T2Rthreebar] = obj2T2Rthreebar.RCB_2T2R_ThreeBar_IK; 
                     WSvalue(i,j,k) = WSvalue_2T2Rthreebar(1);
                 case 10
                     % Four-bar linkage with Serial Chain A1C1: ----- isempty(p) = [1 1 1 0 0 0]
                     % p = [x, y, z, [], [], []]; y < 0 
                     % Here we send 'z' coordinate to make sure the
                     % calculated zop = z, otherwise, it will be wrong value
-                    po = {SpherePath(step,1), SpherePath(step,2), SpherePath(step,3), [], [], [], pi};
+                    po = {SpherePath(step,1), SpherePath(step,2), SpherePath(step,3), [], [], [], 0};
                     q11q12q22q13 = [];
                     obj2RserialA1C1 = RCB2RserialA1C1_WS(po,q11q12q22q13,l1,l2);
                     [~, ~, ~, ~, WSvalue_2RserialA1C1] = obj2RserialA1C1.RCB_2R_SerialA1C1_IK;
@@ -244,7 +244,7 @@ for k = 1:1:xyzStepLength(3)
                     % p = [x, y, z, [], [], []]; y > 0 
                     % Here we send 'z' coordinate to make sure the
                     % calculated zop = z, otherwise, it will be wrong value
-                    po = {SpherePath(step,1), SpherePath(step,2), SpherePath(step,3), [], [], [], pi};
+                    po = {SpherePath(step,1), SpherePath(step,2), SpherePath(step,3), [], [], [], 0};
                     q11q12q22q23 = [];
                     obj2RserialA2C2 = RCB2RserialA2C2_WS(po,q11q12q22q23,l1,l2);
                     [~, ~, ~, ~, WSvalue_2RserialA2C2] = obj2RserialA2C2.RCB_2R_SerialA2C2_IK;
@@ -274,6 +274,8 @@ end
 axis equal
 grid on
 hold on
+
+
 %% Show the Workspace
 
 % save('q0q1q2_mat.mat')
