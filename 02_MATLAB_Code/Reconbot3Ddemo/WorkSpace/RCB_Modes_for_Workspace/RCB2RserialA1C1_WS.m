@@ -75,7 +75,7 @@ classdef RCB2RserialA1C1_WS
             end
             
             %% ----------------------- Calculate rotation matrix according to inputs -----------------------
-            if isequal(p_BinaryCode, [1 1 0 0 0 0]) == 1
+            if isequal(p_BinaryCode, [1 1 1 0 0 0]) == 1
                 %% ----------------------- Calculate rotation matrix of two 2R modes -----------------------
                 %============== Method I ===============
                 if p(2) > 1e-12
@@ -310,7 +310,7 @@ classdef RCB2RserialA1C1_WS
                     %------------------Judge the workspace and solution existence of A1C1-------------------------
                     %---------------------------Position of A1-C1 ----------------------------
                     if q11 >= -2*pi && q12 >= -1e-6 && q13 >= -pi && q14 >= -105*pi/180 && q15 >= -2*pi...
-                            && q11 <= 2*pi && q12 <= pi && q13 <= pi && q14 <= 105*pi/180 && q15 <= 2*pi...
+                            && q11 <= 2*pi && q12 <= pi && q13 <= pi && q14 <= 0*pi/180 && q15 <= 2*pi...
                             && isreal(q1q2(i,1:5)) ~= 0
                         jA1C1 = jA1C1 + 1;
                         %%-----------------Get the output values of Moving Platform-----------------------
@@ -347,6 +347,11 @@ classdef RCB2RserialA1C1_WS
                         end
                     end
                 end
+                               
+                
+%                 % Here is used to check the correctness of each exsited points
+%                 q0q1q2_mat = [0, q1q2(1,1:5),q1q2(1,6:10)];
+%                 ReconbotANI(q0q1q2_mat);
                 
                 % Here, I did a small trick:
                 % The number of correct value of q1 and q2 might be different,
@@ -366,15 +371,17 @@ classdef RCB2RserialA1C1_WS
                         end
                     end
                         q1q2_FeasibleSolution = [q1(:,1:5), q2(:,1:5)];
-                        ABC_FeasibleSolution = [A1B1C1(:,:),A2B2C(:,:)];
+                        ABC_FeasibleSolution = [A1B1C1(:,:),A2B2C(:,:)];  
+                        WSvalue_2R_SinguPosA1C1 = 1;
+                        WSvalue_2R_SinguPosA2C2 = 0;
                 else
                     WSvalue_2R = 0;
                     q1q2_FeasibleSolution = [];
                     ABC_FeasibleSolution = [];
-                end                
-                WSvalue_2R_SinguPosA1C1 = 0;
-                WSvalue_2R_SinguPosA2C2 = 0;
-            %end
+                    WSvalue_2R_SinguPosA1C1 = 0;
+                    WSvalue_2R_SinguPosA2C2 = 0;
+                end    
+                
             WSvalue = [WSvalue_2R, WSvalue_2R_SinguPosA1C1, WSvalue_2R_SinguPosA2C2];      
             p = [p(1), p(2), p(3), EulerAngle];
         end

@@ -133,272 +133,240 @@ classdef RCB3T1RSingularityA1C1_WS
             
                 % Judge the singularity as 1st+5th axes of C1A1 and C2A2 overlap
                 % We assume that the precision is 0.02mm (1) as industry manipulators
-                if abs(C1_in_Ob(1) - A1(1)) <= 1e-8 && abs(C1_in_Ob(2) - A1(2)) <= 1e-8 && (abs((C2_in_Ob(1) - A2(1))) > 1e-8 || abs(C2_in_Ob(2) - A2(2)) > 1e-8)
-                    %display('Notice:The 1st+5th axes of kinematic chain A1C1 overlapped')
-                    % Display the output value, we use angle to show it properly
-%                     name = '3T1R-A1C1 Singularity';
-%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{7}*180/pi);
-                    %display('The solution can be decided by stratgies like (eg.2): ')
+                if abs(C1_in_Ob(1) - A1(1)) <= 1e-8 && abs(C1_in_Ob(2) - A1(2)) <= 1e-8 && abs(C2_in_Ob(1) - A2(1)) > 1e-8 && abs(C2_in_Ob(2) - A2(2)) > 1e-8
+                    %display('The 1st+5th axes of C1A1 and C2A2 overlapped (Please improve in the future!!!)')
+                    %display('The solution can be decided by straties like(eg.2): ')
                     %display('1.Follow the angle of previous or next steps;')
-                    %display('2.Transit into 2T2R, namely, q11 = -q21')
-                    %----------------- Singularity Judgement --------------------
+                    %display('2.Transit into 2T2R, namely, q11 = -q21 = 0 ')
                     WSvalue_3T1R_SinguPosA1C1 = 1;
                     WSvalue_3T1R_SinguPosA2C2 = 0;
                     %--------------------- Assign Value --------------------
-                    q21 = -atan((C2_in_Ob(1) - A2(1))/(C2_in_Ob(2) - A2(2))); % Clockwise is positive direction. top view
-                    q11 = q11_SP_A1C1overlap;
-                elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-8 && abs(C2_in_Ob(2) - A2(2)) <= 1e-8 && abs((C1_in_Ob(1) - A1(1)) > 1e-8 || abs(C1_in_Ob(2) - A1(2)) > 1e-8)
-                    %display('Notice:The 1st+5th axes of kinematic chain A2C2 overlapped')
-%                     name = '3T1R-A2C2 Singularity';
-%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{8}*180/pi);
-                    %display('The solution can be decided by stratgies like(eg.2): ')
-                    %display('1.Follow the angle of previous or next steps;')
-                    %display('2.Transit into 2T2R, namely, q21 = -q11 ')
-                    %----------------- Singularity Judgement --------------------
+                    q11 = 0; % Anti-clockwise is positive direction. top view
+                    q21 = -atan((C2_in_Ob(1) - A2(1))/(C2_in_Ob(2) - A2(2))); % Anti-clockwise is positive direction. top view
+                elseif abs(C1_in_Ob(1) - A1(1)) > 1e-8 && abs(C1_in_Ob(2) - A1(2)) > 1e-8 && abs(C2_in_Ob(1) - A2(1)) <= 1e-8 && abs(C2_in_Ob(2) - A2(2)) <= 1e-8
                     WSvalue_3T1R_SinguPosA1C1 = 0;
                     WSvalue_3T1R_SinguPosA2C2 = 1;
                     %--------------------- Assign Value --------------------
                     q11 = -atan((C1_in_Ob(1) - A1(1))/(C1_in_Ob(2) - A1(2))); % Anti-clockwise is positive direction. top view
-                    q21 = q21_SP_A2C2overlap;
-                    % Display the output value, we use angle to show it properly
-                    
+                    q21 = 0; % Anti-clockwise is positive direction. top view
                 elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-8 && abs(C1_in_Ob(2) - A1(2)) <= 1e-8 && abs(C2_in_Ob(1) - A2(1)) <= 1e-8 && abs(C2_in_Ob(2) - A2(2)) <= 1e-8
-                    %display('Notice:The 1st+5th axes of kinematic chains A1C1 and A2C2 overlapped')
-                    % Display the output value, we use angle to show it properly
-%                     name = '3T1R-A1C1+A2C2 Singularity';
-%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{7}*180/pi, po{8}*180/pi);
-                    %display('The solution can be decided by stratgies like(eg.2): ')
-                    %display('1.Follow the angle of previous or next steps;')
-                    %display('2.Transit into 2T2R, namely, q11 = -q21 = 0 ')
-                    %----------------- Singularity Judgement --------------------
                     WSvalue_3T1R_SinguPosA1C1 = 1;
                     WSvalue_3T1R_SinguPosA2C2 = 1;
                     %--------------------- Assign Value --------------------
-                    q11 = q11_SP_A1C1_A2C2_overlap;
-                    q21 = q21_SP_A1C1_A2C2_overlap;
+                    q11 = 0; % Anti-clockwise is positive direction. top view
+                    q21 = 0; % Anti-clockwise is positive direction. top view
                 else
-                    % Display the output value, we use angle to show it properly
-%                     name = '3T1R';
-%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
-                    %----------------- Singularity Judgement --------------------
                     WSvalue_3T1R_SinguPosA1C1 = 0;
                     WSvalue_3T1R_SinguPosA2C2 = 0;
                     %--------------------- Assign Value -------------------
                     q11 = -atan((C1_in_Ob(1) - A1(1))/(C1_in_Ob(2) - A1(2))); % Anti-clockwise is positive direction. top view
-                    q21 = -atan((C2_in_Ob(1) - A2(1))/(C2_in_Ob(2) - A2(2))); % Anti-clockwise is positive direction. top view
-                
+                    q21 = -atan((C2_in_Ob(1) - A2(1))/(C2_in_Ob(2) - A2(2))); % Anti-clockwise is positive direction. top view                    
                 end
-                theta = 0;
-                beta = 0;
-                gamma = 0;
+                
+                theta = 0;   beta = 0;    gamma = 0;
                 EulerAngle_q11_theta = [alpha, beta, gamma, q11, theta];
                 EulerAngle = EulerAngle_q11_theta(1:3);
-            
-            
-            %% -----------------------Calculate 16 possbile outputs for ABC, q1q2-----------------------
-            %--------------------- First step --------------------
-            %Calculate k1(parallel to plane A1B1C1),k2(parallel to plane A2B2C2),
-            % angles <A1C1,k1> and <A2C2,k2> ,lengths ||A1C1|| and ||A2C2||
-            k1 = [-sin(q11),  cos(q11), 0];
-            k2 = [ sin(q21), -cos(q21), 0];
-            A1C1 = C1_in_Ob - A1;
-            A2C2 = C2_in_Ob - A2;
-            if norm(A1C1) == 0
-                angle_A1C1_k1 = pi/2;
-                angle_A2C2_k2 = pi/2;
-            else
-                angle_A1C1_k1 = acos(dot(A1C1,k1)/(norm(A1C1)*norm(k1)));
-                angle_A2C2_k2 = acos(dot(A2C2,k2)/(norm(A2C2)*norm(k2)));
-            end
-            lengthA1C1 = norm(A1C1);
-            lengthA2C2 = norm(A2C2);
-            %--------------------- Second step --------------------
-            A1B1 = L2; B1C1 = L2;
-            A2B2 = L2; B2C2 = L2;
-            angleA1B1C1 = acos((A1B1^2 + B1C1^2 - lengthA1C1^2)/(2 * A1B1 * B1C1));
-            angleA2B2C2 = acos((A2B2^2 + B2C2^2 - lengthA2C2^2)/(2 * A2B2 * B2C2));
-            % calculate: angleA1B1C1, q13, angleB1A1C1;  angleA2B2C2, q23, angleB2A2C2
-            
-          %% ----------------------- Calculate solutions for one input  -----------------------            
-            % Here are used to preserve the original value of q11
-            % and q21, which are used for i>5 due to the change of q11 and q21
-            q11_original = q11;
-            q21_original = q21;
-            
-            if q11 == 0 || q11 == pi || q11 == -pi || q21 == 0 || q21 == pi || q21 == -pi
-                IterationNumber = 5; % There exist five situations: 0/pi/-pi/2*pi/-2*pi
-            else
-                IterationNumber = 4;
-            end
-            % There exist 4/5 situations for each branch chain under the condition of single value for q13 and q23:
-            jA1C1 = 0; % NumberofFeasibleSolutionA1C1 = 0;    
-            jA2C2 = 0; % NumberofFeasibleSolutionA2C2 = 0;  
-            q1 = [];
-            q2 = [];
-            for i = 1:IterationNumber
                 
-                %--------- Situation I -----------%
-                q13 = pi - angleA1B1C1;
-                q23 = pi - angleA2B2C2;
-                
-                angleB1A1C1 = q13 / 2;
-                angleB2A2C2 = q23 / 2;
-                % calculate: q12, q14; q22, q24;
-                
-                switch i
-                    %--------- Situation I-IV: input q11 -----------%
-                    case 1
-                        %--------- Situation I -----------%
-                        q11 = q11_original;
-                        q21 = q21_original;
-                    case 2
-                        %--------- Situation II -----------%
-                        if q11_original <= 0
-                            q11 = - pi + q11_original;
-                        elseif q11_original > 0
-                            q11 =  pi + q11_original;
-                        end
-                        if q21_original <= 0
-                            q21 = - pi + q21_original;
-                        elseif q21_original > 0
-                            q21 =  pi + q21_original;
-                        end
-                    case 3
-                        %--------- Situation III -----------%
-                        if q11_original <= 0
-                            q11 = pi + q11_original;
-                        elseif q11_original > 0
-                            q11 = -pi + q11_original;
-                        end
-                        if q21_original <= 0
-                            q21 = pi + q21_original;
-                        elseif q21_original > 0
-                            q21 = -pi + q21_original;
-                        end
-                    case 4
-                        %--------- Situation IV -----------%
-                        if q11_original <= 0
-                            q11 = 2 * pi + q11_original;
-                        elseif q11_original > 0
-                            q11 = -2 * pi + q11_original;
-                        end
-                        if q21_original <= 0
-                            q21 = 2 * pi + q21_original;
-                        elseif q21_original > 0
-                            q21 = -2 * pi + q21_original;
-                        end
-                    case 5
-                        %--------- Situation V -----------%
-                        if q11_original == 0
-                            q11 = -2 * pi + q11_original;
-                        elseif q11_original == pi
-                            q11 = -2 * pi;
-                        elseif q11_original == -pi
-                            q11 = 2 * pi;
-                        end
-                        if q21_original <= 0
-                            q21 = 2 * pi + q21_original;
-                        elseif q21_original == pi
-                            q21 = -2 * pi;
-                        elseif q21_original == -pi
-                            q21 = 2 * pi;
-                        end
-                end
-                
-                %--------- q11-q14 and q21-q24 -----------%
-                % Two modes of 3T1R and 2T2R, and the rest modes
-                if q11 == q11_original || i > 3
-                    q12 = pi - angle_A1C1_k1 - angleB1A1C1;
-                    q14 = pi/2 - (q12 + q13 + theta);
+                %% -----------------------Calculate 16 possbile outputs for ABC, q1q2-----------------------
+                %--------------------- First step --------------------
+                %Calculate k1(parallel to plane A1B1C1),k2(parallel to plane A2B2C2),
+                % angles <A1C1,k1> and <A2C2,k2> ,lengths ||A1C1|| and ||A2C2||
+                k1 = [-sin(q11),  cos(q11), 0];
+                k2 = [ sin(q21), -cos(q21), 0];
+                A1C1 = C1_in_Ob - A1;
+                A2C2 = C2_in_Ob - A2;
+                if norm(A1C1) == 0
+                    angle_A1C1_k1 = pi/2;
+                    angle_A2C2_k2 = pi/2;
                 else
-                    q12 = angle_A1C1_k1 - angleB1A1C1;
-                    q14 = pi/2 + theta - (q12 + q13);
+                    angle_A1C1_k1 = acos(dot(A1C1,k1)/(norm(A1C1)*norm(k1)));
+                    angle_A2C2_k2 = acos(dot(A2C2,k2)/(norm(A2C2)*norm(k2)));
                 end
-                if q21 == q21_original || i > 3
-                    q22 = pi - angle_A2C2_k2 - angleB2A2C2;
-                    q24 = pi/2 + theta - (q22 + q23);
+                lengthA1C1 = norm(A1C1);
+                lengthA2C2 = norm(A2C2);
+                %--------------------- Second step --------------------
+                A1B1 = L2; B1C1 = L2;
+                A2B2 = L2; B2C2 = L2;
+                angleA1B1C1 = acos((A1B1^2 + B1C1^2 - lengthA1C1^2)/(2 * A1B1 * B1C1));
+                angleA2B2C2 = acos((A2B2^2 + B2C2^2 - lengthA2C2^2)/(2 * A2B2 * B2C2));
+                % calculate: angleA1B1C1, q13, angleB1A1C1;  angleA2B2C2, q23, angleB2A2C2
+                
+                %% ----------------------- Calculate solutions for one input  -----------------------
+                % Here are used to preserve the original value of q11
+                % and q21, which are used for i>5 due to the change of q11 and q21
+                q11_original = q11;
+                q21_original = q21;
+                
+                if q11 == 0 || q11 == pi || q11 == -pi || q21 == 0 || q21 == pi || q21 == -pi
+                    IterationNumber = 5; % There exist five situations: 0/pi/-pi/2*pi/-2*pi
                 else
-                    q22 = angle_A2C2_k2 - angleB2A2C2;
-                    q24 = pi/2 - (q22 + q23 + theta);
+                    IterationNumber = 4;
                 end
-                %--------- q15 and q25 -----------%
-                q15 = q11 - alpha;   q25 = q21 + alpha ;
-                
-                q1q2(i,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-            
-                %------------------Judge the workspace and solution existence of A1C1-------------------------
-                %---------------------------Position of A1-C1 ----------------------------
-                if q11 >= -2*pi && q12 >= 0 && q13 >= -pi && q14 >= -105*pi/180 && q15 >= -2*pi...
-                        && q11 <= 2*pi && q12 <= pi && q13 <= pi && q14 <= 105*pi/180 && q15 <= 2*pi...
-                        && isreal(q1q2(i,1:5)) ~= 0
-                    jA1C1 = jA1C1 + 1;                   
-                    %%-----------------Get the output values of Moving Platform-----------------------
-                    %%--------------------Calculate the position of Ai Bi Ci------------------
-                    A1(jA1C1,:) = [0, -L1/2, 0];
-                    B1(jA1C1,:) = [L2 * cos(q1q2(i,2)) * sin(q1q2(i,1)), -L1/2 - L2 * cos(q1q2(i,2)) * cos(q1q2(i,1)), L2 * sin(q1q2(i,2))];
-                    C1(jA1C1,:) = [L2 * (cos(q1q2(i,2)) + cos(q1q2(i,2) + q1q2(i,3))) * sin(q1q2(i,1)), -L1/2 - L2 * (cos(q1q2(i,2))...
-                        + cos(q1q2(i,2) + q1q2(i,3))) * cos(q1q2(i,1)), L2 * (sin(q1q2(i,2)) + sin(q1q2(i,2) + q1q2(i,3)))];
-                    %%------------------------------------------------------------------------
+                % There exist 4/5 situations for each branch chain under the condition of single value for q13 and q23:
+                jA1C1 = 0; % NumberofFeasibleSolutionA1C1 = 0;
+                jA2C2 = 0; % NumberofFeasibleSolutionA2C2 = 0;
+                q1 = [];
+                q2 = [];
+                for i = 1:IterationNumber
                     
-                    if C1(jA1C1,:) - C1_in_Ob <= 1e-8
-                        q1(jA1C1,1:5) = q1q2(i,1:5);
-                        A1B1C1(jA1C1,:) = [A1(jA1C1,:), B1(jA1C1,:), C1(jA1C1,:)];
-                    end
-                end                
-                
-                %%------------------------------------------------------------------------
-                %---------------------------Position of A2-C2 ----------------------------
-                if q21 >= -2*pi && q22 >= 0 && q23 >= -pi && q24 >= -105*pi/180 && q25 >= -2*pi ...
-                        && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= 105*pi/180 && q25 <= 2*pi...
-                        && isreal(q1q2(i,6:10)) ~= 0
-                    jA2C2 = jA2C2 + 1;
-                    %%-----------------Get the output values of Moving Platform-----------------------
-                    %%--------------------Calculate the position of Ai Bi Ci------------------
-                    A2(jA2C2,:) = [0, L1/2, 0];
-                    B2(jA2C2,:) = [- L2 * cos(q1q2(i,7)) * sin(q1q2(i,6)), L1/2 + L2 * cos(q1q2(i,7)) * cos(q1q2(i,6)), L2 * sin(q1q2(i,7))];
-                    C2(jA2C2,:) = [- L2 * (cos(q1q2(i,7)) + cos(q1q2(i,7) + q1q2(i,8))) * sin(q1q2(i,6)), L1/2 + L2 * (cos(q1q2(i,7))...
-                        + cos(q1q2(i,7) + q1q2(i,8))) * cos(q1q2(i,6)), L2 * (sin(q1q2(i,7)) + sin(q1q2(i,7) + q1q2(i,8)))];
-                    %%------------------------------------------------------------------------
+                    %--------- Situation I -----------%
+                    q13 = pi - angleA1B1C1;
+                    q23 = pi - angleA2B2C2;
                     
-                    if C2(jA2C2,:) - C2_in_Ob <= 1e-8
-                        q2(jA2C2,1:5) = q1q2(i,6:10);
-                        A2B2C(jA2C2,:) = [A2(jA2C2,:), B2(jA2C2,:), C2(jA2C2,:)];
+                    angleB1A1C1 = q13 / 2;
+                    angleB2A2C2 = q23 / 2;
+                    % calculate: q12, q14; q22, q24;
+                    
+                    switch i
+                        %--------- Situation I-IV: input q11 -----------%
+                        case 1
+                            %--------- Situation I -----------%
+                            q11 = q11_original;
+                            q21 = q21_original;
+                        case 2
+                            %--------- Situation II -----------%
+                            if q11_original <= 0
+                                q11 = - pi + q11_original;
+                            elseif q11_original > 0
+                                q11 =  pi + q11_original;
+                            end
+                            if q21_original <= 0
+                                q21 = - pi + q21_original;
+                            elseif q21_original > 0
+                                q21 =  pi + q21_original;
+                            end
+                        case 3
+                            %--------- Situation III -----------%
+                            if q11_original <= 0
+                                q11 = pi + q11_original;
+                            elseif q11_original > 0
+                                q11 = -pi + q11_original;
+                            end
+                            if q21_original <= 0
+                                q21 = pi + q21_original;
+                            elseif q21_original > 0
+                                q21 = -pi + q21_original;
+                            end
+                        case 4
+                            %--------- Situation IV -----------%
+                            if q11_original <= 0
+                                q11 = 2 * pi + q11_original;
+                            elseif q11_original > 0
+                                q11 = -2 * pi + q11_original;
+                            end
+                            if q21_original <= 0
+                                q21 = 2 * pi + q21_original;
+                            elseif q21_original > 0
+                                q21 = -2 * pi + q21_original;
+                            end
+                        case 5
+                            %--------- Situation V -----------%
+                            if q11_original == 0
+                                q11 = -2 * pi + q11_original;
+                            elseif q11_original == pi
+                                q11 = -2 * pi;
+                            elseif q11_original == -pi
+                                q11 = 2 * pi;
+                            end
+                            if q21_original <= 0
+                                q21 = 2 * pi + q21_original;
+                            elseif q21_original == pi
+                                q21 = -2 * pi;
+                            elseif q21_original == -pi
+                                q21 = 2 * pi;
+                            end
+                    end
+                    
+                    %--------- q11-q14 and q21-q24 -----------%
+                    % Two modes of 3T1R and 2T2R, and the rest modes
+                    if q11 == q11_original || i > 3
+                        q12 = pi - angle_A1C1_k1 - angleB1A1C1;
+                        q14 = pi/2 - (q12 + q13 + theta);
+                    else
+                        q12 = angle_A1C1_k1 - angleB1A1C1;
+                        q14 = pi/2 + theta - (q12 + q13);
+                    end
+                    if q21 == q21_original || i > 3
+                        q22 = pi - angle_A2C2_k2 - angleB2A2C2;
+                        q24 = pi/2 + theta - (q22 + q23);
+                    else
+                        q22 = angle_A2C2_k2 - angleB2A2C2;
+                        q24 = pi/2 - (q22 + q23 + theta);
+                    end
+                    %--------- q15 and q25 -----------%
+                    q15 = q11 - alpha;   q25 = q21 + alpha ;
+                    
+                    q1q2(i,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
+                    
+                    %------------------Judge the workspace and solution existence of A1C1-------------------------
+                    %---------------------------Position of A1-C1 ----------------------------
+                    if q11 >= -2*pi && q12 >= 0 && q13 >= -pi && q14 >= -105*pi/180 && q15 >= -2*pi...
+                            && q11 <= 2*pi && q12 <= pi && q13 <= pi && q14 <= 105*pi/180 && q15 <= 2*pi...
+                            && isreal(q1q2(i,1:5)) ~= 0
+                        jA1C1 = jA1C1 + 1;
+                        %%-----------------Get the output values of Moving Platform-----------------------
+                        %%--------------------Calculate the position of Ai Bi Ci------------------
+                        A1(jA1C1,:) = [0, -L1/2, 0];
+                        B1(jA1C1,:) = [L2 * cos(q1q2(i,2)) * sin(q1q2(i,1)), -L1/2 - L2 * cos(q1q2(i,2)) * cos(q1q2(i,1)), L2 * sin(q1q2(i,2))];
+                        C1(jA1C1,:) = [L2 * (cos(q1q2(i,2)) + cos(q1q2(i,2) + q1q2(i,3))) * sin(q1q2(i,1)), -L1/2 - L2 * (cos(q1q2(i,2))...
+                            + cos(q1q2(i,2) + q1q2(i,3))) * cos(q1q2(i,1)), L2 * (sin(q1q2(i,2)) + sin(q1q2(i,2) + q1q2(i,3)))];
+                        %%------------------------------------------------------------------------
+                        
+                        if C1(jA1C1,:) - C1_in_Ob <= 1e-8
+                            q1(jA1C1,1:5) = q1q2(i,1:5);
+                            A1B1C1(jA1C1,:) = [A1(jA1C1,:), B1(jA1C1,:), C1(jA1C1,:)];
+                        end
+                    end
+                    
+                    %%------------------------------------------------------------------------
+                    %---------------------------Position of A2-C2 ----------------------------
+                    if q21 >= -2*pi && q22 >= 0 && q23 >= -pi && q24 >= -105*pi/180 && q25 >= -2*pi ...
+                            && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= 105*pi/180 && q25 <= 2*pi...
+                            && isreal(q1q2(i,6:10)) ~= 0
+                        jA2C2 = jA2C2 + 1;
+                        %%-----------------Get the output values of Moving Platform-----------------------
+                        %%--------------------Calculate the position of Ai Bi Ci------------------
+                        A2(jA2C2,:) = [0, L1/2, 0];
+                        B2(jA2C2,:) = [- L2 * cos(q1q2(i,7)) * sin(q1q2(i,6)), L1/2 + L2 * cos(q1q2(i,7)) * cos(q1q2(i,6)), L2 * sin(q1q2(i,7))];
+                        C2(jA2C2,:) = [- L2 * (cos(q1q2(i,7)) + cos(q1q2(i,7) + q1q2(i,8))) * sin(q1q2(i,6)), L1/2 + L2 * (cos(q1q2(i,7))...
+                            + cos(q1q2(i,7) + q1q2(i,8))) * cos(q1q2(i,6)), L2 * (sin(q1q2(i,7)) + sin(q1q2(i,7) + q1q2(i,8)))];
+                        %%------------------------------------------------------------------------
+                        
+                        if C2(jA2C2,:) - C2_in_Ob <= 1e-8
+                            q2(jA2C2,1:5) = q1q2(i,6:10);
+                            A2B2C(jA2C2,:) = [A2(jA2C2,:), B2(jA2C2,:), C2(jA2C2,:)];
+                        end
                     end
                 end
-            end
-            
-            % Here, I did a small trick:
-            % The number of correct value of q1 and q2 might be different,
-            % so, I force the number to be the same by compensating the
-            % fewer one with the missing number (jA1C1-jA2C2) of first value q1(1,1:5) and A1B1C1(1,:)
-            if jA1C1 ~= 0 && jA2C2 ~= 0 && isempty(q1) ~= 1 && isempty(q2) ~= 1
-                WSvalue_3T1R = 1;
-                %for i = 1:1:max(jA1C1,jA2C2)
-                if jA1C1 > jA2C2                    
-                    for i = 1:1:(jA1C1-jA2C2)
-                        q2(jA2C2 + i,1:5) = q2(1,1:5);
-                        A2B2C(jA2C2 + i,:) = A2B2C(1,:);
+                
+                % Here, I did a small trick:
+                % The number of correct value of q1 and q2 might be different,
+                % so, I force the number to be the same by compensating the
+                % fewer one with the missing number (jA1C1-jA2C2) of first value q1(1,1:5) and A1B1C1(1,:)
+                if jA1C1 ~= 0 && jA2C2 ~= 0 && isempty(q1) ~= 1 && isempty(q2) ~= 1
+                    WSvalue_3T1R = 1;
+                    %for i = 1:1:max(jA1C1,jA2C2)
+                    if jA1C1 > jA2C2
+                        for i = 1:1:(jA1C1-jA2C2)
+                            q2(jA2C2 + i,1:5) = q2(1,1:5);
+                            A2B2C(jA2C2 + i,:) = A2B2C(1,:);
+                        end
+                    elseif jA1C1 < jA2C2
+                        for i = 1:1:(jA2C2-jA1C1)
+                            q1(jA1C1 + i,1:5) = q1(1,1:5);
+                            A1B1C1(jA1C1 + i,:) = A1B1C1(1,:);
+                        end
                     end
-                elseif jA1C1 < jA2C2
-                    for i = 1:1:(jA2C2-jA1C1)
-                        q1(jA1C1 + i,1:5) = q1(1,1:5);
-                        A1B1C1(jA1C1 + i,:) = A1B1C1(1,:);
-                    end
+                    q1q2_FeasibleSolution = [q1(:,1:5), q2(:,1:5)];
+                    ABC_FeasibleSolution = [A1B1C1(:,:),A2B2C(:,:)];
+                else
+                    WSvalue_3T1R = 0;
+                    WSvalue_3T1R_SinguPosA1C1 = 0;
+                    WSvalue_3T1R_SinguPosA2C2 = 0;
+                    q1q2_FeasibleSolution = [];
+                    ABC_FeasibleSolution = [];
                 end
-                q1q2_FeasibleSolution = [q1(:,1:5), q2(:,1:5)];
-                ABC_FeasibleSolution = [A1B1C1(:,:),A2B2C(:,:)];
-            else
-                WSvalue_3T1R = 0;
-                WSvalue_3T1R_SinguPosA1C1 = 0;
-                WSvalue_3T1R_SinguPosA2C2 = 0;
-                q1q2_FeasibleSolution = [];
-                ABC_FeasibleSolution = [];
-            end
-            
+           
             WSvalue = [WSvalue_3T1R, WSvalue_3T1R_SinguPosA1C1, WSvalue_3T1R_SinguPosA2C2];
             p = [po{1}, po{2}, po{3}, EulerAngle];
         end

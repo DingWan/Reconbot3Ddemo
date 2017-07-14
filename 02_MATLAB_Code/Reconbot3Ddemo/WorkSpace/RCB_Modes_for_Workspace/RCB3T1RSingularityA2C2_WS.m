@@ -133,68 +133,37 @@ classdef RCB3T1RSingularityA2C2_WS
             
                 % Judge the singularity as 1st+5th axes of C1A1 and C2A2 overlap
                 % We assume that the precision is 0.02mm (1) as industry manipulators
-                if abs(C1_in_Ob(1) - A1(1)) <= 1e-8 && abs(C1_in_Ob(2) - A1(2)) <= 1e-8 && (abs((C2_in_Ob(1) - A2(1))) > 1e-8 || abs(C2_in_Ob(2) - A2(2)) > 1e-8)
-                    %display('Notice:The 1st+5th axes of kinematic chain A1C1 overlapped')
-                    % Display the output value, we use angle to show it properly
-%                     name = '3T1R-A1C1 Singularity';
-%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{7}*180/pi);
-                    %display('The solution can be decided by stratgies like (eg.2): ')
+                if abs(C1_in_Ob(1) - A1(1)) <= 1e-8 && abs(C1_in_Ob(2) - A1(2)) <= 1e-8 && abs(C2_in_Ob(1) - A2(1)) > 1e-8 && abs(C2_in_Ob(2) - A2(2)) > 1e-8
+                    %display('The 1st+5th axes of C1A1 and C2A2 overlapped (Please improve in the future!!!)')
+                    %display('The solution can be decided by straties like(eg.2): ')
                     %display('1.Follow the angle of previous or next steps;')
-                    %display('2.Transit into 2T2R, namely, q11 = -q21')
-                    %----------------- Singularity Judgement --------------------
+                    %display('2.Transit into 2T2R, namely, q11 = -q21 = 0 ')
                     WSvalue_3T1R_SinguPosA1C1 = 1;
                     WSvalue_3T1R_SinguPosA2C2 = 0;
                     %--------------------- Assign Value --------------------
-                    q21 = -atan((C2_in_Ob(1) - A2(1))/(C2_in_Ob(2) - A2(2))); % Clockwise is positive direction. top view
-                    q11 = q11_SP_A1C1overlap;
-                elseif abs(C2_in_Ob(1) - A2(1)) <= 1e-8 && abs(C2_in_Ob(2) - A2(2)) <= 1e-8 && (abs(C1_in_Ob(1) - A1(1)) > 1e-8 || abs(C1_in_Ob(2) - A1(2)) > 1e-8)
-                    %display('Notice:The 1st+5th axes of kinematic chain A2C2 overlapped')
-%                     name = '3T1R-A2C2 Singularity';
-%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{8}*180/pi);
-                    %display('The solution can be decided by stratgies like(eg.2): ')
-                    %display('1.Follow the angle of previous or next steps;')
-                    %display('2.Transit into 2T2R, namely, q21 = -q11 ')
-                    %----------------- Singularity Judgement --------------------
+                    q11 = 0; % Anti-clockwise is positive direction. top view
+                    q21 = -atan((C2_in_Ob(1) - A2(1))/(C2_in_Ob(2) - A2(2))); % Anti-clockwise is positive direction. top view
+                elseif abs(C1_in_Ob(1) - A1(1)) > 1e-8 && abs(C1_in_Ob(2) - A1(2)) > 1e-8 && abs(C2_in_Ob(1) - A2(1)) <= 1e-8 && abs(C2_in_Ob(2) - A2(2)) <= 1e-8
                     WSvalue_3T1R_SinguPosA1C1 = 0;
                     WSvalue_3T1R_SinguPosA2C2 = 1;
                     %--------------------- Assign Value --------------------
                     q11 = -atan((C1_in_Ob(1) - A1(1))/(C1_in_Ob(2) - A1(2))); % Anti-clockwise is positive direction. top view
-                    q21 = q21_SP_A2C2overlap;
-                    % Display the output value, we use angle to show it properly
-                    
+                    q21 = 0; % Anti-clockwise is positive direction. top view
                 elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-8 && abs(C1_in_Ob(2) - A1(2)) <= 1e-8 && abs(C2_in_Ob(1) - A2(1)) <= 1e-8 && abs(C2_in_Ob(2) - A2(2)) <= 1e-8
-                    %display('Notice:The 1st+5th axes of kinematic chains A1C1 and A2C2 overlapped')
-                    % Display the output value, we use angle to show it properly
-%                     name = '3T1R-A1C1+A2C2 Singularity';
-%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi, po{7}*180/pi, po{8}*180/pi);
-                    %display('The solution can be decided by stratgies like(eg.2): ')
-                    %display('1.Follow the angle of previous or next steps;')
-                    %display('2.Transit into 2T2R, namely, q11 = -q21 = 0 ')
-                    %----------------- Singularity Judgement --------------------
                     WSvalue_3T1R_SinguPosA1C1 = 1;
                     WSvalue_3T1R_SinguPosA2C2 = 1;
                     %--------------------- Assign Value --------------------
-                    q11 = q11_SP_A1C1_A2C2_overlap;
-                    q21 = q21_SP_A1C1_A2C2_overlap;
+                    q11 = 0; % Anti-clockwise is positive direction. top view
+                    q21 = 0; % Anti-clockwise is positive direction. top view
                 else
-                    % Display the output value, we use angle to show it properly
-%                     name = '3T1R';
-%                     fprintf('Mode %s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', ...
-%                         name, po{1}, po{2}, po{3}, po{4}*180/pi, po{5}*180/pi, po{6}*180/pi);
-                    %----------------- Singularity Judgement --------------------
                     WSvalue_3T1R_SinguPosA1C1 = 0;
                     WSvalue_3T1R_SinguPosA2C2 = 0;
                     %--------------------- Assign Value -------------------
                     q11 = -atan((C1_in_Ob(1) - A1(1))/(C1_in_Ob(2) - A1(2))); % Anti-clockwise is positive direction. top view
-                    q21 = -atan((C2_in_Ob(1) - A2(1))/(C2_in_Ob(2) - A2(2))); % Anti-clockwise is positive direction. top view
-                
+                    q21 = -atan((C2_in_Ob(1) - A2(1))/(C2_in_Ob(2) - A2(2))); % Anti-clockwise is positive direction. top view                    
                 end
-                theta = 0;
-                beta = 0;
-                gamma = 0;
+                
+                theta = 0;   beta = 0;    gamma = 0;
                 EulerAngle_q11_theta = [alpha, beta, gamma, q11, theta];
                 EulerAngle = EulerAngle_q11_theta(1:3);
             
