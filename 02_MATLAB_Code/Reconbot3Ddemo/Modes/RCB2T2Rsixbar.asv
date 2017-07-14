@@ -516,7 +516,9 @@ classdef RCB2T2Rsixbar
                     q13 = pi - (q12 + (pi/2+q14) + angleC2B1A2pie - angleA1A2B1pie - angleC1C2B1pie);
                     %     q13 = pi - (angleC2B1A2pie + angleA1B1A2pie + angleC1B1C2pie);
                     q22 = angleA1A2B1pie + angleB1A2C2pie - q23 / 2;
-                    q24 = - pi/2 + (angleC1C2B1pie + angleA2C2B1pie - q23 / 2);
+                    q24 = - pi/2 + (pi - angleC1C2B1pie - angleA2C2B1pie - q23 / 2);
+                    q24 = pi/2 - (q22 + q23 + theta);
+                    q24 = pi/2 + theta - (q22 + q23);
                 end
                 %--------------------- output angle elimilate imagary part ------------------
                 if isreal(q13)~= 1 && imag(q13) < 1e-6 || isreal(q22)~= 1 && imag(q22) < 1e-6 || isreal(q22)~= 1 && imag(q22) < 1e-6

@@ -403,6 +403,7 @@ for i = 1:length(MPOTP_cell)
         q0q1q2_OptimalRow(NumIntepoPoints*(i-1)+j,:) = q0q1q2_Optimal_SingleRow;   
         %
         PosOri_Output{NumIntepoPoints*(i-1)+j,1} = PosOri;
+        MP_Pos_Intep(NumIntepoPoints*(i-1)+j,1:6) = p;
         
         % ==================  Jacobian Matrix  ====================
         q1q2_Optimal = q0q1q2_Optimal_SingleRow(:,2:11);
@@ -712,6 +713,9 @@ Mode_det_Jq_Jc_J_Intep = Mode_det_Jq_Jc_J;
 %% Assign the correct order of differernt value of 'Self_adjustment_Enable_Disable = 1/2/3/0'
 q0q1q2_P2P_Pos_Intep = q0q1q2_OptimalRow;
 PosOri_Output_Intep = PosOri_Output;
+MP_Pos = MP_Pos_Intep;
+MP_Vel = MP_Vel_Intep;
+MP_Acc = MP_Acc_Intep;
 [~,col] = find(Self_adjustment_Enable_Disable_Array == 1);
 if isempty(col) ~= 1 
     % Position
@@ -723,6 +727,18 @@ if isempty(col) ~= 1
     % Mode and Jacobian
     Mode_det_Jq_Jc_J_Intep(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = Mode_det_Jq_Jc_J((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
     Mode_det_Jq_Jc_J_Intep((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = Mode_det_Jq_Jc_J(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
+    
+    % Moving Platform
+    %Position
+    MP_Pos_Intep(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = MP_Pos((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
+    MP_Pos_Intep((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = MP_Pos(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
+    %Velocity
+    MP_Vel_Intep(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = MP_Vel((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
+    MP_Vel_Intep((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = MP_Vel(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
+    %Acceleration
+    MP_Acc_Intep(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:) = MP_Acc((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:);
+    MP_Acc_Intep((NumIntepoPoints*col(1)+1):col(2)*NumIntepoPoints,:) = MP_Acc(NumIntepoPoints*(col(1)-1)+1:NumIntepoPoints*col(1),:);
+    
 end
 
 %% Position, Velocity, Acceleration Calcuation of joint angles

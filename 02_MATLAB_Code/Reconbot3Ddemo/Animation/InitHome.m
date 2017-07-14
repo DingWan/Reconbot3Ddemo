@@ -35,7 +35,8 @@ daspect([1 1 1])                    % Setting the aspect ratio
 view(45,25)
 xlabel('X'),ylabel('Y'),zlabel('Z');
 title('IGM Robotics - Reconbot');
-axis([-100 600 -100 600 0 700]);
+axis equal
+axis([-100 600 -100 600 0 600]);
 grid on;
 
 BaseLow_data = getappdata(0,'Link_BaseLow_data');

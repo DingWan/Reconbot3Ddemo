@@ -81,9 +81,9 @@ classdef RCB3T1RSingularityA2C2
                     p(i) = po{i};
                 end
             end
-            alpha = po{4};
+            alpha = po{6};
             beta  = po{5};
-            gamma = po{6};
+            gamma = po{4};
             
             switch length(po)
                 case 8 % SingularityPositions 3T1R
@@ -116,7 +116,7 @@ classdef RCB3T1RSingularityA2C2
                 % p = [x, y, z, alpha, [], []];
                 %name = '3T1R';                
                 %fprintf('%s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', name, po{1}, po{2}, po{3}, po{4}, po{5}, po{6});
-                RotationMatrix = rotz(alpha * 180 / pi);
+                RotationMatrix = rotz(gamma * 180 / pi);
             
             
             %% -----------------------Calculaion of Ai & Ci in frame op-xyz-----------------------
@@ -194,7 +194,7 @@ classdef RCB3T1RSingularityA2C2
                 end
                 theta = 0;
                 beta = 0;
-                gamma = 0;
+                alpha = 0;
                 EulerAngle_q11_theta = [alpha, beta, gamma, q11, theta];
                 EulerAngle = EulerAngle_q11_theta(1:3);
             
@@ -326,7 +326,7 @@ classdef RCB3T1RSingularityA2C2
                     q24 = pi/2 - (q22 + q23 + theta);
                 end
                 %--------- q15 and q25 -----------%
-                q15 =  q11 - alpha;   q25 = q21 + alpha ;
+                q15 =  q11 - gamma;   q25 = q21 + gamma ;
                 
                 q1q2(i,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
             
@@ -573,59 +573,63 @@ classdef RCB3T1RSingularityA2C2
                     
                     %%-------------------------q14q15 and q24q25------------------------------
                     % Calculate the angles of q14q15 and q24q25
-                    q14 = pi - q12 - q13;% Actually, it should be:q14 = q12 + q13 - pi/2;
-                    q15 = -q11 - gamma(i+j);
-                    q24 = pi - q22 - q23;%Actually, it should be:q14 = q22 + q23 - pi/2;
+                    q14 = pi/2 - (q12 + q13);
+                    q15 = q11 + gamma(i+j);
+                    q24 = pi/2 - (q22 + q23);
                     q25 = q21 - gamma(i+j);
                     %%------------------------------------------------------------------------
                     %%-------------------------q11-q15 and q21-q25------------------------------
                     q1q2(i+j,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
                     
                     j = j + 1;
-                         %% --------------------Plot the mechanism Ai Bi Ci------------------
-                             PA1B1C1x = [A1(1), B1(1), C1(1)];
-                             PA1B1C1y = [A1(2), B1(2), C1(2)];
-                             PA1B1C1z = [A1(3), B1(3), C1(3)];
-                             plot3(PA1B1C1x, PA1B1C1y, PA1B1C1z,'b-'); hold on;
-                    
-                             PA2B2C2x = [A2(1), B2(1), C2(1)];
-                             PA2B2C2y = [A2(2), B2(2), C2(2)];
-                             PA2B2C2z = [A2(3), B2(3), C2(3)];
-                             plot3(PA2B2C2x, PA2B2C2y, PA2B2C2z,'r-'); hold on;
-                    
-                             PC1C2x = [C1(1), C2(1)];
-                             PC1C2y = [C1(2), C2(2)];
-                             PC1C2z = [C1(3), C2(3)];
-                             plot3(PC1C2x, PC1C2y, PC1C2z,'g-','linewidth',3); hold on;
-                    
-                             PA1A2x = [A1(1), A2(1)];
-                             PA1A2y = [A1(2), A2(2)];
-                             PA1A2z = [A1(3), A2(3)];
-                    
-                             plot3(PA1A2x, PA1A2y, PA1A2z,'k-','linewidth',3); hold on;
-                             %grid on;
-                             %axis equal;
-                             xlabel('x');
-                             ylabel('y');
-                             zlabel('z');
-                             axis equal;
+
+
+%                          %% --------------------Plot the mechanism Ai Bi Ci------------------
+%                              PA1B1C1x = [A1(1), B1(1), C1(1)];
+%                              PA1B1C1y = [A1(2), B1(2), C1(2)];
+%                              PA1B1C1z = [A1(3), B1(3), C1(3)];
+%                              plot3(PA1B1C1x, PA1B1C1y, PA1B1C1z,'b-'); hold on;
+%                     
+%                              PA2B2C2x = [A2(1), B2(1), C2(1)];
+%                              PA2B2C2y = [A2(2), B2(2), C2(2)];
+%                              PA2B2C2z = [A2(3), B2(3), C2(3)];
+%                              plot3(PA2B2C2x, PA2B2C2y, PA2B2C2z,'r-'); hold on;
+%                     
+%                              PC1C2x = [C1(1), C2(1)];
+%                              PC1C2y = [C1(2), C2(2)];
+%                              PC1C2z = [C1(3), C2(3)];
+%                              plot3(PC1C2x, PC1C2y, PC1C2z,'g-','linewidth',3); hold on;
+%                     
+%                              PA1A2x = [A1(1), A2(1)];
+%                              PA1A2y = [A1(2), A2(2)];
+%                              PA1A2z = [A1(3), A2(3)];
+%                     
+%                              plot3(PA1A2x, PA1A2y, PA1A2z,'k-','linewidth',3); hold on;
+%                              %grid on;
+%                              %axis equal;
+%                              xlabel('x');
+%                              ylabel('y');
+%                              zlabel('z');
+%                              axis equal;
+
+
                 end
                 i = i + j;
             end
             
-            %----------------- plot xyz axes of base point --------------
-            x_axis = [50 0 0];
-            y_axis = [0 50 0];
-            z_axis = [0 0 50];
-            OP= [0 0 0];
-            xyz = [OP;x_axis;OP;y_axis;OP;z_axis];
-            i = 1:2;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-r');
-            i = 3:4;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-g');
-            i = 5:6;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-b');
-            %-----------------------------------------------------------
+%             %----------------- plot xyz axes of base point --------------
+%             x_axis = [50 0 0];
+%             y_axis = [0 50 0];
+%             z_axis = [0 0 50];
+%             OP= [0 0 0];
+%             xyz = [OP;x_axis;OP;y_axis;OP;z_axis];
+%             i = 1:2;
+%             plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-r');
+%             i = 3:4;
+%             plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-g');
+%             i = 5:6;
+%             plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-b');
+%             %-----------------------------------------------------------
             
             %%Here is used to judge the existance of the solution
             if i == 1

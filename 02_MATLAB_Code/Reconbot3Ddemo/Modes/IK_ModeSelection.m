@@ -89,7 +89,7 @@
                             [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj3T1R.RCB_3T1R_SingularityA2C2_IK;
                         elseif abs(C1_in_Ob(1) - A1(1)) <= 1e-2 && abs(C1_in_Ob(2) - A1(2)) <= 1e-2 && abs(C2_in_Ob(1) - A2(1)) <= 1e-2 && abs(C2_in_Ob(2) - A2(2)) <= 1e-2
                             Mode = 5; display( 'Mode switch to: "3T1R-SingularityA1C1A2C2"');
-                            po_cell_z78 = inputdlg({'q11','q21'},'3T1R-singularityA1C1', [1 20,1 20]);
+                            po_cell_z78 = inputdlg({'q11','q21'},'3T1R-singularityA1C1', [1 20; 1 20]);
                             po{7} = str2num(po_cell_z78{1}) * pi / 180;
                             po{8} = str2num(po_cell_z78{2}) * pi / 180;
                             q11 = po{7};

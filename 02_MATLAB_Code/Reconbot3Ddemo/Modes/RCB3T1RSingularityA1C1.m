@@ -81,9 +81,9 @@ classdef RCB3T1RSingularityA1C1
                     p(i) = po{i};
                 end
             end
-            alpha = po{4};
+            alpha = po{6};
             beta  = po{5};
-            gamma = po{6};
+            gamma = po{4};
             
             switch length(po)
                 case 8 % SingularityPositions 3T1R
@@ -116,7 +116,7 @@ classdef RCB3T1RSingularityA1C1
                 % p = [x, y, z, alpha, [], []];
                 %name = '3T1R';                
                 %fprintf('%s inputs are: PosOri = [%.6g, %.6g, %.6g, %.6g, %.6g, %.6g].\n', name, po{1}, po{2}, po{3}, po{4}, po{5}, po{6});
-                RotationMatrix = rotz(alpha * 180 / pi);
+                RotationMatrix = rotz(gamma * 180 / pi);
             
             
             %% -----------------------Calculaion of Ai & Ci in frame op-xyz-----------------------
@@ -194,7 +194,7 @@ classdef RCB3T1RSingularityA1C1
                 end
                 theta = 0;
                 beta = 0;
-                gamma = 0;
+                alpha = 0;
                 EulerAngle_q11_theta = [alpha, beta, gamma, q11, theta];
                 EulerAngle = EulerAngle_q11_theta(1:3);
             
@@ -326,7 +326,7 @@ classdef RCB3T1RSingularityA1C1
                     q24 = pi/2 - (q22 + q23 + theta);
                 end
                 %--------- q15 and q25 -----------%
-                q15 = q11 - alpha;   q25 = q21 + alpha ;
+                q15 = q11 - gamma;   q25 = q21 + gamma ;
                 
                 q1q2(i,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
             
@@ -573,10 +573,10 @@ classdef RCB3T1RSingularityA1C1
                     
                     %%-------------------------q14q15 and q24q25------------------------------
                     % Calculate the angles of q14q15 and q24q25
-                    q14 = pi - q12 - q13;% Actually, it should be:q14 = q12 + q13 - pi/2;
-                    q15 = -q11 - gamma(i+j);
-                    q24 = pi - q22 - q23;%Actually, it should be:q14 = q22 + q23 - pi/2;
-                    q25 = q21 - gamma(i+j);
+                    q14 = pi/2 - (q12 + q13);
+                    q15 = q11 - gamma(i+j);
+                    q24 = pi/2 - (q22 + q23);
+                    q25 = q21 + gamma(i+j);
                     %%------------------------------------------------------------------------
                     %%-------------------------q11-q15 and q21-q25------------------------------
                     q1q2(i+j,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
