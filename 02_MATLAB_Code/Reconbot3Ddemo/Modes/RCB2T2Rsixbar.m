@@ -448,76 +448,115 @@ classdef RCB2T2Rsixbar
             
           %% -----------------------Basic calculaion of planar six-bar linkage-----------------------
             NumSolu = 0;
-            for i = 1:3
-                % Three possible solutions
-                if abs(q11) <= pi
+            for i = 1:4
+                % Four possible solutions of q21 for all q11 inputs
+                if q11 >= 0 && q11 <= pi
                     if i == 1
                         q21 = q11;
                     elseif i == 2
                         q21 = q11 + pi;
-                    else
+                    elseif i == 3
                         q21 = q11 - pi;
+                    elseif i == 4
+                        q21 = q11 - 2*pi;
+                    end
+                elseif q11 < 0 && q11 >= -pi
+                    if i == 1
+                        q21 = q11;
+                    elseif i == 2
+                        q21 = q11 + pi;
+                    elseif i == 3
+                        q21 = q11 - pi;
+                    elseif i == 4
+                        q21 = q11 + 2*pi;
                     end
                 elseif q11 > pi && q11 <= 2*pi
                     if i == 1
                         q21 = q11;
                     elseif i == 2
-                        q21 = q11 - pi;
-                    else
+                        q21 = q11 - pi;                        
+                    elseif i == 3
                         q21 = q11 - 2*pi;
+                    else
+                        q21 = q11 - 3*pi;
                     end
                 elseif q11 < -pi && q11 >= -2*pi
                     if i == 1
                         q21 = q11;
                     elseif i == 2
                         q21 = q11 + pi;
-                    else
+                    elseif i == 3
                         q21 = q11 + 2*pi;
+                    else
+                        q21 = q11 + 3*pi;
                     end
                 end
-
-                l1pie = L1 * cos(q11);
+                
+                l1pie = L1 * abs(cos(q11));
                 lA1A2pie = l1pie;
                 lC1C2pie = l1pie;
                 lA1B1pie = L2;
                 lB1C1pie = L2;
-                lB1C2pie = sqrt(l1pie^2 + L2^2 - 2 * l1pie * L2 * cos(pi - (pi/2+q14)));
-                lB1A2pie = sqrt(l1pie^2 + L2^2 - 2 * l1pie * L2 * cos(pi - q12));
-                lA2C2pie = 2 * L2 * cos(q23 / 2);
                 
-                % ------ Method I ---------
-                angleA1A2B1pie = atan(L2 * sin(q12) / (l1pie + L2 * cos(q12)));
-                
-                if (pi/2+q14) < 0
-                    angleC1C2B1pie = - acos((l1pie^2 + lB1C2pie^2 - L2^2) / (2 * l1pie * lB1C2pie));
-                else
-                    angleC1C2B1pie = acos((l1pie^2 + lB1C2pie^2 - L2^2) / (2 * l1pie * lB1C2pie));
-                end
-                %------ Method II ---------
-                % angleA1A2B1pie = acos((lB1A2pie^2 + lA1A2pie^2 - lA1B1pie^2) / (2 * lB1A2pie * lA1A2pie));
-                % angleA1B1A2pie = acos((lA1B1pie^2 + lB1A2pie^2 - lA1A2pie^2) / (2 * lA1B1pie * lB1A2pie));
-                
-                % angleC1C2B1pie = acos((lC1C2pie^2 + lB1C2pie^2 - lB1C1pie^2) / (2 * lC1C2pie * lB1C2pie));
-                % angleC1B1C2pie = acos((lB1C2pie^2 + lB1C1pie^2 - lC1C2pie^2) / (2 * lB1C2pie * lB1C1pie));
-                
-                %---------Triangle A2B1C2 Inner three Angles----------
-                angleC2B1A2pie = acos((lB1A2pie^2 + lB1C2pie^2 - lA2C2pie^2) / (2 * lB1A2pie * lB1C2pie));
-                angleB1A2C2pie = acos((lB1A2pie^2 + lA2C2pie^2 - lB1C2pie^2) / (2 * lB1A2pie * lA2C2pie));
-                angleA2C2B1pie = pi - angleC2B1A2pie - angleB1A2C2pie;
-                
-                if i == 1
-                    %----------The output angle q13, q23, q24 can be calculated as follows:----
+                % Here we give the different calculation of I/IV and II/III
+                % Quadrants, which could be different calculation process
+                if abs(q11) < pi/2 || (q11 > 3*pi/2 && q11 <= 2*pi)  || (q11 < -3*pi/2 && q11 >= -2*pi)
+                    
+                    lB1C2pie = sqrt(l1pie^2 + L2^2 - 2 * l1pie * L2 * cos(pi - (pi/2+q14)));
+                    lB1A2pie = sqrt(l1pie^2 + L2^2 - 2 * l1pie * L2 * cos(pi - q12));
+                    lA2C2pie = 2 * L2 * cos(q23 / 2);
+                    
+                    % ------ Method I ---------
+                    angleA1A2B1pie = atan(L2 * sin(q12) / (l1pie + L2 * cos(q12)));                    
+                    angleC1C2B1pie = acos((l1pie^2 + lB1C2pie^2 - L2^2) / (2 * l1pie * lB1C2pie));                   
+                    
+                    %---------Triangle A2B1C2 Inner three Angles----------
+                    angleC2B1A2pie = acos((lB1A2pie^2 + lB1C2pie^2 - lA2C2pie^2) / (2 * lB1A2pie * lB1C2pie));
+                    angleB1A2C2pie = acos((lB1A2pie^2 + lA2C2pie^2 - lB1C2pie^2) / (2 * lB1A2pie * lA2C2pie));
+                    angleA2C2B1pie = pi - angleC2B1A2pie - angleB1A2C2pie;
+                    
                     q13 = pi - (q12 + (pi/2+q14) + angleC2B1A2pie - angleA1A2B1pie - angleC1C2B1pie);
-                    %     q13 = pi - (angleC2B1A2pie + angleA1B1A2pie + angleC1B1C2pie);
-                    q22 = pi - angleA1A2B1pie - angleB1A2C2pie - q23 / 2;
-                    q24 = - pi/2 + (pi - angleC1C2B1pie - angleA2C2B1pie - q23 / 2);
+                    if abs(q21) < pi/2 || (q21 > 3*pi/2 && q21 <= 2*pi)  || (q21 < -3*pi/2 && q21 >= -2*pi)
+                        %----------The output angle q13, q23, q24 can be calculated as follows:----                        
+                        q22 = pi - angleA1A2B1pie - angleB1A2C2pie - q23 / 2;
+                        q24 = - pi/2 + (pi - angleC1C2B1pie - angleA2C2B1pie - q23 / 2);%pi/2 - (q22 + q23);
+                    else
+                        %----------The output angle q13, q23, q24 can be calculated as follows:----
+                        q22 = angleA1A2B1pie + angleB1A2C2pie - q23 / 2;
+                        q24 = - pi/2 + (angleC1C2B1pie + angleA2C2B1pie - q23 / 2); %pi/2 - (q22 + q23);
+                    end
+                    
                 else
-                    %----------The output angle q13, q23, q24 can be calculated as follows:----
-                    q13 = pi - (q12 + (pi/2+q14) + angleC2B1A2pie - angleA1A2B1pie - angleC1C2B1pie);
-                    %     q13 = pi - (angleC2B1A2pie + angleA1B1A2pie + angleC1B1C2pie);
-                    q22 = angleA1A2B1pie + angleB1A2C2pie - q23 / 2;
-                    q24 = - pi/2 + (angleC1C2B1pie + angleA2C2B1pie - q23 / 2);
+                    
+                    lB1C2pie = sqrt(l1pie^2 + L2^2 - 2 * l1pie * L2 * cos(pi/2+q14));
+                    lB1A2pie = sqrt(l1pie^2 + L2^2 - 2 * l1pie * L2 * cos(q12));
+                    lA2C2pie = 2 * L2 * cos(q23 / 2);
+                    
+                    %------ Method II ---------
+                    angleA1A2B1pie = acos((lB1A2pie^2 + lA1A2pie^2 - lA1B1pie^2) / (2 * lB1A2pie * lA1A2pie));
+                    angleA1B1A2pie = acos((lA1B1pie^2 + lB1A2pie^2 - lA1A2pie^2) / (2 * lA1B1pie * lB1A2pie));
+                    
+                    angleC1C2B1pie = acos((lC1C2pie^2 + lB1C2pie^2 - lB1C1pie^2) / (2 * lC1C2pie * lB1C2pie));
+                    angleC1B1C2pie = acos((lB1C2pie^2 + lB1C1pie^2 - lC1C2pie^2) / (2 * lB1C2pie * lB1C1pie));
+                    
+                    %---------Triangle A2B1C2 Inner three Angles----------
+                    angleC2B1A2pie = acos((lB1A2pie^2 + lB1C2pie^2 - lA2C2pie^2) / (2 * lB1A2pie * lB1C2pie));
+                    angleB1A2C2pie = acos((lB1A2pie^2 + lA2C2pie^2 - lB1C2pie^2) / (2 * lB1A2pie * lA2C2pie));
+                    angleA2C2B1pie = pi - angleC2B1A2pie - angleB1A2C2pie;
+                    
+                    q13 = - pi + (angleC2B1A2pie + angleA1B1A2pie + angleC1B1C2pie);
+                    if abs(q21) < pi/2 || (q21 > 3*pi/2 && q21 <= 2*pi)  || (q21 < -3*pi/2 && q21 >= -2*pi)
+                        %----------The output angle q13, q23, q24 can be calculated as follows:----                        
+                        q22 = pi - angleA1A2B1pie - angleB1A2C2pie - q23 / 2;
+                        q24 = - pi/2 + (pi - angleC1C2B1pie - angleA2C2B1pie - q23 / 2);%pi/2 - (q22 + q23);%
+                    else
+                        %----------The output angle q13, q23, q24 can be calculated as follows:----
+                        q22 = angleA1A2B1pie + angleB1A2C2pie - q23 / 2;
+                        q24 = - pi/2 + (angleC1C2B1pie + angleA2C2B1pie - q23 / 2); %pi/2 - (q22 + q23);
+                    end
+                    
                 end
+                
                 %--------------------- output angle elimilate imagary part ------------------
                 if isreal(q13)~= 1 && imag(q13) < 1e-6 || isreal(q22)~= 1 && imag(q22) < 1e-6 || isreal(q22)~= 1 && imag(q22) < 1e-6
                     q13 = real(q13);
@@ -525,23 +564,21 @@ classdef RCB2T2Rsixbar
                     q24 = real(q24);
                 end
                 
-                %% -----------------------Get the output values of Moving Platform-----------------------
-                C1 = [L2 * (cos(q12) + cos(q12 + q13)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13)) * cos(q11), L2 * (sin(q12) + sin(q12 + q13))];
-                C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
-                %norm(C1-C2)
-                if norm(C1-C2) - L1 > 1e-6
-                    display('Notice:The solution is incorrect, mechanism recovery to original configuration')
-                    q1q2 = [0, pi/3, pi/3, pi/3, 0, 0, pi/3, pi/3, pi/3, 0];
-                end
+              %% -----------------------Get the output values of Moving Platform-----------------------
+              
                 %%--------------------Calculate the position of Ai Bi Ci------------------
                 A1 = [0, -L1/2, 0];
                 B1 = [L2 * cos(q12) * sin(q11), -L1/2 - L2 * cos(q12) * cos(q11), L2 * sin(q12)];
-                %C1 = [L2 * (cos(q12) + cos(q12 + q13)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13)) * cos(q11), L2 * (sin(q12) + sin(q12 + q13))];
+                C1 = [L2 * (cos(q12) + cos(q12 + q13)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13)) * cos(q11), L2 * (sin(q12) + sin(q12 + q13))];
                 
                 A2 = [0, L1/2, 0];
                 B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)];
-                %C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
-                %%------------------------------------------------------------------------
+                C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
+                %%------------------------------------------------------------------------                   
+                
+                if norm(C1-C2) - L1 > 1e-6
+                    display('Notice:The solution is incorrect, mechanism recovery to original configuration')                    
+                end                
                 
                 %-------------------------q15 = q25------------------------------
                 % Calculate the angles of q15
@@ -560,7 +597,6 @@ classdef RCB2T2Rsixbar
                 Tform_from_axis_angle = rotm2tform(Matrix_from_axis_angle);
                 %-- eul = tform2eul(tform): Extract Euler angles from homogeneous transformation--
                 eul_alpha_beta_gamma = tform2eul(Tform_from_axis_angle,'ZYX');
-
                 
                 %-------------------------q11-q15 and q21-q25------------------------------
                 if norm(C1-C2) - L1 < 1e-6
@@ -576,7 +612,7 @@ classdef RCB2T2Rsixbar
                     
                     p(NumSolu,4:6) = eul_alpha_beta_gamma;
                 end
-            end
+            
             %% --------------------Plot the mechanism Ai Bi Ci------------------
 %                      PA1B1C1x = [A1(1), B1(1), C1(1)];
 %                      PA1B1C1y = [A1(2), B1(2), C1(2)];
@@ -629,6 +665,7 @@ classdef RCB2T2Rsixbar
 %                      zlabel('z');
 %                      axis equal;
             %%------------------------------------------------------------------------
+            end
         end
      
     end

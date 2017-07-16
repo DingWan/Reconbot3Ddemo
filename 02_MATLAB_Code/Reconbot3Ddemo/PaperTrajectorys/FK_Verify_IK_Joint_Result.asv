@@ -22,8 +22,8 @@ q0_q11q12q14_q21q22q23_Ang = [q012Ang(:,1)  q012Ang(:,2)  q012Ang(:,3)  q012Ang(
 Ang_Intep = q0_q11q12q14_q21q22q23_Ang;
 
 %%
-for i = 119:121 %length(Ang_Intep)
-    if rem(i,n) == 0 && i < length(q012Ang(:,1)) && norm(q012Ang(i,:) - q012Ang(i+1,:)) < 1e-12
+for i = 219:241 %length(Ang_Intep)
+    if rem(i,n) == 0 && Mode(i)<=5 && i < length(q012Ang(:,1)) && norm(q012Ang(i,:) - q012Ang(i+1,:)) < 1e-12
         i = i + 1;
         j = 1;
     else
@@ -104,15 +104,15 @@ for i = 119:121 %length(Ang_Intep)
             %q0q1q2 = [Ang_Intep(i,1), q1q2];
     end
     
-    if i>119 && length(q1q2(:,1))>1 && isempty(q0q1q2) ~= 1
+    % Find the best configuration
+    if i>1 && length(q1q2(:,1))>1 && isempty(q0q1q2) ~= 1
         % Find the suitable one solution
         for k = 1 : length(q1q2(:,1))
-            q0q1q2_Cur = [Ang_Intep(i,1), q1q2(k,:)];
-            if j == 1
-                q0q1q2_norm(k) = norm(q0q1q2_Cur - q0q1q2(i-2,:));
-            else
-                q0q1q2_norm(k) = norm(q0q1q2_Cur - q0q1q2(i-1,:));
+            if j == 1 && k == 1
+                i = i - 1;
             end
+            q0q1q2_Cur = [Ang_Intep(i,1), q1q2(k,:)];
+            q0q1q2_norm(k) = norm(q0q1q2_Cur - q0q1q2(i-1,:));
         end
         [rowsq1q2,colsq1q2] = find(q0q1q2_norm == min(min(q0q1q2_norm)));
         SolutionRow_q1q2 = colsq1q2(1);
@@ -120,7 +120,7 @@ for i = 119:121 %length(Ang_Intep)
         colsq1q2 = 1;
     end
 
-    q0q1q2(i,:) = [Ang_Intep(i,1), q1q2(2,:)];
+    q0q1q2(i,:) = [Ang_Intep(i,1), q1q2(colsq1q2(1),:)];
     ReconbotANI(q0q1q2(i,:));
             
 end

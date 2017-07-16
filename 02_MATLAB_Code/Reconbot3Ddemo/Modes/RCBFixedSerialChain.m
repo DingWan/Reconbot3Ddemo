@@ -142,6 +142,7 @@ classdef RCBFixedSerialChain
         end
         
         function [p, ABC, q1q2] = RCB_FixedSerialChain_FK(obj)
+           
             q11 = obj.q11q12q21q22(1);
             q12 = obj.q11q12q21q22(2);
             q21 = obj.q11q12q21q22(3);
@@ -150,92 +151,31 @@ classdef RCBFixedSerialChain
             L2 = obj.l2;
             
             %% ----------------------- Calculate one solutions for one input  -----------------------
-            if p(1) == 0 && p(2) == 0 && p(3) == 0
+            
                 q13 = pi;
-                q14 = pi/2 - (q12 + q13 + theta);
+                q14 = - pi/2 - q12;
                 q15 = q11;
                 
                 q23 = pi;
-                q24 = pi/2 - (q22 + q23 + theta);
+                q24 = - pi/2 - q22;
                 q25 = q21;
                 q1q2 = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
                 
-                i = 1;
-                jA1C1 = 0; % NumberofFeasibleSolutionA1C1 = 0;
-                jA2C2 = 0; % NumberofFeasibleSolutionA2C2 = 0;
-                %------------------Judge the workspace and solution existence of A1C1-------------------------
-                %---------------------------Position of A1-C1 ----------------------------
-                if q11 >= -2*pi && q12 >= 0 && q13 >= -pi && q14 >= -105*pi/180 && q15 >= -2*pi...
-                        && q11 <= 2*pi && q12 <= pi && q13 <= pi && q14 <= 105*pi/180 && q15 <= 2*pi...
-                        && isreal(q1q2(i,1:5)) ~= 0
-                    jA1C1 = jA1C1 + 1;
-                    %%-----------------Get the output values of Moving Platform-----------------------
-                    %%--------------------Calculate the position of Ai Bi Ci------------------
-                    A1(jA1C1,:) = [0, -L1/2, 0];
-                    B1(jA1C1,:) = [L2 * cos(q1q2(i,2)) * sin(q1q2(i,1)), -L1/2 - L2 * cos(q1q2(i,2)) * cos(q1q2(i,1)), L2 * sin(q1q2(i,2))];
-                    C1(jA1C1,:) = [L2 * (cos(q1q2(i,2)) + cos(q1q2(i,2) + q1q2(i,3))) * sin(q1q2(i,1)), -L1/2 - L2 * (cos(q1q2(i,2))...
-                        + cos(q1q2(i,2) + q1q2(i,3))) * cos(q1q2(i,1)), L2 * (sin(q1q2(i,2)) + sin(q1q2(i,2) + q1q2(i,3)))];
-                    %%------------------------------------------------------------------------
-                        q1(jA1C1,1:5) = q1q2(i,1:5);
-                        A1B1C1(jA1C1,:) = [A1(jA1C1,:), B1(jA1C1,:), C1(jA1C1,:)];
-                end
+               
+               %%--------------------Calculate the position of Ai Bi Ci------------------
+                A1 = [0, -L1/2, 0];
+                B1 = [L2 * cos(q12) * sin(q11), -L1/2 - L2 * cos(q12) * cos(q11), L2 * sin(q12)];
+                C1 = [L2 * (cos(q12) + cos(q12 + q13)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13)) * cos(q11), L2 * (sin(q12) + sin(q12 + q13))];
                 
+                A2 = [0, L1/2, 0];
+                B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)];
+                C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
                 %%------------------------------------------------------------------------
-                %---------------------------Position of A2-C2 ----------------------------
-                if q21 >= -2*pi && q22 >= 0 && q23 >= -pi && q24 >= -105*pi/180 && q25 >= -2*pi ...
-                        && q21 <= 2*pi && q22 <= pi && q23 <= pi && q24 <= 105*pi/180 && q25 <= 2*pi...
-                        && isreal(q1q2(i,6:10)) ~= 0
-                    jA2C2 = jA2C2 + 1;
-                    %%-----------------Get the output values of Moving Platform-----------------------
-                    %%--------------------Calculate the position of Ai Bi Ci------------------
-                    A2(jA2C2,:) = [0, L1/2, 0];
-                    B2(jA2C2,:) = [- L2 * cos(q1q2(i,7)) * sin(q1q2(i,6)), L1/2 + L2 * cos(q1q2(i,7)) * cos(q1q2(i,6)), L2 * sin(q1q2(i,7))];
-                    C2(jA2C2,:) = [- L2 * (cos(q1q2(i,7)) + cos(q1q2(i,7) + q1q2(i,8))) * sin(q1q2(i,6)), L1/2 + L2 * (cos(q1q2(i,7))...
-                        + cos(q1q2(i,7) + q1q2(i,8))) * cos(q1q2(i,6)), L2 * (sin(q1q2(i,7)) + sin(q1q2(i,7) + q1q2(i,8)))];
-                    %%------------------------------------------------------------------------
-                    
-                        q2(jA2C2,1:5) = q1q2(i,6:10);
-                        A2B2C(jA2C2,:) = [A2(jA2C2,:), B2(jA2C2,:), C2(jA2C2,:)];
-                end
-                
-                % Here, I did a small trick:
-                % The number of correct value of q1 and q2 might be different,
-                % so, I force the number to be the same by compensating the
-                % fewer one with the missing number (jA1C1-jA2C2) of first value q1(1,1:5) and A1B1C1(1,:)
-                if jA1C1 ~= 0 && jA2C2 ~= 0
-                    WSvalue_FixedSerialChain = 1;
-                    %for i = 1:1:max(jA1C1,jA2C2)
-                    if jA1C1 > jA2C2
-                        for i = 1:1:(jA1C1-jA2C2)
-                            q2(jA2C2 + i,1:5) = q2(1,1:5);
-                            A2B2C(jA2C2 + i,:) = A2B2C(1,:);
-                        end
-                    elseif jA1C1 < jA2C2
-                        for i = 1:1:(jA2C2-jA1C1)
-                            q1(jA1C1 + i,1:5) = q1(1,1:5);
-                            A1B1C1(jA1C1 + i,:) = A1B1C1(1,:);
-                        end
-                    end
-                    q1q2 = [q1(:,1:5), q2(:,1:5)];
-                    ABC = [A1B1C1(:,:),A2B2C(:,:)];
-                else
-                    WSvalue_FixedSerialChain = 0;
-                    q1q2 = [];
-                    ABC = [];
-                end
-                WSvalue_3T1R_SinguPosA1C1 = 0;
-                WSvalue_3T1R_SinguPosA2C2 = 0; 
-                
-                WSvalue = [WSvalue_FixedSerialChain, WSvalue_3T1R_SinguPosA1C1, WSvalue_3T1R_SinguPosA2C2];
-                p = [po{1}, po{2}, po{3}, EulerAngle];
-            else 
-                WSvalue = [];
-                q1q2 = [];
-                ABC = [];
-                p = [];
-                display('Reconbot is not in the Fixed Position!')
-                warndlg('Reconbot is not in the Fixed Position! ','!! Warning !!')
-            end                
+            
+                %----------------------Position of A1-C1 and A2-C2-------------------------
+                ABC(:) = [A1, B1, C1, A2, B2, C2];
+                p = [0 0 0, 0 0 0];
+            
                 
         end
         

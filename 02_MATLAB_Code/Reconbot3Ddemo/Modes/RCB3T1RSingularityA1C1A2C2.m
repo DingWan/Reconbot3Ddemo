@@ -454,186 +454,84 @@ classdef RCB3T1RSingularityA1C1A2C2
             % CoefficientMatrix = [J1, J2, J3, J4, J5, J6, J7, J8, J9];
             %%----------------------------------------------------------------------------
             
-            % the Substitutional Variables
-            F = cos(q11) * cos(q21) - sin(q11) * sin(q21);
-            G = sin(q12) - sin(q22);
+            q13 =  pi - 2 * q12;
+            q23 =  pi - 2 * q22;
+              
+            %%-------------------------q14q15 and q24q25------------------------------
+            % Calculate the angles of q14q15 and q24q25
+            q14 = pi/2 - (q12 + q13);
+            q15 = q11;
+            q24 = pi/2 - (q22 + q23);
+            q25 = q21;   
             
-            D1 = 2 * L2 * F;
-            D2 = 2 * (L2 * cos(q22) + L1 * cos(q21) + L2 * F * cos(q12));
+          %% -----------------------Get the output values of Moving Platform-----------------------
+            %%--------------------Calculate the position of Ai Bi Ci------------------
+            A1 = [0, -L1/2, 0];
+            B1 = [L2 * cos(q12) * sin(q11), -L1/2 - L2 * cos(q12) * cos(q11), L2 * sin(q12)];
+            C1 = [L2 * (cos(q12) + cos(q12 + q13)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13)) * cos(q11), L2 * (sin(q12) + sin(q12 + q13))];
             
-            E1 = 2 * (L2 * cos(q12) + L1 * cos(q11) + L2 * F * cos(q22));
-            E2 = L2 * cos(q12)^2 + 2 * (L2 * F * cos(q22) + L1 * cos(q11)) * cos(q12) + L2 * cos(q22)^2 + 2 * L1 * cos(q21) * cos(q22);
+            A2 = [0, L1/2, 0];
+            B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)];
+            C2 = [- L2 * (cos(q22) + cos(q22 + q23)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23))];
+            %%------------------------------------------------------------------------
             
-            H1 = L2^2;
-            H2 = 2 * L2 * E1;
-            H3 = 2 * L2^2 + E1^2 + 2 * L2 * E2 - D1^2;
-            H4 = 2 * (L2 * E1 + E1 * E2 - D1 * D2);
-            H5 = L2^2 + 2 * L2 * E2 + E2^2 - D2^2;
-            
-            I1 = 2 * L2^2 - D1^2;
-            I2 = 2 * (L2 * E1 - D1 * D2);
-            I3 = 2 * L2^2 + 2 * L2 * E2 - D2^2;
-            
-            %%----------------------------Simplified version----------------------------
-            J1 = L2^2 * G^4 - G^2 * (I1 - I2 + I3) + H1 - H2 + H3 - H4 + H5;
-            J2 = L2^2 * 8 * G^3 - 4 * G * (I1 - I2 + I3);
-            J3 = L2^2 * (4 * G^4 + 24 * G^2) - (4 * (I1 - I2 + I3) + 2 * G^2 * (2 * I3 - I2)) - 4 * H1 + 2 * H2 - 2 * H4 + 4 * H5;
-            J4 = L2^2 * (24 * G^3 + 32 * G) - 4 * G * (-I1 - I2 + 3 * I3);
-            J5 = L2^2 * (6 * G^4 + 48 * G^2 + 16) - (8 * (I3 - I1) + 2 * G^2 * (3 * I3 - I1)) + 6 * H1 - 2 * H3 + 6 * H5;
-            J6 = L2^2 * (24 * G^3 + 32 * G) - 4 * G * (-I1 + I2 + 3 * I3);
-            J7 = L2^2 * (4 * G^4 + 24 * G^2) - (4 * (I1 + I2 + I3) + 2 * G^2 * (I2 + 2 * I3)) - 4 * H1 - 2 * H2 + 2 * H4 + 4 * H5;
-            J8 = L2^2 * 8 * G^3 - 4 * G * (I1 + I2 + I3);
-            J9 = L2^2 * G^4 - G^2 * (I1 + I2 + I3) + H1 + H2 + H3 + H4 + H5;
-            
-            % the coefficient matrix of the 8-degree polynomials equation
-            CoefficientMatrix8 = [J1, J2, J3, J4, J5, J6, J7, J8, J9];
-            
-            % calculate the root of the 8-degree polynomials equation
-            x = roots(CoefficientMatrix8);
-            
-            % get the value of real number (+/-)
-            x = x(imag(x) == 0);
-            NumRealq13 = length (x);
-            
-            % the final value of "+/-theta13"
-            % the programm should judge the sign of the value
-            
-            q13all = 2 * atan(x) - q12 ;
-            %  q13all*180/pi
-            
-            %% ------------------Obtain all of the correct values and assign to q13q23-------------------------
-            % numbers of i and j are used to count the possible values that satisfy the
-            % condiation of C1z = C2z; And then, assign all the possible values to
-            % matrix q13q23;
-            
-            i = 1;
-            for Numq13 = 1:NumRealq13
+            % Get rid of the undesired points
+            if abs(C1(3) - C2(3)) < 1e-6
                 
-                q13SingleValue = q13all(Numq13);
-                j = 0;
-                %% -------------- Calculate the value of q23 (theta23) ----------------
-                % Using the following function to calculate the value of q23
-                % L2 * cos(q23)^2 + (D1 * cos(q13) + D2) * cos(q23) + (L2 * cos(q13)^2 + E1 * cos(q13) + E2) = 0
-                % the coefficient matrix of the 2-degree polynomials equations
-                K1 = L2;
-                K2 = D1 * cos(q12 + q13SingleValue) + D2;
-                K3 = L2 * cos(q12 + q13SingleValue)^2 + E1 * cos(q12 + q13SingleValue) + E2;
+                % Calculate the center point of moving platform
+                p(1:3) = (C1 + C2) / 2;
                 
-                % the coefficient matrix of the 2-degree polynomials equation
-                CoefficientMatrix2 = [K1, K2, K3];
+                p(4:6) = [0, 0, 0];
+                ABC(:) = [A1, B1, C1, A2, B2, C2];
                 
-                % calculate the root of the 2-degree polynomials equation
-                cosq23 = roots(CoefficientMatrix2);
-                
-                % get the value of real number (+/-)
-                cosq23 = cosq23(imag(cosq23) == 0);
-                NumRealq23 = length (cosq23);
-                
-                % the final value of "+/-theta13"
-                q23all = acos(cosq23) - q22;
-                %q23all * 180 / pi
-                
-                for Numq23 = 1:NumRealq23
-                    
-                    q23SingleValue = q23all(Numq23);
-                    %% -----------------------Get the output values of Moving Platform-----------------------
-                    %%--------------------Calculate the position of Ai Bi Ci------------------
-                    A1 = [0, -L1/2, 0];
-                    B1 = [L2 * cos(q12) * sin(q11), -L1/2 - L2 * cos(q12) * cos(q11), L2 * sin(q12)];
-                    C1 = [L2 * (cos(q12) + cos(q12 + q13SingleValue)) * sin(q11), -L1/2 - L2 * (cos(q12) + cos(q12 + q13SingleValue)) * cos(q11), L2 * (sin(q12) + sin(q12 + q13SingleValue))];
-                    
-                    A2 = [0, L1/2, 0];
-                    B2 = [- L2 * cos(q22) * sin(q21), L1/2 + L2 * cos(q22) * cos(q21), L2 * sin(q22)];
-                    C2 = [- L2 * (cos(q22) + cos(q22 + q23SingleValue)) * sin(q21), L1/2 + L2 * (cos(q22) + cos(q22 + q23SingleValue)) * cos(q21), L2 * (sin(q22) + sin(q22 + q23SingleValue))];
-                    %%------------------------------------------------------------------------
-
-                    % Get rid of the undesired points
-                    if abs(C1(3) - C2(3)) > 1e-5
-                        continue;
-                    end
-                    
-                    % assign the values to q13q23
-                    q13 = q13SingleValue;
-                    q23 = q23SingleValue;
-                    
-                    % Calculate the center point of moving platform
-                    p(i+j,1:3) = (C1 + C2) / 2;
-                    C1C2 = C2 - C1;
-                    yaxis = [0, 1, 0];
-                    % Judge the direction of the rotation around Z-axis
-                    directionC1C2Xxaxis = cross(C1C2, yaxis);
-                    if directionC1C2Xxaxis(3) < 0
-                        gamma(i+j) = -acos((C1C2 * yaxis')/(norm(C1C2)* norm(yaxis)));
-                    else
-                        gamma(i+j) = acos((C1C2 * yaxis')/(norm(C1C2)* norm(yaxis)));
-                    end
-                    gamma(i+j) * 180 / pi;
-                    p(i+j,4:6) = [0, 0, gamma(i+j)];
-                    ABC(i+j,:) = [A1, B1, C1, A2, B2, C2];
-                    
-                    %%-------------------------q14q15 and q24q25------------------------------
-                    % Calculate the angles of q14q15 and q24q25
-                    q14 = pi/2 - (q12 + q13);
-                    q15 = q11 - gamma(i+j);
-                    q24 = pi/2 - (q22 + q23);
-                    q25 = q21 + gamma(i+j);
-                    %%------------------------------------------------------------------------
-                    %%-------------------------q11-q15 and q21-q25------------------------------
-                    q1q2(i+j,:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
-                    
-                    j = j + 1;
-                         %% --------------------Plot the mechanism Ai Bi Ci------------------
-                             PA1B1C1x = [A1(1), B1(1), C1(1)];
-                             PA1B1C1y = [A1(2), B1(2), C1(2)];
-                             PA1B1C1z = [A1(3), B1(3), C1(3)];
-                             plot3(PA1B1C1x, PA1B1C1y, PA1B1C1z,'b-'); hold on;
-                    
-                             PA2B2C2x = [A2(1), B2(1), C2(1)];
-                             PA2B2C2y = [A2(2), B2(2), C2(2)];
-                             PA2B2C2z = [A2(3), B2(3), C2(3)];
-                             plot3(PA2B2C2x, PA2B2C2y, PA2B2C2z,'r-'); hold on;
-                    
-                             PC1C2x = [C1(1), C2(1)];
-                             PC1C2y = [C1(2), C2(2)];
-                             PC1C2z = [C1(3), C2(3)];
-                             plot3(PC1C2x, PC1C2y, PC1C2z,'g-','linewidth',3); hold on;
-                    
-                             PA1A2x = [A1(1), A2(1)];
-                             PA1A2y = [A1(2), A2(2)];
-                             PA1A2z = [A1(3), A2(3)];
-                    
-                             plot3(PA1A2x, PA1A2y, PA1A2z,'k-','linewidth',3); hold on;
-                             %grid on;
-                             %axis equal;
-                             xlabel('x');
-                             ylabel('y');
-                             zlabel('z');
-                             axis equal;
-                end
-                i = i + j;
+                %%------------------------------------------------------------------------
+                %%-------------------------q11-q15 and q21-q25------------------------------
+                q1q2(:) = [q11, q12, q13, q14, q15, q21, q22, q23, q24, q25];
             end
             
-            %----------------- plot xyz axes of base point --------------
-            x_axis = [50 0 0];
-            y_axis = [0 50 0];
-            z_axis = [0 0 50];
-            OP= [0 0 0];
-            xyz = [OP;x_axis;OP;y_axis;OP;z_axis];
-            i = 1:2;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-r');
-            i = 3:4;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-g');
-            i = 5:6;
-            plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-b');
-            %-----------------------------------------------------------
+%           %% --------------------Plot the mechanism Ai Bi Ci------------------
+%             PA1B1C1x = [A1(1), B1(1), C1(1)];
+%             PA1B1C1y = [A1(2), B1(2), C1(2)];
+%             PA1B1C1z = [A1(3), B1(3), C1(3)];
+%             plot3(PA1B1C1x, PA1B1C1y, PA1B1C1z,'b-'); hold on;
+%             
+%             PA2B2C2x = [A2(1), B2(1), C2(1)];
+%             PA2B2C2y = [A2(2), B2(2), C2(2)];
+%             PA2B2C2z = [A2(3), B2(3), C2(3)];
+%             plot3(PA2B2C2x, PA2B2C2y, PA2B2C2z,'r-'); hold on;
+%             
+%             PC1C2x = [C1(1), C2(1)];
+%             PC1C2y = [C1(2), C2(2)];
+%             PC1C2z = [C1(3), C2(3)];
+%             plot3(PC1C2x, PC1C2y, PC1C2z,'g-','linewidth',3); hold on;
+%             
+%             PA1A2x = [A1(1), A2(1)];
+%             PA1A2y = [A1(2), A2(2)];
+%             PA1A2z = [A1(3), A2(3)];
+%             
+%             plot3(PA1A2x, PA1A2y, PA1A2z,'k-','linewidth',3); hold on;
+%             %grid on;
+%             %axis equal;
+%             xlabel('x');
+%             ylabel('y');
+%             zlabel('z');
+%             axis equal;
+%             
+%             
+%             %----------------- plot xyz axes of base point --------------
+%             x_axis = [50 0 0];
+%             y_axis = [0 50 0];
+%             z_axis = [0 0 50];
+%             OP= [0 0 0];
+%             xyz = [OP;x_axis;OP;y_axis;OP;z_axis];
+%             i = 1:2;
+%             plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-r');
+%             i = 3:4;
+%             plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-g');
+%             i = 5:6;
+%             plot3(xyz(i,1),xyz(i,2),xyz(i,3),'-b');
+%             %-----------------------------------------------------------
             
-            %%Here is used to judge the existance of the solution
-            if i == 1
-                display('No solution for this input, Calculation process is stopped');
-                p = [];
-                ABC = [];
-                q1q2 = [0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
-            end
         end
                
     end

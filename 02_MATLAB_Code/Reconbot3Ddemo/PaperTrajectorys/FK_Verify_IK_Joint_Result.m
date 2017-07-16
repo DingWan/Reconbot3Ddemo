@@ -22,8 +22,8 @@ q0_q11q12q14_q21q22q23_Ang = [q012Ang(:,1)  q012Ang(:,2)  q012Ang(:,3)  q012Ang(
 Ang_Intep = q0_q11q12q14_q21q22q23_Ang;
 
 %%
-for i = 110:160 %length(Ang_Intep)
-    if rem(i,n) == 0 && i < length(q012Ang(:,1)) && norm(q012Ang(i,:) - q012Ang(i+1,:)) < 1e-12
+for i = 1:340 %length(Ang_Intep)
+    if rem(i,n) == 0 && i < length(q012Ang(:,1)) && (Mode(i)<=5 || Mode(i+1)==12) && norm(q012Ang(i,:) - q012Ang(i+1,:)) < 1e-12
         i = i + 1;
         j = 1;
     else
@@ -86,7 +86,7 @@ for i = 110:160 %length(Ang_Intep)
             %q0q1q2 = [Ang_Intep(i,1), q1q2];
         case 10
             %% --RCB2RserialA1C1--
-            q11q12q22q13 = [Ang_Intep(i,2), Ang_Intep(i,3), Ang_Intep(i,6), Ang_Intep(i,4)];
+            q11q12q22q13 = [Ang_Intep(i,2), Ang_Intep(i,3), Ang_Intep(i,6), pi];
             obj2RserialA1C1 = RCB2RserialA1C1(PosOri, q11q12q22q13 , l1, l2);
             [p, ~, q1q2] = obj2RserialA1C1.RCB_2R_serialA1C1_FK;
             %q0q1q2 = [Ang_Intep(i,1), q1q2];
@@ -104,6 +104,8 @@ for i = 110:160 %length(Ang_Intep)
             %q0q1q2 = [Ang_Intep(i,1), q1q2];
     end
     
+    q0q1q2_norm = [];
+    % Find the best configuration
     if i>1 && length(q1q2(:,1))>1 && isempty(q0q1q2) ~= 1
         % Find the suitable one solution
         for k = 1 : length(q1q2(:,1))
