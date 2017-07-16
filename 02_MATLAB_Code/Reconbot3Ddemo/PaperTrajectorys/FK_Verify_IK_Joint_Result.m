@@ -9,6 +9,7 @@ PosOri = {0 0 208.879343162506 [] [] 0 , 0 0};
 n = 20;
 Time = [0,5];
 q0q1q2 = [];
+p_Output = [];
 
 addpath(genpath(pwd));
 
@@ -105,7 +106,8 @@ for i = 1:340 %length(Ang_Intep)
     end
     
     q0q1q2_norm = [];
-    % Find the best configuration
+    p_norm = [];
+    % Find the best configuration with input q1q2
     if i>1 && length(q1q2(:,1))>1 && isempty(q0q1q2) ~= 1
         % Find the suitable one solution
         for k = 1 : length(q1q2(:,1))
@@ -120,7 +122,21 @@ for i = 1:340 %length(Ang_Intep)
     else
         colsq1q2 = 1;
     end
-
+  
+    % Find the correct Posture 
+    if i>1 && length(p(:,1))>1 && isempty(p_Output) ~= 1
+        % Find the suitable one solution
+        for k = 1 : length(p(:,1))
+            p_Cur =  p(k,:);
+            p_norm(k) = norm(p_Cur - p_Output(i-1,:));
+        end
+        [rowsp,colsp] = find(p_norm == min(min(p_norm)));
+        SolutionRow_p = colsp(1);
+    else
+        colsp = 1;
+    end
+    
+    p_Output(i,:) = p(colsp(1),:);
     q0q1q2(i,:) = [Ang_Intep(i,1), q1q2(colsq1q2(1),:)];
     ReconbotANI(q0q1q2(i,:));
             
