@@ -561,8 +561,7 @@ classdef RCB3T1RSingularityA1C1
                     C1C2 = C2 - C1;
                     yaxis = [0, 1, 0];
                     % Judge the direction of the rotation around Z-axis
-                    directionC1C2Xxaxis = cross(C1C2, yaxis);
-                    if directionC1C2Xxaxis(3) < 0
+                    if C1(1) < C2(1)
                         gamma(i+j) = -acos((C1C2 * yaxis')/(norm(C1C2)* norm(yaxis)));
                     else
                         gamma(i+j) = acos((C1C2 * yaxis')/(norm(C1C2)* norm(yaxis)));

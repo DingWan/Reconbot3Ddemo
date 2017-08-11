@@ -1,45 +1,57 @@
-clear
-clc
+
+
+global Mode;
+global q0;
+global q11;
+global q12;
+global q14;
+global q21;
+global q22;
+global q23;
+
+
+global q1q2_Start;
+global q1q2_End;
 
 % Initial Condition
-l1 = 0.2301390;
-l2 = 0.1477;
+l1 = 230.1390;
+l2 = 147.7;
 deg = pi/180;
 PosOri = {0 0 0.208879343162506 0 [] [], pi/2 -pi/2};
-n = 50;
+n = 20;
 Time = [0,5];
+handles=guihandles();
 
 addpath(genpath(pwd));
 
-%RCB_CoSim;
-
-%InitHome;
-
 %% Input values [q0, q1, q2, q3, q4]
-%3T1R; q11q12q21q22 = []
-Mode = 2;
-q1q2_Start = [  0*pi/180,   0*pi/180,   45*pi/180,    -20*pi/180,    45*pi/180];
-  q1q2_End = [  0*pi/180,   30*pi/180,   30*pi/180,    30*pi/180,    20*pi/180];
 
-%2T2R; q11q12q14q23 = []
-% q1q2_Start = [  0*pi/180,   0*pi/180,   45*pi/180,  -45*pi/180,   90*pi/180];
-%   q1q2_End = [ 30*pi/180,  90*pi/180,   45*pi/180,  -45*pi/180,   90*pi/180];
-  
-%2T2Rthreebar;  q11q12q14q23 = []
-% q1q2_Start = [  0*pi/180,  90*pi/180,   45*pi/180,  -45*pi/180,   90*pi/180];
-%   q1q2_End = [ 30*pi/180,  90*pi/180,   60*pi/180,  -30*pi/180,   120*pi/180]; 
+switch Mode
+    case {1,2,3,4,5}
+        q1q2_Start = [  0*pi/180,   0*pi/180,   45*pi/180,    0*pi/180,    45*pi/180];  
+        q1q2_End = [ q0*pi/180,   q11*pi/180,   q12*pi/180,    q21*pi/180,    q23*pi/180];
+      
+    case {6,7,9}
+        q1q2_Start = [  0*pi/180,  90*pi/180,   45*pi/180,  -45*pi/180,   90*pi/180];
+        q1q2_End = [ q0*pi/180,  q11*pi/180,   q12*pi/180,  q13*pi/180,   q23*pi/180]; 
+        
+    case 8
+        q1q2_Start = [  0*pi/180,  90*pi/180,   45*pi/180,  -45*pi/180,   90*pi/180];
+        q1q2_End = [ q0*pi/180,  q11*pi/180,   q12*pi/180,  q21*pi/180,   q22*pi/180]; 
+        
+    case 10
+        q1q2_Start = [  0*pi/180,  180*pi/180,    0*pi/180,   45*pi/180,   180*pi/180];
+        q1q2_End = [  q0*pi/180,  q11*pi/180,   q12*pi/180,  q22*pi/180,   q14*pi/180]; 
 
-%2T2Rthreebar;  q11q12q14q23 = []
-% q1q2_Start = [  0*pi/180,  90*pi/180,   45*pi/180,  -45*pi/180,   45*pi/180];
-%   q1q2_End = [ 60*pi/180,  90*pi/180,   60*pi/180,  -90*pi/180,    0*pi/180]; 
+    case 11
+        q1q2_Start = [  0*pi/180,  45*pi/180,    0*pi/180,   0*pi/180,   180*pi/180];
+        q1q2_End = [  q0*pi/180,  q11*pi/180,   q21*pi/180,  q22*pi/180,   q23*pi/180]; 
+        
+    case 12
+        q1q2_Start = [  0*pi/180,  90*pi/180,   45*pi/180,  -45*pi/180,   45*pi/180];
+        q1q2_End = [ q0*pi/180,  q11*pi/180,   q12*pi/180,  q21*pi/180,    q22*pi/180];
+end
 
-%RCB2RserialA1C1;  q11q12q22q13 = []
-% q1q2_Start = [  0*pi/180,  180*pi/180,    0*pi/180,   45*pi/180,   180*pi/180];
-%   q1q2_End = [  0*pi/180,  150*pi/180,   30*pi/180,  120*pi/180,   180*pi/180];   
-  
-% %RCB2RserialA2C2; q12q21q22q23 = []
-% q1q2_Start = [  0*pi/180,  45*pi/180,    0*pi/180,   0*pi/180,   180*pi/180];
-%   q1q2_End = [  0*pi/180,  90*pi/180,   30*pi/180,  30*pi/180,   180*pi/180]; 
 
 %% 5-Grade Polynomial Intepotation
 for i = 1:5
@@ -65,6 +77,7 @@ end
 
 Step = 1:n;
 
+%%
 for i = 1:n
     switch Mode
         case 1
@@ -123,8 +136,8 @@ for i = 1:n
             q0q1q2 = [Ang_Intep(1,i), q1q2];
         case 10
             %% --RCB2RserialA1C1--
-            q11q12q22q13 = [Ang_Intep(2,i), Ang_Intep(3,i), Ang_Intep(4,i), Ang_Intep(5,i)];
-            obj2RserialA1C1 = RCB2RserialA1C1(PosOri, q11q12q22q13 , l1, l2);
+            q11q12q22q14 = [Ang_Intep(2,i), Ang_Intep(3,i), Ang_Intep(4,i), Ang_Intep(5,i)];
+            obj2RserialA1C1 = RCB2RserialA1C1(PosOri, q11q12q22q14 , l1, l2);
             [p, ~, q1q2] = obj2RserialA1C1.RCB_2R_serialA1C1_FK;
             q0q1q2 = [Ang_Intep(1,i), q1q2];
         case 11
@@ -158,3 +171,7 @@ for i = 1:n
 end
             q0q1q2SlideLeftRightArm_time = [time_Intep', q0q1q2SlideLeftRightArm];
             dlmwrite('Inputs_rad.txt',q0q1q2SlideLeftRightArm_time);
+            
+            
+            
+            

@@ -18,6 +18,7 @@ load('DemoMultiModes_6points.mat');
 
 %% Input values [q0, q1, q2, q3, q4]
 Mode = HomePos2SelectedEndPos_OutputData_Origin.Mode_det_Jq_Jc_J_mat(:,1);
+Time = HomePos2SelectedEndPos_OutputData_Origin.Time_mat;
 q012Ang = HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat;
 q0_q11q12q14_q21q22q23_Ang = [q012Ang(:,1)  q012Ang(:,2)  q012Ang(:,3)  q012Ang(:,5)  q012Ang(:,7)  q012Ang(:,8)  q012Ang(:,9)];
 Ang_Intep = q0_q11q12q14_q21q22q23_Ang;
@@ -120,9 +121,16 @@ for i = 1:340 %length(Ang_Intep)
         [rowsq1q2,colsq1q2] = find(q0q1q2_norm == min(min(q0q1q2_norm)));
         SolutionRow_q1q2 = colsq1q2(1);
     else
+        if j == 1
+            i = i - 1;
+        end
         colsq1q2 = 1;
     end
   
+%     if i == 110
+%       xx = 1    
+%     end
+    
     % Find the correct Posture 
     if i>1 && length(p(:,1))>1 && isempty(p_Output) ~= 1
         % Find the suitable one solution
@@ -136,9 +144,28 @@ for i = 1:340 %length(Ang_Intep)
         colsp = 1;
     end
     
-    p_Output(i,:) = p(colsp(1),:);
+    p_Output(i,:) = [p(colsp(1),1:3), 180/pi*p(colsp(1),4:6)];
     q0q1q2(i,:) = [Ang_Intep(i,1), q1q2(colsq1q2(1),:)];
-    ReconbotANI(q0q1q2(i,:));
+    %ReconbotANI(q0q1q2(i,:));
             
 end
-            
+
+%%
+figure(2)
+plot3(p_Output(:,1),p_Output(:,2),p_Output(:,3),'b-')
+grid on
+axis equal
+
+figure(3)
+i = 1:1:340;
+plot(Time(i),p_Output(i,4),'r-');hold on
+plot(Time(i),p_Output(i,5),'g-');hold on
+plot(Time(i),p_Output(i,6),'b-');hold on
+grid on
+
+figure(4)
+i = 1:1:340;
+plot(Time(i),p_Output(i,1),'r-');hold on
+plot(Time(i),p_Output(i,2),'g-');hold on
+plot(Time(i),p_Output(i,3),'b-');hold on
+grid on            
