@@ -120,6 +120,10 @@
 01_ROS_Code/reconbot_control/src/move_group_interface.cpp
 01_ROS_Code/reconbot_control/src/r_arm_move_group_interface.cpp
 01_ROS_Code/reconbot_control/src/r_arm_trajectory_publisher.cpp
+<<<<<<< HEAD
+=======
+01_ROS_Code/reconbot_control/src/sensor_data_capture.cpp
+>>>>>>> control-loop-multimode-2
 01_ROS_Code/reconbot_control/src/torque_enable_client.cpp
 01_ROS_Code/reconbot_control/src/trajectory_client.py
 01_ROS_Code/reconbot_control/src/trajectory_publisher.cpp
@@ -134,6 +138,7 @@
 01_ROS_Code/trajectory/r_arm_trajectory.txt
 01_ROS_Code/trajectory/trajectory.txt
 02_MATLAB_Code/ReConBot.m
+<<<<<<< HEAD
 02_MATLAB_Code/Reconbot3Ddemo/Animation/CollisionPointsFK.m
 02_MATLAB_Code/Reconbot3Ddemo/Animation/InitHome.m
 02_MATLAB_Code/Reconbot3Ddemo/Animation/RCBLinkdata.mat
@@ -550,6 +555,12 @@
 02_MATLAB_Code/publisher.m
 02_MATLAB_Code/reconbotCallback.m
 02_MATLAB_Code/untitled.m
+=======
+02_MATLAB_Code/data.mat
+02_MATLAB_Code/main.m
+02_MATLAB_Code/publisher.m
+02_MATLAB_Code/reconbotCallback.m
+>>>>>>> control-loop-multimode-2
 03_Documentation/Activity Activity diagram.png
 03_Documentation/ReConBot_class.png
 03_Documentation/html/Info.plist
