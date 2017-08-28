@@ -172,7 +172,8 @@ class DynamixelIO(object):
 
             # wait for response packet from the motor
             timestamp = time.time()
-            time.sleep(0.0013)
+            #time.sleep(0.0013)
+            time.sleep(0.008)
 
             # read response
             data = self.__read_response(servo_id)
@@ -1064,4 +1065,3 @@ class UnsupportedFeatureError(Exception):
         self.message = "Feature %d not supported by model %d (%s)" %(feature_id, model_id, model)
     def __str__(self):
         return self.message
-

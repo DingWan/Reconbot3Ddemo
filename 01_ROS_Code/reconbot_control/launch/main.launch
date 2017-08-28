@@ -3,6 +3,14 @@
   <arg name="full_mode" default="false"/>
   <arg name="r_arm_mode" default="false"/>
   <arg name="l_arm_mode" default="false"/>
+  <arg name="T3R_mode" default="false"/>
+  <arg name="T2R5_mode" default="false"/>
+  <arg name="RA2C2_mode" default="false"/>
+  <arg name="T1R_mode" default="false"/>
+  <arg name="T2R_mode" default="false"/>
+
+
+
 
   <!--<rosparam file="$(find reconbot_control)/config/controller_list.yaml" command="load"/>-->
 
@@ -13,12 +21,26 @@
 
   <include if="$(arg r_arm_mode)" file="$(find reconbot_control)/launch/r_arm_reconbot_controller.launch">  </include>
 
+  <include if="$(arg T3R_mode)" file="$(find reconbot_control)/launch/T3R_reconbot_controller.launch">  </include>
+
   <include if="$(arg l_arm_mode)" file="$(find reconbot_control)/launch/l_arm_reconbot_controller.launch">  </include>
 
+  <include if="$(arg RA2C2_mode)" file="$(find reconbot_control)/launch/RA2C2_reconbot_controller.launch">  </include>
+
+  <include if="$(arg T2R5_mode)" file="$(find reconbot_control)/launch/T2R5_reconbot_controller.launch">  </include>
+
+  <include if="$(arg T1R_mode)" file="$(find reconbot_control)/launch/T1R_reconbot_controller.launch">  </include>
+
+  <include if="$(arg T2R_mode)" file="$(find reconbot_control)/launch/T2R_reconbot_controller.launch">  </include>
+
+  <node name="Enable_Torque_Server" pkg="reconbot_control" type="enable_torque_service.py" respawn="true"/>
+<!--
   <node if="$(arg full_mode)" name="ReConBot_Driver" pkg="reconbot_control" type="move_group_interface" respawn="true"/>
+-->
 
   <node if="$(arg r_arm_mode)" name="r_arm_ReConBot_Driver" pkg="reconbot_control" type="r_arm_move_group_interface" respawn="true"/>
 
   <node if="$(arg l_arm_mode)" name="l_arm_ReConBot_Driver" pkg="reconbot_control" type="l_arm_move_group_interface" respawn="true"/>
+
 
 </launch>

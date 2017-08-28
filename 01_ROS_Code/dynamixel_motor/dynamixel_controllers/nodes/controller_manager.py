@@ -66,18 +66,18 @@ class ControllerManager:
     def __init__(self):
         rospy.init_node('dynamixel_controller_manager', anonymous=True)
         rospy.on_shutdown(self.on_shutdown)
-        
+
         self.waiting_meta_controllers = []
         self.controllers = {}
         self.serial_proxies = {}
         self.diagnostics_rate = rospy.get_param('~diagnostics_rate', 1)
-        
+
         self.start_controller_lock = Lock()
         self.stop_controller_lock = Lock()
 
         manager_namespace = rospy.get_param('~namespace')
         serial_ports = rospy.get_param('~serial_ports')
-        
+
         for port_namespace,port_config in serial_ports.items():
             port_name = port_config['port_name']
             baud_rate = port_config['baud_rate']
@@ -87,13 +87,13 @@ class ControllerManager:
             update_rate = port_config['update_rate'] if 'update_rate' in port_config else 5
             error_level_temp = 75
             warn_level_temp = 70
-            
+
             if 'diagnostics' in port_config:
                 if 'error_level_temp' in port_config['diagnostics']:
                     error_level_temp = port_config['diagnostics']['error_level_temp']
                 if 'warn_level_temp' in port_config['diagnostics']:
                     warn_level_temp = port_config['diagnostics']['warn_level_temp']
-                    
+
             serial_proxy = SerialProxy(port_name,
                                        port_namespace,
                                        baud_rate,
@@ -105,7 +105,7 @@ class ControllerManager:
                                        warn_level_temp,
                                        readback_echo)
             serial_proxy.connect()
-            
+
             # will create a set of services for each serial port under common manager namesapce
             # e.g. /dynamixel_manager/robot_arm_port/start_controller
             #      /dynamixel_manager/robot_head_port/start_controller
@@ -114,9 +114,9 @@ class ControllerManager:
             rospy.Service('%s/%s/start_controller' % (manager_namespace, port_namespace), StartController, self.start_controller)
             rospy.Service('%s/%s/stop_controller' % (manager_namespace, port_namespace), StopController, self.stop_controller)
             rospy.Service('%s/%s/restart_controller' % (manager_namespace, port_namespace), RestartController, self.restart_controller)
-            
+
             self.serial_proxies[port_namespace] = serial_proxy
-            
+
         # services for 'meta' controllers, e.g. joint trajectory controller
         # these controllers don't have their own serial port, instead they rely
         # on regular controllers for serial connection. The advantage of meta
@@ -127,7 +127,7 @@ class ControllerManager:
         rospy.Service('%s/meta/start_controller' % manager_namespace, StartController, self.start_controller)
         rospy.Service('%s/meta/stop_controller' % manager_namespace, StopController, self.stop_controller)
         rospy.Service('%s/meta/restart_controller' % manager_namespace, RestartController, self.restart_controller)
-        
+
         self.diagnostics_pub = rospy.Publisher('/diagnostics', DiagnosticArray, queue_size=1)
         if self.diagnostics_rate > 0: Thread(target=self.diagnostics_processor).start()
 
@@ -137,18 +137,18 @@ class ControllerManager:
 
     def diagnostics_processor(self):
         diag_msg = DiagnosticArray()
-        
+
         rate = rospy.Rate(self.diagnostics_rate)
         while not rospy.is_shutdown():
             diag_msg.status = []
             diag_msg.header.stamp = rospy.Time.now()
-            
+
             for controller in self.controllers.values():
                 try:
                     joint_state = controller.joint_state
                     temps = joint_state.motor_temps
                     max_temp = max(temps)
-                    
+
                     status = DiagnosticStatus()
                     status.name = 'Joint Controller (%s)' % controller.joint_name
                     status.hardware_id = 'Robotis Dynamixel %s on port %s' % (str(joint_state.motor_ids), controller.port_namespace)
@@ -161,17 +161,17 @@ class ControllerManager:
                     status.values.append(KeyValue('Temperature', str(max_temp)))
                     status.level = DiagnosticStatus.OK
                     status.message = 'OK'
-                        
+
                     diag_msg.status.append(status)
                 except:
                     pass
-                    
+
             self.diagnostics_pub.publish(diag_msg)
             rate.sleep()
 
     def check_deps(self):
         controllers_still_waiting = []
-        
+
         for i,(controller_name,deps,kls) in enumerate(self.waiting_meta_controllers):
             if not set(deps).issubset(self.controllers.keys()):
                 controllers_still_waiting.append(self.waiting_meta_controllers[i])
@@ -179,11 +179,11 @@ class ControllerManager:
             else:
                 dependencies = [self.controllers[dep_name] for dep_name in deps]
                 controller = kls(controller_name, dependencies)
-                
+
                 if controller.initialize():
                     controller.start()
                     self.controllers[controller_name] = controller
-                    
+
         self.waiting_meta_controllers = controllers_still_waiting[:]
 
     def start_controller(self, req):
@@ -192,13 +192,13 @@ class ControllerManager:
         module_name = req.module_name
         class_name = req.class_name
         controller_name = req.controller_name
-        
+
         self.start_controller_lock.acquire()
-        
+
         if controller_name in self.controllers:
             self.start_controller_lock.release()
             return StartControllerResponse(False, 'Controller [%s] already started. If you want to restart it, call restart.' % controller_name)
-            
+
         try:
             if module_name not in sys.modules:
                 # import if module not previously imported
@@ -216,28 +216,28 @@ class ControllerManager:
         except Exception, e:
             self.start_controller_lock.release()
             return StartControllerResponse(False, 'Unknown error has occured. Unable to start controller %s\n%s' % (module_name, str(e)))
-        
+
         kls = getattr(controller_module, class_name)
-        
+
         if port_name == 'meta':
             self.waiting_meta_controllers.append((controller_name,req.dependencies,kls))
             self.check_deps()
             self.start_controller_lock.release()
             return StartControllerResponse(True, '')
-            
+
         if port_name != 'meta' and (port_name not in self.serial_proxies):
             self.start_controller_lock.release()
             return StartControllerResponse(False, 'Specified port [%s] not found, available ports are %s. Unable to start controller %s' % (port_name, str(self.serial_proxies.keys()), controller_name))
-            
+
         controller = kls(self.serial_proxies[port_name].dxl_io, controller_name, port_name)
-        
+
         if controller.initialize():
             controller.start()
             self.controllers[controller_name] = controller
-            
+
             self.check_deps()
             self.start_controller_lock.release()
-            
+
             return StartControllerResponse(True, 'Controller %s successfully started.' % controller_name)
         else:
             self.start_controller_lock.release()
@@ -246,7 +246,7 @@ class ControllerManager:
     def stop_controller(self, req):
         controller_name = req.controller_name
         self.stop_controller_lock.acquire()
-        
+
         if controller_name in self.controllers:
             self.controllers[controller_name].stop()
             del self.controllers[controller_name]
@@ -266,4 +266,3 @@ if __name__ == '__main__':
         manager = ControllerManager()
         rospy.spin()
     except rospy.ROSInterruptException: pass
-
