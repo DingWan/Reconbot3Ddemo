@@ -5,7 +5,7 @@
 ###################
 *~
 *.pyc
-*.creator.user
+*.user
 *.includes
 *.files
 *.creator
