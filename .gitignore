@@ -5,3 +5,8 @@
 ###################
 *~
 *.pyc
+*.creator.user
+*.includes
+*.files
+*.creator
+*.config
