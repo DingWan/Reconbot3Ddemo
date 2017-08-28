@@ -76,6 +76,11 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
   client = nh_Client.serviceClient<reconbot_control::EnableTorque>("enable_torque");
   control_msgs::FollowJointTrajectoryGoal goalMode;
 
+
+  /*****************************************************************************
+  ** Instantiation
+  *****************************************************************************/
+
   ReConBotLx RobotModeRef;
   ReConBotLx RobotMode0;
   ReConBotLx RobotMode1;
@@ -92,6 +97,10 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
   ReConBotLx RobotMode12;
 
 
+  /*****************************************************************************
+  ** Instances attribute definition
+  *****************************************************************************/
+
   RobotMode0.nameSpace = "RCB_full_mode_controller";
   RobotMode1.nameSpace = "RCB_3T2R_controller";
   RobotMode2.nameSpace = "RCB_3T1R_controller";
@@ -106,6 +115,10 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
   RobotMode11.nameSpace = "RCB_2RA2C2_controller";
   RobotMode12.nameSpace = "RCB_FIXED2U_controller";
 
+
+  /*****************************************************************************
+  ** variables definition
+  *****************************************************************************/
 
   std::string actMsg0;
   std::string actMsg1;
@@ -136,8 +149,12 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
   actMsg11 = "Mode 11 activated";
   actMsg12 = "Mode 12 activated";
 
+  reconbot_control::EnableTorque srv;
 
 
+  /**************************************************************************************************
+  ** Definition of the trajClient object used for publishing the desired trajectories in joint space.
+  ***************************************************************************************************/
 
   RobotMode0.trajClient();
   RobotMode1.trajClient();
@@ -153,20 +170,27 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
   RobotMode11.trajClient();
   //RobotMode12.trajClient();
 
-  reconbot_control::EnableTorque srv;
 
-  goalSize = goal.trajectory.points.size();
+
+  /*****************************************************************************
+  ** variables definition
+  *****************************************************************************/
+
+  goalSize = goal.trajectory.points.size(); /**< getting trajectory size */
   mode_0 = 1;
   init_index = 0;
   time_rel = ros::Duration(0.001);
+
+
+  /** in case the trajectory has more than one trajectory point **/
   if (goalSize>1) {
     for (size_t i = 0; i < goalSize; i++) {
-      mode_0 = goal.trajectory.points[i].positions[6];
+      mode_0 = goal.trajectory.points[i].positions[6];/**< extracting trajectory's point mode from trajectory message */
       if (i<goalSize-1) {
-        mode_1 = goal.trajectory.points[i+1].positions[6];
+        mode_1 = goal.trajectory.points[i+1].positions[6]; /**< next trajectory's point mode */
       }
       if (i==goalSize-1) {
-        mode_1 = mode_0+1 ;
+        mode_1 = mode_0+1 ; /**< for the last point of the trajectory do mode_1 not null*/
       }
 
       if (mode_0!=mode_1) {

@@ -64,7 +64,7 @@ static int nMotors;
 /**
  * A vector with the numbers which identify the active motors. For example, for the
  * right arm should be motorActive = {1,2,3} because the motors with the ids 1 ,2 3 are
- * included in the kinematic chain of thid arm.
+ * included in the kinematic chain of this arm.
 **/
 static int * motorsActive;
 static std::vector<double> modesLx;

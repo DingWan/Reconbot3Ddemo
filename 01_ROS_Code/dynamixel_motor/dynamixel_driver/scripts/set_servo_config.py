@@ -72,6 +72,8 @@ if __name__ == '__main__':
                       help='set servo motor minimum voltage limit')
     parser.add_option('--max-voltage-limit', type='int', metavar='MAX_VOLTAGE', dest='max_voltage_limit',
                       help='set servo motor maximum voltage limit')
+    parser.add_option('--set-p-gain', type='int', metavar='MAX_VOLTAGE', dest='max_voltage_limit',
+                      help='set servo motor maximum voltage limit')
 
     (options, args) = parser.parse_args(sys.argv)
     print options

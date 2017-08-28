@@ -79,7 +79,7 @@ classdef ReConBot
         %
         % and then,
         %
-        % >> objName.points = points
+        % >> objName.pos = points
         %
         % The joint names have to be defined into the object property
         % _jointNames_:
