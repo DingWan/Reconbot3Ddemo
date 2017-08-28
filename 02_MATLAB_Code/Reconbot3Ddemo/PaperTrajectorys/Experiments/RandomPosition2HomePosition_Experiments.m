@@ -11,19 +11,19 @@ addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
 
 %% Initialization
 %rosinit
-%Reconbot = ReConBot;
-%Reconbot.topic = '/RCB_full_mode_controller/state';
+Reconbot = ReConBot;
+Reconbot.topic = '/RCB_full_mode_controller/state';
 
 %% Read the value of Motor Encoder
 
-% tic
-% DyInfo = Reconbot.getTraj();
-% pause(0.025)
-% DyEnPos = DyInfo.LatestMessage.Actual.Positions;
-% MotorPosition = DyEnPos';
-% toc
+tic
+DyInfo = Reconbot.getTraj();
+pause(0.025)
+DyEnPos = DyInfo.LatestMessage.Actual.Positions;
+MotorPosition = DyEnPos';
+toc
 
-MotorPosition = [0*pi/180, 0*pi/180, -90*pi/180, 0*pi/180, 0*pi/180, 180*pi/180];
+%MotorPosition = [0*pi/180, 0*pi/180, -90*pi/180, 0*pi/180, 0*pi/180, 180*pi/180];
 
 %% Intepotation Points and Time
 NumIntepoPoints = 100;
@@ -114,11 +114,15 @@ for OnlyUsedforFoldingThisPart = 1:1
           MP_Acc_mat = [ MP_Acc_mat; MP_Acc_Intep_HomePosition ];
             Time_mat = [ Time_mat; MP_time_Intep_HomePosition ];
      % Mode, Jacobian of Jq and J
-   Mode_det_Jq_Jc_J_mat = [Mode_det_Jq_J_mat; Mode_det_Jq_J_HomePosition];
+   %Mode_det_Jq_Jc_J_mat = [Mode_det_Jq_J_mat; Mode_det_Jq_J_HomePosition];
+   Mode_det_Jq_J_HomePosition(1:NumIntepoPoints,1) = Mode_det_Jq_J_HomePosition(NumIntepoPoints+1:2*NumIntepoPoints,1);
+   Mode_det_Jq_Jc_J_mat =  Mode_det_Jq_J_HomePosition;
             
 end
 % --------------
 toc
+
+
 
 %% Save the value as '.mat' file
     Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
@@ -127,16 +131,14 @@ toc
                             q0q1q2_Pos_mat(:,5), q0q1q2_Vel_mat(:,5), q0q1q2_Acc_mat(:,5),...
                             q0q1q2_Pos_mat(:,7), q0q1q2_Vel_mat(:,7), q0q1q2_Acc_mat(:,7),...
                             q0q1q2_Pos_mat(:,8), q0q1q2_Vel_mat(:,8), q0q1q2_Acc_mat(:,8),...
-                            q0q1q2_Pos_mat(:,9), q0q1q2_Vel_mat(:,9), q0q1q2_Acc_mat(:,9),...
+                            -q0q1q2_Pos_mat(:,9), -q0q1q2_Vel_mat(:,9), -q0q1q2_Acc_mat(:,9),...
                             Time_mat(:,1), Mode_det_Jq_Jc_J_mat(:,1)
                           ];
 
 %% 3D Animation
 for i = 1:length(q0q1q2_Pos_mat)-0  
     %========================== Animation ============================
-    ReconbotANI(q0q1q2_Pos_mat(i,:));   
-%     set(CPsA1C1,'xdata',xCPsA1C1data(:,i+1),'ydata',yCPsA1C1data(:,i+1),'zdata',zCPsA1C1data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
-%     set(CPsA2C2,'xdata',xCPsA2C2data(:,i+1),'ydata',yCPsA2C2data(:,i+1),'zdata',zCPsA2C2data(:,i+1),'Color','red', 'LineStyle','-', 'LineWidth',2); hold off
+    %ReconbotANI(q0q1q2_Pos_mat(i,:));   
     %============================ End ================================
 end
 
