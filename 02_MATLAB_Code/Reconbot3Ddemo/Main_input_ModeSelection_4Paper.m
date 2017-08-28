@@ -213,12 +213,12 @@ if HomePosition == 2
     end
         
     
-    %%
-    %clr_trail_CollisionPoints_button_press;
-    step = 100;
-    ReconbotANI(HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(step,:));
+    %% clr_trail_CollisionPoints_button_press;
+    %step = 100;
+    %ReconbotANI(HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(step,:));
     
-    % Moving Platform Trajectory
+    
+    %% Moving Platform Trajectory
     % Displacement = [250,250,167.4400] / 1000;
     % for i = 1:length(q0q1q2_Pos_mat(:,1))
     %     Displacement_mat(i,:) = Displacement;
@@ -230,7 +230,7 @@ if HomePosition == 2
     % set(Tr,'xdata',p(1),'ydata',p(2),'zdata',p(3));
     % %============================ End ==============================
     
-    % in World frame    
+    %% in World frame    
     %----------------- Axis angle -----------------------
     EulerAngle_Output = HomePos2SelectedEndPos_OutputData_Origin.CartesianSpace.MP_Pos_mat(step,4:6);
     OperationalMode = HomePos2SelectedEndPos_OutputData_Origin.Mode_det_Jq_Jc_J_mat(step,1);

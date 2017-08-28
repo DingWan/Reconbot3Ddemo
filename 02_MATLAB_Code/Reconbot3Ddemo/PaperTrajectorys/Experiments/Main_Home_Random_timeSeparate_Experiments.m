@@ -20,11 +20,10 @@ clear
 
 l1 = 230.1390;
 l2 = 147.7;
+deg = pi/180;
 
 q0q1q2_HomePosition = [0, 0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
 p_0 = [0 0 208.879343162506 0 0 0, 0 0]; %  p = 2 * l2 * sin(pi/4)
-
-deg = pi/180;
 
 addpath(genpath(pwd)); % Enalbe all folders inside "Reconbot3Ddemo"
  
@@ -40,7 +39,7 @@ switch choice
     case 'No,Go HomePosition'
         disp([choice ' Detecting Motor Encoders...'])
         HomePosition = 1;
-        RandomPosition2HomePosition;
+        RandomPosition2HomePosition_Experiments;
     case 'Yes,Please Continue'
         disp('Inputing Trajectory Points...')
         HomePosition = 2;
@@ -52,9 +51,6 @@ end
 if HomePosition == 2
     %% Select Mode + Posture
     SelectNumberOfTrajectoryPoints;
-    
-    %------ Single Mode ----------
-    % load('q0q1q2_3T2R.mat')
     
     %% ========================= First-Planning for Singurlarity Judging================================ 
     %% Motion planning
@@ -208,12 +204,12 @@ if HomePosition == 2
             end
             
         end
-        h = msgbox('Check Completed, Velocity of Motors are in Limit!');
+        %h = msgbox('Check Completed, Velocity of Motors are in Limit!');
                 
         %  =============================== 3D Animation =================================
         % HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(:,1) = HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(:,2);
         for i = 1:length(HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat)
-            ReconbotANI(HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(i,:));
+            %ReconbotANI(HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(i,:));
         end
         
     end
@@ -381,19 +377,18 @@ if HomePosition == 2
             end
             
         end
-        h = msgbox('Check Completed, Velocity of Motors are in Limit!');
+        %h = msgbox('Check Completed, Velocity of Motors are in Limit!');
                 
         %  =============================== 3D Animation =================================
         % HomePos2SelectedEndPos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(:,1) = HomePos2SelectedEndPos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(:,2);
         for i = 1:length(HomePos2SelectedEndPos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat)
-            ReconbotANI(HomePos2SelectedEndPos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(i,:));
+            %ReconbotANI(HomePos2SelectedEndPos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(i,:));
         end
         
     end
     
     end
-    
-    
+   
     %% ========================= Recovery to HomePosition ================================
     for OnlyUsedforFolding_SelectedEndPos2HomePos = 1:1
     %======================================= 
@@ -547,12 +542,12 @@ if HomePosition == 2
             end
             
         end
-        h = msgbox('Check Completed, Velocity of Motors are in Limit!');
+        %h = msgbox('Check Completed, Velocity of Motors are in Limit!');
                 
         %  =============================== 3D Animation =================================
         % SelectedEndPos2HomePos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(:,1) = SelectedEndPos2HomePos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(:,2);
         for i = 1:length(SelectedEndPos2HomePos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat)
-            ReconbotANI(SelectedEndPos2HomePos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(i,:));
+            %ReconbotANI(SelectedEndPos2HomePos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(i,:));
         end
         
     end
@@ -718,19 +713,42 @@ if HomePosition == 2
             end
             
         end
-        h = msgbox('Check Completed, Velocity of Motors are in Limit!');
+        %h = msgbox('Check Completed, Velocity of Motors are in Limit!');
                 
         %  =============================== 3D Animation =================================
         % SelectedEndPos2HomePos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(:,1) = SelectedEndPos2HomePos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(:,2);
         for i = 1:length(SelectedEndPos2HomePos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat)
-            ReconbotANI(SelectedEndPos2HomePos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(i,:));
+            %ReconbotANI(SelectedEndPos2HomePos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(i,:));
         end
         
     end
     
     end
-  
     
+        %  ============================================== 3D Animation =======================================================
+        %% =============================== HomePos2SelectedEndPos_Origin =================================
+        % HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(:,1) = HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(:,2);
+        for i = 1:length(HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat)
+            ReconbotANI(HomePos2SelectedEndPos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(i,:));
+        end
+        %  =============================== SelectedEndPos2HomePos_Origin =================================
+        % SelectedEndPos2HomePos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(:,1) = SelectedEndPos2HomePos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(:,2);
+        for i = 1:length(SelectedEndPos2HomePos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat)
+            ReconbotANI(SelectedEndPos2HomePos_OutputData_Origin.JointSpace.q0q1q2_Pos_mat(i,:));
+        end
+        
+       %%  ============================== HomePos2SelectedEndPos_RePlan =================================
+        % HomePos2SelectedEndPos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(:,1) = HomePos2SelectedEndPos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(:,2);
+        for i = 1:length(HomePos2SelectedEndPos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat)
+            ReconbotANI(HomePos2SelectedEndPos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(i,:));
+        end
+        %  =============================== SelectedEndPos2HomePos_Origin_RePlan =================================
+        % SelectedEndPos2HomePos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(:,1) = SelectedEndPos2HomePos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(:,2);
+        for i = 1:length(SelectedEndPos2HomePos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat)
+            ReconbotANI(SelectedEndPos2HomePos_OutputData_RePlan.JointSpace.q0q1q2_Pos_mat(i,:));
+        end
+        
+        
     %% ================================== Co-Simulation ==================================
     for OnlyUsedforFolding_CoSim = 1:1
         h = msgbox('Co_Simulation Calculation Completed, 1. Set Co_Simulation as Current Folder, 2. Run RCB_CoSim_FullMode_Output.slx');
@@ -768,23 +786,9 @@ if HomePosition == 2
             
         end
     end    
-       
-    
-    %%
-    %clr_trail_CollisionPoints_button_press;
-    
-    %% Moving Platform Trajectory
-    % Displacement = [250,250,167.4400] / 1000;
-    % for i = 1:length(q0q1q2_Pos_mat(:,1))
-    %     Displacement_mat(i,:) = Displacement;
-    % end
-    % p = q0q1q2_Pos_mat(:,1:3) + Displacement_mat;
-    % handles = getappdata(0,'patch_h');
-    % Tr = handles(12);
-    % %============= Center Point of Moving Platform =================
-    % set(Tr,'xdata',p(1),'ydata',p(2),'zdata',p(3));
-    % %============================ End ==============================
-    
+      
+   
+    %% Moving Platform Trajectory  
     %----------------- plot xyz axes of base point --------------
     Displacement = [250,250,83.5+60.44+(45.5-22)] / 1000 ;
     x_axis = [40 0 0] / 1000 + Displacement;
@@ -799,8 +803,5 @@ if HomePosition == 2
     j = 5:6;
     plot3(xyz(j,1),xyz(j,2),xyz(j,3),'-b','LineWidth',2); hold on
     %------------------------------------------------------------
-    %------------------------------------------------------------
-    
-    %%
     
 end
