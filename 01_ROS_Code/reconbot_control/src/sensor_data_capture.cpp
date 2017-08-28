@@ -3,20 +3,31 @@
 #include <control_msgs/FollowJointTrajectoryAction.h>
 #include <iostream>
 #include <fstream>
+#include <string>
+#include <control_msgs/FollowJointTrajectoryFeedback.h>
+
+using namespace std;
+
+static trajectory_msgs::JointTrajectoryPoint actual_data;
+static int i;
+static ofstream trajectoryFile;
 
 
-void chatterCallback(control_msgs::JointTrajectoryControllerState trajectory_point)
+void chatterCallback(control_msgs::FollowJointTrajectoryFeedback trajectory_point)
 {
-    actual_data = trajectory_point.actual
+    //ofstream trajectoryFile;
+    //trajectoryFile.open("sensor_data.txt");
+    actual_data = trajectory_point.actual;
+    //trajectoryFile<<actual_data;
     //trajectorySize = trajectory.points.size();
-    if (i==0){
-    trajectoryFile<<"time_stamp"
-                 <<"\t"<<"pos_joint_4"<<"\t"<<"pos_joint_5"<<"\t"<<"pos_joint_3"
-                 <<"\t"<<"pos_joint_1"<<"\t"<<"pos_joint_2"<<"\t"<<"pos_joint_6"
-                 <<"\t"<<"vel_joint_4"<<"\t"<<"vel_joint_5"<<"\t"<<"vel_joint_3"
-                 <<"\t"<<"vel_joint_1"<<"\t"<<"vel_joint_2"<<"\t"<<"vel_joint_6"
-                 <<"\t"<<"acc_joint_4"<<"\t"<<"acc_joint_5"<<"\t"<<"acc_joint_3"
-                 <<"\t"<<"acc_joint_1"<<"\t"<<"acc_joint_2"<<"\t"<<"acc_joint_6"<<"\t"<<"time_from_start"<<endl;
+    if (actual_data.accelerations.size() < 2){
+        actual_data.accelerations.resize(6);
+        actual_data.accelerations[0] = 0;
+        actual_data.accelerations[1] = 0;
+        actual_data.accelerations[2] = 0;
+        actual_data.accelerations[3] = 0;
+        actual_data.accelerations[4] = 0;
+        actual_data.accelerations[5] = 0;
     }
 
         trajectoryFile<<trajectory_point.header.stamp
@@ -39,19 +50,23 @@ void chatterCallback(control_msgs::JointTrajectoryControllerState trajectory_poi
                       <<"\t"<<actual_data.accelerations[4]
                       <<"\t"<<actual_data.accelerations[5]
                       <<"\t"<<actual_data.time_from_start<<endl;
-        i++;
 }
 
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "sensor_data_capture");
   ros::NodeHandle n;
-  static trajectory_msgs::JointTrajectoryPoint actual_data;
-  static int i;
-  ofstream trajectoryFile;
   i=0;
   trajectoryFile.open("sensor_data.txt");
-  ros::Subscriber sub = n.subscribe("RCB_full_mode_controller/state", 1000, chatterCallback);
+  trajectoryFile<<"time_stamp"
+               <<"\t"<<"pos_joint_4"<<"\t"<<"pos_joint_5"<<"\t"<<"pos_joint_3"
+               <<"\t"<<"pos_joint_1"<<"\t"<<"pos_joint_2"<<"\t"<<"pos_joint_6"
+               <<"\t"<<"vel_joint_4"<<"\t"<<"vel_joint_5"<<"\t"<<"vel_joint_3"
+               <<"\t"<<"vel_joint_1"<<"\t"<<"vel_joint_2"<<"\t"<<"vel_joint_6"
+               <<"\t"<<"acc_joint_4"<<"\t"<<"acc_joint_5"<<"\t"<<"acc_joint_3"
+               <<"\t"<<"acc_joint_1"<<"\t"<<"acc_joint_2"<<"\t"<<"acc_joint_6"<<"\t"<<"time_from_start"<<endl;
+
+  ros::Subscriber sub = n.subscribe("/RCB_full_mode_controller/state", 1000, chatterCallback);
   ros::spin();
 
   return 0;
