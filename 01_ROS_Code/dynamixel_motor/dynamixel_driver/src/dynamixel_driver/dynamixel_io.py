@@ -277,6 +277,18 @@ class DynamixelIO(object):
             self.exception_on_error(response[4], servo_id, 'setting baud rate to %d' % baud_rate)
         return response
 
+    def set_multiturn_offset(self, servo_id, offset):
+        """
+        Set the Multi Turn Offset.
+        """
+        loVal = int(offset % 256)
+        hiVal = int(offset >> 8)
+
+        response = self.write(servo_id, DXL_DOWN_CALIBRATION_L, (loVal, hiVal))
+        if response:
+            self.exception_on_error(response[4], servo_id, 'setting Muli Turn Offset to %d' % offset)
+        return response
+
     def set_return_delay_time(self, servo_id, delay):
         """
         Sets the delay time from the transmission of Instruction Packet until
