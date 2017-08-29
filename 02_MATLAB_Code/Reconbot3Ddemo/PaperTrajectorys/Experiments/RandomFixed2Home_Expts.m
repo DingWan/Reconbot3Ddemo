@@ -67,6 +67,7 @@ objRCBFixedSerialChain = RCBFixedSerialChain(po,q11q12q21q22,l1,l2);
 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = objRCBFixedSerialChain.RCB_FixedSerialChain_IK;
 ReconbotANI([0 q1q2]); 
 
+
 %% Random Configuration for returnning to HomePosition
 tic
 %---------------
@@ -123,7 +124,6 @@ end
 toc
 
 
-
 %% Save the value as '.mat' file
     Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
     Fixed2Home_q1q2 = [ q0q1q2_Pos_mat(:,2), q0q1q2_Vel_mat(:,2), q0q1q2_Acc_mat(:,2),...
@@ -138,7 +138,7 @@ toc
 %% 3D Animation
 for i = 1:length(q0q1q2_Pos_mat)-0  
     %========================== Animation ============================
-    %ReconbotANI(q0q1q2_Pos_mat(i,:));   
+    ReconbotANI(q0q1q2_Pos_mat(i,:));   
     %============================ End ================================
 end
 
