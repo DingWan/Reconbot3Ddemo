@@ -136,6 +136,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "sensor_data_capture");
   ros::NodeHandle n;
+
   passwd* pw = getpwuid(getuid());
   std::string path(pw->pw_dir);
   trajectoryFile.open(path+="/catkin_ws/src/02_MATLAB_Code/sensors_data/encoders_data.txt");

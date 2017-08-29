@@ -52,7 +52,7 @@ end
 if HomePosition == 2
     %% Select Mode + Posture
     SelectNumberOfTrajectoryPoints;
-    NumIntepoPoints = 20;
+    NumIntepoPoints = 100;
     %% ================================== First-Planning for Singurlarity Judging============================================== 
     % Motion planning
     clc
@@ -205,17 +205,17 @@ if HomePosition == 2
     % --------------
     toc
     
-    %=======================================    
-    Mode_det_Jq_Jc_J_mat(:,2) = zero(1,);
+    %=======================================   
     % Save the value as '.mat' file
     Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
-    Home2Random_q1q2 = [ q0q1q2_Pos_mat(:,2), q0q1q2_Vel_mat(:,2), q0q1q2_Acc_mat(:,2),...
+    Mode_det_Jq_Jc_J_mat_Origin(:,2) = zeros(Len_q0q1q2_mat,1);
+    Origin_Redundant_q1q2 = [ q0q1q2_Pos_mat(:,2), q0q1q2_Vel_mat(:,2), q0q1q2_Acc_mat(:,2),...
                             q0q1q2_Pos_mat(:,3), q0q1q2_Vel_mat(:,3), q0q1q2_Acc_mat(:,3),...
                             q0q1q2_Pos_mat(:,5), q0q1q2_Vel_mat(:,5), q0q1q2_Acc_mat(:,5),...
                             q0q1q2_Pos_mat(:,7), q0q1q2_Vel_mat(:,7), q0q1q2_Acc_mat(:,7),...
                             q0q1q2_Pos_mat(:,8), q0q1q2_Vel_mat(:,8), q0q1q2_Acc_mat(:,8),...
-                            q0q1q2_Pos_mat(:,9), q0q1q2_Vel_mat(:,9), q0q1q2_Acc_mat(:,9),...
-                            Time_mat(:,1), Mode_det_Jq_Jc_J_mat(:,2)
+                            -q0q1q2_Pos_mat(:,9), -q0q1q2_Vel_mat(:,9), -q0q1q2_Acc_mat(:,9),...
+                            Time_mat(:,1), Mode_det_Jq_Jc_J_mat_Origin(:,2)
                           ];
     
     end
@@ -329,13 +329,12 @@ if HomePosition == 2
     toc
         
     % Save the value as '.mat' file
-    Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
-    Home2Random_q1q2_Replan = [ q0q1q2_Pos_mat_NewAdjust(:,2), q0q1q2_Vel_mat_NewAdjust(:,2), q0q1q2_Acc_mat_NewAdjust(:,2),...
+    Replan_q1q2 = [ q0q1q2_Pos_mat_NewAdjust(:,2), q0q1q2_Vel_mat_NewAdjust(:,2), q0q1q2_Acc_mat_NewAdjust(:,2),...
                                         q0q1q2_Pos_mat_NewAdjust(:,3), q0q1q2_Vel_mat_NewAdjust(:,3), q0q1q2_Acc_mat_NewAdjust(:,3),...
                                         q0q1q2_Pos_mat_NewAdjust(:,5), q0q1q2_Vel_mat_NewAdjust(:,5), q0q1q2_Acc_mat_NewAdjust(:,5),...
                                         q0q1q2_Pos_mat_NewAdjust(:,7), q0q1q2_Vel_mat_NewAdjust(:,7), q0q1q2_Acc_mat_NewAdjust(:,7),...
                                         q0q1q2_Pos_mat_NewAdjust(:,8), q0q1q2_Vel_mat_NewAdjust(:,8), q0q1q2_Acc_mat_NewAdjust(:,8),...
-                                        q0q1q2_Pos_mat_NewAdjust(:,9), q0q1q2_Vel_mat_NewAdjust(:,9), q0q1q2_Acc_mat_NewAdjust(:,9),...
+                                        -q0q1q2_Pos_mat_NewAdjust(:,9), -q0q1q2_Vel_mat_NewAdjust(:,9), -q0q1q2_Acc_mat_NewAdjust(:,9),...
                                         Time_mat_NewAdjust(:,1), Mode_det_Jq_Jc_J_mat_NewAdjust(:,2)
                                       ];
     end   
@@ -350,7 +349,7 @@ if HomePosition == 2
         
         for i_CC_colum = 1: 6
             i_colum = (i_CC_colum - 1) * 3 + 1;
-            if Home2Random_q1q2_Replan(i_colum) > VelocityLimitCheck_Redius
+            if Replan_q1q2(i_colum) > VelocityLimitCheck_Redius
                 errordlg('Velocity Exceed Limits!, Please Check!','Check Value Error');
                 error('Error. \n Output Velocity is large than %g degree/s, in row: %g, colum: %g.', LimitCheck_Angle, i_CC_row + 1, i_colum)
             end
