@@ -118,6 +118,8 @@
 01_ROS_Code/reconbot_control/src/l_arm_move_group_interface.cpp
 01_ROS_Code/reconbot_control/src/l_arm_trajectory_publisher.cpp
 01_ROS_Code/reconbot_control/src/move_group_interface.cpp
+01_ROS_Code/reconbot_control/src/pid_client.py
+01_ROS_Code/reconbot_control/src/pid_server.py
 01_ROS_Code/reconbot_control/src/r_arm_move_group_interface.cpp
 01_ROS_Code/reconbot_control/src/r_arm_trajectory_publisher.cpp
 01_ROS_Code/reconbot_control/src/sensor_data_capture.cpp
@@ -126,6 +128,7 @@
 01_ROS_Code/reconbot_control/src/trajectory_publisher.cpp
 01_ROS_Code/reconbot_control/srv/EnableTorque.srv
 01_ROS_Code/reconbot_control/srv/ModeState.srv
+01_ROS_Code/reconbot_control/srv/PIDValues.srv
 01_ROS_Code/trajectory/2T2R.txt
 01_ROS_Code/trajectory/3T1R.txt
 01_ROS_Code/trajectory/3T1R0.txt
