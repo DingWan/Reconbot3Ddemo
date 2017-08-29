@@ -120,6 +120,9 @@
 01_ROS_Code/reconbot_control/src/move_group_interface.cpp
 01_ROS_Code/reconbot_control/src/r_arm_move_group_interface.cpp
 01_ROS_Code/reconbot_control/src/r_arm_trajectory_publisher.cpp
+01_ROS_Code/trajectory/2_2-Fixed2Home.txt
+01_ROS_Code/trajectory/2_3-3T1R_Redundant.txt
+01_ROS_Code/trajectory/2_3-3T1R_Replan.txt
 <<<<<<< HEAD
 =======
 01_ROS_Code/reconbot_control/src/sensor_data_capture.cpp
@@ -130,8 +133,6 @@
 01_ROS_Code/reconbot_control/srv/EnableTorque.srv
 01_ROS_Code/reconbot_control/srv/ModeState.srv
 01_ROS_Code/trajectory/2T2R.txt
-01_ROS_Code/trajectory/3T1R.txt
-01_ROS_Code/trajectory/3T1R0.txt
 01_ROS_Code/trajectory/T3R_trajectory.txt
 01_ROS_Code/trajectory/backup.txt
 01_ROS_Code/trajectory/l_arm_trajectory.txt

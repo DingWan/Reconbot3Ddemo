@@ -115,8 +115,9 @@ for OnlyUsedforFoldingThisPart = 1:1
           MP_Acc_mat = [ MP_Acc_mat; MP_Acc_Intep_HomePosition ];
             Time_mat = [ Time_mat; MP_time_Intep_HomePosition ];
      % Mode, Jacobian of Jq and J
-   %Mode_det_Jq_Jc_J_mat = [Mode_det_Jq_J_mat; Mode_det_Jq_J_HomePosition];
+   
    Mode_det_Jq_J_HomePosition(1:NumIntepoPoints,1) = Mode_det_Jq_J_HomePosition(NumIntepoPoints+1:2*NumIntepoPoints,1);
+   Mode_det_Jq_J_HomePosition(NumIntepoPoints+1:2*NumIntepoPoints,1) = Mode_det_Jq_J_HomePosition(NumIntepoPoints+1:2*NumIntepoPoints,2);
    Mode_det_Jq_Jc_J_mat =  Mode_det_Jq_J_HomePosition;
             
 end
@@ -138,7 +139,7 @@ toc
 %% 3D Animation
 for i = 1:length(q0q1q2_Pos_mat)-0  
     %========================== Animation ============================
-    ReconbotANI(q0q1q2_Pos_mat(i,:));   
+%     ReconbotANI(q0q1q2_Pos_mat(i,:));   
     %============================ End ================================
 end
 

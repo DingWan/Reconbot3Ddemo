@@ -1,10 +1,11 @@
 
 %%
-%data = Origin_Redundant_q1q2;
-%data = Replan_q1q2;
+data = Origin_Redundant_q1q2;
+% data = Replan_q1q2;
 
-% RandomFixed2Home_Expts;
-% data = Fixed2Home_q1q2(1:100,:);
+%%
+RandomFixed2Home_Expts;
+data = Fixed2Home_q1q2;
 
 %%
 robot = ReConBot;

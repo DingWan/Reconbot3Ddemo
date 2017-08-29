@@ -135,7 +135,7 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "sensor_data_capture");
   ros::NodeHandle n;
-  trajectoryFile.open("~/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/encoders_data.txt");
+  trajectoryFile.open("encoders_data.txt");
   trajectoryFile<<"time_stamp"
                <<"\t"<<"actual_pos_joint_4"<<"\t"<<"actual_pos_joint_5"<<"\t"<<"actual_pos_joint_3"
                <<"\t"<<"actual_pos_joint_1"<<"\t"<<"actual_pos_joint_2"<<"\t"<<"actual_pos_joint_6"
