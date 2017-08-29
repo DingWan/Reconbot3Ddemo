@@ -1,0 +1,21 @@
+#!/usr/bin/env python
+# -*- coding: utf-8 -*-
+
+from PIDValues.srv import *
+import rospy
+from dynamixel_driver import dynamixel_io
+
+def set_pid_values(req):
+    print "Returning [%s + %s = %s]"%(req.a, req.b, (req.a + req.b))
+    motors=dynamixel_io.DynamixelIO('/dev/ttyUSB0',1000000)
+    motors.set    
+    return AddTwoIntsResponse(req.a + req.b)
+
+def pid_server():
+    rospy.init_node('pid_server')
+    s = rospy.Service('pid_values', PIDValues, set_pid_values)
+    print "Ready to add two ints."
+    rospy.spin()
+
+if __name__ == "__main__":
+    pid_server()
