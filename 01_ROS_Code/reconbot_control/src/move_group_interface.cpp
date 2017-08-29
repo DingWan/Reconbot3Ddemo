@@ -31,7 +31,7 @@
  *  ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
  *  POSSIBILITY OF SUCH DAMAGE.
  *********************************************************************/
- /**
+/**
   * \author Jorge De La Cruz
   * \version 0.1
   * \date February 20, 2017
