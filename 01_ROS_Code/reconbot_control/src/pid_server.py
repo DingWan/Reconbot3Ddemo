@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import rospy
-from reconbot_control.srv import PIDValues.srv
+from reconbot_control.srv import *
 from dynamixel_driver import dynamixel_io
 
 def set_pid_values(req):
