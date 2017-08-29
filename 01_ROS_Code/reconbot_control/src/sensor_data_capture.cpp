@@ -43,6 +43,7 @@
 #include <iostream>
 #include <fstream>
 #include <string>
+#include <pwd.h>
 #include <control_msgs/FollowJointTrajectoryFeedback.h>
 
 using namespace std;
@@ -135,7 +136,9 @@ int main(int argc, char **argv)
 {
   ros::init(argc, argv, "sensor_data_capture");
   ros::NodeHandle n;
-  trajectoryFile.open("~/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/encoders_data.txt");
+  passwd* pw = getpwuid(getuid());
+  std::string path(pw->pw_dir);
+  trajectoryFile.open(path+="/catkin_ws/src/02_MATLAB_Code/sensors_data/encoders_data.txt");
   trajectoryFile<<"time_stamp"
                <<"\t"<<"actual_pos_joint_4"<<"\t"<<"actual_pos_joint_5"<<"\t"<<"actual_pos_joint_3"
                <<"\t"<<"actual_pos_joint_1"<<"\t"<<"actual_pos_joint_2"<<"\t"<<"actual_pos_joint_6"
