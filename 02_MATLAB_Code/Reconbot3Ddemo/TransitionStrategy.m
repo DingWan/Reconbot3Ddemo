@@ -221,11 +221,11 @@ end
             case 3 % 3T1R-SingularityA1C1
                 switch Mode_current
                     case 1 % 3T2R
-                        InsertRow_TransiConfig{1,:} = {5, Posture_previous};
+                        InsertRow_TransiConfig{1,:} = {3, Posture_previous};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [1 1];                       
                     case 2 % 3T1R
-                        InsertRow_TransiConfig{1,:} = {5, Posture_previous};
+                        InsertRow_TransiConfig{1,:} = {3, Posture_previous};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [1 1];
                     case 3 % 3T1R-SingularityA1C1
@@ -321,11 +321,11 @@ end
             case 4 % 3T1R-SingularityA2C2
                 switch Mode_current
                     case 1 % 3T2R                    
-                        InsertRow_TransiConfig{1,:} = {5, Posture_previous};
+                        InsertRow_TransiConfig{1,:} = {4, Posture_previous};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [1 1];  
                     case 2 % 3T1R
-                        InsertRow_TransiConfig{1,:} = {5, Posture_previous};
+                        InsertRow_TransiConfig{1,:} = {4, Posture_previous};
                         MPOTP_cell = exchange(MPOTP_cell, InsertRow_TransiConfig);
                         Self_adjustment_Enable_Disable = [1 1];                        
                     case 3 % 3T1R-SingularityA1C1                        
