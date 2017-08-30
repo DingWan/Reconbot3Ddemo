@@ -123,6 +123,7 @@
 01_ROS_Code/reconbot_control/src/r_arm_move_group_interface.cpp
 01_ROS_Code/reconbot_control/src/r_arm_trajectory_publisher.cpp
 01_ROS_Code/reconbot_control/src/sensor_data_capture.cpp
+01_ROS_Code/reconbot_control/src/torque_data_capture.cpp
 01_ROS_Code/reconbot_control/src/torque_enable_client.cpp
 01_ROS_Code/reconbot_control/src/trajectory_client.py
 01_ROS_Code/reconbot_control/src/trajectory_publisher.cpp

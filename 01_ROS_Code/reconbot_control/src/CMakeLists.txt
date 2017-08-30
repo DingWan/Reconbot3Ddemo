@@ -34,4 +34,8 @@ add_executable(sensor_data_capture sensor_data_capture.cpp)
 target_link_libraries(sensor_data_capture ${catkin_LIBRARIES} ${Boost_LIBRARIES})
 install(TARGETS sensor_data_capture DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
+add_executable(torque_data_capture torque_data_capture.cpp)
+target_link_libraries(torque_data_capture ${catkin_LIBRARIES} ${Boost_LIBRARIES})
+install(TARGETS torque_data_capture DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
+
 install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
