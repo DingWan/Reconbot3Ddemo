@@ -1,0 +1,13 @@
+figure(1)
+plot(time_stamp, actual_pos_joint_1,time_stamp, desired_pos_joint_1)
+figure(2)
+plot(time_stamp, actual_pos_joint_2,time_stamp, desired_pos_joint_2)
+figure(3)
+plot(time_stamp, actual_pos_joint_3,time_stamp, desired_pos_joint_3)
+figure(4)
+plot(time_stamp, actual_pos_joint_4,time_stamp, desired_pos_joint_4)
+figure(5)
+plot(time_stamp, actual_pos_joint_5,time_stamp, desired_pos_joint_5)
+figure(6)
+plot(time_stamp, actual_pos_joint_6,time_stamp, desired_pos_joint_6)
+
