@@ -139,7 +139,7 @@ toc
 %% 3D Animation
 for i = 1:length(q0q1q2_Pos_mat)-0  
     %========================== Animation ============================
-%     ReconbotANI(q0q1q2_Pos_mat(i,:));   
+    ReconbotANI(q0q1q2_Pos_mat(i,:));   
     %============================ End ================================
 end
 

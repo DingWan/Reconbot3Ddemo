@@ -208,7 +208,7 @@ for i = 1:length(MPOTP_cell)
                         % Here we get the new "q0q1q2_OptimalRow(LastRowValue,7:11)" value by Extrapolation due to the mode switch (Singularity)
                         if Length_Mode10or11 == 2
                             Lenth = NumIntepoPoints;
-                        elseif Length_Mode10or11 == 3
+                        elseif Length_Mode10or11 == 3 && col_Self_adjustment(1) ~= 1
                             Lenth = NumIntepoPoints* (Length_Mode10or11-1);
                         else
                             Lenth = NumIntepoPoints* (Length_Mode10or11-2);
@@ -233,7 +233,7 @@ for i = 1:length(MPOTP_cell)
                 % Assign the correct value for the last self-adjustment to
                 % right position
                 Mode = Mode_current;
-                if Mode == 10 || (Mode == 11 && Length_Mode10or11 == 4)
+                if Mode == 10 || (Mode == 11 && (Length_Mode10or11 == 3 || Length_Mode10or11 == 4))
                     q0q1q2_previous_trajpoint = q0q1q2_OptimalRow(NumIntepoPoints*(length(MPOTP_cell)-2),:);
                 end
                 %

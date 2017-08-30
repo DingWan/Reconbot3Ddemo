@@ -177,7 +177,7 @@ for i = 1:length(MPOTP_cell)
         end
         
             if Mode == 6 && PosOri{1} == 0
-                if abs(PosOri{2} - 0.030) < 1e-12 || abs(PosOri{2} + 0.030) < 1e-12
+                if abs(PosOri{2} - 30) < 1e-12 || abs(PosOri{2} + 30) < 1e-12
                     if j == 1
                         q0q1q2_CurrentStep = q0q1q2_previous_trajpoint;
                     else
