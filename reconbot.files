@@ -131,12 +131,13 @@
 01_ROS_Code/reconbot_control/srv/PIDValues.srv
 01_ROS_Code/trajectory/2R_A2C2_trajectory.txt
 01_ROS_Code/trajectory/2R_Fixed_Home.txt
+01_ROS_Code/trajectory/2T2R.txt
 01_ROS_Code/trajectory/2_2-Fixed2Home.txt
 01_ROS_Code/trajectory/2_3-3T1R_Redundant.txt
 01_ROS_Code/trajectory/2_3-3T1R_Replan.txt
+01_ROS_Code/trajectory/3T1R.txt
+01_ROS_Code/trajectory/5Modes_Redundant.txt
 01_ROS_Code/trajectory/backup.txt
-01_ROS_Code/trajectory/l_arm_trajectory.txt
-01_ROS_Code/trajectory/r_arm_trajectory.txt
 01_ROS_Code/trajectory/trajectory.txt
 02_MATLAB_Code/ReConBot.m
 02_MATLAB_Code/Reconbot3Ddemo/Animation/CollisionPointsFK.m

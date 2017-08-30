@@ -11,7 +11,7 @@
 
   <!-- Start joints trajectory controller controller-->
     <rosparam file="$(find reconbot_control)/config/base_trajectory_controller.yaml" command="load"/>
-    <node name="controller_spawner_l" pkg="dynamixel_controllers" type="controller_spawner.py"
+    <node name="controller_spawner_joint7" pkg="dynamixel_controllers" type="controller_spawner.py"
           args="--manager=dxl_manager
                 --type=meta
                 base_reconbot_controller
