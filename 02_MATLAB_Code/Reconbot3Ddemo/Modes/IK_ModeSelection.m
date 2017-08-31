@@ -148,7 +148,7 @@
                     % Mechanism in a general six-bar linkage:  [1 1 1 0 0 1]
                     % p = [x, y, z, [], [], gamma]
                     po_cell = inputdlg({'x (-L2,L2)','y (-L2,L2)','z ([0, 2*L2])','Theta =(-90~90)'},'2T2R-6-Bar', [1 20; 1 20; 1 20; 1 20;]);
-                    for i=1:3 po_num(i) = str2num(po_cell{i}); end
+                   for i=1:3 po_num(i) = str2num(po_cell{i}); end
                     po_num(4) = str2num(po_cell{4}) * pi / 180;
                     if po_num(1) == 0 && po_num(2) == 0  
                         if po_num(3) == 0
@@ -178,7 +178,7 @@
                         [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rsixbar.RCB_2T2Rsixbar_IK;
                     end
                 case 7
-                    %%------------------------ 2T2R IK£ºRotate around point  ------------------------
+                    %%------------------------ 2T2R IKï¿½ï¿½Rotate around point  ------------------------
                     % Mechanism rotate around point p(1:3):  [0 0 1 0 1 1]
                     % p = [[], [], z, [], beta, gamma]; x = y = 0
                     po_cell = inputdlg({'z ([0, 2*L2])','q11 =(-360,360)','Theta =(-90~90)'},'2T2R-6-Bar', [1 20; 1 20; 1 20;]);
@@ -189,7 +189,7 @@
                     obj1T2RRotAroundPoint = RCB1T2RRotAroundPoint(po,q11q12q14q23,l1,l2);
                     [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj1T2RRotAroundPoint.RCB_1T2R_RotAroundPoint_IK;
                 case 8
-                    %%------------------------ 2T1R IK£ºPlanar Five-bar ------------------------
+                    %%------------------------ 2T1R IKï¿½ï¿½Planar Five-bar ------------------------
                     % Mechanism transfers into Planar five-bar Linkage:  [1 1 1 1 1 1]
                     % p = [x, 0, z, [], beta, 0]
                     po_cell = inputdlg({'x (-L2,L2)','z ([0, 2*L2])','Theta =(-90~90)'},'2T2R-5-Bar', [1 20; 1 20; 1 20;]);
@@ -200,7 +200,7 @@
                     obj2T2Rfivebar = RCB2T2Rfivebar(po,q11q12q14q22,l1,l2);
                     [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = obj2T2Rfivebar.RCB_2T2R_FiveBar_IK;
                 case 9
-                    %%------------------------- 2T1R IK£ºPlanar Three-bar -----------------------
+                    %%------------------------- 2T1R IKï¿½ï¿½Planar Three-bar -----------------------
                     % Mechanism transfers into Planar three-bar Linkage:  [1 1 1 1 1 1]
                     % p = [x, 0, z, 0, beta, []]
                     po_cell = inputdlg({'x (-L2,L2)','z ([0, 2*L2])','Theta =(-90~90)'},'2T1R-3-BarSerial', [1 20; 1 20; 1 20;]);

@@ -123,6 +123,7 @@
 01_ROS_Code/reconbot_control/src/r_arm_move_group_interface.cpp
 01_ROS_Code/reconbot_control/src/r_arm_trajectory_publisher.cpp
 01_ROS_Code/reconbot_control/src/sensor_data_capture.cpp
+01_ROS_Code/reconbot_control/src/torque_data_capture.cpp
 01_ROS_Code/reconbot_control/src/torque_enable_client.cpp
 01_ROS_Code/reconbot_control/src/trajectory_client.py
 01_ROS_Code/reconbot_control/src/trajectory_publisher.cpp
@@ -136,7 +137,7 @@
 01_ROS_Code/trajectory/2_3-3T1R_Redundant.txt
 01_ROS_Code/trajectory/2_3-3T1R_Replan.txt
 01_ROS_Code/trajectory/3T1R.txt
-01_ROS_Code/trajectory/5Modes_Redundant.txt
+01_ROS_Code/trajectory/7Modes_Redundant.txt
 01_ROS_Code/trajectory/backup.txt
 01_ROS_Code/trajectory/trajectory.txt
 02_MATLAB_Code/ReConBot.m
@@ -382,12 +383,19 @@
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Demo3T1R_4points.mat
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/DemoMultiModes_6points.mat
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/BuildTrajecotry.m
+02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/IGM Logo Trajectory/IGMTrajectory.m
+02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/IGM Logo Trajectory/IGM_Logo_Trajectory.mat
+02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/IGM Logo Trajectory/PP_Poly5.m
+02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/IGM Logo Trajectory/PP_Poly5_Coeff.m
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/Main_Home_Random_timeCombine_Exps.m
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/Main_Home_Random_timeSeparate_Exps.m
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/PlotAngleValue_Experiment.m
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/RandomFixed2Home_Expts.m
+02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/ReConBot.m
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/Trajectories/IndividualSteps/2_2Fixed2Home.mat
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/Trajectories/IndividualSteps/Fixed2Home_q1q2.mat
+02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/publisher.m
+02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Experiments/reconbotCallback.m
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/FK_Verify_IK_Joint_Result.m
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Main_input_ModeSelection_Experiments.m
 02_MATLAB_Code/Reconbot3Ddemo/PaperTrajectorys/Mode/Mode3.fig
@@ -555,8 +563,10 @@
 02_MATLAB_Code/main.m
 02_MATLAB_Code/publisher.m
 02_MATLAB_Code/reconbotCallback.m
-02_MATLAB_Code/sensors_data/encoders_data.txt
+02_MATLAB_Code/sensors_data/encoders_data_30_08_2017.txt
 02_MATLAB_Code/sensors_data/encoders_data_latest.txt
+02_MATLAB_Code/sensors_data/plotting.m
+02_MATLAB_Code/sensors_data/torque_data_joint_1.txt
 02_MATLAB_Code/untitled.m
 03_Documentation/Activity Activity diagram.png
 03_Documentation/ReConBot_class.png

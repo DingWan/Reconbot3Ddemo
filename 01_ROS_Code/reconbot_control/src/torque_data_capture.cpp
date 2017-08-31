@@ -72,31 +72,63 @@ static ofstream torqueFile6;
 
 void chatterCallback(dynamixel_msgs::MotorStateList dynamixelList)
 {
-    dynamixel_msgs::MotorState dynamixel;
-    dynamixel = dynamixelList.motor_states[0];
-    float torque_ratio = dynamixel.load; /**< variable which contains the actual kinematic values*/
-    int temperature = dynamixel.temperature;/**< variable which contains the desired kinematic values*/
-    int motor_id = dynamixel.id;
-    float time_stamp = dynamixel.timestamp;
+    dynamixel_msgs::MotorState dynamixel0;
+    dynamixel_msgs::MotorState dynamixel1;
+    dynamixel_msgs::MotorState dynamixel2;
+    dynamixel_msgs::MotorState dynamixel3;
+    dynamixel_msgs::MotorState dynamixel4;
+    dynamixel_msgs::MotorState dynamixel5;
 
-    if (motor_id == 1){
-        torqueFile1<<time_stamp <<"\t"<<torque_ratio<<"\t"<<temperature<<endl;
-    }
-    if (motor_id == 2){
-        torqueFile2<<time_stamp <<"\t"<<torque_ratio<<"\t"<<temperature<<endl;
-    }
-    if (motor_id == 3){
-        torqueFile3<<time_stamp <<"\t"<<torque_ratio<<"\t"<<temperature<<endl;
-    }
-    if (motor_id == 4){
-        torqueFile4<<time_stamp <<"\t"<<torque_ratio<<"\t"<<temperature<<endl;
-    }
-    if (motor_id == 5){
-        torqueFile5<<time_stamp <<"\t"<<torque_ratio<<"\t"<<temperature<<endl;
-    }
-    if (motor_id == 6){
-        torqueFile6<<time_stamp <<"\t"<<torque_ratio<<"\t"<<temperature<<endl;
-    }
+    dynamixel0 = dynamixelList.motor_states[0];
+    dynamixel1 = dynamixelList.motor_states[1];
+    dynamixel2 = dynamixelList.motor_states[2];
+    dynamixel3 = dynamixelList.motor_states[3];
+    dynamixel4 = dynamixelList.motor_states[4];
+    dynamixel5 = dynamixelList.motor_states[5];
+
+
+    float torque_ratio0 = dynamixel0.load; /**< variable which contains the actual kinematic values*/
+    int temperature0 = dynamixel0.temperature;/**< variable which contains the desired kinematic values*/
+    int motor_id0 = dynamixel0.id;
+    float time_stamp0 = dynamixel0.timestamp;
+
+    float torque_ratio1 = dynamixel1.load; /**< variable which contains the actual kinematic values*/
+    int temperature1 = dynamixel1.temperature;/**< variable which contains the desired kinematic values*/
+    int motor_id1 = dynamixel1.id;
+    float time_stamp1 = dynamixel1.timestamp;
+
+    float torque_ratio2 = dynamixel2.load; /**< variable which contains the actual kinematic values*/
+    int temperature2 = dynamixel2.temperature;/**< variable which contains the desired kinematic values*/
+    int motor_id2 = dynamixel2.id;
+    float time_stamp2 = dynamixel2.timestamp;
+
+    float torque_ratio3 = dynamixel3.load; /**< variable which contains the actual kinematic values*/
+    int temperature3 = dynamixel3.temperature;/**< variable which contains the desired kinematic values*/
+    int motor_id3 = dynamixel3.id;
+    float time_stamp3 = dynamixel3.timestamp;
+
+    float torque_ratio4 = dynamixel4.load; /**< variable which contains the actual kinematic values*/
+    int temperature4 = dynamixel4.temperature;/**< variable which contains the desired kinematic values*/
+    int motor_id4 = dynamixel4.id;
+    float time_stamp4 = dynamixel4.timestamp;
+
+    float torque_ratio5 = dynamixel5.load; /**< variable which contains the actual kinematic values*/
+    int temperature5 = dynamixel5.temperature;/**< variable which contains the desired kinematic values*/
+    int motor_id5 = dynamixel5.id;
+    float time_stamp5 = dynamixel5.timestamp;
+
+        torqueFile1<<time_stamp0 <<"\t"<<torque_ratio0<<"\t"<<temperature0<<endl;
+
+        torqueFile2<<time_stamp1 <<"\t"<<torque_ratio1<<"\t"<<temperature1<<endl;
+
+        torqueFile3<<time_stamp2 <<"\t"<<torque_ratio2<<"\t"<<temperature2<<endl;
+
+        torqueFile4<<time_stamp3 <<"\t"<<torque_ratio3<<"\t"<<temperature3<<endl;
+
+        torqueFile5<<time_stamp4 <<"\t"<<torque_ratio4<<"\t"<<temperature4<<endl;
+
+        torqueFile6<<time_stamp5 <<"\t"<<torque_ratio5<<"\t"<<temperature5<<endl;
+
 }
 
 int main(int argc, char **argv)

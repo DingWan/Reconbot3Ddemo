@@ -351,13 +351,13 @@ classdef RCB2T2Rsixbar
                     
                     %%------------------------------------------------------------------------
                     %---------------------------Position of A2-C2 ----------------------------
-                    if q21 == 0 || q21 == pi || q21 == -pi || q21 == 2*pi || q21 == -2*pi 
-                        q22_LowerLimit = -pi/6;
-                        q24_LowerLimit = -135*pi/180;
-                    else                       
+                    %if q21 == 0 || q21 == pi || q21 == -pi || q21 == 2*pi || q21 == -2*pi 
+                        %q22_LowerLimit = -pi/6;
+                        %q24_LowerLimit = -135*pi/180;
+                    %else                       
                         q22_LowerLimit = 0;
                         q24_LowerLimit = -105*pi/180;
-                    end
+                    %end
                     
                     if q11 > -pi/2 && q11 < pi/2
                         q24_LowerLimit = -120*pi/180;

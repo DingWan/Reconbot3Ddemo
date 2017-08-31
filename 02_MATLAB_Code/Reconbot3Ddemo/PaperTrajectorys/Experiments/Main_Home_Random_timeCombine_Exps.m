@@ -40,7 +40,7 @@ switch choice
     case 'No,Go HomePosition'
         disp([choice ' Detecting Motor Encoders...'])
         HomePosition = 1;
-        RandomPosition2HomePosition_Experiments;
+        RandomFixed2Home_Expts;
     case 'Yes,Please Continue'
         disp('Inputing Trajectory Points...')
         HomePosition = 2;
