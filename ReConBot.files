@@ -566,6 +566,7 @@
 02_MATLAB_Code/sensors_data/encoders_data_30_08_2017.txt
 02_MATLAB_Code/sensors_data/encoders_data_latest.txt
 02_MATLAB_Code/sensors_data/plotting.m
+02_MATLAB_Code/sensors_data/torque_data_joint_1.txt
 02_MATLAB_Code/untitled.m
 03_Documentation/Activity Activity diagram.png
 03_Documentation/ReConBot_class.png

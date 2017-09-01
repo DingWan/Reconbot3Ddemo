@@ -54,7 +54,7 @@ if HomePosition == 2
     SelectNumberOfTrajectoryPoints;
     
     %% ================================== First-Planning for Singurlarity Judging============================================== 
-    NumIntepoPoints = 100;
+    NumIntepoPoints =100;
     % Motion planning
     clc
     for OnlyUsedforFolding_HomePos2SelectedEndPos = 1:1

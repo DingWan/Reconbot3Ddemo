@@ -76,7 +76,7 @@ void chatterCallback(dynamixel_msgs::MotorStateList dynamixelList)
     std::vector<int> temperature;
     std::vector<float> time_stamp;
 
-    for (size_t i = 0; i < dynamixelList.size(); i++) {
+    for (size_t i = 0; i < 7; i++) {
       dynamixel = dynamixelList.motor_states[i];
       torque_ratio.push_back(dynamixel.load); /**< variable which contains the actual torque load, this is a ratio which is obtained dividing the actual torque by maximun Dynamixel motor's torque.*/
       temperature.push_back(dynamixel.temperature); /**< Working temperature of the motor in ºC. */
@@ -101,7 +101,7 @@ int main(int argc, char **argv)
   std::string topic;
   ros::Subscriber sub;
 
-  sourcefile = path += "/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/torque_data_joint_1.txt";
+  sourcefile = path += "/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/torque_data_joint.txt";
 
   torqueFile.open(sourcefile.c_str());
   torqueFile<<"time_stamp"

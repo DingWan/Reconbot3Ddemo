@@ -415,7 +415,7 @@ int main(int argc, char** argv)
   ROS_INFO("=========== Waiting for a trajectory to execute...         ==============");
   ROS_INFO("=========================================================================");
   // Init the ROS node
-  ros::init(argc, argv, "ReConBot_Driver");
+  ros::init(argc, argv, "ReConBot_move_group_interface");
   ros::NodeHandle nh_;
   ros::Subscriber sub_path;
   //ros::ServiceClient client;
