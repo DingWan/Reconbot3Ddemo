@@ -175,7 +175,7 @@ void ReConBotLx::trajClient(){
 
 
   // wait for action server to come up
-  while(!traj_client_->waitForServer(ros::Duration(5.0))){
+  while(!traj_client_->waitForServer(ros::Duration(3.0))){
   ROS_INFO("Waiting for the joint_trajectory_action server");
   }
 }
@@ -235,28 +235,32 @@ control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::Fo
       goalMode.trajectory.joint_names.push_back("joint_1");
       goalMode.trajectory.joint_names.push_back("joint_2");
       goalMode.trajectory.joint_names.push_back("joint_6");
+      goalMode.trajectory.joint_names.push_back("joint_7");
       goalMode.trajectory.points.resize(pointsSize);
-      goalMode.trajectory.points[i].positions.resize(6);
+      goalMode.trajectory.points[i].positions.resize(7);
       goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[j].positions[0];
       goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[j].positions[1];
       goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[j].positions[2];
       goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[j].positions[3];
       goalMode.trajectory.points[i].positions[4] = goal.trajectory.points[j].positions[4];
       goalMode.trajectory.points[i].positions[5] = goal.trajectory.points[j].positions[5];
-      goalMode.trajectory.points[i].velocities.resize(6);
+      goalMode.trajectory.points[i].positions[6] = goal.trajectory.points[j].positions[6];
+      goalMode.trajectory.points[i].velocities.resize(7);
       goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[j].velocities[0];
       goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[j].velocities[1];
       goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[j].velocities[2];
       goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[j].velocities[3];
       goalMode.trajectory.points[i].velocities[4] = goal.trajectory.points[j].velocities[4];
       goalMode.trajectory.points[i].velocities[5] = goal.trajectory.points[j].velocities[5];
-      goalMode.trajectory.points[i].accelerations.resize(6);
+      goalMode.trajectory.points[i].velocities[6] = goal.trajectory.points[j].velocities[6];
+      goalMode.trajectory.points[i].accelerations.resize(7);
       goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[j].accelerations[0];
       goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[j].accelerations[1];
       goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[j].accelerations[2];
       goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[j].accelerations[3];
       goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[j].accelerations[4];
       goalMode.trajectory.points[i].accelerations[5] = goal.trajectory.points[j].accelerations[5];
+      goalMode.trajectory.points[i].accelerations[6] = goal.trajectory.points[j].accelerations[6];
       goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[j].time_from_start - time_rel;
       if (i==pointsSize-1) {
         new_time_rel = goalMode.trajectory.points[i].time_from_start;
@@ -274,26 +278,30 @@ control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::Fo
       goalMode.trajectory.joint_names.push_back("joint_3");
       goalMode.trajectory.joint_names.push_back("joint_1");
       goalMode.trajectory.joint_names.push_back("joint_6");
+      goalMode.trajectory.joint_names.push_back("joint_7");
       goalMode.trajectory.points.resize(pointsSize);
-      goalMode.trajectory.points[i].positions.resize(5);
+      goalMode.trajectory.points[i].positions.resize(6);
       goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[j].positions[0];
       goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[j].positions[1];
       goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[j].positions[2];
       goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[j].positions[3];
       goalMode.trajectory.points[i].positions[4] = goal.trajectory.points[j].positions[5];
+      goalMode.trajectory.points[i].positions[5] = goal.trajectory.points[j].positions[6];
 
-      goalMode.trajectory.points[i].velocities.resize(5);
+      goalMode.trajectory.points[i].velocities.resize(6);
       goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[j].velocities[0];
       goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[j].velocities[1];
       goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[j].velocities[2];
       goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[j].velocities[3];
       goalMode.trajectory.points[i].velocities[4] = goal.trajectory.points[j].velocities[5];
-      goalMode.trajectory.points[i].accelerations.resize(5);
+      goalMode.trajectory.points[i].velocities[5] = goal.trajectory.points[j].velocities[6];
+      goalMode.trajectory.points[i].accelerations.resize(6);
       goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[j].accelerations[0];
       goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[j].accelerations[1];
       goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[j].accelerations[2];
       goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[j].accelerations[3];;
-      goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[j].accelerations[5];;
+      goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[j].accelerations[5];
+      goalMode.trajectory.points[i].accelerations[5] = goal.trajectory.points[j].accelerations[6];
       goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[j].time_from_start - time_rel;
       if (i==pointsSize-1) {
         new_time_rel = goalMode.trajectory.points[i].time_from_start;
@@ -308,22 +316,26 @@ control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::Fo
       goalMode.trajectory.joint_names.push_back("joint_5");
       goalMode.trajectory.joint_names.push_back("joint_1");
       goalMode.trajectory.joint_names.push_back("joint_2");
+      goalMode.trajectory.joint_names.push_back("joint_7");
       goalMode.trajectory.points.resize(pointsSize);
-      goalMode.trajectory.points[i].positions.resize(4);
+      goalMode.trajectory.points[i].positions.resize(5);
       goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[j].positions[0];
       goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[j].positions[1];
       goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[j].positions[3];
       goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[j].positions[4];
-      goalMode.trajectory.points[i].velocities.resize(4);
+      goalMode.trajectory.points[i].positions[4] = goal.trajectory.points[j].positions[6];
+      goalMode.trajectory.points[i].velocities.resize(5);
       goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[j].velocities[0];
       goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[j].velocities[1];
       goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[j].velocities[3];
       goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[j].velocities[4];
-      goalMode.trajectory.points[i].accelerations.resize(4);
+      goalMode.trajectory.points[i].velocities[4] = goal.trajectory.points[j].velocities[6];
+      goalMode.trajectory.points[i].accelerations.resize(5);
       goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[j].accelerations[0];
       goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[j].accelerations[1];
       goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[j].accelerations[3];
       goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[j].accelerations[4];
+      goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[j].accelerations[6];
       goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[j].time_from_start - time_rel;
       if (i==pointsSize-1) {
         new_time_rel = goalMode.trajectory.points[i].time_from_start;
@@ -340,25 +352,29 @@ control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::Fo
       goalMode.trajectory.joint_names.push_back("joint_3");
       goalMode.trajectory.joint_names.push_back("joint_1");
       goalMode.trajectory.joint_names.push_back("joint_2");
+      goalMode.trajectory.joint_names.push_back("joint_7");
       goalMode.trajectory.points.resize(pointsSize);
-      goalMode.trajectory.points[i].positions.resize(5);
+      goalMode.trajectory.points[i].positions.resize(6);
       goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[j].positions[0];
       goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[j].positions[1];
       goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[j].positions[2];
       goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[j].positions[3];
       goalMode.trajectory.points[i].positions[4] = goal.trajectory.points[j].positions[4];
-      goalMode.trajectory.points[i].velocities.resize(5);
+      goalMode.trajectory.points[i].positions[5] = goal.trajectory.points[j].positions[6];
+      goalMode.trajectory.points[i].velocities.resize(6);
       goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[j].velocities[0];
       goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[j].velocities[1];
       goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[j].velocities[2];
       goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[j].velocities[3];
       goalMode.trajectory.points[i].velocities[4] = goal.trajectory.points[j].velocities[4];
-      goalMode.trajectory.points[i].accelerations.resize(5);
+      goalMode.trajectory.points[i].velocities[5] = goal.trajectory.points[j].velocities[6];
+      goalMode.trajectory.points[i].accelerations.resize(6);
       goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[j].accelerations[0];
       goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[j].accelerations[1];
       goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[j].accelerations[2];
       goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[j].accelerations[3];
       goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[j].accelerations[4];
+      goalMode.trajectory.points[i].accelerations[5] = goal.trajectory.points[j].accelerations[6];
       goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[i].time_from_start - time_rel;
       if (i==pointsSize-1) {
         new_time_rel = goalMode.trajectory.points[i].time_from_start;
@@ -375,25 +391,29 @@ control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::Fo
       goalMode.trajectory.joint_names.push_back("joint_3");
       goalMode.trajectory.joint_names.push_back("joint_1");
       goalMode.trajectory.joint_names.push_back("joint_2");
+      goalMode.trajectory.joint_names.push_back("joint_7");
       goalMode.trajectory.points.resize(pointsSize);
-      goalMode.trajectory.points[i].positions.resize(5);
+      goalMode.trajectory.points[i].positions.resize(6);
       goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[j].positions[0];
       goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[j].positions[1];
       goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[j].positions[2];
       goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[j].positions[3];
       goalMode.trajectory.points[i].positions[4] = goal.trajectory.points[j].positions[4];
-      goalMode.trajectory.points[i].velocities.resize(5);
+      goalMode.trajectory.points[i].positions[5] = goal.trajectory.points[j].positions[6];
+      goalMode.trajectory.points[i].velocities.resize(6);
       goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[j].velocities[0];
       goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[j].velocities[1];
       goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[j].velocities[2];
       goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[j].velocities[3];
       goalMode.trajectory.points[i].velocities[4] = goal.trajectory.points[j].velocities[4];
-      goalMode.trajectory.points[i].accelerations.resize(5);
+      goalMode.trajectory.points[i].velocities[5] = goal.trajectory.points[j].velocities[6];
+      goalMode.trajectory.points[i].accelerations.resize(6);
       goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[j].accelerations[0];
       goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[j].accelerations[1];
       goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[j].accelerations[2];
       goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[j].accelerations[3];
       goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[j].accelerations[4];
+      goalMode.trajectory.points[i].accelerations[5] = goal.trajectory.points[j].accelerations[6];
       goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[j].time_from_start - time_rel;
       if (i==pointsSize-1) {
         new_time_rel = goalMode.trajectory.points[i].time_from_start;
@@ -410,25 +430,29 @@ control_msgs::FollowJointTrajectoryGoal ReConBotLx::getGoalMode(control_msgs::Fo
       goalMode.trajectory.joint_names.push_back("joint_1");
       goalMode.trajectory.joint_names.push_back("joint_2");
       goalMode.trajectory.joint_names.push_back("joint_6");
+      goalMode.trajectory.joint_names.push_back("joint_7");
       goalMode.trajectory.points.resize(pointsSize);
-      goalMode.trajectory.points[i].positions.resize(5);
+      goalMode.trajectory.points[i].positions.resize(6);
       goalMode.trajectory.points[i].positions[0] = goal.trajectory.points[j].positions[0];
       goalMode.trajectory.points[i].positions[1] = goal.trajectory.points[j].positions[1];
       goalMode.trajectory.points[i].positions[2] = goal.trajectory.points[j].positions[3];
       goalMode.trajectory.points[i].positions[3] = goal.trajectory.points[j].positions[4];
       goalMode.trajectory.points[i].positions[4] = goal.trajectory.points[j].positions[5];
-      goalMode.trajectory.points[i].velocities.resize(5);
+      goalMode.trajectory.points[i].positions[5] = goal.trajectory.points[j].positions[6];
+      goalMode.trajectory.points[i].velocities.resize(6);
       goalMode.trajectory.points[i].velocities[0] = goal.trajectory.points[j].velocities[0];
       goalMode.trajectory.points[i].velocities[1] = goal.trajectory.points[j].velocities[1];
       goalMode.trajectory.points[i].velocities[2] = goal.trajectory.points[j].velocities[3];
       goalMode.trajectory.points[i].velocities[3] = goal.trajectory.points[j].velocities[4];
       goalMode.trajectory.points[i].velocities[4] = goal.trajectory.points[j].velocities[5];
-      goalMode.trajectory.points[i].accelerations.resize(5);
+      goalMode.trajectory.points[i].velocities[5] = goal.trajectory.points[j].velocities[6];
+      goalMode.trajectory.points[i].accelerations.resize(6);
       goalMode.trajectory.points[i].accelerations[0] = goal.trajectory.points[j].accelerations[0];
       goalMode.trajectory.points[i].accelerations[1] = goal.trajectory.points[j].accelerations[1];
       goalMode.trajectory.points[i].accelerations[2] = goal.trajectory.points[j].accelerations[3];
       goalMode.trajectory.points[i].accelerations[3] = goal.trajectory.points[j].accelerations[4];
       goalMode.trajectory.points[i].accelerations[4] = goal.trajectory.points[j].accelerations[5];
+      goalMode.trajectory.points[i].accelerations[5] = goal.trajectory.points[j].accelerations[6];
       goalMode.trajectory.points[i].time_from_start = goal.trajectory.points[j].time_from_start - time_rel;
       if (i==pointsSize-1) {
         new_time_rel = goalMode.trajectory.points[i].time_from_start;
