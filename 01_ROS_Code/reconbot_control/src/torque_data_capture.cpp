@@ -76,6 +76,10 @@ void chatterCallback(dynamixel_msgs::MotorStateList dynamixelList)
     std::vector<int> temperature;
     std::vector<float> time_stamp;
 
+    torque_ratio.clear();
+    temperature.clear();
+    time_stamp.clear();
+
     for (size_t i = 0; i < 7; i++) {
       dynamixel = dynamixelList.motor_states[i];
       torque_ratio.push_back(dynamixel.load); /**< variable which contains the actual torque load, this is a ratio which is obtained dividing the actual torque by maximun Dynamixel motor's torque.*/
