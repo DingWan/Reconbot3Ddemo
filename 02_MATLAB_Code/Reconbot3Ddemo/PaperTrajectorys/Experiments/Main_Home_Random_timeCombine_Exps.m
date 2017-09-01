@@ -94,6 +94,7 @@ if HomePosition == 2
     Mode_det_Jq_Jc_J = [];
     Mode_det_Jq_Jc_J_HomePosition_mat = [];
     Mode_det_Jq_Jc_J_HomePosition = [];
+    Mode_det_Jq_Jc_J_mat_Origin = [];
     %
     PosOri_Output_mat = {};
     
@@ -209,9 +210,12 @@ if HomePosition == 2
     %% Base Motor intepolation
     Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
     TotalSteps = Len_q0q1q2_mat/NumIntepoPoints;
-    BaseMotorValue = zeros(1, TotalSteps+1); %[0, 30*pi/180, 0]; 
+    %BaseMotorValue = zeros(1, TotalSteps+1); %[0, 30*pi/180, 0]; 
+    BaseMotorValue = [0, -30*pi/180, -30*pi/180, -30*pi/180,  -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180,...
+        -30*pi/180, -30*pi/180, -30*pi/180,  -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180,...
+        -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180]; 
     for i = 1:TotalSteps
-        Time = [(i-1) * Time_inteval, i * Time_inteval] + Start_Time * [1 1];
+        Time = [(i-1) * Time_inteval, i * Time_inteval] + Start_Time * ones(1,2);
         [Pos_Intep, Vel_Intep, Acc_Intep] = FiveDegPolyIntep(BaseMotorValue(i), BaseMotorValue(i+1), NumIntepoPoints, Time);
         q0q1q2_Pos_mat((i-1)*NumIntepoPoints + 1: i*NumIntepoPoints,1) = Pos_Intep';
         q0q1q2_Vel_mat((i-1)*NumIntepoPoints + 1: i*NumIntepoPoints,1) = Vel_Intep';
