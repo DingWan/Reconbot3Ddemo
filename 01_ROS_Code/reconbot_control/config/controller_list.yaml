@@ -5,6 +5,7 @@ controller_list:
   controller_4: joint4_controller
   controller_5: joint5_controller
   controller_6: joint6_controller
+  controller_7: joint7_controller
   controller_l: l_reconbot_arm_controller
   controller_r: r_reconbot_arm_controller
   controller_full: reconbot_controller

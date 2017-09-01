@@ -7,7 +7,7 @@
                 --port pan_tilt_port
                 joint1_controller
                 joint2_controller
-                joint3_controller
+                joint6_controller
                 "
           output="screen"/>
 
@@ -19,7 +19,7 @@
                 r_arm_reconbot_controller
                 joint1_controller
                 joint2_controller
-                joint3_controller
+                joint6_controller
 
                 "
 

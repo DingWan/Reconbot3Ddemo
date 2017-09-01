@@ -46,3 +46,16 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
+## Ignored Folders ##
+#####################
+
+## Ignored Types ##
+###################
+*~
+*.pyc
+*.user
+*.includes
+*.files
+*.creator
+*.config
+*.creator.user

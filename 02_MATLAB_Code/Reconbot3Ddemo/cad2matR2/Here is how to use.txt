@@ -1,0 +1,4 @@
+1. Open file "cad2matRCB.m";
+2. Run it
+3. You now can get the "RCBLinkdata.mat" file,
+wich is used in 3D demo.

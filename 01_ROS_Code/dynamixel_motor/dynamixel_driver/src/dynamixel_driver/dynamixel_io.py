@@ -172,7 +172,8 @@ class DynamixelIO(object):
 
             # wait for response packet from the motor
             timestamp = time.time()
-            time.sleep(0.0013)
+            #time.sleep(0.0013)
+            time.sleep(0.008)
 
             # read response
             data = self.__read_response(servo_id)
@@ -274,6 +275,18 @@ class DynamixelIO(object):
         response = self.write(servo_id, DXL_BAUD_RATE, [baud_rate])
         if response:
             self.exception_on_error(response[4], servo_id, 'setting baud rate to %d' % baud_rate)
+        return response
+
+    def set_multiturn_offset(self, servo_id, offset):
+        """
+        Set the Multi Turn Offset.
+        """
+        loVal = int(offset % 256)
+        hiVal = int(offset >> 8)
+
+        response = self.write(servo_id, DXL_DOWN_CALIBRATION_L, (loVal, hiVal))
+        if response:
+            self.exception_on_error(response[4], servo_id, 'setting Muli Turn Offset to %d' % offset)
         return response
 
     def set_return_delay_time(self, servo_id, delay):
@@ -1064,4 +1077,3 @@ class UnsupportedFeatureError(Exception):
         self.message = "Feature %d not supported by model %d (%s)" %(feature_id, model_id, model)
     def __str__(self):
         return self.message
-

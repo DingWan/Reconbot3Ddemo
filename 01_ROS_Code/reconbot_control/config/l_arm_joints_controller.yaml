@@ -7,9 +7,9 @@ joint4_controller:
     joint_speed: 1.0
     motor:
         id: 4
-        init: 0
-        min: 0
-        max: 4095
+        init: 7167
+        min: 3072
+        max: 11262
 
 joint5_controller:
     controller:
@@ -24,15 +24,15 @@ joint5_controller:
         min: 2048
         max: 4095
 
-joint6_controller:
+joint3_controller:
     controller:
         package: dynamixel_controllers
         module: joint_position_controller
         type: JointPositionController
-    joint_name: joint_6
+    joint_name: joint_3
     joint_speed: 1.0
     motor:
-        id: 6
-        init: 0
-        min: 0
+        id: 3
+        init: 2822
+        min: 1456
         max: 4095
