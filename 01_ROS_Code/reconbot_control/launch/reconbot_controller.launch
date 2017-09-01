@@ -42,6 +42,7 @@
                 joint3_controller
                 joint1_controller
                 joint6_controller
+                joint7_controller
                 "
                          output="screen"/>
 
@@ -55,6 +56,7 @@
                 joint5_controller
                 joint1_controller
                 joint2_controller
+                joint7_controller
                 "
                         output="screen"/>
 
@@ -68,6 +70,7 @@
               joint3_controller
               joint1_controller
               joint2_controller
+              joint7_controller
               "
                       output="screen"/>
 
@@ -82,6 +85,7 @@
                 joint1_controller
                 joint2_controller
                 joint6_controller
+                joint7_controller
                 "
                         output="screen"/>
 
@@ -96,6 +100,7 @@
                 joint3_controller
                 joint1_controller
                 joint2_controller
+                joint7_controller
                 "
                          output="screen"/>
 

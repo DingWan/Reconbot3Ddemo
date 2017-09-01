@@ -54,7 +54,7 @@ if HomePosition == 2
     SelectNumberOfTrajectoryPoints;
     
     %% ================================== First-Planning for Singurlarity Judging============================================== 
-    NumIntepoPoints =100;
+    NumIntepoPoints = 100;
     % Motion planning
     clc
     for OnlyUsedforFolding_HomePos2SelectedEndPos = 1:1
@@ -206,7 +206,19 @@ if HomePosition == 2
     % --------------
     toc
     
-    %=======================================   
+    %% Base Motor intepolation
+    Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
+    TotalSteps = Len_q0q1q2_mat/NumIntepoPoints;
+    BaseMotorValue = zeros(1, TotalSteps+1); %[0, 30*pi/180, 0]; 
+    for i = 1:TotalSteps
+        Time = [(i-1) * Time_inteval, i * Time_inteval] + Start_Time * [1 1];
+        [Pos_Intep, Vel_Intep, Acc_Intep] = FiveDegPolyIntep(BaseMotorValue(i), BaseMotorValue(i+1), NumIntepoPoints, Time);
+        q0q1q2_Pos_mat((i-1)*NumIntepoPoints + 1: i*NumIntepoPoints,1) = Pos_Intep';
+        q0q1q2_Vel_mat((i-1)*NumIntepoPoints + 1: i*NumIntepoPoints,1) = Vel_Intep';
+        q0q1q2_Acc_mat((i-1)*NumIntepoPoints + 1: i*NumIntepoPoints,1) = Acc_Intep';
+    end    
+    
+    %% =======================================
     % Save the value as '.mat' file
     Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
     Mode_det_Jq_Jc_J_mat_Origin(:,2) = zeros(Len_q0q1q2_mat,1);
@@ -216,6 +228,7 @@ if HomePosition == 2
                             q0q1q2_Pos_mat(:,7), q0q1q2_Vel_mat(:,7), q0q1q2_Acc_mat(:,7),...
                             q0q1q2_Pos_mat(:,8), q0q1q2_Vel_mat(:,8), q0q1q2_Acc_mat(:,8),...
                             -q0q1q2_Pos_mat(:,9), -q0q1q2_Vel_mat(:,9), -q0q1q2_Acc_mat(:,9),...
+                            q0q1q2_Pos_mat(:,1), q0q1q2_Vel_mat(:,1), q0q1q2_Acc_mat(:,1),...
                             Time_mat(:,1), Mode_det_Jq_Jc_J_mat_Origin(:,2)
                           ];
     
@@ -328,7 +341,8 @@ if HomePosition == 2
         end
     end
     toc
-        
+
+    
     % Save the value as '.mat' file
     Replan_q1q2 = [ q0q1q2_Pos_mat_NewAdjust(:,2), q0q1q2_Vel_mat_NewAdjust(:,2), q0q1q2_Acc_mat_NewAdjust(:,2),...
                                         q0q1q2_Pos_mat_NewAdjust(:,3), q0q1q2_Vel_mat_NewAdjust(:,3), q0q1q2_Acc_mat_NewAdjust(:,3),...
@@ -336,6 +350,7 @@ if HomePosition == 2
                                         q0q1q2_Pos_mat_NewAdjust(:,7), q0q1q2_Vel_mat_NewAdjust(:,7), q0q1q2_Acc_mat_NewAdjust(:,7),...
                                         q0q1q2_Pos_mat_NewAdjust(:,8), q0q1q2_Vel_mat_NewAdjust(:,8), q0q1q2_Acc_mat_NewAdjust(:,8),...
                                         -q0q1q2_Pos_mat_NewAdjust(:,9), -q0q1q2_Vel_mat_NewAdjust(:,9), -q0q1q2_Acc_mat_NewAdjust(:,9),...
+                                        q0q1q2_Pos_mat_NewAdjust(:,1), q0q1q2_Vel_mat_NewAdjust(:,1), q0q1q2_Acc_mat_NewAdjust(:,1),...
                                         Time_mat_NewAdjust(:,1), Mode_det_Jq_Jc_J_mat_NewAdjust(:,2)
                                       ];
     end   

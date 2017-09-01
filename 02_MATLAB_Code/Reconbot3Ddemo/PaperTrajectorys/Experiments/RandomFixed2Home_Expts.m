@@ -20,7 +20,8 @@ tic
 DyInfo = Reconbot.getTraj();
 pause(0.025)
 DyEnPos = DyInfo.LatestMessage.Actual.Positions;
-MotorPosition = DyEnPos';
+MotorPosition = DyEnPos(1:6)';
+q0 = DyEnPos(7);
 toc
 
 %MotorPosition = [0*pi/180, 0*pi/180, -90*pi/180, 0*pi/180, 0*pi/180, 180*pi/180];
@@ -65,7 +66,7 @@ po = RandomMode{2};
 q11q12q21q22 = [];
 objRCBFixedSerialChain = RCBFixedSerialChain(po,q11q12q21q22,l1,l2);
 [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = objRCBFixedSerialChain.RCB_FixedSerialChain_IK;
-ReconbotANI([0 q1q2]); 
+ReconbotANI([q0 q1q2]); 
 
 
 %% Random Configuration for returnning to HomePosition
@@ -124,15 +125,27 @@ end
 % --------------
 toc
 
+%% Base Motor intepolation
+Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
+TotalSteps = Len_q0q1q2_mat/NumIntepoPoints;
+BaseMotorValue = [q0, 0*pi/180, 0]; %zeros(1, TotalSteps+1);
+for i = 1:TotalSteps
+    Time = [(i-1) * Time_inteval, i * Time_inteval] + Start_Time * [1 1];
+    [Pos_Intep, Vel_Intep, Acc_Intep] = FiveDegPolyIntep(BaseMotorValue(i), BaseMotorValue(i+1), NumIntepoPoints, Time);
+    q0q1q2_Pos_mat((i-1)*NumIntepoPoints + 1: i*NumIntepoPoints,1) = Pos_Intep';
+    q0q1q2_Vel_mat((i-1)*NumIntepoPoints + 1: i*NumIntepoPoints,1) = Vel_Intep';
+    q0q1q2_Acc_mat((i-1)*NumIntepoPoints + 1: i*NumIntepoPoints,1) = Acc_Intep';
+end
 
 %% Save the value as '.mat' file
-    Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
+
     Fixed2Home_q1q2 = [ q0q1q2_Pos_mat(:,2), q0q1q2_Vel_mat(:,2), q0q1q2_Acc_mat(:,2),...
                             q0q1q2_Pos_mat(:,3), q0q1q2_Vel_mat(:,3), q0q1q2_Acc_mat(:,3),...
                             q0q1q2_Pos_mat(:,5), q0q1q2_Vel_mat(:,5), q0q1q2_Acc_mat(:,5),...
                             q0q1q2_Pos_mat(:,7), q0q1q2_Vel_mat(:,7), q0q1q2_Acc_mat(:,7),...
                             q0q1q2_Pos_mat(:,8), q0q1q2_Vel_mat(:,8), q0q1q2_Acc_mat(:,8),...
                             -q0q1q2_Pos_mat(:,9), -q0q1q2_Vel_mat(:,9), -q0q1q2_Acc_mat(:,9),...
+                            q0q1q2_Pos_mat(:,1), q0q1q2_Vel_mat(:,1), q0q1q2_Acc_mat(:,1),...
                             Time_mat(:,1), Mode_det_Jq_Jc_J_mat(:,1)
                           ];
 
