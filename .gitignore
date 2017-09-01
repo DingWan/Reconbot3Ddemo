@@ -4,3 +4,10 @@
 ## Ignored Types ##
 ###################
 *~
+*.pyc
+*.user
+*.includes
+*.files
+*.creator
+*.config
+*.creator.user
