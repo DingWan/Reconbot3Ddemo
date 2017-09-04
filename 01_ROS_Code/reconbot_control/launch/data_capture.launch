@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<launch>
+  <node name="sensor_data_capture" pkg="reconbot_control" type="sensor_data_capture" respaw="true"/>
+
+  <node name="torque_data_capture" pkg="reconbot_control" type="torque_data_capture" respaw="true"/>
+
+</launch>
