@@ -5,18 +5,21 @@
 ## IGM - Institut fur Getriebetechnik und Maschinendynamik
 
 import os
-import shlex, subprocess
+import shlex, subprocess, sys
 from Tkinter import *
+from tkMessageBox import *
+
 
 class App:
     def __init__(self, master):
         self.master = master
+        #self.master.geometry('800x600')
         fm = Frame(self.master)
         menu = Menu(master)
         master.config(menu=menu)
         filemenu = Menu(menu)
         menu.add_cascade(label="File", menu=filemenu)
-        filemenu.add_command(label="Execute", command=self.Execute)
+        filemenu.add_command(label="Execute", command=self.ExecuteWindow)
         filemenu.add_command(label="PID...", command=self.PID)
         filemenu.add_separator()
         filemenu.add_command(label="Exit", command=self.master.quit)
@@ -24,20 +27,28 @@ class App:
         helpmenu = Menu(menu)
         menu.add_cascade(label="Help", menu=helpmenu)
         helpmenu.add_command(label="About...", command=self.About)
+
+        ##################################################################################
+        ##                              Defining Widgets                             ##
+        ##################################################################################
         self.titlei = self.master.title("Reconbot GUI")
-        self.logoi = PhotoImage(file="/home/jdelacruz/Pictures/igm.png")
-        self.reconbotfig = PhotoImage(file="/home/jdelacruz/Pictures/igm.png")
+        self.logoi = PhotoImage(file="~/catkin_ws/src/reconbot/04_PYTHON_GUI/pictures/igm.png")
+        self.reconbotfig = PhotoImage(file="~/catkin_ws/src/reconbot/04_PYTHON_GUI/pictures/reconbot.png")
         self.w1i = Label(fm, image=self.logoi)
         self.reconbot = Label(fm, image=self.reconbotfig)
-        self.explanationi = """
-Welcome to the Reconbot User Interface
-Copyright (c) 2017, IGM-RWTH Aachen University
-All rights reserved."""
+        self.expli = """
+        Welcome to Reconbot User Interface
+        Copyright (c) 2017, IGM-RWTH Aachen University
+        All rights reserved."""
         self.w2i = Label(fm,
                         justify=LEFT,
                         padx = 10,
-                        text=self.explanationi, fg="blue")
+                        text=self.expli, fg="blue",
+                        font = "Times 12 bold")
 
+        ##################################################################################
+        ##                              Positioning Widgets                            ##
+        ##################################################################################
         self.w2i.grid(row=0, sticky=W)
         self.w1i.grid(row=0, column = 1, columnspan=2)
         self.reconbot.grid(row=1, column = 0, columnspan=3)
@@ -47,7 +58,7 @@ All rights reserved."""
     def PID(self):
         fm3 = Frame(Toplevel(self.master))
         self.explanation3 = """
-Welcome to the Reconbot User Interface"""
+        Welcome to the Reconbot User Interface"""
         self.w3 = Label(fm3,
                         justify=LEFT,
                         padx = 10,
@@ -56,58 +67,220 @@ Welcome to the Reconbot User Interface"""
         self.w3.grid(row=0, column = 1, columnspan=2)
         fm3.pack()
 
-    def Execute(self):
-        fm1 = Frame(Toplevel(self.master))
+    def ExecuteWindow(self):
+        #fm1 = Frame(Toplevel(), width=800, height=600)
+        fm1 = Toplevel(self.master, relief = RIDGE, bd = 5, bg = "white")
+        fm1.geometry("800x440")
+        #canvas = Canvas(fm1)
+        #can = Canvas(fm1)
+        #can.pack()
+        #can.create_line(0, 0, 725, 100)
+        #can.pack()
+        #self.master.geometry("800x600")
+        #fm1.pack()
         #self.title = master.title("Reconbot GUI")
-        self.logo = PhotoImage(file="/home/jdelacruz/Pictures/igm.png")
-        self.w1 = Label(fm1, image=self.logo)
-        self.explanation = """
-Welcome to the Reconbot User Interface
-Copyright (c) 2017, IGM-RWTH Aachen University
-All rights reserved."""
-        self.w2 = Label(fm1,
+        ##################################################################################
+        ##                              Defining Widgets                             ##
+        ##################################################################################
+
+        self.logo = PhotoImage(file="~/catkin_ws/src/reconbot/04_PYTHON_GUI/pictures/igm.png")
+        self.expl1 = """
+        Welcome to Reconbot User Interface
+        Copyright (c) 2017, IGM-RWTH Aachen University
+        All rights reserved."""
+        self.expl2 = """
+        Please select ONE of the following
+        kinematic modes:"""
+
+        self.expl3 = "Motors mode:"
+        self.expl4 = "Record positions, velocities, \n accelerations and torque:"
+        self.passiveExpl = 'Passive'
+        self.activeExpl = 'Active'
+        self.w1 = Label(fm1,
                         justify=LEFT,
                         padx = 10,
-                        text=self.explanation)
+                        text=self.expl1,
+                        font = "Times 12 bold",
+                        fg = "blue",
+                        bg = "white")
+        self.w2 = Label(fm1, image=self.logo, bg = "white")
 
-        self.w2.grid(row=0, sticky=W)
-        self.w1.grid(row=0, column = 1, columnspan=2)
+        self.w3 = Label(fm1,
+                        justify=LEFT,
+                        padx = 10,
+                        text=self.expl2,
+                        font = "Times 11 bold", bg = "white")
+        self.labelRec = Label (fm1,
+                               justify = LEFT,
+                               padx = 10,
+                               text = self.expl4,
+                               font = "Times 11 bold", bg = "White")
+        self.labelMotors = Label (fm1,
+                               justify = LEFT,
+                               padx = 10,
+                               text = self.expl3,
+                               font = "Times 11 bold", bg = "white")
+        self.buttonRecStart = Button(fm1,text='Start Rec', command = self.StartRecording, width = 7, bg = "green")
+        self.buttonRecStop = Button(fm1,text='Stop Rec', command = self.StopRecording, width = 7, bg = "red")
+        self.buttonPassive = Button(fm1,text= self.passiveExpl, command = self.PassiveMotors, width = 7, bg= "yellow")
+        self.buttonActive = Button(fm1,text= self.activeExpl, command = self.ActiveMotors, width = 7, bg = "green")
         #fm1.pack(side="top")
         #fm2 = Frame(master)
-        self.button1 = Checkbutton(fm1,text='RCB_full_mode_controller')
-        self.button2 = Checkbutton(fm1,text='RCB_3T2R_controller')
-        self.button3 = Checkbutton(fm1,text='RCB_3T1R_controller')
-        self.button4 = Checkbutton(fm1,text='RCB_1T1RA1C1_controller')
-        self.button5 = Checkbutton(fm1,text='RCB_1T1RA2C2_controller')
-        self.button6 = Checkbutton(fm1,text='RCB_2T2R6B_controller')
-        self.buttonRec = Checkbutton(fm1,text='Record Kinematics variables and Torque')
+        self.modes = Listbox(fm1)
+        for option in ['RCB_full_mode_controller', 'RCB_3T2R_controller',
+                        'RCB_3T1R_controller', 'RCB_1T1RA1C1_controller',
+                        'RCB_1T1RA2C2_controller', 'RCB_1T1RA1C1A2C2_controller',
+                        'RCB_2T2R6B_controller','RCB_2T2R6BX0Y0_controller',
+                        'RCB_2T2R5B_controller', 'RCB_2T2R3B_controller',
+                        'RCB_2RA1C1_controller', 'RCB_2RA2C2_controller',
+                        'RCB_FIXED2U_controller'
+                        ]:
+                        self.modes.insert(END, option)
+        self.modes.bind("<Button-1>", self.ModeState)
+        self.buttonCancel = Button(fm1,text='Stop', command = self.StopReconbot, width = 7, bg = "red")
+        self.buttonRun = Button(fm1,text='Run',command = self.Execute, width = 7, bg = "green")
+        self.buttonConnect = Button(fm1,text='Connect',command = self.Connect, width = 7, bg = "yellow")
 
 
-        self.button1.grid(row=1,sticky = W)
-        self.button2.grid(row = 2,sticky = W)
-        self.button3.grid(row=3,sticky = W)
-        self.button4.grid(row=4,sticky = W)
-        self.button5.grid(row=5,sticky = W)
-        self.button6.grid(row=6,sticky = W)
-        self.buttonRec.grid(row=1,column=1,sticky = W)
 
-        #fm2.pack(side="ce,anchor=W, padx=10)
-
-        #fm3 = Frame(master)
-        self.buttonR = Button(fm1,text='Activate all motors to be passive')
-        self.buttonRun = Button(fm1,text='Run')
-        self.buttonCancel = Button(fm1,text='Cancel', command = self.master.quit)
-
-        self.buttonR.grid(row=3,column=1, sticky = W)
-        self.buttonRun.grid(row=6,column=2, sticky = W)
-        self.buttonCancel.grid(row=6,column=1, sticky = E)
+        ##################################################################################
+        ##                              Positioning Widgets                            ##
+        ##################################################################################
+        self.w1.grid(row=0, column = 0, sticky=W)
+        self.w2.grid(row=0, column = 1,columnspan = 3)
+        self.w3.grid(row=2, column = 0, sticky = W)
+        self.modes.grid(row=4,rowspan=2, padx= 40,sticky = W)
+        self.labelRec.grid(row = 4, column = 1, sticky = NE)
+        self.labelMotors.grid(row = 3, column = 1, sticky = SE)
+        self.buttonRecStart.grid(row=4,column=2,sticky = NE)
+        self.buttonRecStop.grid(row=4,column=3,sticky = NW)
+        self.buttonPassive.grid(row=3,column=3, sticky = SW)
+        self.buttonActive.grid(row=3,column=2, sticky = SE)
+        self.buttonRun.grid(row=7,column=3, sticky = W)
+        self.buttonConnect.grid(row=6, column=3, sticky = W)
+        self.buttonCancel.grid(row=7,column=2, sticky = E)
 
 
 
 
 
         #fm3.pack(side="bottom")
-        fm1.pack()
+        #fm1.pack()
+
+    def StopReconbot(self):
+            a = 'killall -9 rosmaster'
+            #b = 'kill'+' '+self.pidp
+            #print b
+            args = shlex.split(a)
+            #args2 = shlex.split(b)
+            #p = subprocess.Popen(args)
+            q = subprocess.Popen(args)
+
+    def Execute(self):
+        try:
+            a = 'rosrun reconbot_control trajectory_publisher'
+            args = shlex.split(a)
+            p = subprocess.Popen(args)
+            #p = subprocess.Popen(args, stdout=subprocess.PIPE,stderr=subprocess.PIPE)
+            #output,error = p.communicate()
+        except:
+            showerror("Exception", "Please, select one of the available modes before connecting")
+
+
+    def Connect(self):
+        try:
+            imode = self.selectedMode[0]
+            if  imode == 0 or imode == 9 or imode == 12:
+                #a = 'roslaunch reconbot_control main.launch full_mode:=true'
+                a = 'roslaunch igm_collision main.launch sim:=true limited:=true'
+                args1 = shlex.split(a)
+                p=subprocess.Popen(args1)
+                self.pidp = str(p.pid)
+
+            if  imode == 1 or imode == 6 or imode == 7:
+                a = 'roslaunch reconbot_control main.launch full_mode:=true'
+                b = 'rosrun'
+                args = shlex.split(a)
+                p=subprocess.Popen(args)
+
+
+                b = 'rosrun reconbot_control torque_enable_client 1'
+                args2 = shlex.split(b)
+                q=subprocess.Popen(args2)
+
+            if  imode == 2 or imode == 3 or imode == 4 or imode == 5:
+                a = 'roslaunch reconbot_control main.launch full_mode:=true'
+                args = shlex.split(a)
+                p=subprocess.Popen(args)
+
+
+                b = 'rosrun reconbot_control torque_enable_client 2'
+                args2 = shlex.split(b)
+                q=subprocess.Popen(args2)
+
+            if  imode == 8:
+                a = 'roslaunch reconbot_control main.launch full_mode:=true'
+                args = shlex.split(a)
+                p=subprocess.Popen(args)
+
+
+                b = 'rosrun reconbot_control torque_enable_client 8'
+                args2 = shlex.split(b)
+                q=subprocess.Popen(args2)
+
+            if  imode == 10:
+                a = 'roslaunch reconbot_control main.launch full_mode:=true'
+                args = shlex.split(a)
+                p=subprocess.Popen(args)
+
+
+                b = 'rosrun reconbot_control torque_enable_client 10'
+                args2 = shlex.split(b)
+                q=subprocess.Popen(args2)
+
+            if  imode == 11:
+                a = 'roslaunch reconbot_control main.launch full_mode:=true'
+                args = shlex.split(a)
+                p=subprocess.Popen(args)
+
+
+                b = 'rosrun reconbot_control torque_enable_client 11'
+                args2 = shlex.split(b)
+                q=subprocess.Popen(args2)
+
+        except:
+            #fmexce = Frame(Toplevel(self.master))
+            showerror("Exception", "Please, select one of the available modes before connecting")
+
+    def ModeState(self,event):
+        self.selectedMode = self.modes.curselection()
+
+    def PassiveMotors(self):
+        a = 'rosrun reconbot_control torque_enable_client 15'
+        args = shlex.split(a)
+        p=subprocess.Popen(args)
+
+    def ActiveMotors(self):
+        a = 'rosrun reconbot_control torque_enable_client 0'
+        args = shlex.split(a)
+        p=subprocess.Popen(args)
+
+    def StartRecording(self):
+        a = 'rosrun reconbot_control sensor_data_capture'
+        b = 'rosrun reconbot_control torque_data_capture'
+        args1 = shlex.split(a)
+        args2 = shlex.split(b)
+        p=subprocess.Popen(args1)
+        q=subprocess.Popen(args2)
+
+    def StopRecording(self):
+        a = 'rosnode kill sensor_data_capture'
+        b = 'rosnode kill torque_data_capture'
+        args1 = shlex.split(a)
+        args2 = shlex.split(b)
+        p=subprocess.Popen(args1)
+        q=subprocess.Popen(args2)
+
 
     def About(self):
         print "This is a simple example of a menu"
