@@ -12,7 +12,7 @@
 
 %%-------------------------------------------------------------------
 %                        Version 1.1
-%%-------------------------------------------------------------------
+%%----------------  ---------------------------------------------------
 
 clc
 %close all
@@ -68,7 +68,7 @@ if HomePosition == 2
     % Intepotation Points and Time
     %NumIntepoPoints = 20;
     Start_Time = 0;
-    Time_inteval = 5;
+    Time_inteval = 3;
     %
     q0q1q2_Pos_mat = [];
     q0q1q2_Vel_mat = [];
@@ -94,6 +94,7 @@ if HomePosition == 2
     Mode_det_Jq_Jc_J = [];
     Mode_det_Jq_Jc_J_HomePosition_mat = [];
     Mode_det_Jq_Jc_J_HomePosition = [];
+    Mode_det_Jq_Jc_J_mat_Origin = [];
     %
     PosOri_Output_mat = {};
     
@@ -206,7 +207,26 @@ if HomePosition == 2
     % --------------
     toc
     
-    %=======================================   
+    %% Base Motor intepolation
+    Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
+    TotalSteps = Len_q0q1q2_mat/NumIntepoPoints;
+    %BaseMotorValue = zeros(1, TotalSteps+1); %[0, 30*pi/180, 0]; 
+    % IGM trajectory
+    BaseMotorValue = [0, -30*pi/180, -45*pi/180, -0*pi/180,  30*pi/180, 45*pi/180, 0*pi/180, -20*pi/180, -30*pi/180, 0*pi/180, 0*pi/180,...
+        0*pi/180, 30*pi/180, 20*pi/180,  45*pi/180, 0*pi/180, 20*pi/180, 0*pi/180, -30*pi/180, -30*pi/180, -30*pi/180,...
+        -30*pi/180, -30*pi/180, -30*pi/180, 0*pi/180]; 
+%    BaseMotorValue = [0, -0*pi/180, -0*pi/180, -0*pi/180,  -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180,...
+%        -0*pi/180, -0*pi/180, -0*pi/180,  -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180,...
+%        -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180];
+    for i = 1:TotalSteps
+        Time = [(i-1) * Time_inteval, i * Time_inteval] + Start_Time * ones(1,2);
+        [Pos_Intep, Vel_Intep, Acc_Intep] = FiveDegPolyIntep(BaseMotorValue(i), BaseMotorValue(i+1), NumIntepoPoints, Time);
+        q0q1q2_Pos_mat((i-1)*NumIntepoPoints + 1: i*NumIntepoPoints,1) = Pos_Intep';
+        q0q1q2_Vel_mat((i-1)*NumIntepoPoints + 1: i*NumIntepoPoints,1) = Vel_Intep';
+        q0q1q2_Acc_mat((i-1)*NumIntepoPoints + 1: i*NumIntepoPoints,1) = Acc_Intep';
+    end    
+    
+    %% =======================================
     % Save the value as '.mat' file
     Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
     Mode_det_Jq_Jc_J_mat_Origin(:,2) = zeros(Len_q0q1q2_mat,1);
@@ -216,6 +236,7 @@ if HomePosition == 2
                             q0q1q2_Pos_mat(:,7), q0q1q2_Vel_mat(:,7), q0q1q2_Acc_mat(:,7),...
                             q0q1q2_Pos_mat(:,8), q0q1q2_Vel_mat(:,8), q0q1q2_Acc_mat(:,8),...
                             -q0q1q2_Pos_mat(:,9), -q0q1q2_Vel_mat(:,9), -q0q1q2_Acc_mat(:,9),...
+                            q0q1q2_Pos_mat(:,1), q0q1q2_Vel_mat(:,1), q0q1q2_Acc_mat(:,1),...
                             Time_mat(:,1), Mode_det_Jq_Jc_J_mat_Origin(:,2)
                           ];
     
@@ -328,7 +349,8 @@ if HomePosition == 2
         end
     end
     toc
-        
+
+    
     % Save the value as '.mat' file
     Replan_q1q2 = [ q0q1q2_Pos_mat_NewAdjust(:,2), q0q1q2_Vel_mat_NewAdjust(:,2), q0q1q2_Acc_mat_NewAdjust(:,2),...
                                         q0q1q2_Pos_mat_NewAdjust(:,3), q0q1q2_Vel_mat_NewAdjust(:,3), q0q1q2_Acc_mat_NewAdjust(:,3),...
@@ -336,6 +358,7 @@ if HomePosition == 2
                                         q0q1q2_Pos_mat_NewAdjust(:,7), q0q1q2_Vel_mat_NewAdjust(:,7), q0q1q2_Acc_mat_NewAdjust(:,7),...
                                         q0q1q2_Pos_mat_NewAdjust(:,8), q0q1q2_Vel_mat_NewAdjust(:,8), q0q1q2_Acc_mat_NewAdjust(:,8),...
                                         -q0q1q2_Pos_mat_NewAdjust(:,9), -q0q1q2_Vel_mat_NewAdjust(:,9), -q0q1q2_Acc_mat_NewAdjust(:,9),...
+                                        q0q1q2_Pos_mat_NewAdjust(:,1), q0q1q2_Vel_mat_NewAdjust(:,1), q0q1q2_Acc_mat_NewAdjust(:,1),...
                                         Time_mat_NewAdjust(:,1), Mode_det_Jq_Jc_J_mat_NewAdjust(:,2)
                                       ];
     end   

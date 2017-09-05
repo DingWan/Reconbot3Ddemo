@@ -95,11 +95,11 @@ classdef ReConBot
             traj.Trajectory.JointNames = obj.jointNames;
             [m,n]=size(obj.trajPoints);
             for i=1:m
-                positions = obj.trajPoints(i,1:3:18);
-                velocities = obj.trajPoints(i,2:3:18);
-                accelerations = obj.trajPoints(i,3:3:18);
-                timefromstart = rosduration(obj.trajPoints(i,19));
-                positions(7) = obj.trajPoints(i,20);
+                positions = obj.trajPoints(i,1:3:21);
+                velocities = obj.trajPoints(i,2:3:21);
+                accelerations = obj.trajPoints(i,3:3:21);
+                timefromstart = rosduration(obj.trajPoints(i,22));
+                positions(8) = obj.trajPoints(i,23);
                 points_msg = rosmessage('trajectory_msgs/JointTrajectoryPoint');
                 points_msg.Positions = positions;
                 points_msg.Velocities = velocities;

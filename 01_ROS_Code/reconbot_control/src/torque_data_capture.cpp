@@ -34,7 +34,7 @@
 /**
   * \author Jorge De La Cruz
   * \email delacruz@igm.rwth-aachen.de
-  * \date August 25, 2017
+  * \date August 29, 2017
   */
 
 #include "ros/ros.h"
@@ -51,124 +51,72 @@
 
 using namespace std;
 
-static ofstream torqueFile1;
-static ofstream torqueFile2;
-static ofstream torqueFile3;
-static ofstream torqueFile4;
-static ofstream torqueFile5;
-static ofstream torqueFile6;
+static ofstream torqueFile;
+static dynamixel_msgs::MotorState dynamixel;
 
 
-
-/**\fn void chatterCallback(control_msgs::FollowJointTrajectoryFeedback trajectory_point)
-  * This callback function writes, into ~/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/encoders_data.txt
-  *  file, the kinematics variables read for the encoders of the Dynamixel motors. This file contains the desired
-  * trajectory point, which is a message of the type trajectory_msgs/JointTrajectoryPoint as well as the actual
-  * trajectory point. These messages are saved in the variables desired_data and actual_data.
+/**\fn void chatterCallback(dynamixel_msgs::MotorStateList dynamixelList)
+  * This callback function writes, into
+  * ~/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/encoders_data.txt
+  *  file, the kinematics variables read for the encoders of the Dynamixel
+  * motors. This file contains the desired
+  * trajectory point, which is a message of the type
+  * trajectory_msgs/JointTrajectoryPoint as well as the actual
+  * trajectory point. These messages are saved in the variables desired_data
+  * and actual_data.
   *
-  * The "sensor_data_capture" node starts recording the sensor data published in the "/RCB_full_mode_controller/state"
+  * The "sensor_data_capture" node starts recording the sensor data published
+  *in the "/RCB_full_mode_controller/state"
   *  topic as soon as the node is deployed and stops when is killed.
   **/
 
 void chatterCallback(dynamixel_msgs::MotorStateList dynamixelList)
 {
-    dynamixel_msgs::MotorState dynamixel0;
-    dynamixel_msgs::MotorState dynamixel1;
-    dynamixel_msgs::MotorState dynamixel2;
-    dynamixel_msgs::MotorState dynamixel3;
-    dynamixel_msgs::MotorState dynamixel4;
-    dynamixel_msgs::MotorState dynamixel5;
+    std::vector<float> torque_ratio;
+    std::vector<int> temperature;
+    std::vector<float> time_stamp;
 
-    dynamixel0 = dynamixelList.motor_states[0];
-    dynamixel1 = dynamixelList.motor_states[1];
-    dynamixel2 = dynamixelList.motor_states[2];
-    dynamixel3 = dynamixelList.motor_states[3];
-    dynamixel4 = dynamixelList.motor_states[4];
-    dynamixel5 = dynamixelList.motor_states[5];
+    torque_ratio.clear();
+    temperature.clear();
+    time_stamp.clear();
 
-
-    float torque_ratio0 = dynamixel0.load; /**< variable which contains the actual kinematic values*/
-    int temperature0 = dynamixel0.temperature;/**< variable which contains the desired kinematic values*/
-    int motor_id0 = dynamixel0.id;
-    float time_stamp0 = dynamixel0.timestamp;
-
-    float torque_ratio1 = dynamixel1.load; /**< variable which contains the actual kinematic values*/
-    int temperature1 = dynamixel1.temperature;/**< variable which contains the desired kinematic values*/
-    int motor_id1 = dynamixel1.id;
-    float time_stamp1 = dynamixel1.timestamp;
-
-    float torque_ratio2 = dynamixel2.load; /**< variable which contains the actual kinematic values*/
-    int temperature2 = dynamixel2.temperature;/**< variable which contains the desired kinematic values*/
-    int motor_id2 = dynamixel2.id;
-    float time_stamp2 = dynamixel2.timestamp;
-
-    float torque_ratio3 = dynamixel3.load; /**< variable which contains the actual kinematic values*/
-    int temperature3 = dynamixel3.temperature;/**< variable which contains the desired kinematic values*/
-    int motor_id3 = dynamixel3.id;
-    float time_stamp3 = dynamixel3.timestamp;
-
-    float torque_ratio4 = dynamixel4.load; /**< variable which contains the actual kinematic values*/
-    int temperature4 = dynamixel4.temperature;/**< variable which contains the desired kinematic values*/
-    int motor_id4 = dynamixel4.id;
-    float time_stamp4 = dynamixel4.timestamp;
-
-    float torque_ratio5 = dynamixel5.load; /**< variable which contains the actual kinematic values*/
-    int temperature5 = dynamixel5.temperature;/**< variable which contains the desired kinematic values*/
-    int motor_id5 = dynamixel5.id;
-    float time_stamp5 = dynamixel5.timestamp;
-
-        torqueFile1<<time_stamp0 <<"\t"<<torque_ratio0<<"\t"<<temperature0<<endl;
-
-        torqueFile2<<time_stamp1 <<"\t"<<torque_ratio1<<"\t"<<temperature1<<endl;
-
-        torqueFile3<<time_stamp2 <<"\t"<<torque_ratio2<<"\t"<<temperature2<<endl;
-
-        torqueFile4<<time_stamp3 <<"\t"<<torque_ratio3<<"\t"<<temperature3<<endl;
-
-        torqueFile5<<time_stamp4 <<"\t"<<torque_ratio4<<"\t"<<temperature4<<endl;
-
-        torqueFile6<<time_stamp5 <<"\t"<<torque_ratio5<<"\t"<<temperature5<<endl;
-
+    for (size_t i = 0; i < 7; i++) {
+      dynamixel = dynamixelList.motor_states[i];
+      torque_ratio.push_back(dynamixel.load); /**< variable which contains the actual torque load, this is a ratio which is obtained dividing the actual torque by maximun Dynamixel motor's torque.*/
+      temperature.push_back(dynamixel.temperature); /**< Working temperature of the motor in ºC. */
+      time_stamp.push_back(dynamixel.timestamp);
+    }
+    torqueFile<<time_stamp[0]
+          <<"\t"<<torque_ratio[0]<<"\t"<<torque_ratio[1]<<"\t"<<torque_ratio[2]
+          <<"\t"<<torque_ratio[3]<<"\t"<<torque_ratio[4]<<"\t"<<torque_ratio[5]
+          <<"\t"<<torque_ratio[6]
+          <<"\t"<<temperature[0]<<"\t"<<temperature[1]<<"\t"<<temperature[2]
+          <<"\t"<<temperature[3]<<"\t"<<temperature[4]<<"\t"<<temperature[5]
+          <<"\t"<<temperature[6]<<endl;
 }
 
 int main(int argc, char **argv)
 {
   ros::init(argc, argv, "torque_data_capture");
   ros::NodeHandle n;
-
   passwd* pw = getpwuid(getuid());
   std::string path(pw->pw_dir);
-  std::string sourcefile1;
-  std::string sourcefile2;
-  std::string sourcefile3;
-  std::string sourcefile4;
-  std::string sourcefile5;
-  std::string sourcefile6;
+  std::string sourcefile;
+  std::string topic;
+  ros::Subscriber sub;
 
-  sourcefile1 = path += "/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/torque_data_joint_1.txt";
-  sourcefile2 = path += "/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/torque_data_joint_2.txt";
-  sourcefile3 = path += "/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/torque_data_joint_3.txt";
-  sourcefile4 = path += "/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/torque_data_joint_4.txt";
-  sourcefile5 = path += "/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/torque_data_joint_5.txt";
-  sourcefile6 = path += "/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/torque_data_joint_6.txt";
+  sourcefile = path += "/catkin_ws/src/reconbot/02_MATLAB_Code/sensors_data/torque_data_joint.txt";
 
-  torqueFile1.open(sourcefile1.c_str());
-  torqueFile2.open(sourcefile2.c_str());
-  torqueFile3.open(sourcefile3.c_str());
-  torqueFile4.open(sourcefile4.c_str());
-  torqueFile5.open(sourcefile5.c_str());
-  torqueFile6.open(sourcefile6.c_str());
+  torqueFile.open(sourcefile.c_str());
+  torqueFile<<"time_stamp"
+        <<"\t"<<"torque_joint_1"<<"\t"<<"torque_joint_2"<<"\t"<<"torque_joint_3"
+        <<"\t"<<"torque_joint_4"<<"\t"<<"torque_joint_5"<<"\t"<<"torque_joint_6"
+        <<"\t"<<"torque_joint_7"
+        <<"\t"<<"temperature_1"<<"\t"<<"temperature_2"<<"\t"<<"temperature_3"
+        <<"\t"<<"temperature_4"<<"\t"<<"temperature_5"<<"\t"<<"temperature_6"
+        <<"\t"<<"temperature_7"<<endl;
 
-  torqueFile1<<"time_stamp"<<"\t"<<"torque_joint_1"<<"\t"<<"temp_1"<<endl;
-  torqueFile2<<"time_stamp"<<"\t"<<"torque_joint_2"<<"\t"<<"temp_2"<<endl;
-  torqueFile3<<"time_stamp"<<"\t"<<"torque_joint_3"<<"\t"<<"temp_3"<<endl;
-  torqueFile4<<"time_stamp"<<"\t"<<"torque_joint_4"<<"\t"<<"temp_4"<<endl;
-  torqueFile5<<"time_stamp"<<"\t"<<"torque_joint_5"<<"\t"<<"temp_5"<<endl;
-  torqueFile6<<"time_stamp"<<"\t"<<"torque_joint_6"<<"\t"<<"temp_6"<<endl;
-
-
-  ros::Subscriber sub = n.subscribe("/motor_states/pan_tilt_port", 1000, chatterCallback);
+  sub = n.subscribe("/motor_states/pan_tilt_port", 1000, chatterCallback);
   ros::spin();
-
   return 0;
 }

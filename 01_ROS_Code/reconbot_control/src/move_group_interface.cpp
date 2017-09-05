@@ -185,9 +185,9 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
   /** in case the trajectory has more than one trajectory point **/
   if (goalSize>1) {
     for (size_t i = 0; i < goalSize; i++) {
-      mode_0 = goal.trajectory.points[i].positions[6];/**< extracting trajectory's point mode from trajectory message */
+      mode_0 = goal.trajectory.points[i].positions[7];/**< extracting trajectory's point mode from trajectory message */
       if (i<goalSize-1) {
-        mode_1 = goal.trajectory.points[i+1].positions[6]; /**< next trajectory's point mode */
+        mode_1 = goal.trajectory.points[i+1].positions[7]; /**< next trajectory's point mode */
       }
       if (i==goalSize-1) {
         mode_1 = mode_0+1 ; /**< for the last point of the trajectory do mode_1 not null*/
@@ -303,7 +303,7 @@ void reconbotCallback(control_msgs::FollowJointTrajectoryGoal goal){
 
 
   if(goalSize==1){
-    mode_0 = goal.trajectory.points[0].positions[6];
+    mode_0 = goal.trajectory.points[0].positions[7];
     if (mode_0 == 0 || mode_0 == 9 || mode_0 == 12) {
       init_index = 0;
       current_index = 1;
@@ -415,7 +415,7 @@ int main(int argc, char** argv)
   ROS_INFO("=========== Waiting for a trajectory to execute...         ==============");
   ROS_INFO("=========================================================================");
   // Init the ROS node
-  ros::init(argc, argv, "ReConBot_Driver");
+  ros::init(argc, argv, "ReConBot_move_group_interface");
   ros::NodeHandle nh_;
   ros::Subscriber sub_path;
   //ros::ServiceClient client;

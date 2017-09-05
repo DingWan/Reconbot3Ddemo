@@ -73,19 +73,19 @@ int main(int argc,char **argv){
   //spinner.start();
   ReConBotPub Publisher;
   Publisher.topicName = "/reconbot_trajectory";
-  int arg[] = {4,5,3,1,2,6};
+  int arg[] = {4,5,3,1,2,6,7};
 
   passwd* pw = getpwuid(getuid());
   std::string path(pw->pw_dir);
 
-  Publisher.motorsState(arg,6);
+  Publisher.motorsState(arg,7);
   Publisher.trajectoryPublisherStart(nh, 1000);
   Publisher.nameSpace = "reconbot_controller";
   Publisher.sourceFile = path += "/catkin_ws/src/reconbot/01_ROS_Code/trajectory/trajectory.txt";
   goal = Publisher.buildTrajectory();
   Publisher.publisher(goal);
 
-  sleep(3);
+  sleep(1);
 
   ROS_INFO("Good bye!");
   //spinner.stop();
