@@ -31,13 +31,13 @@ class App:
         ##################################################################################
         ##                              Defining Widgets                             ##
         ##################################################################################
-        self.titlei = self.master.title("Reconbot GUI")
+        self.titlei = self.master.title("reconbot_control GUI")
         self.logoi = PhotoImage(file="~/catkin_ws/src/reconbot/04_PYTHON_GUI/pictures/igm.png")
         self.reconbotfig = PhotoImage(file="~/catkin_ws/src/reconbot/04_PYTHON_GUI/pictures/reconbot.png")
         self.w1i = Label(fm, image=self.logoi)
         self.reconbot = Label(fm, image=self.reconbotfig)
         self.expli = """
-        Welcome to Reconbot User Interface
+        Welcome to reconbot_control User Interface
         Copyright (c) 2017, IGM-RWTH Aachen University
         All rights reserved."""
         self.w2i = Label(fm,
@@ -58,7 +58,7 @@ class App:
     def PID(self):
         fm3 = Frame(Toplevel(self.master))
         self.explanation3 = """
-        Welcome to the Reconbot User Interface"""
+        under construction"""
         self.w3 = Label(fm3,
                         justify=LEFT,
                         padx = 10,
@@ -70,7 +70,7 @@ class App:
     def ExecuteWindow(self):
         #fm1 = Frame(Toplevel(), width=800, height=600)
         fm1 = Toplevel(self.master, relief = RIDGE, bd = 5, bg = "white")
-        fm1.geometry("800x440")
+        fm1.geometry("1175x540")
         #canvas = Canvas(fm1)
         #can = Canvas(fm1)
         #can.pack()
@@ -85,12 +85,12 @@ class App:
 
         self.logo = PhotoImage(file="~/catkin_ws/src/reconbot/04_PYTHON_GUI/pictures/igm.png")
         self.expl1 = """
-        Welcome to Reconbot User Interface
+        Welcome to reconbot_control User Interface
         Copyright (c) 2017, IGM-RWTH Aachen University
         All rights reserved."""
         self.expl2 = """
         Please select ONE of the following
-        kinematic modes:"""
+        kinematic modes (double clicking):"""
 
         self.expl3 = "Motors mode:"
         self.expl4 = "Record positions, velocities, \n accelerations and torque:"
@@ -141,13 +141,25 @@ class App:
         self.buttonRun = Button(fm1,text='Run',command = self.Execute, width = 7, bg = "green")
         self.buttonConnect = Button(fm1,text='Connect',command = self.Connect, width = 7, bg = "yellow")
 
+        lcc = "Launch roscore and all necessary nodes for controlling the Reconbot."
+        lsc = "Stop all ROS processes invoking kill rosmaster."
+        lrc = "Execute the trajectory into the ~/catkin_ws/src/reconbot/01_ROS_Code/trajectory/trajectory.txt file."
+
+        labelNote = Label(fm1, justify = LEFT, text = "Note:", font = "Times 12 bold",width = 9)
+        labelRun = Label(fm1, justify = LEFT, text = "Run:", bg = "green", width = 9)
+        labelConnect = Label(fm1, justify = LEFT, text = "Connect:", bg = "yellow", width = 9)
+        labelStop = Label(fm1, justify = LEFT, text = "Stop:", bg = "red", width = 9)
+        labelConnectCon = Label(fm1, text = lcc, width=80, anchor = W)
+        labelStopCon = Label(fm1, anchor = W, text = lsc, width=80)
+        labelRunCon = Label(fm1, anchor = W, text = lrc, width=80)
+
 
 
         ##################################################################################
         ##                              Positioning Widgets                            ##
         ##################################################################################
         self.w1.grid(row=0, column = 0, sticky=W)
-        self.w2.grid(row=0, column = 1,columnspan = 3)
+        self.w2.grid(row=0, column = 1,columnspan = 3, sticky = E)
         self.w3.grid(row=2, column = 0, sticky = W)
         self.modes.grid(row=4,rowspan=2, padx= 40,sticky = W)
         self.labelRec.grid(row = 4, column = 1, sticky = NE)
@@ -159,11 +171,13 @@ class App:
         self.buttonRun.grid(row=7,column=3, sticky = W)
         self.buttonConnect.grid(row=6, column=3, sticky = W)
         self.buttonCancel.grid(row=7,column=2, sticky = E)
-
-
-
-
-
+        labelNote.grid(row = 9 , column = 0, sticky = E)
+        labelConnect.grid(row = 10 , column = 0, sticky = E)
+        labelStop.grid(row = 11 , column = 0, sticky = E)
+        labelRun.grid(row = 12 , column = 0, sticky = E)
+        labelConnectCon.grid(row = 10, column=1,columnspan = 2, sticky=W)
+        labelStopCon.grid(row = 11, column=1, columnspan = 2, sticky=W)
+        labelRunCon.grid(row = 12, column=1, columnspan = 2, sticky=W)
         #fm3.pack(side="bottom")
         #fm1.pack()
 
@@ -191,11 +205,9 @@ class App:
         try:
             imode = self.selectedMode[0]
             if  imode == 0 or imode == 9 or imode == 12:
-                #a = 'roslaunch reconbot_control main.launch full_mode:=true'
-                a = 'roslaunch igm_collision main.launch sim:=true limited:=true'
+                a = 'roslaunch reconbot_control main.launch full_mode:=true'
                 args1 = shlex.split(a)
                 p=subprocess.Popen(args1)
-                self.pidp = str(p.pid)
 
             if  imode == 1 or imode == 6 or imode == 7:
                 a = 'roslaunch reconbot_control main.launch full_mode:=true'
@@ -283,7 +295,17 @@ class App:
 
 
     def About(self):
-        print "This is a simple example of a menu"
+        aboutfn = Toplevel(bg = "white")
+        msg1 = "reconbot_control User Interface developed in Python \n for executing the reconbot_control package"
+        msg2 = "Developed by Jorge De La Cruz \n E-mail: delacruz@igm.rwth-aachen.de \n September 2017."
+        labelmsg1 = Label(aboutfn, text = msg1, justify = LEFT, font = "Times 11 bold", bg = "white")
+        labelmsg2 = Label(aboutfn, text = msg2, justify = LEFT, font = "Times 10 bold", bg = "white")
+        labelfig = Label(aboutfn, image = self.logoi, bg = "white")
+
+        labelfig.grid(row = 0, sticky = W)
+        labelmsg1.grid(row = 1, sticky = W)
+        labelmsg2.grid(row = 2, sticky = W)
+        #aboutfn.pack()
 
 
 if __name__ == "__main__":
