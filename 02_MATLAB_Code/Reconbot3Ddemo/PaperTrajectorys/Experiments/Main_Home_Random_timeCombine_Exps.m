@@ -12,7 +12,7 @@
 
 %%-------------------------------------------------------------------
 %                        Version 1.1
-%%-------------------------------------------------------------------
+%%----------------  ---------------------------------------------------
 
 clc
 %close all
@@ -68,7 +68,7 @@ if HomePosition == 2
     % Intepotation Points and Time
     %NumIntepoPoints = 20;
     Start_Time = 0;
-    Time_inteval = 5;
+    Time_inteval = 3;
     %
     q0q1q2_Pos_mat = [];
     q0q1q2_Vel_mat = [];
@@ -211,9 +211,13 @@ if HomePosition == 2
     Len_q0q1q2_mat = length(q0q1q2_Pos_mat);
     TotalSteps = Len_q0q1q2_mat/NumIntepoPoints;
     %BaseMotorValue = zeros(1, TotalSteps+1); %[0, 30*pi/180, 0]; 
-    BaseMotorValue = [0, -30*pi/180, -30*pi/180, -30*pi/180,  -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180,...
-        -30*pi/180, -30*pi/180, -30*pi/180,  -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180,...
-        -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180, -30*pi/180]; 
+    % IGM trajectory
+    BaseMotorValue = [0, -30*pi/180, -45*pi/180, -0*pi/180,  30*pi/180, 45*pi/180, 0*pi/180, -20*pi/180, -30*pi/180, 0*pi/180, 0*pi/180,...
+        0*pi/180, 30*pi/180, 20*pi/180,  45*pi/180, 0*pi/180, 20*pi/180, 0*pi/180, -30*pi/180, -30*pi/180, -30*pi/180,...
+        -30*pi/180, -30*pi/180, -30*pi/180, 0*pi/180]; 
+%    BaseMotorValue = [0, -0*pi/180, -0*pi/180, -0*pi/180,  -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180,...
+%        -0*pi/180, -0*pi/180, -0*pi/180,  -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180,...
+%        -0*pi/180, -0*pi/180, -0*pi/180, -0*pi/180];
     for i = 1:TotalSteps
         Time = [(i-1) * Time_inteval, i * Time_inteval] + Start_Time * ones(1,2);
         [Pos_Intep, Vel_Intep, Acc_Intep] = FiveDegPolyIntep(BaseMotorValue(i), BaseMotorValue(i+1), NumIntepoPoints, Time);
