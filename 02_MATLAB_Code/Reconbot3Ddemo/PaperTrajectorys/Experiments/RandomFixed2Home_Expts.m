@@ -19,6 +19,7 @@ Reconbot.topic = '/RCB_full_mode_controller/state';
 tic
 DyInfo = Reconbot.getTraj();
 pause(0.025)
+% ROS Callback function
 DyEnPos = DyInfo.LatestMessage.Actual.Positions;
 MotorPosition = DyEnPos(1:6)';
 q0 = DyEnPos(7);
