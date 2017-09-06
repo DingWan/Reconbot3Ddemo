@@ -1,11 +1,15 @@
 
 %%
-data = Origin_Redundant_q1q2; %(1:100,:)
+data = Origin_Redundant_q1q2; 
 % data = Replan_q1q2;
 
 %%
 RandomFixed2Home_Expts;
-data = Fixed2Home_q1q2;
+% without payload, go to Home position
+%data = Fixed2Home_q1q2;
+
+% with Payload, go to initial position
+data = Fixed2Home_q1q2(1:100,:);
 
 %%
 % rosinit
