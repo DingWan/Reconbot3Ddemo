@@ -71,7 +71,7 @@ Pos_Intep(:,3) = l2 * sin(Ang_Intep);
 %%
 Mode = 1;
 PosOri = {0 0 0 0 [] [], 0 0};
-q0 = 0;
+%q0 = 0;
 q11 = 0;
 q21 = 0;
 Time_inteval = 5;
@@ -96,7 +96,7 @@ end
 
 [rowsq1q2,colsq1q2] = find(q1q2_matrix_norm == min(min(q1q2_matrix_norm)));
 SolutionRow_q1q2 = colsq1q2(1);
-q0q1q2_OptimalRow(i,:) = [q0, q0q1q2_CurrentStep(SolutionRow_q1q2,2:11)];
+q0q1q2_OptimalRow(i,:) = [0, q0q1q2_CurrentStep(SolutionRow_q1q2,2:11)];
 
 %ReconbotANI(q0q1q2_OptimalRow(i,:)); 
 end

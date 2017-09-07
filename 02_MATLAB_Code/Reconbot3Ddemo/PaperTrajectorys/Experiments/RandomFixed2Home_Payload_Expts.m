@@ -31,7 +31,7 @@ toc
 % q0 = 0;
 
 %% Intepotation Points and Time
-NumIntepoPoints = 20;
+NumIntepoPoints = 100;
 Start_Time = 0;
 Time_inteval = 5;
 %%
@@ -148,8 +148,11 @@ for i = 1:TotalSteps
 end
 
 %% Save the value as '.mat' file
-        Mode_det_Jq_Jc_J_mat = zeros(NumIntepoPoints*3,1);
-    
+        SwitchNum = 0;
+        Mode_det_Jq_Jc_J_mat = 5*ones(NumIntepoPoints,1);
+        Mode_det_Jq_Jc_J_mat(NumIntepoPoints+1 : 2*NumIntepoPoints+SwitchNum,1) = zeros(NumIntepoPoints+SwitchNum,1);
+        Mode_det_Jq_Jc_J_mat(2*NumIntepoPoints+SwitchNum+1 : 3*NumIntepoPoints,1) = 6*ones(NumIntepoPoints-SwitchNum,1);
+        
         Fixed2Home_q1q2 = [ q0q1q2_Pos_mat(:,2), q0q1q2_Vel_mat(:,2), q0q1q2_Acc_mat(:,2),...
                             q0q1q2_Pos_mat(:,3), q0q1q2_Vel_mat(:,3), q0q1q2_Acc_mat(:,3),...
                             q0q1q2_Pos_mat(:,5), q0q1q2_Vel_mat(:,5), q0q1q2_Acc_mat(:,5),...
