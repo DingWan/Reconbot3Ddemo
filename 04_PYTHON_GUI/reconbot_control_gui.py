@@ -70,7 +70,7 @@ class App:
     def ExecuteWindow(self):
         #fm1 = Frame(Toplevel(), width=800, height=600)
         fm1 = Toplevel(self.master, relief = RIDGE, bd = 5, bg = "white")
-        fm1.geometry("1175x540")
+        fm1.geometry("1175x700")
         #canvas = Canvas(fm1)
         #can = Canvas(fm1)
         #can.pack()
@@ -152,6 +152,35 @@ class App:
         labelConnectCon = Label(fm1, text = lcc, width=80, anchor = W)
         labelStopCon = Label(fm1, anchor = W, text = lsc, width=80)
         labelRunCon = Label(fm1, anchor = W, text = lrc, width=80)
+        var1, var2, var3, var4, var5, var6, var7 = StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar()
+
+        rtlabelD1 = Checkbutton(fm1, text = "Dynamixel 1",
+                              offvalue = '', onvalue = 'joint1_controller/state',
+                              variable = var1)
+        rtlabelD2 = Checkbutton(fm1, text = "Dynamixel 2",
+                              offvalue = '', onvalue = 'joint2_controller/state',
+                              variable = var2)
+
+        rtlabelD3 = Checkbutton(fm1, text = "Dynamixel 3",
+                              offvalue = '', onvalue = 'joint3_controller/state',
+                              variable = var3)
+
+        rtlabelD4 = Checkbutton(fm1, text = "Dynamixel 4",
+                              offvalue = '', onvalue = 'joint4_controller/state',
+                              variable = var4)
+
+        rtlabelD5 = Checkbutton(fm1, text = "Dynamixel 5",
+                              offvalue = '', onvalue = 'joint5_controller/state',
+                              variable = var5)
+
+        rtlabelD6 = Checkbutton(fm1, text = "Dynamixel 6",
+                              offvalue = '', onvalue = 'joint6_controller/state',
+                              variable = var6)
+
+        rtlabelD7 = Checkbutton(fm1, text = "Dynamixel 7",
+                              offvalue = '', onvalue = 'joint7_controller/state',
+                              variable = var7)
+        buttonPlot = Button(fm1,text='Plot',command = self.RqtPlot, width = 7, bg = "green")
 
 
 
@@ -161,34 +190,49 @@ class App:
         self.w1.grid(row=0, column = 0, sticky=W)
         self.w2.grid(row=0, column = 1,columnspan = 3, sticky = E)
         self.w3.grid(row=2, column = 0, sticky = W)
-        self.modes.grid(row=4,rowspan=2, padx= 40,sticky = W)
+        self.modes.grid(row=4,rowspan=2, columnspan = 2, padx= 40,sticky = W)
         self.labelRec.grid(row = 4, column = 1, sticky = NE)
         self.labelMotors.grid(row = 3, column = 1, sticky = SE)
         self.buttonRecStart.grid(row=4,column=2,sticky = NE)
         self.buttonRecStop.grid(row=4,column=3,sticky = NW)
         self.buttonPassive.grid(row=3,column=3, sticky = SW)
         self.buttonActive.grid(row=3,column=2, sticky = SE)
-        self.buttonRun.grid(row=7,column=3, sticky = W)
-        self.buttonConnect.grid(row=6, column=3, sticky = W)
-        self.buttonCancel.grid(row=7,column=2, sticky = E)
-        labelNote.grid(row = 9 , column = 0, sticky = E)
-        labelConnect.grid(row = 10 , column = 0, sticky = E)
-        labelStop.grid(row = 11 , column = 0, sticky = E)
-        labelRun.grid(row = 12 , column = 0, sticky = E)
-        labelConnectCon.grid(row = 10, column=1,columnspan = 2, sticky=W)
-        labelStopCon.grid(row = 11, column=1, columnspan = 2, sticky=W)
-        labelRunCon.grid(row = 12, column=1, columnspan = 2, sticky=W)
+        self.buttonRun.grid(row=15,column=3, sticky = W)
+        self.buttonConnect.grid(row=14, column=3, sticky = W)
+        self.buttonCancel.grid(row=15,column=2, sticky = E)
+        labelNote.grid(row = 17 , column = 0, sticky = E)
+        labelConnect.grid(row = 18 , column = 0, sticky = E)
+        labelStop.grid(row = 19 , column = 0, sticky = E)
+        labelRun.grid(row = 20 , column = 0, sticky = E)
+        labelConnectCon.grid(row = 18, column=1,columnspan = 2, sticky=W)
+        labelStopCon.grid(row = 19, column=1, columnspan = 2, sticky=W)
+        labelRunCon.grid(row = 20, column=1, columnspan = 2, sticky=W)
+
+        rtlabelD1.grid(row = 6, column = 2, sticky = W)
+        rtlabelD2.grid(row = 7, column = 2, sticky = W)
+        rtlabelD3.grid(row = 8, column = 2, sticky = W)
+        rtlabelD4.grid(row = 9, column = 2, sticky = W)
+        rtlabelD5.grid(row = 10, column = 2, sticky = W)
+        rtlabelD6.grid(row = 11, column = 2, sticky = W)
+        rtlabelD7.grid(row = 12, column = 2, sticky = W)
+        buttonPlot.grid(row = 6,column = 1, sticky = E)
+
         #fm3.pack(side="bottom")
         #fm1.pack()
 
+    def RqtPlot(self):
+        a = 'rosrun rqt_plot rqt_plot'+' '+var1+' '+var2+' '+var3+' '+var4+' '+var5+' '+var6+' '+var7
+        args = shlex.split(a)
+        p = subprocess.Popen(args)
+
     def StopReconbot(self):
             a = 'killall -9 rosmaster'
-            #b = 'kill'+' '+self.pidp
+            b = 'kill -9'+' '+self.pidp
             #print b
             args = shlex.split(a)
-            #args2 = shlex.split(b)
-            #p = subprocess.Popen(args)
-            q = subprocess.Popen(args)
+            args2 = shlex.split(b)
+            p = subprocess.Popen(args)
+            q = subprocess.Popen(args2)
 
     def Execute(self):
         try:
@@ -208,6 +252,7 @@ class App:
                 a = 'roslaunch reconbot_control main.launch full_mode:=true'
                 args1 = shlex.split(a)
                 p=subprocess.Popen(args1)
+                self.pidp = p.pid
 
             if  imode == 1 or imode == 6 or imode == 7:
                 a = 'roslaunch reconbot_control main.launch full_mode:=true'
