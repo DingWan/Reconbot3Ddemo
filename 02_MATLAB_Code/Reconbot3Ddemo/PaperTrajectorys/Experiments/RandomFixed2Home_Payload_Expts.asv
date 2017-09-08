@@ -4,6 +4,7 @@ l1 = 230.1390;
 l2 = 147.7;
 
 q0q1q2_HomePosition = [0, 0, pi/4, pi/2, -pi/4, 0, 0, pi/4, pi/2, -pi/4, 0];
+q0q1q2_RectagularPosition = [0, 0, 0, pi/2, 0, 0, 0, pi/2, pi/2, -pi/2, 0];
 p_0 = [0 0 208.879343162506 0 0 0, 0 0]; %  p = 2 * l2 * sin(pi/4)
 
 deg = pi/180;
@@ -28,7 +29,7 @@ toc
 %MotorPosition = [0*pi/180, 0*pi/180, -90*pi/180, 0*pi/180, 0*pi/180, 180*pi/180];
 
 %% Intepotation Points and Time
-NumIntepoPoints = 100;
+NumIntepoPoints = 20;
 Start_Time = 0;
 Time_inteval = 5;
 %
@@ -73,12 +74,17 @@ ReconbotANI([q0 q1q2]);
 %% Random Configuration for returnning to HomePosition
 tic
 %---------------
-for OnlyUsedforFoldingThisPart = 1:1
+for ii = 1:3
     
+    if ii == 1 
     Mode_Pos_Ori_TrajPoints_cell{1} = RandomMode;
+    Mode_Pos_Ori_TrajPoints_cell{1} = { 12, {0 0 0 [] [] [], 0 ,0, 0, 0},q0q1q2_FixedMode};
+    elseif ii == 3
+    Mode_Pos_Ori_TrajPoints_cell{2} = { 1, {0 147.7 147.7 0 [] [], 0 ,0},q0q1q2_RectagularPosition};
     Mode_Pos_Ori_TrajPoints_cell{2} = { 5, {0 0 208.879343162506 0 [] [], 0 ,0},q0q1q2_HomePosition};
+    end
     % First step: Calculate the next step and get the second row values of q11 and q21 after
-    % interpotation, and assign to the previous step.0
+    % intepolation, and assign to the previous step.0
     % Assgin Input value
     Mode_previous = Mode_Pos_Ori_TrajPoints_cell{1}{1};
     Mode_current  = Mode_Pos_Ori_TrajPoints_cell{2}{1};
@@ -153,7 +159,7 @@ end
 %% 3D Animation
 for i = 1:length(q0q1q2_Pos_mat)-0  
     %========================== Animation ============================
-    %ReconbotANI(q0q1q2_Pos_mat(i,:));   
+    ReconbotANI(q0q1q2_Pos_mat(i,:));   
     %============================ End ================================
 end
 

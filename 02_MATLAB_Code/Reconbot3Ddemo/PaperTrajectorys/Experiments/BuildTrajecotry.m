@@ -1,10 +1,15 @@
 
 %%
-data = Origin_Redundant_q1q2; %(1:100,:)
+data = Origin_Redundant_q1q2; 
 % data = Replan_q1q2;
 
 %%
-RandomFixed2Home_Expts;
+% without payload, go to Home position
+%RandomFixed2Home_Expts;
+%data = Fixed2Home_q1q2;
+
+% with Payload, go to initial position
+RandomFixed2Home_Payload_Expts;
 data = Fixed2Home_q1q2;
 
 %%
@@ -15,7 +20,7 @@ robot.jointNames = {'joint_4','joint_5','joint_3','joint_1','joint_2','joint_6',
 robot.pos = data;
 robot.timeFromStart = 3;
 robot.trajPoints = robot.transform();
-robot.tj = robot.buildTrajectory();
+%robot.tj = robot.buildTrajectory();
 %robot.trajPub;
 
 %%
