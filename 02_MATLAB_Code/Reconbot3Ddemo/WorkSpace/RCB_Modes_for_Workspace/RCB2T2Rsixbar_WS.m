@@ -156,17 +156,24 @@ classdef RCB2T2Rsixbar_WS
                     EulerAngle_q11_theta = [];
                     return;
                 else           
-                    RotationMatrix = eul2rotm(EulerAngle_q11_theta(i,1:3));
-                    alpha = EulerAngle_q11_theta(i,1);
-                    beta  = EulerAngle_q11_theta(i,2);
-                    gamma = EulerAngle_q11_theta(i,3);
-                    EulerAngle = EulerAngle_q11_theta(i,1:3);
-                    % Ci_in_Ob: Ci in frame Ob-xyz
-                    C1_in_Ob = (RotationMatrix * C1_in_op')' + p(1:3);
-                    C2_in_Ob = (RotationMatrix * C2_in_op')' + p(1:3);
-                    q11 = EulerAngle_q11_theta(i,4);
-                    theta = EulerAngle_q11_theta(i,5);
-                    q21 = q11;
+                    for i = 1:length(EulerAngle_q11_theta(:,1))
+                        RotationMatrix = eul2rotm(EulerAngle_q11_theta(i,1:3));
+                        alpha = EulerAngle_q11_theta(i,1);
+                        beta  = EulerAngle_q11_theta(i,2);
+                        gamma = EulerAngle_q11_theta(i,3);
+                        EulerAngle = EulerAngle_q11_theta(i,1:3);
+                        % Ci_in_Ob: Ci in frame Ob-xyz
+                        C1_in_Ob = (RotationMatrix * C1_in_op')' + p(1:3);
+                        C2_in_Ob = (RotationMatrix * C2_in_op')' + p(1:3);
+                        q11 = EulerAngle_q11_theta(i,4);
+                        theta = EulerAngle_q11_theta(i,5);
+                        q21 = q11;
+                        if (C2_in_Ob(3) -  C1_in_Ob(3)) * theta >= 0
+                            break;
+                        else
+                            continue;
+                        end
+                    end
                 end
                 po{4} = alpha;
                 po{5} = beta;
