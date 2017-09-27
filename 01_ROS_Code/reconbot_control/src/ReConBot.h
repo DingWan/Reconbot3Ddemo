@@ -505,9 +505,7 @@ control_msgs::FollowJointTrajectoryGoal ReConBotPub::buildTrajectory(){
     goal.trajectory.joint_names.push_back("joint_"+ ss.str());
   }
   goal.trajectory.joint_names.push_back("mode");
-  //goal.trajectory.joint_names.push_back("joint_1");
-  //goal.trajectory.joint_names.push_back("joint_2");
-  //goal.trajectory.joint_names.push_back("joint_3");
+
 
   std::fstream pathfile(sourceFile.c_str(), std::ios_base::in);
   number_of_lines = 0;
