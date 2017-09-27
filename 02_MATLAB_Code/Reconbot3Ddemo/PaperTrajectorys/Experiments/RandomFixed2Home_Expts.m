@@ -19,6 +19,7 @@ Reconbot.topic = '/RCB_full_mode_controller/state';
 tic
 DyInfo = Reconbot.getTraj();
 pause(0.025)
+% ROS Callback function
 DyEnPos = DyInfo.LatestMessage.Actual.Positions;
 MotorPosition = DyEnPos(1:6)';
 q0 = DyEnPos(7);
@@ -152,7 +153,7 @@ end
 %% 3D Animation
 for i = 1:length(q0q1q2_Pos_mat)-0  
     %========================== Animation ============================
-    ReconbotANI(q0q1q2_Pos_mat(i,:));   
+    %ReconbotANI(q0q1q2_Pos_mat(i,:));   
     %============================ End ================================
 end
 

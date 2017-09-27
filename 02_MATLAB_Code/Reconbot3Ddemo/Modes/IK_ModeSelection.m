@@ -7,7 +7,15 @@
                     po_cell = inputdlg({'x ([-L1/2,L1/2])','y ([-L1/2,L1/2])','z(z>0)',},'3T2R', [1 20; 1 20; 1 20]);
                     for i=1:3 po_num(i) = str2num(po_cell{i}); end
                     if po_num(1) == 0 && po_num(2) == 0 && po_num(3) == 0
-                        po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};
+                        %%------------------------- Two Serial Chains -----------------------------
+                        % Mechanism transit into two serial chain mechanism:  [1 1 1 0 0 0]
+                        % p = {0, 0, 0, [], [], []}
+                        q11q12q21q22 = [];
+                        po_cell = inputdlg({'theta11 =(-360~360)','theta12 =(0~45))','theta21 =(-360~360)','theta22 =(0~45))'},'Fixed-SerialA1C1A2C2', [1 20; 1 20; 1 20; 1 20]);
+                        for i=1:4 po_num(i) = str2num(po_cell{i}) * pi / 180; end
+                        po = {0, 0, 0, [], [], [], po_num(1), po_num(2), po_num(3), po_num(4)};                    
+                        objRCBFixedSerialChain = RCBFixedSerialChain(po,q11q12q21q22,l1,l2);
+                        [p, EulerAngle_q11_theta, ABC, q1q2, WSvalue] = objRCBFixedSerialChain.RCB_FixedSerialChain_IK;
                     else
                         po = {po_num(1), po_num(2), po_num(3), 0, [], []};                        
                         q11q12q21q22 = [];
