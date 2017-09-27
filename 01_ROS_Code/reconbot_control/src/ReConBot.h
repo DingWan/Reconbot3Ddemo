@@ -82,13 +82,6 @@ protected:
   /**
    * Definition of the trajClient object used for publishing the desired trajectories in joint space.
   **/
-  //TrajClient* traj_client_;
-  //TrajClient* traj_client_mode1_;
-  //TrajClient* traj_client_mode2_;
-  //TrajClient* traj_client_mode3_;
-  //TrajClient* traj_client_mode5_;
-  //TrajClient* traj_client_mode6_;
-
   control_msgs::FollowJointTrajectoryGoal goal;
   control_msgs::FollowJointTrajectoryGoal goalMode;
 
