@@ -556,8 +556,5 @@ control_msgs::FollowJointTrajectoryGoal ReConBotPub::buildTrajectory(){
   ROS_INFO("Trajectory vector was successfully built....");
   return goal;
 }
-/**
- * \todo Continue adding comments to the Class
- */
 
 #endif
