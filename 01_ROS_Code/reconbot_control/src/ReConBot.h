@@ -481,13 +481,7 @@ void ReConBotPub::publisher(control_msgs::FollowJointTrajectoryGoal goal){
     if (flag1==0) {
       ROS_INFO("Waiting for Subscribers...");
     }
-  //ros::Rate loop_rate(0.1);
-  //nhPub_pub.publish(goal);
-  //ros::spinOnce();
-  //loop_rate.sleep();
-  //ros::spinOnce();
-  //ROS_INFO("Goal published");
-//}
+
     if (nhPub_pub.getNumSubscribers()>= 1 && flag == 0) {
       nhPub_pub.publish(goal);
       ros::spinOnce();
