@@ -34,9 +34,9 @@
   <include if="$(arg T2R_mode)" file="$(find reconbot_control)/launch/T2R_reconbot_controller.launch">  </include>
 
   <node name="Enable_Torque_Server" pkg="reconbot_control" type="enable_torque_service.py" respawn="true"/>
-<!--
+
   <node if="$(arg full_mode)" name="ReConBot_Driver" pkg="reconbot_control" type="move_group_interface" respawn="true"/>
--->
+
 
   <node if="$(arg r_arm_mode)" name="r_arm_ReConBot_Driver" pkg="reconbot_control" type="r_arm_move_group_interface" respawn="true"/>
 

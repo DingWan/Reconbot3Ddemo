@@ -152,34 +152,34 @@ class App:
         labelConnectCon = Label(fm1, text = lcc, width=80, anchor = W)
         labelStopCon = Label(fm1, anchor = W, text = lsc, width=80)
         labelRunCon = Label(fm1, anchor = W, text = lrc, width=80)
-        var1, var2, var3, var4, var5, var6, var7 = StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar()
+        self.var1, self.var2, self.var3, self.var4, self.var5, self.var6, self.var7 = StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar(), StringVar()
 
         rtlabelD1 = Checkbutton(fm1, text = "Dynamixel 1",
-                              offvalue = '', onvalue = 'joint1_controller/state',
-                              variable = var1)
+                              offvalue = " ", onvalue = "joint1_controller/state",
+                              variable = self.var1)
         rtlabelD2 = Checkbutton(fm1, text = "Dynamixel 2",
-                              offvalue = '', onvalue = 'joint2_controller/state',
-                              variable = var2)
+                              offvalue = " ", onvalue = "joint2_controller/state",
+                              variable = self.var2)
 
         rtlabelD3 = Checkbutton(fm1, text = "Dynamixel 3",
-                              offvalue = '', onvalue = 'joint3_controller/state',
-                              variable = var3)
+                              offvalue = " ", onvalue = "joint3_controller/state",
+                              variable = self.var3)
 
         rtlabelD4 = Checkbutton(fm1, text = "Dynamixel 4",
-                              offvalue = '', onvalue = 'joint4_controller/state',
-                              variable = var4)
+                              offvalue = " ", onvalue = "joint4_controller/state",
+                              variable = self.var4)
 
         rtlabelD5 = Checkbutton(fm1, text = "Dynamixel 5",
-                              offvalue = '', onvalue = 'joint5_controller/state',
-                              variable = var5)
+                              offvalue = " ", onvalue = "joint5_controller/state",
+                              variable = self.var5)
 
         rtlabelD6 = Checkbutton(fm1, text = "Dynamixel 6",
-                              offvalue = '', onvalue = 'joint6_controller/state',
-                              variable = var6)
+                              offvalue = " ", onvalue = "joint6_controller/state",
+                              variable = self.var6)
 
         rtlabelD7 = Checkbutton(fm1, text = "Dynamixel 7",
-                              offvalue = '', onvalue = 'joint7_controller/state',
-                              variable = var7)
+                              offvalue = " ", onvalue = "joint7_controller/state",
+                              variable = self.var7)
         buttonPlot = Button(fm1,text='Plot',command = self.RqtPlot, width = 7, bg = "green")
 
 
@@ -221,18 +221,22 @@ class App:
         #fm1.pack()
 
     def RqtPlot(self):
-        a = 'rosrun rqt_plot rqt_plot'+' '+var1+' '+var2+' '+var3+' '+var4+' '+var5+' '+var6+' '+var7
+        a = 'rosrun rqt_plot rqt_plot'+' '+self.var1.get()+' '+self.var2.get()+' '+self.var3.get()+' '+self.var4.get()+' '+self.var5.get()+' '+self.var6.get()+' '+self.var7.get()
         args = shlex.split(a)
         p = subprocess.Popen(args)
 
     def StopReconbot(self):
             a = 'killall -9 rosmaster'
-            b = 'kill -9'+' '+self.pidp
+            #b = 'kill -9'+' '+str(self.pidp)
+            b = 'pkill roslaunch'
+            #c = 'killall -9 python'
             #print b
-            args = shlex.split(a)
+            args1 = shlex.split(a)
             args2 = shlex.split(b)
-            p = subprocess.Popen(args)
-            q = subprocess.Popen(args2)
+            #args3 = shlex.split(c)
+            p = subprocess.Popen(args2)
+            q = subprocess.Popen(args)
+            #r = subprocess.Popen(args3)
 
     def Execute(self):
         try:
@@ -253,6 +257,7 @@ class App:
                 args1 = shlex.split(a)
                 p=subprocess.Popen(args1)
                 self.pidp = p.pid
+                print "PID", p.pid
 
             if  imode == 1 or imode == 6 or imode == 7:
                 a = 'roslaunch reconbot_control main.launch full_mode:=true'
@@ -351,6 +356,9 @@ class App:
         labelmsg1.grid(row = 1, sticky = W)
         labelmsg2.grid(row = 2, sticky = W)
         #aboutfn.pack()
+
+    def quit(self):
+        self.master.destroy()
 
 
 if __name__ == "__main__":

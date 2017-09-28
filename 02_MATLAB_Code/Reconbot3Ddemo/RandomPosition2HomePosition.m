@@ -16,14 +16,14 @@ Reconbot.topic = '/RCB_full_mode_controller/state';
 
 %% Read the value of Motor Encoder
 
-% tic
-% DyInfo = Reconbot.getTraj();
-% pause(0.025)
-% DyEnPos = DyInfo.LatestMessage.Actual.Positions;
-% MotorPosition = DyEnPos';
-% toc
+ tic
+ DyInfo = Reconbot.getTraj();
+ pause(0.025)
+ DyEnPos = DyInfo.LatestMessage.Actual.Positions;
+ MotorPosition = DyEnPos';
+ toc
 
-MotorPosition = [90*pi/180, 0*pi/180, -90*pi/180, 90*pi/180, 0*pi/180, 180*pi/180];
+%MotorPosition = [90*pi/180, 0*pi/180, -90*pi/180, 90*pi/180, 0*pi/180, 180*pi/180];
 
 %% Intepotation Points and Time
 NumIntepoPoints = 20;
