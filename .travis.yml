@@ -1,12 +1,13 @@
 sudo: required
-dist: trusty
+dist: xenial
 language: generic
 compiler:
   - gcc
-notifications:
-  email:
-    on_success: always
-    on_failure: always
+  - python
+#notifications:
+#  email:
+#    on_success: always
+#    on_failure: always
 #    recipients:
 #      - jane@doe
 env:
@@ -20,4 +21,4 @@ install:
   - git clone https://github.com/ros-industrial/industrial_ci.git .ci_config
 script:
   - source .ci_config/travis.sh
-#  - source ./travis.sh  # Enable this when you have a package-local script 
+#  - source ./travis.sh  # Enable this when you have a package-local script
