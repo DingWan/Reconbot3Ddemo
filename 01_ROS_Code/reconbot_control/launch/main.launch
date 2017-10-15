@@ -8,13 +8,28 @@
   <arg name="RA2C2_mode" default="false"/>
   <arg name="T1R_mode" default="false"/>
   <arg name="T2R_mode" default="false"/>
+  <arg name="remote" default="false"/>
+  <arg name="master_ip" default="localhost"/>
+
+
+
+  <param name="master_ip_par" value="$(arg master_ip)" />
+
+  <machine name="master" address="$(arg master_ip)" env-loader="/home/jdelacruz/rosenv.sh" user="jdelacruz" />
+
 
 
 
 
   <!--<rosparam file="$(find reconbot_control)/config/controller_list.yaml" command="load"/>-->
 
-  <include file="$(find reconbot_control)/launch/controller_manager.launch"></include>
+  <include if="$(arg remote)" file="$(find reconbot_control)/launch/controller_manager.launch">
+    <arg name="master_ip" value="$(arg master_ip)"/>
+    <arg name="remote" value="$(arg remote)"/>
+  </include>
+
+  <include unless="$(arg remote)" file="$(find reconbot_control)/launch/controller_manager.launch">
+  </include>
 
   <include if="$(arg full_mode)" file="$(find reconbot_control)/launch/reconbot_controller.launch">
   </include>
@@ -33,14 +48,14 @@
 
   <include if="$(arg T2R_mode)" file="$(find reconbot_control)/launch/T2R_reconbot_controller.launch">  </include>
 
-  <node name="Enable_Torque_Server" pkg="reconbot_control" type="enable_torque_service.py" respawn="true"/>
+  <node if="$(arg remote)" machine="master" name="Enable_Torque_Server" pkg="reconbot_control" type="enable_torque_service.py" respawn="true"/>
 
-  <node if="$(arg full_mode)" name="ReConBot_Driver" pkg="reconbot_control" type="move_group_interface" respawn="true"/>
+  <node unless="$(arg remote)" name="Enable_Torque_Server" pkg="reconbot_control" type="enable_torque_service.py" respawn="true"/>
+
+  <node  if="$(arg full_mode)" name="ReConBot_Driver" pkg="reconbot_control" type="move_group_interface" respawn="true"/>
 
 
-  <node if="$(arg r_arm_mode)" name="r_arm_ReConBot_Driver" pkg="reconbot_control" type="r_arm_move_group_interface" respawn="true"/>
+  <node  if="$(arg r_arm_mode)" name="r_arm_ReConBot_Driver" pkg="reconbot_control" type="r_arm_move_group_interface" respawn="true"/>
 
   <node if="$(arg l_arm_mode)" name="l_arm_ReConBot_Driver" pkg="reconbot_control" type="l_arm_move_group_interface" respawn="true"/>
-
-
 </launch>

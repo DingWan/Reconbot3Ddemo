@@ -96,6 +96,7 @@ class App:
         self.expl4 = "Record positions, velocities, \n accelerations and torque:"
         self.passiveExpl = 'Passive'
         self.activeExpl = 'Active'
+        self.expl5 = "Remote-Master"
         self.w1 = Label(fm1,
                         justify=LEFT,
                         padx = 10,
@@ -120,6 +121,7 @@ class App:
                                padx = 10,
                                text = self.expl3,
                                font = "Times 11 bold", bg = "white")
+
         self.buttonRecStart = Button(fm1,text='Start Rec', command = self.StartRecording, width = 7, bg = "green")
         self.buttonRecStop = Button(fm1,text='Stop Rec', command = self.StopRecording, width = 7, bg = "red")
         self.buttonPassive = Button(fm1,text= self.passiveExpl, command = self.PassiveMotors, width = 7, bg= "yellow")
@@ -182,7 +184,15 @@ class App:
                               variable = self.var7)
         buttonPlot = Button(fm1,text='Plot',command = self.RqtPlot, width = 7, bg = "green")
 
+        self.labelMaster = Label (fm1,
+                               justify = LEFT,
+                               padx = 10,
+                               text = self.expl5,
+                               font = "Times 11 bold", bg = "white")
 
+        self.entryVar = StringVar()
+        self.entryVar.set("localhost")
+        self.entryMaster = Entry(fm1, textvariable=self.entryVar)
 
         ##################################################################################
         ##                              Positioning Widgets                            ##
@@ -207,6 +217,9 @@ class App:
         labelConnectCon.grid(row = 18, column=1,columnspan = 2, sticky=W)
         labelStopCon.grid(row = 19, column=1, columnspan = 2, sticky=W)
         labelRunCon.grid(row = 20, column=1, columnspan = 2, sticky=W)
+
+        self.labelMaster.grid(row = 5, column = 1, sticky = E)
+        self.entryMaster.grid(row = 5, column = 2, sticky = W)
 
         rtlabelD1.grid(row = 6, column = 2, sticky = W)
         rtlabelD2.grid(row = 7, column = 2, sticky = W)
@@ -250,10 +263,17 @@ class App:
 
 
     def Connect(self):
+        s = self.entryVar.get()
+        if s!="localhost":
+            s1 = 'remote:=true'
+            s2 = 'master_ip:='+s
+        else:
+            s1 = ' '
+            s2 = ' '
         try:
             imode = self.selectedMode[0]
             if  imode == 0 or imode == 9 or imode == 12:
-                a = 'roslaunch reconbot_control main.launch full_mode:=true'
+                a = 'roslaunch reconbot_control main.launch full_mode:=true'+' '+s1+' '+s2
                 args1 = shlex.split(a)
                 p=subprocess.Popen(args1)
                 self.pidp = p.pid

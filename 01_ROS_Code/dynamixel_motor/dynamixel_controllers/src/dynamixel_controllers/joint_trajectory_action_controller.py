@@ -65,7 +65,7 @@ class Segment():
 class JointTrajectoryActionController():
     def __init__(self, controller_namespace, controllers):
         self.update_rate = 1000
-        self.state_update_rate = 50
+        self.state_update_rate = 100 #50hz by defaul
         self.trajectory = []
 
         self.controller_namespace = controller_namespace
