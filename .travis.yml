@@ -3,6 +3,9 @@ dist: trusty
 language: generic
 compiler:
   - gcc
+
+services:
+  - mongodb
 env:
   matrix:
     - USE_DEB=true  ROS_DISTRO="indigo" ROS_REPOSITORY_PATH=http://packages.ros.org/ros/ubuntu
