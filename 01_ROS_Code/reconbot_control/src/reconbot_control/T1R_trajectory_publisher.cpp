@@ -55,7 +55,7 @@
 #include <actionlib/client/simple_action_client.h>
 #include <iostream>
 #include <fstream>
-#include "ReConBot.h"
+#include "reconbot_control/ReConBot.h"
 #include <string>
 #include <vector>
 #include <cstdlib>

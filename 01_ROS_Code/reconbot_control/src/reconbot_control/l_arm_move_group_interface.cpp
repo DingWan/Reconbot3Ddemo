@@ -45,7 +45,7 @@
 #include <fstream>
 #include <string>
 #include <vector>
-#include "ReConBot.h"
+#include "reconbot_control/ReConBot.h"
 
 int main(int argc, char** argv)
 {
