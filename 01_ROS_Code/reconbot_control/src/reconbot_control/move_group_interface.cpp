@@ -46,7 +46,7 @@
 #include <string>
 #include <vector>
 #include "reconbot_control/EnableTorque.h"
-#include "ReConBot.h"
+#include "reconbot_control/ReConBot.h"
 
 using namespace std;
 
