@@ -39,3 +39,4 @@ target_link_libraries(torque_data_capture ${catkin_LIBRARIES} ${Boost_LIBRARIES}
 install(TARGETS torque_data_capture DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION})
 
 install(DIRECTORY launch DESTINATION ${CATKIN_PACKAGE_SHARE_DESTINATION})
+

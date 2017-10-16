@@ -19,4 +19,8 @@
   <run_depend>rospy</run_depend>
   <run_depend>std_msgs</run_depend>
 
+  <export>
+    <metapackage/>
+  </export>
+
 </package>
