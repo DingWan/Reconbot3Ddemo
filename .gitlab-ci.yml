@@ -17,7 +17,7 @@ before_script:
   #- source /opt/ros/indigo/setup.bash
   # Prepare rosdep to install dependencies.
   #- rosdep init
-  - rosdep update
+  #- rosdep update
 
 indigo:
   script:
