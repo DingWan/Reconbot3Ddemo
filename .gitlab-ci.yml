@@ -21,6 +21,3 @@ jade:
   variables:
     ROS_DISTRO: "jade"
     PRERELEASE: "true"
-
-kinetic:
-script: .ci_config/gitlab.sh ROS_DISTRO=kinetic # alternate syntax
