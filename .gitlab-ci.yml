@@ -8,7 +8,7 @@ services:
 
 before_script:
   - apk add --update bash coreutils # install industrial_ci dependencies
-  # for regular users: - git clone https://github.com/ros-industrial/industrial_ci .ci_config
+  - git clone https://github.com/ros-industrial/industrial_ci .ci_config
   - mkdir .ci_config && cp -a * .ci_config # this is only needed for branch testing of industrial_ci itself
 
 indigo:
