@@ -7,17 +7,22 @@ services:
   - docker:dind # enable docker-in-docker
 
 before_script:
-  - apk add --update bash coreutils # install industrial_ci dependencies
-  - git clone https://github.com/ros-industrial/industrial_ci .ci_config
-  - mkdir .ci_config && cp -a * .ci_config # this is only needed for branch testing of industrial_ci itself
+  - sudo sh -c "echo \"deb http://packages.ros.org/ros/ubuntu lsb_release -cs main\" > /etc/apt/sources.list.d/ros-latest.list"
+  - sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+  - sudo apt-get update -qq
+  - sudo apt-get install -y python-catkin-pkg python-rosdep python-wstool ros-indigo-catkin
+  - source /opt/ros/indigo/setup.bash
+  # Prepare rosdep to install dependencies.
+  - sudo rosdep init
+  - rosdep update
 
 indigo:
-  script: .ci_config/gitlab.sh
-  variables:
-    ROS_DISTRO: "indigo"
-
-jade:
-  script: .ci_config/gitlab.sh
-  variables:
-    ROS_DISTRO: "jade"
-    PRERELEASE: "true"
+  script:
+    - mkdir -p ~/catkin_ws/src
+    - cd ~/catkin_ws/src
+    - catkin_init_workspace
+    - cd ~/catkin_ws/build
+    - cmake ../src
+    - make
+#  variables:
+#    ROS_DISTRO: "indigo"
