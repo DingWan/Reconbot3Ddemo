@@ -23,9 +23,9 @@ indigo:
   script:
     - mkdir -p ~/catkin_ws/src
     - cd ~/catkin_ws/src
-    - catkin_init_workspace
-    - cd ~/catkin_ws/build
-    - cmake ../src
-    - make
+#    - catkin_init_workspace
+#    - cd ~/catkin_ws/build
+#    - cmake ../src
+#    - make
 #  variables:
 #    ROS_DISTRO: "indigo"
