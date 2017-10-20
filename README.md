@@ -1,12 +1,10 @@
 # ReConBot
----
 
 indigo-devel: ![Build status][1]     kinetic-devel: ![Build status][1]
 
 The Reconbot is a Reconfigurable parallel mechanism considered as the flexible torso of a mobile manipulator.
 
 # For the organization of this GitLab repository:
----
 
 
 **Content that belongs in this repository**
