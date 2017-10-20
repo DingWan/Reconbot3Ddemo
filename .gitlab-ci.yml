@@ -30,4 +30,4 @@ indigo-master:
   only:
     - reconbot-experimental
   tags:
-- ros
+    - ros
